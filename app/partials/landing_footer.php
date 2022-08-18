@@ -30,14 +30,14 @@
                             <div class="ec-footer-links">
                                 <ul class="align-items-center">
                                     <li class="ec-footer-link">
-                                        <a href="about-us.html">About us</a>
+                                        <a href="landing_about">About us</a>
                                     </li>
-                                    <li class="ec-footer-link"><a href="faq.html">FAQ</a></li>
+                                    <li class="ec-footer-link"><a href="landing_faq">FAQ</a></li>
                                     <li class="ec-footer-link">
-                                        <a href="track-order.html">Delivery Information</a>
+                                        <a href="landing_terms">Terms And Conditions</a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <a href="contact-us.html">Contact us</a>
+                                        <a href="landing_contacts">Contact us</a>
                                     </li>
                                 </ul>
                             </div>
@@ -49,16 +49,13 @@
                             <div class="ec-footer-links">
                                 <ul class="align-items-center">
                                     <li class="ec-footer-link">
-                                        <a href="user-profile.html">My Account</a>
+                                        <a href="login">My Account</a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <a href="track-order.html">Order History</a>
+                                        <a href="login">Order History</a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <a href="wishlist.html">Wish List</a>
-                                    </li>
-                                    <li class="ec-footer-link">
-                                        <a href="offer.html">Specials</a>
+                                        <a href="login">Wish List</a>
                                     </li>
                                 </ul>
                             </div>
@@ -70,16 +67,13 @@
                             <div class="ec-footer-links">
                                 <ul class="align-items-center">
                                     <li class="ec-footer-link">
-                                        <a href="track-order.html">Discount Returns</a>
+                                        <a href="landing_terms">Discount Returns</a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <a href="privacy-policy.html">Policy & policy </a>
+                                        <a href="landing_terms">Policy & policy </a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <a href="terms-condition.html">Customer Service</a>
-                                    </li>
-                                    <li class="ec-footer-link">
-                                        <a href="terms-condition.html">Term & condition</a>
+                                        <a href="landing_terms">Customer Service</a>
                                     </li>
                                 </ul>
                             </div>
@@ -139,8 +133,8 @@
                     <div class="col text-center footer-copy">
                         <div class="footer-bottom-copy">
                             <div class="ec-copy">
-                                Copyright © 2021-2022
-                                <a class="site-name text-upper" href="#">ekka<span>.</span></a>. All Rights Reserved
+                                Copyright © 2022 - <?php echo date('Y'); ?>
+                                <a class="site-name text-upper" href="https://martmbithi.github.io">eArtworks<span>.</span></a>. All Rights Reserved
                             </div>
                         </div>
                     </div>

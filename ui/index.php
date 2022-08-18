@@ -334,12 +334,6 @@ require_once('../app/partials/landing_head.php');
   <?php require_once('../app/partials/landing_footer.php'); ?>
   <!-- Footer Area End -->
  
-
-  <!-- Footer navigation panel for responsive display -->
-  
-  <!-- Footer navigation panel for responsive display end -->
-
-
   <!-- Vendor JS -->
   <?php require_once('../app/partials/landing_scripts.php'); ?>
 </body>
