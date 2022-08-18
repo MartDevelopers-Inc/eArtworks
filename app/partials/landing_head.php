@@ -29,6 +29,7 @@
 
     <!-- Main Style -->
     <link rel="stylesheet" href="../public/landing_assets/css/demo1.css" />
+    <link rel="stylesheet" href="../public/landing_assets/css/style.css" />
     <link rel="stylesheet" href="../public/landing_assets/css/responsive.css" />
 
     <!-- Background css -->
