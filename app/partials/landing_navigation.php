@@ -97,9 +97,6 @@
                             <span class="ec-header-count cart-count-lable">3</span>
                         </a>
                         <!-- Header Cart End -->
-                        <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
-                            <img src="../public/landing_assets/images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
-                        </a>
                         <!-- Header menu Start -->
                         <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
                             <img src="../public/landing_assets/images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
@@ -120,7 +117,7 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="../"><img src="../public/landing_assets//images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                            <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
