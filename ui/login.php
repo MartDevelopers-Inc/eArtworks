@@ -620,7 +620,7 @@
                     <div class="section-title">
                         <h2 class="ec-bg-title">Log In</h2>
                         <h2 class="ec-title">Log In</h2>
-                        <p class="sub-title mb-3">Best place to buy and sell digital products</p>
+                        <p class="sub-title mb-3">Best place to buy and sell artworks products</p>
                     </div>
                 </div>
                 <div class="ec-login-wrapper">
@@ -629,18 +629,18 @@
                             <form action="#" method="post">
                                 <span class="ec-login-wrap">
                                     <label>Email Address*</label>
-                                    <input type="text" name="name" placeholder="Enter your email add..." required />
+                                    <input type="text" name="user_login" placeholder="Enter your email add..." required />
                                 </span>
                                 <span class="ec-login-wrap">
                                     <label>Password*</label>
-                                    <input type="password" name="password" placeholder="Enter your password" required />
+                                    <input type="password" name="user_password" placeholder="Enter your password" required />
                                 </span>
                                 <span class="ec-login-wrap ec-login-fp">
-                                    <label><a href="#">Forgot Password?</a></label>
+                                    <label><a href="reset_password">Forgot Password?</a></label>
                                 </span>
                                 <span class="ec-login-wrap ec-login-btn">
-                                    <button class="btn btn-primary" type="submit">Login</button>
-                                    <a href="register.html" class="btn btn-secondary">Register</a>
+                                    <button class="btn btn-primary" name="login" type="submit">Login</button>
+                                    <a href="register" class="btn btn-secondary">Register</a>
                                 </span>
                             </form>
                         </div>
