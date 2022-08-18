@@ -37,14 +37,13 @@
                         <!-- Currency Start -->
                         <div class="header-top-curr dropdown">
                             <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">
-                                Currency
+                                Default Currency
                                 <i class="ecicon eci-caret-down" aria-hidden="true"></i>
                             </button>
                             <ul class="dropdown-menu">
                                 <li class="active">
-                                    <a class="dropdown-item" href="#">USD $</a>
+                                    <a class="dropdown-item" href="">Kes</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#">EUR €</a></li>
                             </ul>
                         </div>
                         <!-- Currency End -->
@@ -56,9 +55,8 @@
                             </button>
                             <ul class="dropdown-menu">
                                 <li class="active">
-                                    <a class="dropdown-item" href="#">English</a>
+                                    <a class="dropdown-item" href="">English</a>
                                 </li>
-                                <li><a class="dropdown-item" href="#">Italiano</a></li>
                             </ul>
                         </div>
                         <!-- Language End -->
@@ -71,14 +69,11 @@
                         <!-- Header User Start -->
                         <div class="ec-header-user dropdown">
                             <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                <img src="assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
+                                <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
                             </button>
                             <ul class="dropdown-menu dropdown-menu-right">
                                 <li>
-                                    <a class="dropdown-item" href="register.html">Register</a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="checkout.html">Checkout</a>
+                                    <a class="dropdown-item" href="register">Register</a>
                                 </li>
                                 <li>
                                     <a class="dropdown-item" href="login.html">Login</a>
@@ -89,7 +84,7 @@
                         <!-- Header Cart Start -->
                         <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
                             <div class="header-icon">
-                                <img src="assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
+                                <img src="../public/landing_assets//images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                             </div>
                             <span class="ec-header-count">4</span>
                         </a>
@@ -97,17 +92,17 @@
                         <!-- Header Cart Start -->
                         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                             <div class="header-icon">
-                                <img src="assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
+                                <img src="../public/landing_assets//images/icons/cart.svg" class="svg_img header_svg" alt="" />
                             </div>
                             <span class="ec-header-count cart-count-lable">3</span>
                         </a>
                         <!-- Header Cart End -->
                         <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
-                            <img src="assets/images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
+                            <img src="../public/landing_assets//images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
                         </a>
                         <!-- Header menu Start -->
                         <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
-                            <img src="assets/images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
+                            <img src="../public/landing_assets//images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
                         </a>
                         <!-- Header menu End -->
                     </div>
@@ -125,7 +120,7 @@
                     <!-- Ec Header Logo Start -->
                     <div class="align-self-center">
                         <div class="header-logo">
-                            <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                            <a href="../"><img src="../public/landing_assets//images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -136,7 +131,7 @@
                             <form class="ec-btn-group-form" action="#">
                                 <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
                                 <button class="submit" type="submit">
-                                    <img src="assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
+                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                 </button>
                             </form>
                         </div>
@@ -149,25 +144,22 @@
                             <!-- Header User Start -->
                             <div class="ec-header-user dropdown">
                                 <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                    <img src="assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
+                                    <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li>
-                                        <a class="dropdown-item" href="register.html">Register</a>
+                                        <a class="dropdown-item" href="register">Register</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="checkout.html">Checkout</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="login.html">Login</a>
+                                        <a class="dropdown-item" href="login">Login</a>
                                     </li>
                                 </ul>
                             </div>
                             <!-- Header User End -->
                             <!-- Header wishlist Start -->
-                            <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
+                            <a href="wishlist" class="ec-header-btn ec-header-wishlist">
                                 <div class="header-icon">
-                                    <img src="assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
+                                    <img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                                 </div>
                                 <span class="ec-header-count">4</span>
                             </a>
@@ -175,7 +167,7 @@
                             <!-- Header Cart Start -->
                             <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                                 <div class="header-icon">
-                                    <img src="assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
+                                    <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
                                 </div>
                                 <span class="ec-header-count cart-count-lable">3</span>
                             </a>
@@ -194,7 +186,7 @@
                 <!-- Ec Header Logo Start -->
                 <div class="col">
                     <div class="header-logo">
-                        <a href="index.html"><img src="assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                        <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
                     </div>
                 </div>
                 <!-- Ec Header Logo End -->
@@ -204,7 +196,7 @@
                         <form class="ec-btn-group-form" action="#">
                             <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
                             <button class="submit" type="submit">
-                                <img src="assets/images/icons/search.svg" class="svg_img header_svg" alt="icon" />
+                                <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="icon" />
                             </button>
                         </form>
                     </div>
@@ -221,7 +213,7 @@
                 <div class="col-md-12 align-self-center">
                     <div class="ec-main-menu">
                         <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
-                            <img src="assets/images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
+                            <img src="../public/landing_assets/images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
                         </a>
                         <ul>
                             <li><a href="index.html">Home</a></li>
@@ -957,23 +949,21 @@
                         </button>
                         <ul class="dropdown-menu">
                             <li class="active">
-                                <a class="dropdown-item" href="#">English</a>
+                                <a class="dropdown-item" href="">English</a>
                             </li>
-                            <li><a class="dropdown-item" href="#">Italiano</a></li>
                         </ul>
                     </div>
                     <!-- Language End -->
                     <!-- Currency Start -->
                     <div class="header-top-curr dropdown">
                         <button class="dropdown-toggle text-upper" data-bs-toggle="dropdown">
-                            Currency
+                            Default Currency
                             <i class="ecicon eci-caret-down" aria-hidden="true"></i>
                         </button>
                         <ul class="dropdown-menu">
                             <li class="active">
-                                <a class="dropdown-item" href="#">USD $</a>
+                                <a class="dropdown-item" href="">Kes </a>
                             </li>
-                            <li><a class="dropdown-item" href="#">EUR €</a></li>
                         </ul>
                     </div>
                     <!-- Currency End -->
