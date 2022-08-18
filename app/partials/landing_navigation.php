@@ -76,15 +76,15 @@
                                     <a class="dropdown-item" href="register">Register</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="login.html">Login</a>
+                                    <a class="dropdown-item" href="login">Login</a>
                                 </li>
                             </ul>
                         </div>
                         <!-- Header User End -->
                         <!-- Header Cart Start -->
-                        <a href="wishlist.html" class="ec-header-btn ec-header-wishlist">
+                        <a href="wishlist" class="ec-header-btn ec-header-wishlist">
                             <div class="header-icon">
-                                <img src="../public/landing_assets//images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
+                                <img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                             </div>
                             <span class="ec-header-count">4</span>
                         </a>
@@ -92,17 +92,17 @@
                         <!-- Header Cart Start -->
                         <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
                             <div class="header-icon">
-                                <img src="../public/landing_assets//images/icons/cart.svg" class="svg_img header_svg" alt="" />
+                                <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
                             </div>
                             <span class="ec-header-count cart-count-lable">3</span>
                         </a>
                         <!-- Header Cart End -->
                         <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
-                            <img src="../public/landing_assets//images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
+                            <img src="../public/landing_assets/images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
                         </a>
                         <!-- Header menu Start -->
                         <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
-                            <img src="../public/landing_assets//images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
+                            <img src="../public/landing_assets/images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
                         </a>
                         <!-- Header menu End -->
                     </div>
@@ -212,9 +212,6 @@
             <div class="row">
                 <div class="col-md-12 align-self-center">
                     <div class="ec-main-menu">
-                        <a href="javascript:void(0)" class="ec-header-btn ec-sidebar-toggle">
-                            <img src="../public/landing_assets/images/icons/category-icon.svg" class="svg_img header_svg" alt="icon" />
-                        </a>
                         <ul>
                             <li><a href="index.html">Home</a></li>
                             <li class="dropdown position-static">
