@@ -67,37 +67,13 @@
 
 
 /* Check Login Function Kill All Unauthorized Logins */
-function admin_check_login()
+function checklogin()
 {
-	if ((strlen($_SESSION['login_admin_id']) == 0)) {
+	if ((strlen($_SESSION['user_id']) == 0)) {
 		$host = $_SERVER['HTTP_HOST'];
 		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
 		$extra = "../";
-		$_SESSION["login_admin_id"] = "";
-		header("Location: http://$host$uri/$extra");
-	}
-}
-
-/* Artist Checklogin */
-function artist_check_login()
-{
-	if ((strlen($_SESSION['login_artist_id']) == 0)) {
-		$host = $_SERVER['HTTP_HOST'];
-		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = "../";
-		$_SESSION["login_artist_id"] = "";
-		header("Location: http://$host$uri/$extra");
-	}
-}
-
-/* Customer Checklogin */
-function user_check_login()
-{
-	if ((strlen($_SESSION['login_user_id']) == 0)) {
-		$host = $_SERVER['HTTP_HOST'];
-		$uri  = rtrim(dirname($_SERVER['PHP_SELF']), '/\\');
-		$extra = "../";
-		$_SESSION["login_user_id"] = "";
+		$_SESSION["user_id"] = "";
 		header("Location: http://$host$uri/$extra");
 	}
 }

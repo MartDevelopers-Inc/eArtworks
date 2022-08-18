@@ -71,5 +71,5 @@
 $dbuser = "root";
 $dbpass = "";
 $host = "localhost";
-$db = "online_paiting_store";
+$db = "eArtworks";
 $mysqli = new mysqli($host, $dbuser, $dbpass, $db);
