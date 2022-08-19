@@ -94,8 +94,52 @@ if (isset($_POST['User_Login'])) {
         $err = "Failed!, Incorrect Login Credentials";
     }
 }
- /* Register */
 
+/* Register */
+if (isset($_POST['User_Register'])) {
+    $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
+    $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_dob  = mysqli_real_escape_string($mysqli, $_POST['user_dob']);
+    $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
+    $user_access_level  = mysqli_real_escape_string($mysqli, 'Customer');
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    /* Check If Passwords Match */
+    if ($new_password != $confirm_password) {
+        $err = "Passwords Does Not Match";
+    } else {
+        /* Avoid Duplications */
+        $sql = "SELECT * FROM  users   WHERE user_access_level ='{$user_access_level}' 
+        AND  user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $user_access_level == $row['user_access_level'] &&
+                $user_email == $row['user_email'] ||
+                $user_phone_number == $row['user_phone_number']
+            ) {
+                $err = 'Phone Number Or Email Already Exists';
+            }
+        } else {
+            /* Persist */
+            $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level)
+            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}')";
+
+            /* Prepare */
+            if (mysqli_query($mysqli, $insert_sql)) {
+                $_SESSION['success'] = "Account created, proceed to log in";
+                header('Location: login');
+                exit;
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
+        }
+    }
+}
  /* Reset Password Step 1 */
 
  /* Reset Password Step 2 */
