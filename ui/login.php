@@ -123,13 +123,13 @@ require_once('../app/partials/landing_head.php');
                                 </span>
                                 <span class="ec-login-wrap">
                                     <label>Password*</label>
-                                    <input type="password" name="user_password"  required />
+                                    <input type="password" name="user_password" required />
                                 </span>
                                 <span class="ec-login-wrap ec-login-fp">
                                     <label><a href="reset_password">Forgot Password?</a></label>
                                 </span>
                                 <span class="ec-login-wrap ec-login-btn">
-                                    <button class="btn btn-primary" name="login" type="submit">Login</button>
+                                    <button class="btn btn-primary" name="User_Login" type="submit">Login</button>
                                     <a href="register" class="btn btn-secondary">Register</a>
                                 </span>
                             </form>
