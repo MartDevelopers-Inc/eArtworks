@@ -64,6 +64,9 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/config.php');
+require_once('../app/helpers/authentication.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -119,7 +122,7 @@ require_once('../app/partials/landing_head.php');
                             <form method="post">
                                 <span class="ec-login-wrap">
                                     <label>Email Address*</label>
-                                    <input type="text" name="user_login" required />
+                                    <input type="text" name="user_email" required />
                                 </span>
                                 <span class="ec-login-wrap">
                                     <label>Password*</label>

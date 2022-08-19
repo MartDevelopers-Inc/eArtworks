@@ -67,12 +67,12 @@
  */
 
 /* Login */
-if (isset($_POST['Login'])) {
+if (isset($_POST['User_Login'])) {
     $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
     $user_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['user_password'])));
 
     /* Persist*/
-    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status FROM login
+    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status FROM users
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
     $stmt->execute();
     $stmt->bind_result($user_id, $user_email, $user_password, $user_access_level, $user_delete_status);
