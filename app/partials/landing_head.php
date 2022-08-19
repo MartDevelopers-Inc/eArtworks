@@ -36,4 +36,11 @@
     <link rel="stylesheet" id="bg-switcher-css" href="../public/landing_assets/css/backgrounds/bg-4.css" />
     <!-- Toastr -->
     <link rel="stylesheet" href="../public/backoffice_assets/plugins/toastr/toastr.min.css">
+    <?php
+    /* Alert Sesion Via Alerts */
+    if (isset($_SESSION['success'])) {
+        $success = $_SESSION['success'];
+        unset($_SESSION['success']);
+    }
+    ?>
 </head>
