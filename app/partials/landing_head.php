@@ -34,4 +34,6 @@
 
     <!-- Background css -->
     <link rel="stylesheet" id="bg-switcher-css" href="../public/landing_assets/css/backgrounds/bg-4.css" />
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../public/backoffice_assets/plugins/toastr/toastr.min.css">
 </head>

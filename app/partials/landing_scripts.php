@@ -30,3 +30,5 @@
 <!-- Main Js -->
 <script src="../public/landing_assets/js/vendor/index.js"></script>
 <script src="../public/landing_assets/js/main.js"></script>
+<!-- Toastr -->
+<script src="../public/backoffice_assets/plugins/toastr/toastr.min.js"></script>
