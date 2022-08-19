@@ -122,11 +122,11 @@ require_once('../app/partials/landing_head.php');
                             <form method="post">
                                 <span class="ec-login-wrap">
                                     <label>Email Address*</label>
-                                    <input type="text" name="user_email" required />
+                                    <input type="text" autocomplete="off" name="user_email" required />
                                 </span>
                                 <span class="ec-login-wrap">
                                     <label>Password*</label>
-                                    <input type="password" name="user_password" required />
+                                    <input type="password" autocomplete="off" name="user_password" required />
                                 </span>
                                 <span class="ec-login-wrap ec-login-fp">
                                     <label><a href="reset_password">Forgot Password?</a></label>

@@ -64,6 +64,9 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/checklogin.php');
+require_once('../app/settings/codeGen.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -333,7 +336,7 @@ require_once('../app/partials/landing_head.php');
   <!-- Footer Start -->
   <?php require_once('../app/partials/landing_footer.php'); ?>
   <!-- Footer Area End -->
- 
+
   <!-- Vendor JS -->
   <?php require_once('../app/partials/landing_scripts.php'); ?>
 </body>

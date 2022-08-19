@@ -123,35 +123,35 @@ require_once('../app/partials/landing_head.php');
                                 <form method="post">
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>First Name*</label>
-                                        <input type="text" name="user_first_name" required />
+                                        <input type="text" name="user_first_name" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Last Name*</label>
-                                        <input type="text" name="user_last_name" required />
+                                        <input type="text" name="user_last_name" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Email*</label>
-                                        <input type="email" name="user_email" required />
+                                        <input type="email" name="user_email" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Phone Number*</label>
-                                        <input type="text" name="user_phone_number" required />
+                                        <input type="text" name="user_phone_number" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Address</label>
-                                        <input type="text" name="user_default_address" required />
+                                        <input type="text" name="user_default_address" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Date Of Birth*</label>
-                                        <input type="date" name="user_dob" required />
+                                        <input type="date" name="user_dob" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Password *</label>
-                                        <input type="password" name="new_password" required />
+                                        <input type="password" name="new_password" autocomplete="off" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Confirm Password *</label>
-                                        <input type="password" name="confirm_password" required />
+                                        <input type="password" name="confirm_password" autocomplete="off" required />
                                     </span>
 
                                     <span class="ec-register-wrap ec-register-btn">

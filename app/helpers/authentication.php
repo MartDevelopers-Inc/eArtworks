@@ -86,7 +86,7 @@ if (isset($_POST['User_Login'])) {
         $_SESSION['success'] = "Welcome to back office module";
         header('Location: dashboard');
         exit;
-    } else if ($rs && $login_rank == 'Customer') {
+    } else if ($rs && $user_access_level == 'Customer') {
         $_SESSION['success'] = 'Login success';
         header('Location: ../');
         exit;
@@ -112,15 +112,12 @@ if (isset($_POST['User_Register'])) {
         $err = "Passwords Does Not Match";
     } else {
         /* Avoid Duplications */
-        $sql = "SELECT * FROM  users   WHERE user_access_level ='{$user_access_level}' 
-        AND  user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+        $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $row = mysqli_fetch_assoc($res);
             if (
-                $user_access_level == $row['user_access_level'] &&
-                $user_email == $row['user_email'] ||
-                $user_phone_number == $row['user_phone_number']
+                $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
             ) {
                 $err = 'Phone Number Or Email Already Exists';
             }
