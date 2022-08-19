@@ -116,14 +116,14 @@ require_once('../app/partials/landing_head.php');
                 <div class="ec-login-wrapper">
                     <div class="ec-login-container">
                         <div class="ec-login-form">
-                            <form action="#" method="post">
+                            <form method="post">
                                 <span class="ec-login-wrap">
                                     <label>Email Address*</label>
-                                    <input type="text" name="user_login" placeholder="Enter your email add..." required />
+                                    <input type="text" name="user_login" required />
                                 </span>
                                 <span class="ec-login-wrap">
                                     <label>Password*</label>
-                                    <input type="password" name="user_password" placeholder="Enter your password" required />
+                                    <input type="password" name="user_password"  required />
                                 </span>
                                 <span class="ec-login-wrap ec-login-fp">
                                     <label><a href="reset_password">Forgot Password?</a></label>
