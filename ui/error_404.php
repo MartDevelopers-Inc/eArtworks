@@ -68,6 +68,7 @@ session_start();
 require_once('../app/settings/checklogin.php');
 require_once('../app/settings/config.php');
 require_once('../app/partials/landing_head.php');
+
 ?>
 
 <body>
@@ -80,15 +81,14 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-md-6">
                     <div class="under-maintenance">
                         <h1>Error 404</h1>
-                        <h4>The page was not found.</h4>
-                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has
-                            been the industry's standard dummy.</p>
-                        <a href="index.html" class="btn btn-lg btn-primary" tabindex="0">Back to Home</a>
+                        <h4>We cant find the page you are looking for.</h4>
+
+                        <a href="../" class="btn btn-lg btn-primary" tabindex="0">Back to Home</a>
                     </div>
                 </div>
                 <div class="col-md-6 disp-768">
                     <div class="under-maintenance">
-                        <img class="maintenance-img" src="assets/images/common/404.png" alt="maintenance">
+                        <img class="maintenance-img" src="../public/landing_assets/images/common/404.png" alt="maintenance">
                     </div>
                 </div>
             </div>
