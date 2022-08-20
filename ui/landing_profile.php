@@ -82,7 +82,7 @@ if (mysqli_num_rows($user_sql) > 0) {
             <!-- Header start  -->
             <?php require_once('../app/partials/landing_navigation.php'); ?>
             <!-- Header End  -->
-            
+
             <!-- Ec breadcrumb start -->
             <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
                 <div class="container">
@@ -125,25 +125,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                 <div class="container">
                     <div class="row">
                         <!-- Sidebar Area Start -->
-                        <div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
-                            <div class="ec-sidebar-wrap">
-                                <!-- Sidebar Category Block -->
-                                <div class="ec-sidebar-block">
-                                    <div class="ec-vendor-block">
-
-                                        <div class="ec-vendor-block-items">
-                                            <ul>
-                                                <li><a class="active" href="landing_profile">User Profile</a></li>
-                                                <li><a href="landing_purchase_history">History</a></li>
-                                                <li><a href="landing_wishlist">Wishlist</a></li>
-                                                <li><a href="landing_cart">Cart</a></li>
-                                                <li><a href="landing_track_order">Track Order</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php require_once('../app/partials/landing_profile_sidebar.php'); ?>
                         <div class="ec-shop-rightside col-lg-9 col-md-12">
                             <div class="ec-vendor-dashboard-card ec-vendor-setting-card">
                                 <div class="ec-vendor-card-body">
