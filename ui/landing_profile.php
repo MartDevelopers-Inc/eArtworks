@@ -66,124 +66,131 @@
  */
 session_start();
 require_once('../app/settings/checklogin.php');
-require_once('../app/settings/codeGen.php');
+require_once('../app/settings/config.php');
 require_once('../app/partials/landing_head.php');
+/* Get Details Of Logged In User */
+$user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+$user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
+if (mysqli_num_rows($user_sql) > 0) {
+    while ($customer = mysqli_fetch_array($user_sql)) {
 ?>
 
-<body class="shop_page">
-    <div id="ec-overlay"><span class="loader_img"></span></div>
+        <body class="shop_page">
+            <div id="ec-overlay"><span class="loader_img"></span></div>
 
-    <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
-    <!-- Header End  -->
+            <!-- Header start  -->
+            <?php require_once('../app/partials/landing_navigation.php'); ?>
+            <!-- Header End  -->
 
-    <!-- ekka Cart Start -->
-    <?php include('../app/partials/landing_cart.php'); ?>
-    <!-- ekka Cart End -->
+            <!-- ekka Cart Start -->
+            <?php include('../app/partials/landing_cart.php'); ?>
+            <!-- ekka Cart End -->
 
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">User Profile</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Profile</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
-
-    <!-- User profile section -->
-    <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
-        <div class="container">
-            <div class="row">
-                <!-- Sidebar Area Start -->
-                <div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
-                    <div class="ec-sidebar-wrap">
-                        <!-- Sidebar Category Block -->
-                        <div class="ec-sidebar-block">
-                            <div class="ec-vendor-block">
-
-                                <div class="ec-vendor-block-items">
-                                    <ul>
-                                        <li><a class="active" href="landing_profile">User Profile</a></li>
-                                        <li><a href="landing_purchase_history">History</a></li>
-                                        <li><a href="landing_wishlist">Wishlist</a></li>
-                                        <li><a href="landing_cart">Cart</a></li>
-                                        <li><a href="landing_track_order">Track Order</a></li>
+            <!-- Ec breadcrumb start -->
+            <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row ec_breadcrumb_inner">
+                                <div class="col-md-6 col-sm-12">
+                                    <h2 class="ec-breadcrumb-title">User Profile</h2>
+                                </div>
+                                <div class="col-md-6 col-sm-12">
+                                    <!-- ec-breadcrumb-list start -->
+                                    <ul class="ec-breadcrumb-list">
+                                        <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="ec-breadcrumb-item active">Profile</li>
                                     </ul>
+                                    <!-- ec-breadcrumb-list end -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="ec-shop-rightside col-lg-9 col-md-12">
-                    <div class="ec-vendor-dashboard-card ec-vendor-setting-card">
-                        <div class="ec-vendor-card-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="ec-vendor-block-profile">
-                                        <div class="ec-vendor-block-img space-bottom-30">
-                                            <div class="ec-vendor-block-bg">
-                                                <a href="#" class="btn btn-lg btn-primary" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal">Edit Detail</a>
-                                            </div>
-                                            <div class="ec-vendor-block-detail">
-                                                <img class="v-img" src="assets/images/user/1.jpg" alt="vendor image">
-                                                <h5 class="name">Mariana Johns</h5>
-                                                <p>( Business Man )</p>
-                                            </div>
-                                            <p>Hello <span>Mariana Johns!</span></p>
-                                            <p>From your account you can easily view and track orders. You can manage and change your account information like address, contact information and history of orders.</p>
-                                        </div>
-                                        <h5>Account Information</h5>
+            </div>
+            <!-- Ec breadcrumb end -->
 
-                                        <div class="row">
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
-                                                    <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
-                                                    <ul>
-                                                        <li><strong>Email 1 : </strong>support1@exapmle.com</li>
-                                                        <li><strong>Email 2 : </strong>support2@exapmle.com</li>
-                                                    </ul>
+            <!-- User profile section -->
+            <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
+                <div class="container">
+                    <div class="row">
+                        <!-- Sidebar Area Start -->
+                        <div class="ec-shop-leftside ec-vendor-sidebar col-lg-3 col-md-12">
+                            <div class="ec-sidebar-wrap">
+                                <!-- Sidebar Category Block -->
+                                <div class="ec-sidebar-block">
+                                    <div class="ec-vendor-block">
+
+                                        <div class="ec-vendor-block-items">
+                                            <ul>
+                                                <li><a class="active" href="landing_profile">User Profile</a></li>
+                                                <li><a href="landing_purchase_history">History</a></li>
+                                                <li><a href="landing_wishlist">Wishlist</a></li>
+                                                <li><a href="landing_cart">Cart</a></li>
+                                                <li><a href="landing_track_order">Track Order</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ec-shop-rightside col-lg-9 col-md-12">
+                            <div class="ec-vendor-dashboard-card ec-vendor-setting-card">
+                                <div class="ec-vendor-card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="ec-vendor-block-profile">
+                                                <div class="ec-vendor-block-img space-bottom-30">
+                                                    <div class="ec-vendor-block-bg">
+                                                        <a href="#" class="btn btn-lg btn-primary" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal">Edit Detail</a>
+                                                    </div>
+                                                    <div class="ec-vendor-block-detail">
+                                                        <img class="v-img" src="assets/images/user/1.jpg" alt="vendor image">
+                                                        <h5 class="name">Mariana Johns</h5>
+                                                        <p>( Business Man )</p>
+                                                    </div>
+                                                    <p>Hello <span>Mariana Johns!</span></p>
+                                                    <p>From your account you can easily view and track orders. You can manage and change your account information like address, contact information and history of orders.</p>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
-                                                    <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
-                                                    <ul>
-                                                        <li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890</li>
-                                                        <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
-                                                    <h6>Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
-                                                    <ul>
-                                                        <li><strong>Home : </strong>123, 2150 Sycamore Street, dummy text of
-                                                            the, San Jose, California - 95131.</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 col-sm-12">
-                                                <div class="ec-vendor-detail-block ec-vendor-block-address">
-                                                    <h6>Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
-                                                    <ul>
-                                                        <li><strong>Office : </strong>123, 2150 Sycamore Street, dummy text of
-                                                            the, San Jose, California - 95131.</li>
-                                                    </ul>
+                                                <h5>Account Information</h5>
+
+                                                <div class="row">
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
+                                                            <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <ul>
+                                                                <li><strong>Email 1 : </strong>support1@exapmle.com</li>
+                                                                <li><strong>Email 2 : </strong>support2@exapmle.com</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
+                                                            <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <ul>
+                                                                <li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890</li>
+                                                                <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
+                                                            <h6>Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <ul>
+                                                                <li><strong>Home : </strong>123, 2150 Sycamore Street, dummy text of
+                                                                    the, San Jose, California - 95131.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-12">
+                                                        <div class="ec-vendor-detail-block ec-vendor-block-address">
+                                                            <h6>Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <ul>
+                                                                <li><strong>Office : </strong>123, 2150 Sycamore Street, dummy text of
+                                                                    the, San Jose, California - 95131.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -193,24 +200,26 @@ require_once('../app/partials/landing_head.php');
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-    <!-- End User profile section -->
-
-    <!-- Footer Start -->
-    <?php require_once('../app/partials/landing_footer.php'); ?>
-    <!-- Footer Area End -->
-
-    <!-- Modal -->
-    <?php require_once('../app/modals/landing_profile_modal.php'); ?>
-    <!-- Modal end -->
+            </section>
+            <!-- End User profile section -->
 
 
+            <!-- Footer Start -->
+            <?php require_once('../app/partials/landing_footer.php'); ?>
+            <!-- Footer Area End -->
 
+            <!-- Modal -->
+            <?php require_once('../app/modals/landing_profile_modal.php'); ?>
+            <!-- Modal end -->
 
-    <?php require_once('../app/partials/landing_scripts.php'); ?>
+            <?php require_once('../app/partials/landing_scripts.php'); ?>
 
-</body>
+        </body>
 
-</html>
+        </html>
+    <?php
+    }
+} else {
+    /* LOad 404 Page */
+    include('error_404.php'); ?>
+<?php } ?>
