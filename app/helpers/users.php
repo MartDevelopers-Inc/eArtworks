@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Thu Aug 18 2022
+ *   Crafted On Sat Aug 20 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -64,80 +64,68 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
-require_once('../app/partials/landing_head.php');
-?>
-
-<body>
-    <div id="ec-overlay"><span class="loader_img"></span></div>
-
-    <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
-    <!-- Header End  -->
- 
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Reset Password</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Reset password</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
-
-    <!-- Ec login page -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-title">
-                        <h2 class="ec-bg-title">Reset password</h2>
-                        <h2 class="ec-title">Reset Password</h2>
-                        <p class="sub-title mb-3">Forget password, worry not. Enter your email and your password reset details will be emailed to you</p>
-                    </div>
-                </div>
-                <div class="ec-register-wrapper">
-                    <div class="ec-register-wrapper">
-                        <div class="ec-register-container">
-                            <div class="ec-register-form">
-                                <form method="post">
-                                    <span class="ec-register-wrap">
-                                        <label>Email*</label>
-                                        <input type="email" name="user_email" required />
-                                    </span>
-                                    <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Reset_Password" type="submit">Reset Password</button>
-                                    </span>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Start -->
-    <?php require_once('../app/partials/landing_footer.php'); ?>
-    <!-- Footer Area End -->
-
-    <!-- Feature tools end -->
-    <?php require_once('../app/partials/landing_scripts.php'); ?>
-
-</body>
 
 
-</html>
+/* Register Customer */
+
+/* Update Customer */
+
+/* Delete Customer */
+
+/* Update Customer Account */
+if (isset($_POST['Update_Customer_Profile'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
+    $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_dob  = mysqli_real_escape_string($mysqli, $_POST['user_dob']);
+    $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
+    /* Check If User Profile Has A File In It */
+    if (!empty($_FILES['user_profile_picture']['name'])) {
+        /* Process User Image */
+        $temp_user_image = explode('.', $_FILES['user_profile_picture']['name']);
+        $new_user_image = 'Customer_' . (round(microtime(true)) . '.' . end($temp_user_image));
+        move_uploaded_file(
+            $_FILES['user_profile_picture']['tmp_name'],
+            '../public/uploads/users/' . $new_user_image
+        );
+        /*Check If User Had 
+        Existing Profile Photo And If It
+        Was There Delete It From Storage Then Replace With New One
+        */
+        $sql = "SELECT * FROM  users WHERE  user_id = '{$user_id}'";
+        $res = mysqli_query($mysqli, $sql);
+        $row = mysqli_fetch_assoc($res);
+        if (!empty($row['user_profile_picture'])) {
+            /* User Has Old Photo */
+            $old_profile_photo = $row['user_profile_picture'];
+            $old_profile_photo_location = '../public/uploads/users/' . $old_profile_photo;
+            /* Delete It */
+            unlink($old_profile_photo_location);
+        }
+        /* Process  User Accout Update */
+        $update_sql = "UPDATE users SET user_first_name = '{$user_first_name}', user_last_name = '{$user_last_name}', 
+        user_email = '{$user_email}', user_dob = '{$user_dob}',user_phone_number = '{$user_phone_number}',user_default_address = '{$user_default_address}',
+        user_profile_picture = '{$new_user_image}' WHERE user_id = '{$user_id}'";
+
+        /* Persist */
+        if (mysqli_query($mysqli, $update_sql)) {
+            $success = "Profile details updated";
+        } else {
+            $err = "Failed, please try again later";
+        }
+    } else {
+        /* Process User Account Update Without Changing Profile Photo */
+        $update_sql = "UPDATE users SET user_first_name = '{$user_first_name}', user_last_name = '{$user_last_name}', 
+        user_email = '{$user_email}', user_dob = '{$user_dob}',user_phone_number = '{$user_phone_number}',user_default_address = '{$user_default_address}'
+        WHERE user_id = '{$user_id}'";
+
+        /* Persist */
+        if (mysqli_query($mysqli, $update_sql)) {
+            $success = "Profile details updated";
+        } else {
+            $err = "Failed, please try again later";
+        }
+    }
+}

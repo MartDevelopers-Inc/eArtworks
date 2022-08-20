@@ -65,8 +65,7 @@
  *
  */
 session_start();
-require_once('../app/settings/checklogin.php');
-require_once('../app/settings/codeGen.php');
+require_once('../app/settings/config.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -76,11 +75,6 @@ require_once('../app/partials/landing_head.php');
   <!-- Header start  -->
   <?php require_once('../app/partials/landing_navigation.php'); ?>
   <!-- Header End  -->
-
-  <!-- ekka Cart Start -->
-  <?php include('../app/partials/landing_cart.php'); ?>
-  <!-- ekka Cart End -->
-
 
 
   <!-- Main Slider Start -->

@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Thu Aug 18 2022
+ *   Crafted On Sat Aug 20 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -65,89 +65,41 @@
  *
  */
 session_start();
+require_once('../app/settings/checklogin.php');
 require_once('../app/settings/config.php');
-require_once('../app/helpers/authentication.php');
 require_once('../app/partials/landing_head.php');
+
 ?>
 
 <body>
-    <div id="ec-overlay"><span class="loader_img"></span></div>
 
-    <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
-    <!-- Header End  -->
+    <!-- Start main Section -->
+    <section class="ec-under-maintenance">
 
-
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
         <div class="container">
             <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Login</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Login</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
+                <div class="col-md-6">
+                    <div class="under-maintenance">
+                        <h1>Error 404</h1>
+                        <h4>We cant find the page you are looking for.</h4>
 
-    <!-- Ec login page -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-title">
-                        <h2 class="ec-bg-title">Log In</h2>
-                        <h2 class="ec-title">Log In</h2>
-                        <p class="sub-title mb-3">Best place to buy and sell artworks products</p>
+                        <a href="../" class="btn btn-lg btn-primary" tabindex="0">Back to Home</a>
                     </div>
                 </div>
-                <div class="ec-login-wrapper">
-                    <div class="ec-login-container">
-                        <div class="ec-login-form">
-                            <form method="post">
-                                <span class="ec-login-wrap">
-                                    <label>Email Address*</label>
-                                    <input type="text" autocomplete="off" name="user_email" required />
-                                </span>
-                                <span class="ec-login-wrap">
-                                    <label>Password*</label>
-                                    <input type="password" autocomplete="off" name="user_password" required />
-                                </span>
-                                <span class="ec-login-wrap ec-login-fp">
-                                    <label><a href="reset_password">Forgot Password?</a></label>
-                                </span>
-                                <span class="ec-login-wrap ec-login-btn">
-                                    <button class="btn btn-primary" name="User_Login" type="submit">Login</button>
-                                    <a href="register" class="btn btn-secondary">Register</a>
-                                </span>
-                            </form>
-                        </div>
+                <div class="col-md-6 disp-768">
+                    <div class="under-maintenance">
+                        <img class="maintenance-img" src="../public/landing_assets/images/common/404.png" alt="maintenance">
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
-    <!-- Footer Start -->
-    <?php require_once('../app/partials/landing_footer.php'); ?>
-    <!-- Footer Area End -->
-
-    <!-- Feature tools end -->
+    <!-- End main Section -->
     <?php require_once('../app/partials/landing_scripts.php'); ?>
 
+
 </body>
+
 
 
 </html>
