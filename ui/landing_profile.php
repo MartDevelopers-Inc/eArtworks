@@ -173,7 +173,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-12">
                                                         <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
-                                                            <h6>E-mail Address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <h6>E-mail Address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="../public/landing_assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
                                                             <ul>
                                                                 <li><strong>Email : </strong><?php echo $customer['user_email']; ?></li>
                                                             </ul>
@@ -181,7 +181,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <div class="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
-                                                            <h6>Contact Number<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <h6>Contact Number<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="../public/landing_assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
                                                             <ul>
                                                                 <li><strong>Phone Number : </strong> <?php echo $customer['user_phone_number']; ?></li>
                                                             </ul>
@@ -189,7 +189,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                     </div>
                                                     <div class="col-md-12 col-sm-12">
                                                         <div class="ec-vendor-detail-block ec-vendor-block-address">
-                                                            <h6>Default Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <h6>Default Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="../public/landing_assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
                                                             <ul>
                                                                 <li>
                                                                     <strong>Address : </strong> <?php echo $customer['user_default_address']; ?>
