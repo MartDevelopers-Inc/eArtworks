@@ -213,10 +213,10 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     </button>
                                     <ul class="dropdown-menu dropdown-menu-right">
                                         <li>
-                                            <a class="dropdown-item" href="register">Register</a>
+                                            <a class="dropdown-item" href="landing_profile">My Profile</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="login">Login</a>
+                                            <a class="dropdown-item" href="lgout">Logout</a>
                                         </li>
                                     </ul>
                                 </div>
