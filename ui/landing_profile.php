@@ -82,11 +82,7 @@ if (mysqli_num_rows($user_sql) > 0) {
             <!-- Header start  -->
             <?php require_once('../app/partials/landing_navigation.php'); ?>
             <!-- Header End  -->
-
-            <!-- ekka Cart Start -->
-            <?php include('../app/partials/landing_cart.php'); ?>
-            <!-- ekka Cart End -->
-
+            
             <!-- Ec breadcrumb start -->
             <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
                 <div class="container">

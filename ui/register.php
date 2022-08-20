@@ -77,9 +77,6 @@ require_once('../app/partials/landing_head.php');
     <?php require_once('../app/partials/landing_navigation.php'); ?>
     <!-- Header End  -->
 
-    <!-- ekka Cart Start -->
-    <?php require_once('../app/partials/landing_cart.php'); ?>
-    <!-- ekka Cart End -->
 
     <!-- Ec breadcrumb start -->
     <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
