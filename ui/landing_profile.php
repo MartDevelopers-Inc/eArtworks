@@ -153,8 +153,8 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                         <?php } else { ?>
                                                             <img class="v-img" src="../public/uploads/users/<?php echo $customer['user_profile_picture']; ?>" alt="Customer image">
                                                         <?php } ?>
-                                                        <h5 class="name">Mariana Johns</h5>
-                                                        <p>( Business Man )</p>
+                                                        <h5 class="name"><?php echo $customer['user_first_name'] . ' ' . $customer['user_last_name']; ?></h5>
+                                                        <p class="text-success">( Loyal Customer Since <?php echo date('d M Y g:ia', strtotime($customer['user_date_joined'])); ?> )</p>
                                                     </div>
                                                     <p>Hello <span>Mariana Johns!</span></p>
                                                     <p>From your account you can easily view and track orders. You can manage and change your account information like address, contact information and history of orders.</p>
