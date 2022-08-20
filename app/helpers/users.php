@@ -90,6 +90,20 @@ if (isset($_POST['Update_Customer_Profile'])) {
             $_FILES['user_profile_picture']['tmp_name'],
             '../public/uploads/users/' . $new_user_image
         );
+        /*Check If User Had 
+        Existing Profile Photo And If It
+        Was There Delete It From Storage Then Replace With New One
+        */
+        $sql = "SELECT * FROM  users WHERE  user_id = {'$user_id'}";
+        $res = mysqli_query($mysqli, $sql);
+        $row = mysqli_fetch_assoc($res);
+        if (!empty($row['user_profile_picture'])) {
+            /* User Has Old Photo */
+            $old_profile_photo = $row['user_profile_picture'];
+            $old_profile_photo_location = '../public/uploads/users/' . $old_profile_photo;
+            /* Delete It */
+            unlink($old_image_location);
+        }
         /* Process  User Accout Update */
         $update_sql = "UPDATE users SET user_first_name = '{$user_first_name}', user_last_name = '{$user_last_name}', 
         user_email = '{$user_email}', user_dob = '{$user_dob}',user_phone_number = '{$user_phone_number}',user_default_address = '{$user_default_address}',
