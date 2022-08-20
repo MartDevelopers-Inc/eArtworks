@@ -150,7 +150,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             </div>
                             <!-- Header User End -->
                             <!-- Header Cart Start -->
-                            <a href="wishlist" class="ec-header-btn ec-header-wishlist">
+                            <a href="landing_wishlist" class="ec-header-btn ec-header-wishlist">
                                 <div class="header-icon">
                                     <img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                                 </div>
@@ -158,7 +158,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             </a>
                             <!-- Header Cart End -->
                             <!-- Header Cart Start -->
-                            <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
+                            <a href="landing_cart" class="ec-header-btn">
                                 <div class="header-icon">
                                     <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
                                 </div>
@@ -222,7 +222,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 </div>
                                 <!-- Header User End -->
                                 <!-- Header wishlist Start -->
-                                <a href="wishlist" class="ec-header-btn ec-header-wishlist">
+                                <a href="landing_wishlist" class="ec-header-btn ec-header-wishlist">
                                     <div class="header-icon">
                                         <img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                                     </div>
@@ -230,11 +230,10 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 </a>
                                 <!-- Header wishlist End -->
                                 <!-- Header Cart Start -->
-                                <a href="#ec-side-cart" class="ec-header-btn ec-side-toggle">
+                                <a href="landing_cart" class="ec-header-btn">
                                     <div class="header-icon">
                                         <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
                                     </div>
-                                    <span class="ec-header-count cart-count-lable">3</span>
                                 </a>
                                 <!-- Header Cart End -->
                             </div>

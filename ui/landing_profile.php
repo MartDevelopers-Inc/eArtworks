@@ -118,13 +118,11 @@ require_once('../app/partials/landing_head.php');
 
                                 <div class="ec-vendor-block-items">
                                     <ul>
-                                        <li><a class="active" href="user-profile.html">User Profile</a></li>
-                                        <li><a href="user-history.html">History</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                        <li><a href="cart.html">Cart</a></li>
-                                        <li><a href="checkout.html">Checkout</a></li>
-                                        <li><a href="track-order.html">Track Order</a></li>
-                                        <li><a href="user-invoice.html">Invoice</a></li>
+                                        <li><a class="active" href="landing_profile">User Profile</a></li>
+                                        <li><a href="landing_purchase_history">History</a></li>
+                                        <li><a href="landing_wishlist">Wishlist</a></li>
+                                        <li><a href="landing_cart">Cart</a></li>
+                                        <li><a href="landing_track_order">Track Order</a></li>
                                     </ul>
                                 </div>
                             </div>
