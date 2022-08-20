@@ -67,36 +67,19 @@
                 <div class="col d-lg-none">
                     <div class="ec-header-bottons">
                         <!-- Header User Start -->
-                        <?php
-                        if ((strlen($_SESSION['user_id']) != 0)) { ?>
-                            <div class="ec-header-user dropdown">
-                                <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                    <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <a class="dropdown-item" href="register">Register</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="login">Login</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        <?php } else { ?>
-                            <div class="ec-header-user dropdown">
-                                <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                    <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-right">
-                                    <li>
-                                        <a class="dropdown-item" href="register">Orders</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="logout">Logout</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        <?php } ?>
+                        <div class="ec-header-user dropdown">
+                            <button class="dropdown-toggle" data-bs-toggle="dropdown">
+                                <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-right">
+                                <li>
+                                    <a class="dropdown-item" href="register">Register</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="login">Login</a>
+                                </li>
+                            </ul>
+                        </div>
                         <!-- Header User End -->
                         <!-- Header Cart Start -->
                         <a href="wishlist" class="ec-header-btn ec-header-wishlist">
@@ -156,36 +139,19 @@
                     <div class="align-self-center">
                         <div class="ec-header-bottons">
                             <!-- Header User Start -->
-                            <?php
-                            if ((strlen($_SESSION['user_id']) != 0)) { ?>
-                                <div class="ec-header-user dropdown">
-                                    <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-item" href="register">Register</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="login">Login</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            <?php } else { ?>
-                                <div class="ec-header-user dropdown">
-                                    <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-item" href="register">Orders</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="logout">Logout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            <?php } ?>
+                            <div class="ec-header-user dropdown">
+                                <button class="dropdown-toggle" data-bs-toggle="dropdown">
+                                    <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a class="dropdown-item" href="register">Register</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="login">Login</a>
+                                    </li>
+                                </ul>
+                            </div>
                             <!-- Header User End -->
                             <!-- Header wishlist Start -->
                             <a href="wishlist" class="ec-header-btn ec-header-wishlist">
