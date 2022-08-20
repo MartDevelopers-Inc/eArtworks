@@ -99,7 +99,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                 <div class="col-md-6 col-sm-12">
                                     <!-- ec-breadcrumb-list start -->
                                     <ul class="ec-breadcrumb-list">
-                                        <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
+                                        <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
                                         <li class="ec-breadcrumb-item active">Profile</li>
                                     </ul>
                                     <!-- ec-breadcrumb-list end -->
@@ -143,10 +143,16 @@ if (mysqli_num_rows($user_sql) > 0) {
                                             <div class="ec-vendor-block-profile">
                                                 <div class="ec-vendor-block-img space-bottom-30">
                                                     <div class="ec-vendor-block-bg">
-                                                        <a href="#" class="btn btn-lg btn-primary" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal">Edit Detail</a>
+                                                        <a href="#" class="btn btn-lg btn-primary" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal">Update Profile</a>
                                                     </div>
                                                     <div class="ec-vendor-block-detail">
-                                                        <img class="v-img" src="assets/images/user/1.jpg" alt="vendor image">
+                                                        <?php
+                                                        /* Load Default Image If User Has No Profile Photo */
+                                                        if ($customer['user_profile_picture'] == '') { ?>
+                                                            <img class="v-img" src="../public/uploads/users/no-profile.png" alt="Customer image">
+                                                        <?php } else { ?>
+                                                            <img class="v-img" src="../public/uploads/users/<?php echo $customer['user_profile_picture']; ?>" alt="Customer image">
+                                                        <?php } ?>
                                                         <h5 class="name">Mariana Johns</h5>
                                                         <p>( Business Man )</p>
                                                     </div>
