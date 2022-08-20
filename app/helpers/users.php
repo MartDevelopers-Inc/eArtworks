@@ -101,5 +101,17 @@ if (isset($_POST['Update_Customer_Profile'])) {
         } else {
             $err = "Failed, please try again later";
         }
+    } else {
+        /* Process User Account Update Without Changing Profile Photo */
+        $update_sql = "UPDATE users SET user_first_name = '{$user_first_name}', user_last_name = '{$user_last_name}', 
+        user_email = '{$user_email}', user_dob = '{$user_dob}',user_phone_number = '{$user_phone_number}',user_default_address = '{$user_default_address}'
+        WHERE user_id = '{$user_id}'";
+
+        /* Persist */
+        if (mysqli_query($mysqli, $update_sql)) {
+            $success = "Profile details updated";
+        } else {
+            $err = "Failed, please try again later";
+        }
     }
 }
