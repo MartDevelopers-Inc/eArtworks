@@ -110,7 +110,20 @@ if (mysqli_num_rows($user_sql) > 0) {
                 </div>
             </div>
             <!-- Ec breadcrumb end -->
-
+            <?php
+            if ($customer['user_email_status'] == 'Pending') {
+                /* Show This Banner If User Has Not Verified Their Email Address */
+            ?>
+                <div class="footer-offer">
+                    <div class="container">
+                        <div class="row">
+                            <div class="text-center footer-off-msg">
+                                <span>Kindly Verify Your Email In Order To Enjoy Our Daily Updates And Offers.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
             <!-- User profile section -->
             <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
                 <div class="container">
@@ -156,7 +169,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                         <h5 class="name"><?php echo $customer['user_first_name'] . ' ' . $customer['user_last_name']; ?></h5>
                                                         <p class="text-success">( Loyal Customer Since <?php echo date('d M Y g:ia', strtotime($customer['user_date_joined'])); ?> )</p>
                                                     </div>
-                                                    <p>Hello <span>Mariana Johns!</span></p>
+                                                    <p>Hello <span><?php echo $customer['user_first_name'] . ' ' . $customer['user_last_name']; ?></span></p>
                                                     <p>From your account you can easily view and track orders. You can manage and change your account information like address, contact information and history of orders.</p>
                                                 </div>
                                                 <h5>Account Information</h5>
@@ -164,37 +177,27 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                 <div class="row">
                                                     <div class="col-md-6 col-sm-12">
                                                         <div class="ec-vendor-detail-block ec-vendor-block-email space-bottom-30">
-                                                            <h6>E-mail address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <h6>E-mail Address <a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
                                                             <ul>
-                                                                <li><strong>Email 1 : </strong>support1@exapmle.com</li>
-                                                                <li><strong>Email 2 : </strong>support2@exapmle.com</li>
+                                                                <li><strong>Email : </strong><?php echo $customer['user_email']; ?></li>
                                                             </ul>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-6 col-sm-12">
                                                         <div class="ec-vendor-detail-block ec-vendor-block-contact space-bottom-30">
-                                                            <h6>Contact nubmer<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <h6>Contact Number<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
                                                             <ul>
-                                                                <li><strong>Phone Nubmer 1 : </strong>(123) 123 456 7890</li>
-                                                                <li><strong>Phone Nubmer 2 : </strong>(123) 123 456 7890</li>
+                                                                <li><strong>Phone Number : </strong> <?php echo $customer['user_phone_number']; ?></li>
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6 col-sm-12">
-                                                        <div class="ec-vendor-detail-block ec-vendor-block-address mar-b-30">
-                                                            <h6>Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
-                                                            <ul>
-                                                                <li><strong>Home : </strong>123, 2150 Sycamore Street, dummy text of
-                                                                    the, San Jose, California - 95131.</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6 col-sm-12">
+                                                    <div class="col-md-12 col-sm-12">
                                                         <div class="ec-vendor-detail-block ec-vendor-block-address">
-                                                            <h6>Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
+                                                            <h6>Default Shipping Address<a href="javasript:void(0)" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><img src="assets/images/icons/edit.svg" class="svg_img pro_svg" alt="edit" /></a></h6>
                                                             <ul>
-                                                                <li><strong>Office : </strong>123, 2150 Sycamore Street, dummy text of
-                                                                    the, San Jose, California - 95131.</li>
+                                                                <li>
+                                                                    <strong>Address : </strong> <?php echo $customer['user_default_address']; ?>
+                                                                </li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -209,7 +212,6 @@ if (mysqli_num_rows($user_sql) > 0) {
                 </div>
             </section>
             <!-- End User profile section -->
-
 
             <!-- Footer Start -->
             <?php require_once('../app/partials/landing_footer.php'); ?>
