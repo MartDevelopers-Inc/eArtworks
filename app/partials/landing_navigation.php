@@ -216,7 +216,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                             <a class="dropdown-item" href="landing_profile">My Profile</a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="lgout">Logout</a>
+                                            <a class="dropdown-item" href="logout">Logout</a>
                                         </li>
                                     </ul>
                                 </div>
