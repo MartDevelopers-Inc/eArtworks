@@ -241,82 +241,70 @@ require_once('../app/partials/landing_head.php');
                     </div>
                 </div>
                 <div class="ec-shop-rightside col-lg-4 col-md-4">
-                    <div class="ec-sidebar-wrap ec-checkout-pay-wrap">
-                        <!-- Sidebar Payment Block -->
-                        <div class="ec-sidebar-block">
-                            <div class="ec-sb-title">
-                                <h3 class="ec-sidebar-title">Payment Method</h3>
+                <div class="ec-sidebar-wrap ec-checkout-pay-wrap">
+                    <!-- Sidebar Payment Block -->
+                    <div class="ec-sidebar-block">
+                        <div class="ec-sb-title">
+                            <h3 class="ec-sidebar-title">Payment Method</h3>
+                        </div>
+                        <div class="ec-sb-block-content">
+                            <div class="ec-checkout-pay">
+                                <div class="ec-pay-desc">Please select the preferred payment method to use on this
+                                    order.</div>
+                                <form action="#">
+                                    <span class="ec-pay-option">
+                                        <span>
+                                            <input type="radio" id="pay1" name="radio-group" checked>
+                                            <label for="pay1">Cash On Delivery</label>
+                                        </span>
+                                    </span>
+                                    <span class="ec-pay-commemt">
+                                        <span class="ec-pay-opt-head">Add Comments About Your Order</span>
+                                        <textarea name="your-commemt" placeholder="Comments"></textarea>
+                                    </span>
+                                    <span class="ec-pay-agree"><input type="checkbox" value=""><a href="#">I have
+                                            read and agree to the <span>Terms & Conditions</span></a><span class="checked"></span></span>
+                                </form>
                             </div>
-                            <div class="ec-sb-block-content">
-                                <div class="ec-checkout-pay">
-                                    <div class="ec-pay-desc">Please select the preferred payment method to use on this
-                                        order.
-                                    </div>
-                                    <div class="ec-check-bill-form">
-                                        <form action="#" method="post">
-                                            <span class="ec-bill-wrap ec-bill-half">
-                                                <label>First Name*</label>
-                                                <input type="text" name="firstname" placeholder="Enter your first name" required />
-                                            </span>
-                                            <span class="ec-bill-wrap ec-bill-half">
-                                                <label>Last Name*</label>
-                                                <input type="text" name="lastname" placeholder="Enter your last name" required />
-                                            </span>
-                                            <span class="ec-bill-wrap">
-                                                <label>Address</label>
-                                                <input type="text" name="address" placeholder="Address Line 1" />
-                                            </span>
-                                            <span class="ec-bill-wrap ec-bill-half">
-                                                <label>City *</label>
-                                                <span class="ec-bl-select-inner">
-                                                    <select name="ec_select_city" id="ec-select-city" class="ec-bill-select">
-                                                        <option selected disabled>City</option>
-                                                        <option value="1">City 1</option>
-                                                        <option value="2">City 2</option>
-                                                        <option value="3">City 3</option>
-                                                        <option value="4">City 4</option>
-                                                        <option value="5">City 5</option>
-                                                    </select>
-                                                </span>
-                                            </span>
-                                            <span class="ec-bill-wrap ec-bill-half">
-                                                <label>Post Code</label>
-                                                <input type="text" name="postalcode" placeholder="Post Code" />
-                                            </span>
-                                            <span class="ec-bill-wrap ec-bill-half">
-                                                <label>Country *</label>
-                                                <span class="ec-bl-select-inner">
-                                                    <select name="ec_select_country" id="ec-select-country" class="ec-bill-select">
-                                                        <option selected disabled>Country</option>
-                                                        <option value="1">Country 1</option>
-                                                        <option value="2">Country 2</option>
-                                                        <option value="3">Country 3</option>
-                                                        <option value="4">Country 4</option>
-                                                        <option value="5">Country 5</option>
-                                                    </select>
-                                                </span>
-                                            </span>
-                                            <span class="ec-bill-wrap ec-bill-half">
-                                                <label>Region State</label>
-                                                <span class="ec-bl-select-inner">
-                                                    <select name="ec_select_state" id="ec-select-state" class="ec-bill-select">
-                                                        <option selected disabled>Region/State</option>
-                                                        <option value="1">Region/State 1</option>
-                                                        <option value="2">Region/State 2</option>
-                                                        <option value="3">Region/State 3</option>
-                                                        <option value="4">Region/State 4</option>
-                                                        <option value="5">Region/State 5</option>
-                                                    </select>
-                                                </span>
-                                            </span>
-                                        </form>
-                                    </div>
+                        </div>
+                    </div>
+                    <!-- Sidebar Payment Block -->
+                </div>
+                <div class="ec-sidebar-wrap ec-check-pay-img-wrap">
+                    <!-- Sidebar Payment Block -->
+                    <div class="ec-sidebar-block">
+                        <div class="ec-sb-title">
+                            <h3 class="ec-sidebar-title">Payment Method</h3>
+                        </div>
+                        <div class="ec-sb-block-content">
+                            <div class="ec-check-pay-img-inner">
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment1.png" alt="">
+                                </div>
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment2.png" alt="">
+                                </div>
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment3.png" alt="">
+                                </div>
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment4.png" alt="">
+                                </div>
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment5.png" alt="">
+                                </div>
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment6.png" alt="">
+                                </div>
+                                <div class="ec-check-pay-img">
+                                    <img src="assets/images/icons/payment7.png" alt="">
                                 </div>
                             </div>
                         </div>
-                        <!-- Sidebar Payment Block -->
                     </div>
+                    <!-- Sidebar Payment Block -->
                 </div>
+
             </div>
         </div>
     </section>
