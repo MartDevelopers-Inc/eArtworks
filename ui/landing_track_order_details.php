@@ -92,6 +92,7 @@ require_once('../app/partials/landing_head.php');
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
+                                <li class="ec-breadcrumb-item"><a href="landing_track_order">Orders</a></li>
                                 <li class="ec-breadcrumb-item active">Track</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
