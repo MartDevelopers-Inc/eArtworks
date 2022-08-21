@@ -108,12 +108,11 @@ require_once('../app/partials/landing_head.php');
     <section class="ec-page-content ec-vendor-uploads ec-user-account section-space-p">
         <div class="container">
             <div class="row">
-                <div class="ec-shop-rightside col-lg-12 col-md-12">
+                <div class="ec-shop-rightside col-lg-8 col-md-8">
                     <div class="ec-vendor-dashboard-card">
                         <div class="ec-vendor-card-header">
                             <h5>Invoice</h5>
                             <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-secondary" href="#">Pay</a>
                                 <a class="btn btn-lg btn-primary" href="#">Download</a>
                             </div>
                         </div>
@@ -152,16 +151,24 @@ require_once('../app/partials/landing_head.php');
                                                     <hr class="d-sm-none" />
                                                     <div class="text-grey-m2">
 
-                                                        <div class="my-2"><span class="text-600 text-90">ID : </span>
-                                                            #111-222</div>
+                                                        <div class="my-2">
+                                                            <span class="text-600 text-90">ID : </span>
+                                                            #111-222
+                                                        </div>
 
-                                                        <div class="my-2"><span class="text-600 text-90">Invoice Status :
-                                                            </span> Paid</div>
-                                                        <div class="my-2"><span class="text-600 text-90">Issue Date :
-                                                            </span> Oct 12, 2021-2022</div>
+                                                        <div class="my-2">
+                                                            <span class="text-600 text-90">Invoice Status :
+                                                            </span> Paid
+                                                        </div>
+                                                        <div class="my-2">
+                                                            <span class="text-600 text-90">Issue Date :
+                                                            </span> Oct 12, 2021-2022
+                                                        </div>
 
-                                                        <div class="my-2"><span class="text-600 text-90">Invoice No :
-                                                            </span>6548</div>
+                                                        <div class="my-2">
+                                                            <span class="text-600 text-90">Invoice No :
+                                                            </span>6548
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <!-- /.col -->
@@ -231,6 +238,83 @@ require_once('../app/partials/landing_head.php');
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="ec-shop-rightside col-lg-4 col-md-4">
+                    <div class="ec-sidebar-wrap ec-checkout-pay-wrap">
+                        <!-- Sidebar Payment Block -->
+                        <div class="ec-sidebar-block">
+                            <div class="ec-sb-title">
+                                <h3 class="ec-sidebar-title">Payment Method</h3>
+                            </div>
+                            <div class="ec-sb-block-content">
+                                <div class="ec-checkout-pay">
+                                    <div class="ec-pay-desc">Please select the preferred payment method to use on this
+                                        order.
+                                    </div>
+                                    <div class="ec-check-bill-form">
+                                        <form action="#" method="post">
+                                            <span class="ec-bill-wrap ec-bill-half">
+                                                <label>First Name*</label>
+                                                <input type="text" name="firstname" placeholder="Enter your first name" required />
+                                            </span>
+                                            <span class="ec-bill-wrap ec-bill-half">
+                                                <label>Last Name*</label>
+                                                <input type="text" name="lastname" placeholder="Enter your last name" required />
+                                            </span>
+                                            <span class="ec-bill-wrap">
+                                                <label>Address</label>
+                                                <input type="text" name="address" placeholder="Address Line 1" />
+                                            </span>
+                                            <span class="ec-bill-wrap ec-bill-half">
+                                                <label>City *</label>
+                                                <span class="ec-bl-select-inner">
+                                                    <select name="ec_select_city" id="ec-select-city" class="ec-bill-select">
+                                                        <option selected disabled>City</option>
+                                                        <option value="1">City 1</option>
+                                                        <option value="2">City 2</option>
+                                                        <option value="3">City 3</option>
+                                                        <option value="4">City 4</option>
+                                                        <option value="5">City 5</option>
+                                                    </select>
+                                                </span>
+                                            </span>
+                                            <span class="ec-bill-wrap ec-bill-half">
+                                                <label>Post Code</label>
+                                                <input type="text" name="postalcode" placeholder="Post Code" />
+                                            </span>
+                                            <span class="ec-bill-wrap ec-bill-half">
+                                                <label>Country *</label>
+                                                <span class="ec-bl-select-inner">
+                                                    <select name="ec_select_country" id="ec-select-country" class="ec-bill-select">
+                                                        <option selected disabled>Country</option>
+                                                        <option value="1">Country 1</option>
+                                                        <option value="2">Country 2</option>
+                                                        <option value="3">Country 3</option>
+                                                        <option value="4">Country 4</option>
+                                                        <option value="5">Country 5</option>
+                                                    </select>
+                                                </span>
+                                            </span>
+                                            <span class="ec-bill-wrap ec-bill-half">
+                                                <label>Region State</label>
+                                                <span class="ec-bl-select-inner">
+                                                    <select name="ec_select_state" id="ec-select-state" class="ec-bill-select">
+                                                        <option selected disabled>Region/State</option>
+                                                        <option value="1">Region/State 1</option>
+                                                        <option value="2">Region/State 2</option>
+                                                        <option value="3">Region/State 3</option>
+                                                        <option value="4">Region/State 4</option>
+                                                        <option value="5">Region/State 5</option>
+                                                    </select>
+                                                </span>
+                                            </span>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Sidebar Payment Block -->
                     </div>
                 </div>
             </div>
