@@ -113,14 +113,14 @@ require_once('../app/partials/landing_head.php');
                         <div class="ec-vendor-card-header">
                             <h5>Invoice</h5>
                             <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-secondary" href="#">Print</a>
-                                <a class="btn btn-lg btn-primary" href="#">Export</a>
+                                <a class="btn btn-lg btn-secondary" href="#">Pay</a>
+                                <a class="btn btn-lg btn-primary" href="#">Download</a>
                             </div>
                         </div>
                         <div class="ec-vendor-card-body padding-b-0">
                             <div class="page-content">
                                 <div class="page-header text-blue-d2">
-                                    <img src="assets/images/logo/logo.png" alt="Site Logo">
+                                    <img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo">
                                 </div>
 
                                 <div class="container px-0">
@@ -155,8 +155,8 @@ require_once('../app/partials/landing_head.php');
                                                         <div class="my-2"><span class="text-600 text-90">ID : </span>
                                                             #111-222</div>
 
-                                                        <div class="my-2"><span class="text-600 text-90">HSN Code :
-                                                            </span> #123456</div>
+                                                        <div class="my-2"><span class="text-600 text-90">Invoice Status :
+                                                            </span> Paid</div>
                                                         <div class="my-2"><span class="text-600 text-90">Issue Date :
                                                             </span> Oct 12, 2021-2022</div>
 
@@ -189,27 +189,6 @@ require_once('../app/partials/landing_head.php');
                                                                     <td><span>$65</span></td>
                                                                     <td><span>$130</span></td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <th><span>548</span></th>
-                                                                    <td><span>Mens cotton fabric shirt</span></td>
-                                                                    <td><span>3</span></td>
-                                                                    <td><span>$10</span></td>
-                                                                    <td><span>$30</span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th><span>684</span></th>
-                                                                    <td><span>Baby clothes pair</span></td>
-                                                                    <td><span>1</span></td>
-                                                                    <td><span>$360</span></td>
-                                                                    <td><span>$360</span></td>
-                                                                </tr>
-                                                                <tr>
-                                                                    <th><span>987</span></th>
-                                                                    <td><span>Hand bags for women</span></td>
-                                                                    <td><span>5</span></td>
-                                                                    <td><span>$50</span></td>
-                                                                    <td><span>$250</span></td>
-                                                                </tr>
                                                             </tbody>
                                                             <tfoot>
                                                                 <tr>
@@ -235,9 +214,7 @@ require_once('../app/partials/landing_head.php');
                                                                     </td>
                                                                 </tr>
                                                                 <tr>
-                                                                    <td class="border-none m-m15" colspan="3"><span class="note-text-color">Extra
-                                                                            note such as company or payment
-                                                                            information...</span></td>
+                                                                    <td class="border-none m-m15" colspan="3"><span class="note-text-color"></span></td>
                                                                     <td class="border-color m-m15" colspan="1"><span><strong>Total</strong></span>
                                                                     </td>
                                                                     <td class="border-color m-m15">
