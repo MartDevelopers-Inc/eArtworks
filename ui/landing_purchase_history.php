@@ -115,7 +115,7 @@ require_once('../app/partials/landing_head.php');
                         <div class="ec-vendor-card-header">
                             <h5>Product Purchase History</h5>
                             <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-primary" href="#">Shop Now</a>
+                                <a class="btn btn-lg btn-primary" href="landing_products">Shop Now</a>
                             </div>
                         </div>
                         <div class="ec-vendor-card-body">
@@ -140,7 +140,7 @@ require_once('../app/partials/landing_head.php');
                                             <td><span>16 Jul 2021</span></td>
                                             <td><span>$65</span></td>
                                             <td><span>Active</span></td>
-                                            <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="#">View</a></span></td>
+                                            <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_product">View</a></span></td>
                                         </tr>
                                     </tbody>
                                 </table>
