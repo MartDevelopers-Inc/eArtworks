@@ -241,70 +241,50 @@ require_once('../app/partials/landing_head.php');
                     </div>
                 </div>
                 <div class="ec-shop-rightside col-lg-4 col-md-4">
-                <div class="ec-sidebar-wrap ec-checkout-pay-wrap">
-                    <!-- Sidebar Payment Block -->
-                    <div class="ec-sidebar-block">
-                        <div class="ec-sb-title">
-                            <h3 class="ec-sidebar-title">Payment Method</h3>
-                        </div>
-                        <div class="ec-sb-block-content">
-                            <div class="ec-checkout-pay">
-                                <div class="ec-pay-desc">Please select the preferred payment method to use on this
-                                    order.</div>
-                                <form action="#">
-                                    <span class="ec-pay-option">
-                                        <span>
-                                            <input type="radio" id="pay1" name="radio-group" checked>
-                                            <label for="pay1">Cash On Delivery</label>
+                    <div class="ec-sidebar-wrap ec-checkout-pay-wrap">
+                        <!-- Sidebar Payment Block -->
+                        <div class="ec-sidebar-block">
+                            <div class="ec-sb-title">
+                                <h3 class="ec-sidebar-title">Payment Method</h3>
+                            </div>
+                            <div class="ec-sb-block-content">
+                                <div class="ec-checkout-pay">
+                                    <div class="ec-pay-desc">Please select the preferred payment method to use on this
+                                        order.
+                                    </div>
+                                    <form method="POST">
+                                        <span class="ec-bill-wrap ec-bill-full">
+                                            <label>Payment Method</label>
+                                            <span class="ec-bl-select-inner">
+                                                <select required name="payment_means_id" id="ec-select-state" class="ec-bill-select">
+                                                    <option>Select</option>
+                                                    <?php
+                                                    $method_sql = mysqli_query($mysqli, "SELECT * FROM payment_means");
+                                                    if (mysqli_num_rows($method_sql) > 0) {
+                                                        while ($method = mysqli_fetch_array($method_sql)) { ?>
+                                                            <option value="<?php echo $method['means_id']; ?>"><?php echo $method['means_name']; ?></option>
+                                                    <?php }
+                                                    } ?>
+                                                </select>
+                                            </span>
                                         </span>
-                                    </span>
-                                    <span class="ec-pay-commemt">
-                                        <span class="ec-pay-opt-head">Add Comments About Your Order</span>
-                                        <textarea name="your-commemt" placeholder="Comments"></textarea>
-                                    </span>
-                                    <span class="ec-pay-agree"><input type="checkbox" value=""><a href="#">I have
-                                            read and agree to the <span>Terms & Conditions</span></a><span class="checked"></span></span>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Sidebar Payment Block -->
-                </div>
-                <div class="ec-sidebar-wrap ec-check-pay-img-wrap">
-                    <!-- Sidebar Payment Block -->
-                    <div class="ec-sidebar-block">
-                        <div class="ec-sb-title">
-                            <h3 class="ec-sidebar-title">Payment Method</h3>
-                        </div>
-                        <div class="ec-sb-block-content">
-                            <div class="ec-check-pay-img-inner">
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment1.png" alt="">
-                                </div>
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment2.png" alt="">
-                                </div>
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment3.png" alt="">
-                                </div>
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment4.png" alt="">
-                                </div>
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment5.png" alt="">
-                                </div>
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment6.png" alt="">
-                                </div>
-                                <div class="ec-check-pay-img">
-                                    <img src="assets/images/icons/payment7.png" alt="">
+                                        <span class="ec-pay-agree">
+                                            <input required type="checkbox" value="">
+                                            <a href="landing_terms">I have
+                                                read and agree to the <span>Terms & Conditions</span>
+                                            </a>
+                                            <span class="checked"></span>
+                                        </span>
+                                        <span class="ec-pay-agree text-right">
+                                            <button type="submit" name="Pay_Order" class="btn btn-primary btn-sm">Pay </button>
+                                        </span>
+                                    </form>
                                 </div>
                             </div>
                         </div>
+                        <!-- Sidebar Payment Block -->
                     </div>
-                    <!-- Sidebar Payment Block -->
                 </div>
-
             </div>
         </div>
     </section>
