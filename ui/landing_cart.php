@@ -126,7 +126,11 @@ require_once('../app/partials/landing_head.php');
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td data-label="Product" class="ec-cart-pro-name"><a href="product-left-sidebar.html"><img class="ec-cart-pro-img mr-4" src="assets/images/product-image/1.jpg" alt="" />Stylish Baby Shoes</a></td>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <a href="product-left-sidebar.html">
+                                                            <img class="ec-cart-pro-img mr-4" src="../public/landing_assets/images/product-image/1.jpg" alt="" />Stylish Baby Shoes
+                                                        </a>
+                                                    </td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$56.00</span></td>
                                                     <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
                                                         <div class="cart-qty-plus-minus">
@@ -138,52 +142,13 @@ require_once('../app/partials/landing_head.php');
                                                         <a href="#"><i class="ecicon eci-trash-o"></i></a>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <td data-label="Product" class="ec-cart-pro-name"><a href="product-left-sidebar.html"><img class="ec-cart-pro-img mr-4" src="assets/images/product-image/2.jpg" alt="" />Unisex Fully Solid Hoodie</a></td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$75.00</span></td>
-                                                    <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
-                                                        <div class="cart-qty-plus-minus">
-                                                            <input class="cart-plus-minus" type="text" name="cartqtybutton" value="1" />
-                                                        </div>
-                                                    </td>
-                                                    <td data-label="Total" class="ec-cart-pro-subtotal">$75.00</td>
-                                                    <td data-label="Remove" class="ec-cart-pro-remove">
-                                                        <a href="#"><i class="ecicon eci-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-label="Product" class="ec-cart-pro-name"><a href="product-left-sidebar.html"><img class="ec-cart-pro-img mr-4" src="assets/images/product-image/3.jpg" alt="" />Beautiful T-shirt For Women</a></td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$48.00</span></td>
-                                                    <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
-                                                        <div class="cart-qty-plus-minus">
-                                                            <input class="cart-plus-minus" type="text" name="cartqtybutton" value="1" />
-                                                        </div>
-                                                    </td>
-                                                    <td data-label="Total" class="ec-cart-pro-subtotal">$48.00</td>
-                                                    <td data-label="Remove" class="ec-cart-pro-remove">
-                                                        <a href="#"><i class="ecicon eci-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td data-label="Product" class="ec-cart-pro-name"><a href="product-left-sidebar.html"><img class="ec-cart-pro-img mr-4" src="assets/images/product-image/4.jpg" alt="" />Wool Hat For Men</a></td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$95.00</span></td>
-                                                    <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
-                                                        <div class="cart-qty-plus-minus">
-                                                            <input class="cart-plus-minus" type="text" name="cartqtybutton" value="1" />
-                                                        </div>
-                                                    </td>
-                                                    <td data-label="Total" class="ec-cart-pro-subtotal">$95.00</td>
-                                                    <td data-label="Remove" class="ec-cart-pro-remove">
-                                                        <a href="#"><i class="ecicon eci-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="ec-cart-update-bottom">
-                                                <a href="#">Continue Shopping</a>
+                                                <a href="landing_products">Continue Shopping</a>
                                                 <button class="btn btn-primary">Check Out</button>
                                             </div>
                                         </div>
@@ -200,48 +165,26 @@ require_once('../app/partials/landing_head.php');
                         <!-- Sidebar Summary Block -->
                         <div class="ec-sidebar-block">
                             <div class="ec-sb-title">
-                                <h3 class="ec-sidebar-title">Summary</h3>
+                                <h3 class="ec-sidebar-title">Order Summary</h3>
                             </div>
                             <div class="ec-sb-block-content">
-                                <h4 class="ec-ship-title">Estimate Shipping</h4>
+                                <h4 class="ec-ship-title">Default Shipping Address</h4>
                                 <div class="ec-cart-form">
-                                    <p>Enter your destination to get a shipping estimate</p>
-                                    <form action="#" method="post">
-                                        <span class="ec-cart-wrap">
-                                            <label>Country *</label>
-                                            <span class="ec-cart-select-inner">
-                                                <select name="ec_cart_country" id="ec-cart-select-country" class="ec-cart-select">
-                                                    <option selected="" disabled="">United States</option>
-                                                    <option value="1">Country 1</option>
-                                                    <option value="2">Country 2</option>
-                                                    <option value="3">Country 3</option>
-                                                    <option value="4">Country 4</option>
-                                                    <option value="5">Country 5</option>
-                                                </select>
-                                            </span>
-                                        </span>
-                                        <span class="ec-cart-wrap">
-                                            <label>State/Province</label>
-                                            <span class="ec-cart-select-inner">
-                                                <select name="ec_cart_state" id="ec-cart-select-state" class="ec-cart-select">
-                                                    <option selected="" disabled="">Please Select a region, state
-                                                    </option>
-                                                    <option value="1">Region/State 1</option>
-                                                    <option value="2">Region/State 2</option>
-                                                    <option value="3">Region/State 3</option>
-                                                    <option value="4">Region/State 4</option>
-                                                    <option value="5">Region/State 5</option>
-                                                </select>
-                                            </span>
-                                        </span>
-                                        <span class="ec-cart-wrap">
-                                            <label>Zip/Postal Code</label>
-                                            <input type="text" name="postalcode" placeholder="Zip/Postal Code">
-                                        </span>
-                                    </form>
+                                    <?php
+                                    /* Get Default Shipping Address */
+                                    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+                                    $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
+                                    if (mysqli_num_rows($user_sql) > 0) {
+                                        while ($customer = mysqli_fetch_array($user_sql)) {
+                                    ?>
+                                            <p>
+                                                <?php echo $customer['user_default_address']; ?>
+                                            </p>
+                                    <?php
+                                        }
+                                    } ?>
                                 </div>
                             </div>
-
                             <div class="ec-sb-block-content">
                                 <div class="ec-cart-summary-bottom">
                                     <div class="ec-cart-summary">
@@ -254,7 +197,7 @@ require_once('../app/partials/landing_head.php');
                                             <span class="text-right">$80.00</span>
                                         </div>
                                         <div>
-                                            <span class="text-left">Coupan Discount</span>
+                                            <span class="text-left">Coupon Discount</span>
                                             <span class="text-right"><a class="ec-cart-coupan">Apply Coupan</a></span>
                                         </div>
                                         <div class="ec-cart-coupan-content">
