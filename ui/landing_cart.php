@@ -149,7 +149,7 @@ require_once('../app/partials/landing_head.php');
                                         <div class="col-lg-12">
                                             <div class="ec-cart-update-bottom">
                                                 <a href="landing_products">Continue Shopping</a>
-                                                <button class="btn btn-primary">Check Out</button>
+                                                <button  class="btn btn-primary">Check Out</button>
                                             </div>
                                         </div>
                                     </div>
@@ -211,7 +211,6 @@ require_once('../app/partials/landing_head.php');
                                             <span class="text-right">$80.00</span>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>
