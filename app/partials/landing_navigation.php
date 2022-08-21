@@ -216,6 +216,12 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                             <a class="dropdown-item" href="landing_profile">My Profile</a>
                                         </li>
                                         <li>
+                                            <a class="dropdown-item" href="landing_purchase_history">Recent Orders</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="landing_track_order">Track Orders</a>
+                                        </li>
+                                        <li>
                                             <a class="dropdown-item" href="logout">Logout</a>
                                         </li>
                                     </ul>
