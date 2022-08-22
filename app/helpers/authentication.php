@@ -112,7 +112,7 @@ if (isset($_POST['Customer_Confirm_2FA'])) {
     $stmt = $mysqli->prepare("SELECT user_id, user_2fa_status  FROM users  WHERE 
     user_2fa_status = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
     $stmt->execute();
-    $stmt->bind_result($user_2fa_status);
+    $stmt->bind_result($user_2fa_status, $user_id);
     $rs = $stmt->fetch();
     /* Prepare */
     if ($rs) {
