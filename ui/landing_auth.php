@@ -77,9 +77,9 @@ if (mysqli_num_rows($user_sql) > 0) {
     while ($customer = mysqli_fetch_array($user_sql)) {
         /* Check If User Has Enabled 2FA */
         if ($customer['user_2fa_status'] == '0') {
-            $two_fa_status = "Enable 2 Factor Authentication";
+            $two_fa_status = "Enable Two Factor Authentication";
         } else {
-            $disable_fa_status = "Enable 2 Factor Authentication";
+            $two_fa_status = "Disable Two Factor Authentication";
         }
 ?>
 
@@ -196,7 +196,7 @@ if (mysqli_num_rows($user_sql) > 0) {
             <!-- Footer Area End -->
 
             <!-- Modal -->
-            <?php require_once('../app/modals/landing_profile_modal.php'); ?>
+            <?php require_once('../app/modals/landing_two_factor_modal.php'); ?>
             <!-- Modal end -->
 
             <?php require_once('../app/partials/landing_scripts.php'); ?>
