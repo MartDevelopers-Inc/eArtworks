@@ -79,7 +79,7 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
     $uri = 'http://';
 }
 $uri .= $_SERVER['HTTP_HOST'];
-$confirm_url = $uri . 'eArtworks/ui/landing_confirm_email?Confirm_User_Email=' . $user_email;
+$confirm_url = $uri . '/eArtworks/ui/landing_confirm_email?Confirm_User_Email=' . $user_email;
 
 
 /* Init PHP Mailer */
