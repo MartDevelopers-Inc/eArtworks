@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Sun Jul 17 2022
+ *   Crafted On Thu Aug 18 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -64,44 +64,85 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/config.php');
+require_once('../app/helpers/authentication.php');
+require_once('../app/partials/landing_head.php');
+?>
+
+<body>
+    <div id="ec-overlay"><span class="loader_img"></span></div>
+
+    <!-- Header start  -->
+    <?php require_once('../app/partials/landing_navigation.php'); ?>
+    <!-- Header End  -->
+
+    <!-- Ec breadcrumb start -->
+    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row ec_breadcrumb_inner">
+                        <div class="col-md-6 col-sm-12">
+                            <h2 class="ec-breadcrumb-title">Confirm Code</h2>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <!-- ec-breadcrumb-list start -->
+                            <ul class="ec-breadcrumb-list">
+                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
+                                <li class="ec-breadcrumb-item active">Confirm Code</li>
+                            </ul>
+                            <!-- ec-breadcrumb-list end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ec breadcrumb end -->
+
+    <!-- Ec login page -->
+    <section class="ec-page-content section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="section-title">
+                        <h2 class="ec-bg-title">Confirm Code</h2>
+                        <h2 class="ec-title">Confirm Code</h2>
+                        <p class="sub-title mb-3">
+                            Enter the two factor authentication code sent in your email.
+                        </p>
+                    </div>
+                </div>
+                <div class="ec-register-wrapper">
+                    <div class="ec-register-wrapper">
+                        <div class="ec-register-container">
+                            <div class="ec-register-form">
+                                <form method="post">
+                                    <span class="ec-register-wrap">
+                                        <label>Enter The Code In Your Email*</label>
+                                        <input type="text" name="user_2fa_code" required />
+                                    </span>
+                                    <span class="ec-register-wrap ec-register-btn">
+                                        <button class="btn btn-primary" name="Customer_Confirm_2FA" type="submit">Confirm Code</button>
+                                    </span>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer Start -->
+    <?php require_once('../app/partials/landing_footer.php'); ?>
+    <!-- Footer Area End -->
+
+    <!-- Feature tools end -->
+    <?php require_once('../app/partials/landing_scripts.php'); ?>
+
+</body>
 
 
-/* System Generated Codes */
-
-
-/* Password Reset Tokens */
-$length = 30;
-$tk = substr(str_shuffle("qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $length);
-
-/* System Generated Password Engine */
-$length = 8;
-$rc = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $length);
-
-/* System Generated IDs & Primar Keys & They Are Hashed */
-$length = date('y');
-$sys_gen_id = bin2hex(random_bytes($length));
-$sys_gen_alt_id = bin2hex(random_bytes($length));
-
-
-/* System Generated Checksums */
-$length = 12;
-$checksum = bin2hex(random_bytes($length));
-
-/* System Generated Codes */
-$alpha = 5;
-$beta = 5;
-$a = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM"), 1, $alpha);
-$b = substr(str_shuffle("1234567890"), 1, $beta);
-
-/* System Generatd Payment Sandbox Codes */
-$alpha = 10;
-$paycode = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $alpha);
-
-
-/* OTP & 2FA Codes */
-$two_fa_codes = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 6);
-
-/* Mailer Links */
-$confirm_url =  'landing_confirm_email?email=';
-
-$reset_password = '';
+</html>

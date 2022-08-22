@@ -64,6 +64,8 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/config.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -73,7 +75,7 @@ require_once('../app/partials/landing_head.php');
     <!-- Header start  -->
     <?php require_once('../app/partials/landing_navigation.php'); ?>
     <!-- Header End  -->
- 
+
     <!-- Ec breadcrumb start -->
     <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
         <div class="container">

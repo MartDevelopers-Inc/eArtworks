@@ -72,14 +72,15 @@ if (isset($_POST['User_Login'])) {
     $user_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['user_password'])));
 
     /* Persist*/
-    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status FROM users
+    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status, user_2fa_status FROM users
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
     $stmt->execute();
-    $stmt->bind_result($user_id, $user_email, $user_password, $user_access_level, $user_delete_status);
+    $stmt->bind_result($user_id, $user_email, $user_password, $user_access_level, $user_delete_status, $user_2fa_status);
     $rs = $stmt->fetch();
     /* Persist Sessions */
     $_SESSION['user_id'] = $user_id;
     $_SESSION['user_access_level'] = $user_access_level;
+
 
     /* Determiner Where To Redirect Based On Access Leveles */
     if (($rs && $user_access_level == 'Administrator') ||  ($rs && $user_access_level == 'Staff)')) {
@@ -87,11 +88,40 @@ if (isset($_POST['User_Login'])) {
         header('Location: dashboard');
         exit;
     } else if ($rs && $user_access_level == 'Customer') {
+        /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
+        if ($user_2fa_status == '1') {
+            /* Email User An OTP */
+            header('Location: landing_otp_confirm');
+            exit;
+        } else {
+            $_SESSION['success'] = 'Login success';
+            header('Location: ../');
+            exit;
+        }
+    } else {
+        $err = "Failed!, Incorrect Login Credentials";
+    }
+}
+
+/* Confirm 2FA */
+if (isset($_POST['Customer_Confirm_2FA'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
+
+    /* Login User Using This Code */
+    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code  FROM users  WHERE 
+    user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
+    $stmt->execute();
+    $stmt->bind_result($user_id, $user_2fa_code);
+    $rs = $stmt->fetch();
+    /* Prepare */
+    if ($rs) {
+        /* Allow Login */
         $_SESSION['success'] = 'Login success';
         header('Location: ../');
         exit;
     } else {
-        $err = "Failed!, Incorrect Login Credentials";
+        $err = "Failed, please enter correct code";
     }
 }
 
@@ -126,8 +156,11 @@ if (isset($_POST['User_Register'])) {
             $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level)
             VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$confirm_password}', '{$user_access_level}')";
 
+            /* Load Mailer */
+            include('../app/mailers/confirm_email.php');
+
             /* Prepare */
-            if (mysqli_query($mysqli, $insert_sql)) {
+            if (mysqli_query($mysqli, $insert_sql) && $mail->send()) {
                 $_SESSION['success'] = "Account created, proceed to log in";
                 header('Location: login');
                 exit;
@@ -135,6 +168,21 @@ if (isset($_POST['User_Register'])) {
                 $err = "Failed!, Please Try Again";
             }
         }
+    }
+}
+
+/* Confirm User Email */
+if (isset($_GET['confirm'])) {
+    $user_email = mysqli_real_escape_string($mysqli, $_GET['confirm']);
+
+    /* Persist */
+    $sql = "UPDATE users SET user_email_status = 'Confirmed' WHERE user_email  = '{$user_email}'";
+
+    /* Prepare*/
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Email confirmed";
+    } else {
+        $err = "Please try again later";
     }
 }
  /* Reset Password Step 1 */

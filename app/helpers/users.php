@@ -129,3 +129,64 @@ if (isset($_POST['Update_Customer_Profile'])) {
         }
     }
 }
+
+/* Update Customer Account Password Details */
+if (isset($_POST['Update_Customer_Password'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $old_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['old_password'])));
+    $new_password  = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    if ($new_password != $confirm_password) {
+        /* Check If Passwords Match */
+        $err = "Passwords does not match";
+    } else {
+
+        /* Does Old Password Match */
+        $sql = "SELECT * FROM  users   WHERE user_id = '{$user_id}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if ($row['user_password'] != $old_password) {
+                $err = "Enter correct old password";
+            } else {
+                /* Persist Password Update */
+                $update_sql = "UPDATE users SET user_password  = '{$confirm_password}' WHERE user_id = '{$user_id}'";
+                /* Prepare */
+                if (mysqli_query($mysqli, $update_sql)) {
+                    $success = "Password updated";
+                } else {
+                    $err = "Failed, please try again";
+                }
+            }
+        }
+    }
+}
+
+/* Enable Or Disable 2FA */
+if (isset($_POST['Customer_2FA'])) {
+    $user_2fa_status = mysqli_real_escape_string($mysqli, $_POST['user_2fa_status']);
+    $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $alert = mysqli_real_escape_string($mysqli, $_POST['alert']);
+
+    /* Persist  */
+    $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}', user_2fa_code = '{$user_2fa_code}' WHERE user_id = '{$user_id}'";
+
+    /* Invoke Mailer When User Is Enabling 2FA*/
+    if (!empty($user_2fa_code)) {
+        $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+
+        /* Mail User */
+        require_once('../app/mailers/otp.php');
+        $mail->send();
+    }
+
+    /* Prepare */
+    if (mysqli_query($mysqli, $sql)) {
+
+        $success = $alert;
+    } else {
+        $err = "Failed!, Please Try Again";
+    }
+}

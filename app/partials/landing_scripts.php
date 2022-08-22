@@ -19,12 +19,17 @@
 <!-- Google translate Js -->
 <script src="../public/landing_assets/js/vendor/google-translate.js"></script>
 <script>
+    /* Google Translate */
     function googleTranslateElementInit() {
         new google.translate.TranslateElement({
                 pageLanguage: "en"
             },
             "google_translate_element"
         );
+    }
+    /* Prevent Double Submissions */
+    if (window.history.replaceState) {
+        window.history.replaceState(null, null, window.location.href);
     }
 </script>
 <!-- Main Js -->
