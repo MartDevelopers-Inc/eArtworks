@@ -109,10 +109,10 @@ if (isset($_POST['Customer_Confirm_2FA'])) {
     $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
 
     /* Login User Using This Code */
-    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_status  FROM users  WHERE 
-    user_2fa_status = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
+    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code  FROM users  WHERE 
+    user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
     $stmt->execute();
-    $stmt->bind_result($user_2fa_status, $user_id);
+    $stmt->bind_result($user_id, $user_2fa_code);
     $rs = $stmt->fetch();
     /* Prepare */
     if ($rs) {
