@@ -75,6 +75,12 @@ $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
 $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
 if (mysqli_num_rows($user_sql) > 0) {
     while ($customer = mysqli_fetch_array($user_sql)) {
+        /* Check If User Has Enabled 2FA */
+        if ($customer['user_2fa_status'] == '0') {
+            $two_fa_status = "Enable 2 Factor Authentication";
+        } else {
+            $disable_fa_status = "Enable 2 Factor Authentication";
+        }
 ?>
 
         <body class="shop_page">
@@ -135,6 +141,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                             <div class="ec-vendor-block-profile">
                                                 <div class="ec-vendor-block-img space-bottom-30">
                                                     <div class="ec-vendor-block-bg">
+                                                        <a href="#" class="btn btn-lg btn-primary" data-link-action="editmodal" title="Edit Detail" data-bs-toggle="modal" data-bs-target="#edit_modal"><?php echo $two_fa_status; ?></a>
                                                     </div>
                                                     <div class="ec-vendor-block-detail">
                                                         <?php
