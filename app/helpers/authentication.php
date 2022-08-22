@@ -172,8 +172,8 @@ if (isset($_POST['User_Register'])) {
 }
 
 /* Confirm User Email */
-if (isset($_GET['Confirm_User_Email'])) {
-    $user_email = mysqli_real_escape_string($mysqli, $_GET['Confirm_User_Email']);
+if (isset($_GET['confirm'])) {
+    $user_email = mysqli_real_escape_string($mysqli, $_GET['confirm']);
 
     /* Persist */
     $sql = "UPDATE users SET user_email_status = 'Confirmed' WHERE user_email  = '{$user_email}'";
