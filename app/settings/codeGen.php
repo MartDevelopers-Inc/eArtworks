@@ -100,3 +100,8 @@ $paycode = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $alpha
 
 /* OTP & 2FA Codes */
 $two_fa_codes = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 6);
+
+/* Mailer Links */
+$confirm_url =  'landing_confirm_email?email=';
+
+$reset_password = '';
