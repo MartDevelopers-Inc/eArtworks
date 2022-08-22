@@ -105,13 +105,17 @@ if (isset($_POST['User_Login'])) {
 
 /* Confirm 2FA */
 if (isset($_POST['Customer_Confirm_2FA'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
     $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
 
     /* Login User Using This Code */
-    $sql = "SELECT * FROM users WHERE user_2fa_code = '{$user_2fa_code}'";
-
+    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_status  FROM users  WHERE 
+    user_2fa_status = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
+    $stmt->execute();
+    $stmt->bind_result($user_2fa_status);
+    $rs = $stmt->fetch();
     /* Prepare */
-    if (mysqli_query($mysqli, $sql)) {
+    if ($rs) {
         /* Allow Login */
         $_SESSION['success'] = 'Login success';
         header('Location: ../');
