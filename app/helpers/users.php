@@ -141,6 +141,7 @@ if (isset($_POST['Update_Customer_Password'])) {
         /* Check If Passwords Match */
         $err = "Passwords does not match";
     } else {
+
         /* Does Old Password Match */
         $sql = "SELECT * FROM  users   WHERE user_id = '{$user_id}'";
         $res = mysqli_query($mysqli, $sql);
@@ -148,16 +149,15 @@ if (isset($_POST['Update_Customer_Password'])) {
             $row = mysqli_fetch_assoc($res);
             if ($row['user_password'] != $old_password) {
                 $err = "Enter correct old password";
-            }
-        } else {
-            /* Persist Password Update */
-            $update_sql = "UPDATE user SET user_password  = '{$confirm_password}' WHERE user_id = '{$user_id}'";
-
-            /* Prepare */
-            if (mysqli_query($mysqli, $update_sql)) {
-                $success = "Password updated";
             } else {
-                $err = "Failed, please try again";
+                /* Persist Password Update */
+                $update_sql = "UPDATE users SET user_password  = '{$confirm_password}' WHERE user_id = '{$user_id}'";
+                /* Prepare */
+                if (mysqli_query($mysqli, $update_sql)) {
+                    $success = "Password updated";
+                } else {
+                    $err = "Failed, please try again";
+                }
             }
         }
     }

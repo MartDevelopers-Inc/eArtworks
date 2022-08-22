@@ -167,8 +167,9 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                             <input type="password" name="confirm_password" required class="form-control">
                                                         </div>
                                                         <div class="col-md-12 space-t-15 text-right">
+                                                            <br>
+                                                            <br>
                                                             <button type="submit" name="Update_Customer_Password" class="btn btn-primary">Update</button>
-                                                            <a href="#" class="btn btn-lg btn-secondary qty_close" data-bs-dismiss="modal" aria-label="Close">Close</a>
                                                         </div>
                                                     </form>
                                                 </div>
