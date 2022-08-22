@@ -173,11 +173,17 @@ if (isset($_POST['Customer_2FA'])) {
     /* Persist  */
     $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}', user_2fa_code = '{$user_2fa_code}' WHERE user_id = '{$user_id}'";
 
-    /* Maile User */
-    require_once('mailers/otp.php');
+    /* Invoke Mailer When User Is Enabling 2FA*/
+    if (!empty($user_2fa_code)) {
+        $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+
+        /* Mail User */
+        require_once('../app/mailers/otp.php');
+        $mail->send();
+    }
 
     /* Prepare */
-    if (mysqli_query($mysqli, $sql) && $mail->send()) {
+    if (mysqli_query($mysqli, $sql)) {
 
         $success = $alert;
     } else {

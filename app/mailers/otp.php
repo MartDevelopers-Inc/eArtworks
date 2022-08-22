@@ -66,29 +66,30 @@
  */
 
 /* Load Composer PHPMAILER */
-require_once('../vendor/PHPMailer/src/SMTP.php');
+/* require_once('../vendor/PHPMailer/src/SMTP.php');
 require_once('../vendor/PHPMailer/src/PHPMailer.php');
-require_once('../vendor/PHPMailer/src/Exception.php');
+require_once('../vendor/PHPMailer/src/Exception.php'); */
+
+include('../vendor/autoload.php');
 
 /* Init PHP Mailer */
-$ret = "SELECT * FROM system_settings 
-INNER JOIN mailer_settings";
+$ret = "SELECT * FROM mailer_settings";
 $stmt = $mysqli->prepare($ret);
 $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($sys = $res->fetch_object()) {
     $mail = new PHPMailer\PHPMailer\PHPMailer();
-    $mail->setFrom($sys->mailer_mail_from_email);
+    $mail->setFrom($sys->mail_from_email);
     $mail->addAddress($user_email);
-    $mail->FromName = $sys->system_name;
+    $mail->FromName = $sys->mail_from_name;
     $mail->isHTML(true);
     $mail->IsSMTP();
     $mail->SMTPSecure = 'ssl';
-    $mail->Host = $sys->mailer_host;
+    $mail->Host = $sys->mail_host;
     $mail->SMTPAuth = true;
-    $mail->Port = $sys->mailer_port;
-    $mail->Username = $sys->mailer_username;
-    $mail->Password = $sys->mailer_password;
+    $mail->Port = $sys->mail_port;
+    $mail->Username = $sys->mail_username;
+    $mail->Password = $sys->mail_password;
     $mail->Subject = 'Two Factor Authentication Code';
     $mail->Body = '
     <table style="table-layout: fixed; vertical-align: top; min-width: 320px; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #d2e7f5; width: 100%;user-select: none;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#d2e7f5">
@@ -206,7 +207,7 @@ while ($sys = $res->fetch_object()) {
                                                                                                                 <table width="100%" cellspacing="0" cellpadding="0" border="0">
                                                                                                                     <tbody>
                                                                                                                         <tr style="line-height:0px">
-                                                                                                                            <td style="padding-right: 0px;padding-left: 0px;" align="center"><img style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 612px; display: block;" title="bear looking at password" alt="bear looking at password" src="https://cdn-icons-png.flaticon.com/512/3176/3176384.png" width="612" border="0" align="middle"> </td>
+                                                                                                                            <td style="padding-right: 0px;padding-left: 0px;" align="center"><img style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 40%; max-width: 612px; display: block;" title="bear looking at password" alt="bear looking at password" src="https://cdn-icons-png.flaticon.com/512/3176/3176384.png" width="612" border="0" align="middle"> </td>
                                                                                                                         </tr>
                                                                                                                     </tbody>
                                                                                                                 </table>
@@ -352,6 +353,18 @@ while ($sys = $res->fetch_object()) {
                                                                                                                     </tr>
                                                                                                                 </tbody>
                                                                                                             </table>
+                                                                                                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td style="padding-right: 10px; padding-left: 20px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif">
+                                                                                                                            <div style="color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 1.8; padding: 10px 10px 10px 20px;">
+                                                                                                                                <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+																										    </table>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>

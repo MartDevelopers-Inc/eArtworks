@@ -14,6 +14,7 @@
                                     </h4>
                                     <p class="text-center"> Two-factor authentication adds an additional layer of security to your account by requiring more than just a password to sign in. </p>
                                     <input type="hidden" name="user_2fa_status" value="1">
+                                    <input type="hidden" name="user_email" value="<?php echo $customer['user_email']; ?>">
                                     <input type="hidden" name="user_2fa_code" value="<?php echo $two_fa_codes; ?>">
                                     <input type="hidden" name="alert" value="Two factor authentication is enabled">
                                     <div class="col-md-12 space-t-15 text-center">
