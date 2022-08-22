@@ -72,6 +72,15 @@ require_once('../vendor/PHPMailer/src/Exception.php'); */
 
 include('../vendor/autoload.php');
 
+/* Confirm Links */
+if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
+    $uri = 'https://';
+} else {
+    $uri = 'http://';
+}
+$uri .= $_SERVER['HTTP_HOST'];
+$confirm_url = $uri . 'eArtworks/ui/landing_confirm_email?Confirm_User_Email=' . $user_email;
+
 
 /* Init PHP Mailer */
 $ret = "SELECT * FROM mailer_settings";
@@ -80,7 +89,6 @@ $stmt->execute(); //ok
 $res = $stmt->get_result();
 while ($sys = $res->fetch_object()) {
     $mail = new PHPMailer\PHPMailer\PHPMailer();
-    $confirm_url =  'landing_confirm_email?email=' . $user_email . 'status=Confirmed';
     $mail->setFrom($sys->mail_from_email);
     $mail->addAddress($user_email);
     $mail->FromName = $sys->mail_from_name;

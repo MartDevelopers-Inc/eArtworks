@@ -170,6 +170,21 @@ if (isset($_POST['User_Register'])) {
         }
     }
 }
+
+/* Confirm User Email */
+if (isset($_GET['Confirm_User_Email'])) {
+    $user_email = mysqli_real_escape_string($mysqli, $_GET['Confirm_User_Email']);
+
+    /* Persist */
+    $sql = "UPDATE users SET user_email_status = 'Confirmed' WHERE user_email  = '{$user_email}'";
+
+    /* Prepare*/
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Email confirmed";
+    } else {
+        $err = "Please try again later";
+    }
+}
  /* Reset Password Step 1 */
 
  /* Reset Password Step 2 */

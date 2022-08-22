@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Sun Jul 17 2022
+ *   Crafted On Sat Aug 20 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -64,44 +64,42 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/checklogin.php');
+require_once('../app/settings/config.php');
+require_once('../app/partials/landing_head.php');
+require_once('../app/helpers/authentication.php');
+?>
+
+<body>
+
+    <!-- Start main Section -->
+    <section class="ec-under-maintenance">
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="under-maintenance">
+                        <h1>Success</h1>
+                        <h4>We have confirmed your email.</h4>
+
+                        <a href="../" class="btn btn-lg btn-primary" tabindex="0">Back to Home</a>
+                    </div>
+                </div>
+                <div class="col-md-6 disp-768">
+                    <div class="under-maintenance">
+                        <img class="maintenance-img" src="../public/landing_assets/images/email-template/confirm-email-1.jpg" alt="maintenance">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End main Section -->
+    <?php require_once('../app/partials/landing_scripts.php'); ?>
 
 
-/* System Generated Codes */
+</body>
 
 
-/* Password Reset Tokens */
-$length = 30;
-$tk = substr(str_shuffle("qwertyuioplkjhgfdsazxcvbnmQWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $length);
 
-/* System Generated Password Engine */
-$length = 8;
-$rc = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $length);
-
-/* System Generated IDs & Primar Keys & They Are Hashed */
-$length = date('y');
-$sys_gen_id = bin2hex(random_bytes($length));
-$sys_gen_alt_id = bin2hex(random_bytes($length));
-
-
-/* System Generated Checksums */
-$length = 12;
-$checksum = bin2hex(random_bytes($length));
-
-/* System Generated Codes */
-$alpha = 5;
-$beta = 5;
-$a = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM"), 1, $alpha);
-$b = substr(str_shuffle("1234567890"), 1, $beta);
-
-/* System Generatd Payment Sandbox Codes */
-$alpha = 10;
-$paycode = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $alpha);
-
-
-/* OTP & 2FA Codes */
-$two_fa_codes = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 6);
-
-/* Mailer Links */
-$confirm_url =  'landing_confirm_email?email=';
-
-$reset_password = '';
+</html>
