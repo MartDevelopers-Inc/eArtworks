@@ -72,14 +72,15 @@ if (isset($_POST['User_Login'])) {
     $user_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['user_password'])));
 
     /* Persist*/
-    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status FROM users
+    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status, user_2fa_status FROM users
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
     $stmt->execute();
-    $stmt->bind_result($user_id, $user_email, $user_password, $user_access_level, $user_delete_status);
+    $stmt->bind_result($user_id, $user_email, $user_password, $user_access_level, $user_delete_status, $user_2fa_status);
     $rs = $stmt->fetch();
     /* Persist Sessions */
     $_SESSION['user_id'] = $user_id;
     $_SESSION['user_access_level'] = $user_access_level;
+
 
     /* Determiner Where To Redirect Based On Access Leveles */
     if (($rs && $user_access_level == 'Administrator') ||  ($rs && $user_access_level == 'Staff)')) {
@@ -87,9 +88,14 @@ if (isset($_POST['User_Login'])) {
         header('Location: dashboard');
         exit;
     } else if ($rs && $user_access_level == 'Customer') {
-        $_SESSION['success'] = 'Login success';
-        header('Location: ../');
-        exit;
+        /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
+        if ($user_2fa_status == '1') {
+            /* Email User An OTP */
+        } else {
+            $_SESSION['success'] = 'Login success';
+            header('Location: ../');
+            exit;
+        }
     } else {
         $err = "Failed!, Incorrect Login Credentials";
     }

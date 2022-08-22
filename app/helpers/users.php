@@ -166,11 +166,12 @@ if (isset($_POST['Update_Customer_Password'])) {
 /* Enable Or Disable 2FA */
 if (isset($_POST['Customer_2FA'])) {
     $user_2fa_status = mysqli_real_escape_string($mysqli, $_POST['user_2fa_status']);
+    $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
     $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
     $alert = mysqli_real_escape_string($mysqli, $_POST['alert']);
 
     /* Persist  */
-    $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}' WHERE user_id = '{$user_id}'";
+    $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}', user_2fa_code = '{$user_2fa_code}' WHERE user_id = '{$user_id}'";
 
     /* Prepare */
     if (mysqli_query($mysqli, $sql)) {

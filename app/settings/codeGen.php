@@ -96,3 +96,7 @@ $b = substr(str_shuffle("1234567890"), 1, $beta);
 /* System Generatd Payment Sandbox Codes */
 $alpha = 10;
 $paycode = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, $alpha);
+
+
+/* OTP & 2FA Codes */
+$two_fa_codes = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 6);
