@@ -66,6 +66,7 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+require_once('../app/helpers/authentication.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -83,13 +84,13 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Reset Password</h2>
+                            <h2 class="ec-breadcrumb-title">Confirm Code</h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Reset password</li>
+                                <li class="ec-breadcrumb-item active">Confirm Code</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
                         </div>
@@ -106,9 +107,11 @@ require_once('../app/partials/landing_head.php');
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="section-title">
-                        <h2 class="ec-bg-title">Reset password</h2>
-                        <h2 class="ec-title">Reset Password</h2>
-                        <p class="sub-title mb-3">Forget password, worry not. Enter your email and your password reset details will be emailed to you</p>
+                        <h2 class="ec-bg-title">Confirm Code</h2>
+                        <h2 class="ec-title">Confirm Code</h2>
+                        <p class="sub-title mb-3">
+                            Enter the two factor authentication code sent in your email.
+                        </p>
                     </div>
                 </div>
                 <div class="ec-register-wrapper">
@@ -117,11 +120,11 @@ require_once('../app/partials/landing_head.php');
                             <div class="ec-register-form">
                                 <form method="post">
                                     <span class="ec-register-wrap">
-                                        <label>Email*</label>
-                                        <input type="email" name="user_email" required />
+                                        <label>Enter The Code In Your Email*</label>
+                                        <input type="text" name="user_2fa_code" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Reset_Password" type="submit">Reset Password</button>
+                                        <button class="btn btn-primary" name="Customer_Confirm_2FA" type="submit">Confirm Code</button>
                                     </span>
                                 </form>
                             </div>

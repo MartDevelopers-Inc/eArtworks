@@ -91,6 +91,8 @@ if (isset($_POST['User_Login'])) {
         /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
         if ($user_2fa_status == '1') {
             /* Email User An OTP */
+            header('Location: landing_otp_confirm');
+            exit;
         } else {
             $_SESSION['success'] = 'Login success';
             header('Location: ../');
