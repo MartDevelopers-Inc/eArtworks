@@ -103,6 +103,24 @@ if (isset($_POST['User_Login'])) {
     }
 }
 
+/* Confirm 2FA */
+if (isset($_POST['Customer_Confirm_2FA'])) {
+    $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
+
+    /* Login User Using This Code */
+    $sql = "SELECT * FROM users WHERE user_2fa_code = '{$user_2fa_code}'";
+
+    /* Prepare */
+    if (mysqli_query($mysqli, $sql)) {
+        /* Allow Login */
+        $_SESSION['success'] = 'Login success';
+        header('Location: ../');
+        exit;
+    } else {
+        $err = "Failed, please enter correct code";
+    }
+}
+
 /* Register */
 if (isset($_POST['User_Register'])) {
     $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
