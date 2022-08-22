@@ -173,8 +173,12 @@ if (isset($_POST['Customer_2FA'])) {
     /* Persist  */
     $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}', user_2fa_code = '{$user_2fa_code}' WHERE user_id = '{$user_id}'";
 
+    /* Maile User */
+    require_once('mailers/otp.php');
+
     /* Prepare */
-    if (mysqli_query($mysqli, $sql)) {
+    if (mysqli_query($mysqli, $sql) && $mail->send()) {
+
         $success = $alert;
     } else {
         $err = "Failed!, Please Try Again";

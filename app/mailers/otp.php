@@ -64,3 +64,405 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+
+/* Load Composer PHPMAILER */
+require_once('../vendor/PHPMailer/src/SMTP.php');
+require_once('../vendor/PHPMailer/src/PHPMailer.php');
+require_once('../vendor/PHPMailer/src/Exception.php');
+
+/* Init PHP Mailer */
+$ret = "SELECT * FROM system_settings 
+INNER JOIN mailer_settings";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute(); //ok
+$res = $stmt->get_result();
+while ($sys = $res->fetch_object()) {
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->setFrom($sys->mailer_mail_from_email);
+    $mail->addAddress($user_email);
+    $mail->FromName = $sys->system_name;
+    $mail->isHTML(true);
+    $mail->IsSMTP();
+    $mail->SMTPSecure = 'ssl';
+    $mail->Host = $sys->mailer_host;
+    $mail->SMTPAuth = true;
+    $mail->Port = $sys->mailer_port;
+    $mail->Username = $sys->mailer_username;
+    $mail->Password = $sys->mailer_password;
+    $mail->Subject = 'Two Factor Authentication Code';
+    $mail->Body = '
+    <table style="table-layout: fixed; vertical-align: top; min-width: 320px; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #d2e7f5; width: 100%;user-select: none;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#d2e7f5">
+        <tbody>
+            <tr style="vertical-align: top;" valign="top">
+                <td style="word-break: break-word; vertical-align: top;" valign="top">
+                    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                        <tbody>
+                            <tr>
+                                <td style="background-color:#d2e7f5" align="center">
+
+                                    <div style="background-color: transparent;">
+                                        <div style="min-width: 320px; max-width: 680px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; margin: 0 auto; background-color: #fff;">
+                                            <div style="border-collapse: collapse; display: table; width: 100%; background-color: transparent;">
+                                                <table style="background-color:transparent;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <table style="width:680px" cellspacing="0" cellpadding="0" border="0">
+                                                                    <tbody>
+                                                                        <tr style="background-color:transparent">
+                                                                            <td style="background-color:transparent;width:226px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="226" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 224px; width: 226px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 0px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 0px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="0">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                            
+                                                                            <td style="background-color:transparent;width:226px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="226" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 224px; width: 226px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 0px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 0px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="0">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div style="background-color: transparent;">
+                                        <div style="min-width: 320px; max-width: 680px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; margin: 0 auto; background-color: white;">
+                                            <div style="border-collapse: collapse; display: table; width: 100%; background-color: transparent;">
+                                                <table style="background-color:transparent;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <table style="width:680px" cellspacing="0" cellpadding="0" border="0">
+                                                                    <tbody>
+                                                                        <tr style="background-color:transparent">
+                                                                            <td style="background-color:transparent;width:680px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="680" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="min-width: 320px; max-width: 680px; display: table-cell; vertical-align: top; width: 680px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <div style="padding-right: 0px; padding-left: 0px;" align="center">
+                                                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                    <tbody>
+                                                                                                                        <tr style="line-height:0px">
+                                                                                                                            <td style="padding-right: 0px;padding-left: 0px;" align="center"><img style="text-decoration: none; -ms-interpolation-mode: bicubic; height: auto; border: 0; width: 100%; max-width: 612px; display: block;" title="bear looking at password" alt="bear looking at password" src="https://cdn-icons-png.flaticon.com/512/3176/3176384.png" width="612" border="0" align="middle"> </td>
+                                                                                                                        </tr>
+                                                                                                                    </tbody>
+                                                                                                                </table>
+                                                                                                            </div>
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 0px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 5px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="5">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="background-color: transparent;">
+                                        <div style="min-width: 320px; max-width: 680px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; margin: 0 auto; background-color: #fff;">
+                                            <div style="border-collapse: collapse; display: table; width: 100%; background-color: transparent;">
+                                                <table style="background-color:transparent;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <table style="width:680px" cellspacing="0" cellpadding="0" border="0">
+                                                                    <tbody>
+                                                                        <tr style="background-color:transparent">
+                                                                            <td style="background-color:transparent;width:113px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="113" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 112px; width: 113px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 0px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 0px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="0">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td style="background-color:transparent;width:453px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="453" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 448px; width: 453px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%" cellspacing="0" cellpadding="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px;" width="100%" valign="top" align="center">
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Two Factor </strong></h1>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%" cellspacing="0" cellpadding="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px 0px 10px 0px;" width="100%" valign="top" align="center">
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Authentication Code</strong></h1>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr>
+                                                                                                                        <td style="padding-right: 10px; padding-left: 20px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif">
+                                                                                                                            <div style="color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 1.8; padding: 10px 10px 10px 20px;">
+                                                                                                                                <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
+                                                                                                                                    <p style="margin: 0; font-size: 14px; line-height: 1.8; word-break: break-word; text-align: center; mso-line-height-alt: 25px; margin-top: 0; margin-bottom: 0;">
+                                                                                                                                        <span style="font-size: 14px;">Hello, You have enabled two factor authentication. Below is your code. Kindly keep it safe because it will be required every time you are logging in.</span>
+                                                                                                                                    </p>
+                                                                                                                                </div>
+                                                                                                                            </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 5px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 0px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="0">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%" cellspacing="0" cellpadding="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px;" width="100%" valign="top" align="center">
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
+                                                                                                                                <strong>' . $user_2fa_code . '</strong>
+                                                                                                                            </h1>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="background-color: transparent;">
+                                        <div style="min-width: 320px; max-width: 680px; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; margin: 0 auto; background-color: transparent;">
+                                            <div style="border-collapse: collapse; display: table; width: 100%; background-color: transparent;">
+                                                <table style="background-color:transparent;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td align="center">
+                                                                <table style="width:680px" cellspacing="0" cellpadding="0" border="0">
+                                                                    <tbody>
+                                                                        <tr style="background-color:transparent">
+                                                                            <td style="background-color:transparent;width:113px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="113" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 112px; width: 113px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 10px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 5px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="5">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td style="background-color:transparent;width:453px; border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent;" width="453" valign="top" align="center">
+                                                                                <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                    <tbody>
+                                                                                        <tr>
+                                                                                            <td style="padding-right: 0px; padding-left: 0px; padding-top:5px; padding-bottom:5px;">
+                                                                                                <div style="display: table-cell; vertical-align: top; max-width: 320px; min-width: 448px; width: 453px;">
+                                                                                                    <div style="width: 100% !important;">
+                                                                                                        <div style="border: 0px solid transparent; padding: 5px 0px 5px 0px;">
+                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                                                                                <tbody>
+                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                        <td style="word-break: break-word; vertical-align: top; min-width: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; padding: 10px;" valign="top">
+                                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-top: 0px solid transparent; height: 5px; width: 100%;" width="100%" cellspacing="0" cellpadding="0" border="0" align="center">
+                                                                                                                                <tbody>
+                                                                                                                                    <tr style="vertical-align: top;" valign="top">
+                                                                                                                                        <td style="word-break: break-word; vertical-align: top; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%;" valign="top" height="5">&nbsp;</td>
+                                                                                                                                    </tr>
+                                                                                                                                </tbody>
+                                                                                                                            </table>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+                                                                                                                </tbody>
+                                                                                                            </table>
+                                                                                                            
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </td>
+                                                                            
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    ';
+}
