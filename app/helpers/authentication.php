@@ -156,8 +156,11 @@ if (isset($_POST['User_Register'])) {
             $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level)
             VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$confirm_password}', '{$user_access_level}')";
 
+            /* Load Mailer */
+            include('../app/mailers/confirm_email.php');
+
             /* Prepare */
-            if (mysqli_query($mysqli, $insert_sql)) {
+            if (mysqli_query($mysqli, $insert_sql) && $mail->send()) {
                 $_SESSION['success'] = "Account created, proceed to log in";
                 header('Location: login');
                 exit;

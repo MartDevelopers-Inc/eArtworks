@@ -266,14 +266,14 @@ while ($sys = $res->fetch_object()) {
                                                                                                                             <h1
                                                                                                                                 style="color: #555555; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 30px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;padding: 0 50px;">
                                                                                                                                 <strong>
-                                                                                                                                    You
+                                                                                                                                    Hey there, you
                                                                                                                                     are
                                                                                                                                     one
                                                                                                                                     step
                                                                                                                                     away
                                                                                                                                     from
                                                                                                                                     ultimate
-                                                                                                                                    eArtwprks
+                                                                                                                                    eArtworks
                                                                                                                                 </strong>
                                                                                                                             </h1>
                                                                                                                         </td>
