@@ -320,7 +320,8 @@ while ($sys = $res->fetch_object()) {
                                                                                                                                 <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
                                                                                                                                     <p style="margin: 0; font-size: 14px; line-height: 1.8; word-break: break-word; text-align: center; mso-line-height-alt: 25px; margin-top: 0; margin-bottom: 0;">
                                                                                                                                         <span style="font-size: 14px;">
-                                                                                                                                        Hello, You have disabled two factor authentication. You can now log in without using One Time Password.</span>
+                                                                                                                                            Hello, You have turned off two-factor authentication. You may now log in without having to use a One Time Password.
+                                                                                                                                        </span>
                                                                                                                                     </p>
                                                                                                                                 </div>
                                                                                                                             </div>

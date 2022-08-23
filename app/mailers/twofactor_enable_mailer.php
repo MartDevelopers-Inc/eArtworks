@@ -298,7 +298,7 @@ while ($sys = $res->fetch_object()) {
                                                                                                                 <tbody>
                                                                                                                     <tr style="vertical-align: top;" valign="top">
                                                                                                                         <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>You Have</strong></h1>
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Two Factor </strong></h1>
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </tbody>
@@ -307,7 +307,7 @@ while ($sys = $res->fetch_object()) {
                                                                                                                 <tbody>
                                                                                                                     <tr style="vertical-align: top;" valign="top">
                                                                                                                         <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px 0px 10px 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Disabled Two Factor Authentication</strong></h1>
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Authentication Enabled</strong></h1>
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </tbody>
@@ -320,7 +320,9 @@ while ($sys = $res->fetch_object()) {
                                                                                                                                 <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
                                                                                                                                     <p style="margin: 0; font-size: 14px; line-height: 1.8; word-break: break-word; text-align: center; mso-line-height-alt: 25px; margin-top: 0; margin-bottom: 0;">
                                                                                                                                         <span style="font-size: 14px;">
-                                                                                                                                        Hello, You have disabled two factor authentication. You can now log in without using One Time Password.</span>
+                                                                                                                                            Hello, You have turned on two-factor authentication. A One Time Password code will be emailed to you every time you log in. 
+                                                                                                                                            This code will be required for each login.
+                                                                                                                                        </span>
                                                                                                                                     </p>
                                                                                                                                 </div>
                                                                                                                             </div>
