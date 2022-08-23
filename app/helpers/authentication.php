@@ -84,6 +84,7 @@ if (isset($_POST['User_Login'])) {
             $_SESSION['success'] = "Welcome to back office module";
             header('Location: dashboard');
             exit;
+            
         } else if ($num['user_access_level'] == 'Customer') {
             /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
             if ($num['user_2fa_status'] == '1') {
