@@ -71,37 +71,47 @@ if (isset($_POST['User_Login'])) {
     $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
     $user_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['user_password'])));
 
-    /* Persist*/
-    $stmt = $mysqli->prepare("SELECT user_id, user_email, user_password, user_access_level, user_delete_status, user_2fa_status FROM users
+    $ret = mysqli_query($mysqli, "SELECT * FROM users 
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
-    $stmt->execute();
-    $stmt->bind_result($user_id, $user_email, $user_password, $user_access_level, $user_delete_status, $user_2fa_status);
-    $rs = $stmt->fetch();
-    /* Persist Sessions */
-    $_SESSION['user_id'] = $user_id;
-    $_SESSION['user_access_level'] = $user_access_level;
+    $num = mysqli_fetch_array($ret);
+    if ($num > 0) {
+        $_SESSION['user_id'] = $num['user_id'];
 
-
-    /* Determiner Where To Redirect Based On Access Leveles */
-    if (($rs && $user_access_level == 'Administrator') ||  ($rs && $user_access_level == 'Staff)')) {
-        $_SESSION['success'] = "Welcome to back office module";
-        header('Location: dashboard');
-        exit;
-    } else if ($rs && $user_access_level == 'Customer') {
-        /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
-        if ($user_2fa_status == '1') {
-            /* Email User An OTP */
-            header('Location: landing_otp_confirm');
+        /* Determiner Where To Redirect Based On Access Leveles */
+        if (($num['user_access_level'] == 'Administrator') ||  ($num['user_access_level'] == 'Staff)')) {
+            /* Load Sessions */
+            $_SESSION['user_access_level'] = $num['user_access_level'];
+            $_SESSION['success'] = "Welcome to back office module";
+            header('Location: dashboard');
             exit;
-        } else {
-            $_SESSION['success'] = 'Login success';
-            header('Location: ../');
-            exit;
+            
+        } else if ($num['user_access_level'] == 'Customer') {
+            /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
+            if ($num['user_2fa_status'] == '1') {
+                /* Give User OTP Code*/
+                $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$num['user_id']}'";
+                /* Mail That OTP Code  */
+                include('../app/mailers/otp.php');
+                if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
+                    $_SESSION['success'] = 'Check your email We have sent you authentication code';
+                    header('Location: landing_otp_confirm');
+                    exit;
+                } else {
+                    $err = "We're experiencing difficulty delivering your OTP code. Please retry later.";
+                }
+            } else {
+                /* Load Sessions */
+                $_SESSION['user_access_level'] = $num['user_access_level'];
+                $_SESSION['success'] = 'Login was successful';
+                header('Location: ../');
+                exit;
+            }
         }
     } else {
-        $err = "Failed!, Incorrect Login Credentials";
+        $err = "Failed! Invalid Login Credentials";
     }
 }
+
 
 /* Confirm 2FA */
 if (isset($_POST['Customer_Confirm_2FA'])) {
@@ -109,19 +119,20 @@ if (isset($_POST['Customer_Confirm_2FA'])) {
     $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
 
     /* Login User Using This Code */
-    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code  FROM users  WHERE 
+    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code, user_access_level  FROM users  WHERE 
     user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
     $stmt->execute();
-    $stmt->bind_result($user_id, $user_2fa_code);
+    $stmt->bind_result($user_id, $user_2fa_code, $user_access_level);
     $rs = $stmt->fetch();
     /* Prepare */
     if ($rs) {
         /* Allow Login */
+        $_SESSION['user_access_level'] = $user_access_level;
         $_SESSION['success'] = 'Login success';
         header('Location: ../');
         exit;
     } else {
-        $err = "Failed, please enter correct code";
+        $err = "Failed, please type the right code";
     }
 }
 
@@ -185,6 +196,50 @@ if (isset($_GET['confirm'])) {
         $err = "Please try again later";
     }
 }
- /* Reset Password Step 1 */
 
- /* Reset Password Step 2 */
+/* Reset Password Step 1 */
+if (isset($_POST['Reset_Password'])) {
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_password_reset_token = mysqli_real_escape_string($mysqli, $checksum);
+
+    /* Persist */
+    $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}'";
+    $res = mysqli_query($mysqli, $sql);
+    if (mysqli_num_rows($res) > 0) {
+        /* Persist Reset Token */
+        $sql = "UPDATE users SET user_password_reset_token = '{$user_password_reset_token}' WHERE user_email = '{$user_email}'";
+        /* Email User Reset Token */
+        include('../app/mailers/reset_password.php');
+        if (mysqli_query($mysqli, $sql) && $mail->send()) {
+            $success = "Password reset instructions has been emailed to you";
+        } else {
+            $err = "Failed, please try again later";
+        }
+    } else {
+        /* No Account With This Email */
+        $err = "Email address does not exist";
+    }
+}
+
+
+/* Reset Password Step 2 */
+if (isset($_POST['Reset_Password_Step_2'])) {
+    $token = mysqli_real_escape_string($mysqli, $_GET['token']);
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    /* Check If Passwords Match */
+    if ($confirm_password != $new_password) {
+        $err = "Passwords does not match";
+    } else {
+        /* Persist */
+        $sql = "UPDATE users SET user_password  = '{$confirm_password}' WHERE user_password_reset_token = '{$token}'";
+
+        /* Prepare */
+        if (mysqli_query($mysqli, $sql)) {
+            $_SESSION['success'] = 'Successfully reset your password, now log in.';
+            header('Location: ../');
+            exit;
+        }
+    }
+}

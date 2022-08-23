@@ -73,23 +73,25 @@ require_once('../vendor/PHPMailer/src/Exception.php'); */
 include('../vendor/autoload.php');
 
 /* Init PHP Mailer */
-$sql = mysqli_query($mysqli, "SELECT * FROM mailer_settings");
-if (mysqli_num_rows($sql) > 0) {
-    while ($sys = mysqli_fetch_array($sql)) {
-        $mail = new PHPMailer\PHPMailer\PHPMailer();
-        $mail->setFrom($sys['mail_from_email']);
-        $mail->addAddress($user_email);
-        $mail->FromName = $sys['mail_from_name'];
-        $mail->isHTML(true);
-        $mail->IsSMTP();
-        $mail->SMTPSecure = 'ssl';
-        $mail->Host = $sys['mail_host'];
-        $mail->SMTPAuth = true;
-        $mail->Port = $sys['mail_port'];
-        $mail->Username = $sys['mail_username'];
-        $mail->Password = $sys['mail_password'];
-        $mail->Subject = 'Two Factor Authentication Code';
-        $mail->Body = '
+$ret = "SELECT * FROM mailer_settings";
+$stmt = $mysqli->prepare($ret);
+$stmt->execute(); //ok
+$res = $stmt->get_result();
+while ($sys = $res->fetch_object()) {
+    $mail = new PHPMailer\PHPMailer\PHPMailer();
+    $mail->setFrom($sys->mail_from_email);
+    $mail->addAddress($user_email);
+    $mail->FromName = $sys->mail_from_name;
+    $mail->isHTML(true);
+    $mail->IsSMTP();
+    $mail->SMTPSecure = 'ssl';
+    $mail->Host = $sys->mail_host;
+    $mail->SMTPAuth = true;
+    $mail->Port = $sys->mail_port;
+    $mail->Username = $sys->mail_username;
+    $mail->Password = $sys->mail_password;
+    $mail->Subject = 'Two Factor Authentication Enabled';
+    $mail->Body = '
     <table style="table-layout: fixed; vertical-align: top; min-width: 320px; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #d2e7f5; width: 100%;user-select: none;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#d2e7f5">
         <tbody>
             <tr style="vertical-align: top;" valign="top">
@@ -305,7 +307,7 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                 <tbody>
                                                                                                                     <tr style="vertical-align: top;" valign="top">
                                                                                                                         <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px 0px 10px 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Authentication Code</strong></h1>
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Authentication Enabled</strong></h1>
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </tbody>
@@ -317,7 +319,10 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                             <div style="color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 1.8; padding: 10px 10px 10px 20px;">
                                                                                                                                 <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
                                                                                                                                     <p style="margin: 0; font-size: 14px; line-height: 1.8; word-break: break-word; text-align: center; mso-line-height-alt: 25px; margin-top: 0; margin-bottom: 0;">
-                                                                                                                                        <span style="font-size: 14px;">Hello, You have enabled two factor authentication. Below is your code. Kindly keep it safe because it will be required every time you are logging in.</span>
+                                                                                                                                        <span style="font-size: 14px;">
+                                                                                                                                            Hello, You have turned on two-factor authentication. A One Time Password code will be emailed to you every time you log in. 
+                                                                                                                                            This code will be required for each login.
+                                                                                                                                        </span>
                                                                                                                                     </p>
                                                                                                                                 </div>
                                                                                                                             </div>
@@ -340,29 +345,6 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                     </tr>
                                                                                                                 </tbody>
                                                                                                             </table>
-                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%" cellspacing="0" cellpadding="0">
-                                                                                                                <tbody>
-                                                                                                                    <tr style="vertical-align: top;" valign="top">
-                                                                                                                        <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-                                                                                                                                <strong>' . $two_fa_codes . '</strong>
-                                                                                                                            </h1>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </tbody>
-                                                                                                            </table>
-                                                                                                            <table width="100%" cellspacing="0" cellpadding="0" border="0">
-                                                                                                                <tbody>
-                                                                                                                    <tr>
-                                                                                                                        <td style="padding-right: 10px; padding-left: 20px; padding-top: 10px; padding-bottom: 10px; font-family: Arial, sans-serif">
-                                                                                                                            <div style="color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; line-height: 1.8; padding: 10px 10px 10px 20px;">
-                                                                                                                                <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
-                                                                                                                                </div>
-                                                                                                                            </div>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </tbody>
-																										    </table>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
@@ -476,5 +458,4 @@ if (mysqli_num_rows($sql) > 0) {
         </tbody>
     </table>
     ';
-    }
 }

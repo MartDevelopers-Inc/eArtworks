@@ -169,16 +169,19 @@ if (isset($_POST['Customer_2FA'])) {
     $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
     $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
     $alert = mysqli_real_escape_string($mysqli, $_POST['alert']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+
 
     /* Persist  */
-    $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}', user_2fa_code = '{$user_2fa_code}' WHERE user_id = '{$user_id}'";
+    $sql  = "UPDATE users SET user_2fa_status = '{$user_2fa_status}'  WHERE user_id = '{$user_id}'";
 
-    /* Invoke Mailer When User Is Enabling 2FA*/
     if (!empty($user_2fa_code)) {
-        $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
-
-        /* Mail User */
-        require_once('../app/mailers/otp.php');
+        /* Notify User Has Enabled 2FA */
+        include('../app/mailers/twofactor_enable_mailer.php');
+        $mail->send();
+    } else {
+        /* Send Disabling 2FA Mailer */
+        include('../app/mailers/twofactor_disable_mailer.php');
         $mail->send();
     }
 

@@ -66,17 +66,17 @@
  */
 session_start();
 require_once('../app/settings/config.php');
-require_once('../app/settings/codeGen.php');
-require_once('../app/helpers/authentication.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
-<body>
+<body class="shop_page">
     <div id="ec-overlay"><span class="loader_img"></span></div>
 
     <!-- Header start  -->
     <?php require_once('../app/partials/landing_navigation.php'); ?>
     <!-- Header End  -->
+
+
 
     <!-- Ec breadcrumb start -->
     <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
@@ -85,13 +85,13 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Reset Password</h2>
+                            <h2 class="ec-breadcrumb-title">Products</h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Reset password</li>
+                                <li class="ec-breadcrumb-item active">Products</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
                         </div>
@@ -102,43 +102,73 @@ require_once('../app/partials/landing_head.php');
     </div>
     <!-- Ec breadcrumb end -->
 
-    <!-- Ec login page -->
+    <!-- Ec Shop page -->
     <section class="ec-page-content section-space-p">
         <div class="container">
             <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-title">
-                        <h2 class="ec-bg-title">Reset password</h2>
-                        <h2 class="ec-title">Reset Password</h2>
-                        <p class="sub-title mb-3">Forget password, worry not. Enter your email and your password reset details will be emailed to you</p>
-                    </div>
-                </div>
-                <div class="ec-register-wrapper">
-                    <div class="ec-register-wrapper">
-                        <div class="ec-register-container">
-                            <div class="ec-register-form">
-                                <form method="post">
-                                    <span class="ec-register-wrap">
-                                        <label>Email*</label>
-                                        <input type="email" name="user_email" required />
-                                    </span>
-                                    <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Reset_Password" type="submit">Reset Password</button>
-                                    </span>
-                                </form>
+                <div class="ec-shop-rightside col-lg-12 order-lg-last col-md-12 order-md-first margin-b-30">
+                    <!-- Shop Top Start -->
+                    <div class="ec-pro-list-top d-flex">
+                        <div class="col-md-6 ec-grid-list">
+                            <div class="ec-gl-btn">
+                                <button class="btn btn-grid active"><img src="../public/landing_assets/images/icons/grid.svg" class="svg_img gl_svg" alt="" /></button>
+                                <button class="btn btn-list"><img src="../public/landing_assets/images/icons/list.svg" class="svg_img gl_svg" alt="" /></button>
                             </div>
                         </div>
                     </div>
+                    <!-- Shop Top End -->
+
+                    <!-- Shop content Start -->
+                    <div class="shop-pro-content">
+                        <div class="shop-pro-inner">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                    <div class="ec-product-inner">
+                                        <div class="ec-pro-image-outer">
+                                            <div class="ec-pro-image">
+                                                <a href="landing_product?view=" class="image">
+                                                    <img class="main-image" src="../public/landing_assets/images/product-image/6_1.jpg" alt="Product" />
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="ec-pro-content">
+                                            <h5 class="ec-pro-title">
+                                                <a href="landing_product?view=">
+                                                    Round Neck T-Shirt
+                                                </a>
+                                            </h5>
+                                            <div class="ec-pro-rating">
+                                                <i class="ecicon eci-star fill"></i>
+                                                <i class="ecicon eci-star fill"></i>
+                                                <i class="ecicon eci-star fill"></i>
+                                                <i class="ecicon eci-star fill"></i>
+                                                <i class="ecicon eci-star fill"></i>
+                                            </div>
+                                            <div class="ec-pro-list-desc">
+                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.
+                                            </div>
+                                            <span class="ec-price">
+                                                <span class="new-price">$22.00</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Shop content End -->
                 </div>
+
             </div>
         </div>
     </section>
+    <!-- End Shop page -->
 
     <!-- Footer Start -->
     <?php require_once('../app/partials/landing_footer.php'); ?>
     <!-- Footer Area End -->
 
-    <!-- Feature tools end -->
+    <!-- Vendor JS -->
     <?php require_once('../app/partials/landing_scripts.php'); ?>
 
 </body>
