@@ -211,4 +211,24 @@ if (isset($_POST['Reset_Password'])) {
 }
 
 
- /* Reset Password Step 2 */
+/* Reset Password Step 2 */
+if (isset($_POST['Reset_Password_Step_2'])) {
+    $token = mysqli_real_escape_string($mysqli, $_GET['token']);
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    /* Check If Passwords Match */
+    if ($confirm_password != $new_password) {
+        $err = "Passwords does not match";
+    } else {
+        /* Persist */
+        $sql = "UPDATE users SET user_password  = '{$confirm_password}' WHERE user_password_reset_token = '{$token}'";
+
+        /* Prepare */
+        if (mysqli_query($mysqli, $sql)) {
+            $_SESSION['success'] = 'Successfully reset your password, now log in.';
+            header('Location: ../');
+            exit;
+        }
+    }
+}

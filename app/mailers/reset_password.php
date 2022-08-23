@@ -79,7 +79,7 @@ if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
     $uri = 'http://';
 }
 $uri .= $_SERVER['HTTP_HOST'];
-$reset_url = $uri . '/eArtworks/ui/?confirm_password?token=' . $user_password_reset_token;
+$reset_url = $uri . '/eArtworks/ui/confirm_password?token=' . $user_password_reset_token;
 
 
 /* Init PHP Mailer */
