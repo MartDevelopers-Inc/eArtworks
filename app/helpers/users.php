@@ -177,11 +177,11 @@ if (isset($_POST['Customer_2FA'])) {
 
     if (!empty($user_2fa_code)) {
         /* Notify User Has Enabled 2FA */
-        require_once('../app/mailers/twofactor_enable_mailer.php');
+        include('../app/mailers/twofactor_enable_mailer.php');
         $mail->send();
     } else {
         /* Send Disabling 2FA Mailer */
-        require_once('../app/mailers/twofactor_disable_mailer.php');
+        include('../app/mailers/twofactor_disable_mailer.php');
         $mail->send();
     }
 
