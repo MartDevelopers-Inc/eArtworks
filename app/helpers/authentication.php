@@ -81,7 +81,6 @@ if (isset($_POST['User_Login'])) {
     $_SESSION['user_id'] = $user_id;
     $_SESSION['user_access_level'] = $user_access_level;
 
-
     /* Determiner Where To Redirect Based On Access Leveles */
     if (($rs && $user_access_level == 'Administrator') ||  ($rs && $user_access_level == 'Staff)')) {
         $_SESSION['success'] = "Welcome to back office module";
@@ -91,10 +90,10 @@ if (isset($_POST['User_Login'])) {
         /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
         if ($user_2fa_status == '1') {
             /* Give User OTP Code*/
-            $sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
+            $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
             /* Mail That OTP Code  */
             include('../app/mailers/otp.php');
-            if (mysqli_query($mysqli, $sql) && $mail->send()) {
+            if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
                 header('Location: landing_otp_confirm');
                 exit;
             } else {
@@ -110,27 +109,30 @@ if (isset($_POST['User_Login'])) {
     }
 }
 
-/* Confirm 2FA */
-if (isset($_POST['Customer_Confirm_2FA'])) {
-    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
-    $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
+/* Email User 2FA Code  */
+if (isset($_GET['OTP']))
 
-    /* Login User Using This Code */
-    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code  FROM users  WHERE 
-    user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
-    $stmt->execute();
-    $stmt->bind_result($user_id, $user_2fa_code);
-    $rs = $stmt->fetch();
-    /* Prepare */
-    if ($rs) {
-        /* Allow Login */
-        $_SESSION['success'] = 'Login success';
-        header('Location: ../');
-        exit;
-    } else {
-        $err = "Failed, please type the right code";
+    /* Confirm 2FA */
+    if (isset($_POST['Customer_Confirm_2FA'])) {
+        $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+        $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
+
+        /* Login User Using This Code */
+        $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code  FROM users  WHERE 
+        user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
+        $stmt->execute();
+        $stmt->bind_result($user_id, $user_2fa_code);
+        $rs = $stmt->fetch();
+        /* Prepare */
+        if ($rs) {
+            /* Allow Login */
+            $_SESSION['success'] = 'Login success';
+            header('Location: ../');
+            exit;
+        } else {
+            $err = "Failed, please type the right code";
+        }
     }
-}
 
 /* Register */
 if (isset($_POST['User_Register'])) {
