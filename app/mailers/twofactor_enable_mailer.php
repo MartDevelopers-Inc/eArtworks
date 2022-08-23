@@ -90,7 +90,7 @@ while ($sys = $res->fetch_object()) {
     $mail->Port = $sys->mail_port;
     $mail->Username = $sys->mail_username;
     $mail->Password = $sys->mail_password;
-    $mail->Subject = 'Two Factor Authentication Disabled';
+    $mail->Subject = 'Two Factor Authentication Enabled';
     $mail->Body = '
     <table style="table-layout: fixed; vertical-align: top; min-width: 320px; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #d2e7f5; width: 100%;user-select: none;" width="100%" cellspacing="0" cellpadding="0" bgcolor="#d2e7f5">
         <tbody>
