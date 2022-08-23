@@ -185,6 +185,30 @@ if (isset($_GET['confirm'])) {
         $err = "Please try again later";
     }
 }
- /* Reset Password Step 1 */
+
+/* Reset Password Step 1 */
+if (isset($_POST['Reset_Password'])) {
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_password_reset_token = mysqli_real_escape_string($mysqli, $checksum);
+
+    /* Persist */
+    $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}'";
+    $res = mysqli_query($mysqli, $sql);
+    if (mysqli_num_rows($res) > 0) {
+        /* Persist Reset Token */
+        $sql = "UPDATE users SET user_password_reset_token = '{$user_password_reset_token}' WHERE user_email = '{$user_email}'";
+        /* Email User Reset Token */
+        include('../app/mailers/reset_password.php');
+        if (mysqli_query($mysqli, $sql) && $mail->send()) {
+            $success = "Password reset instructions has been emailed to you";
+        } else {
+            $err = "Failed, please try again later";
+        }
+    } else {
+        /* No Account With This Email */
+        $err = "Email address does not exist";
+    }
+}
+
 
  /* Reset Password Step 2 */
