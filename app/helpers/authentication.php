@@ -75,12 +75,12 @@ if (isset($_POST['User_Login'])) {
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
     $num = mysqli_fetch_array($ret);
     if ($num > 0) {
-        /* Load Sessions */
         $_SESSION['user_id'] = $num['user_id'];
-        $_SESSION['user_access_level'] = $num['user_access_level'];
 
         /* Determiner Where To Redirect Based On Access Leveles */
         if (($num['user_access_level'] == 'Administrator') ||  ($num['user_access_level'] == 'Staff)')) {
+            /* Load Sessions */
+            $_SESSION['user_access_level'] = $num['user_access_level'];
             $_SESSION['success'] = "Welcome to back office module";
             header('Location: dashboard');
             exit;
@@ -92,12 +92,15 @@ if (isset($_POST['User_Login'])) {
                 /* Mail That OTP Code  */
                 include('../app/mailers/otp.php');
                 if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
+                    $_SESSION['success'] = 'Check your email We have sent you authentication code';
                     header('Location: landing_otp_confirm');
                     exit;
                 } else {
                     $err = "We're experiencing difficulty delivering your OTP code. Please retry later.";
                 }
             } else {
+                /* Load Sessions */
+                $_SESSION['user_access_level'] = $num['user_access_level'];
                 $_SESSION['success'] = 'Login was successful';
                 header('Location: ../');
                 exit;
@@ -108,30 +111,29 @@ if (isset($_POST['User_Login'])) {
     }
 }
 
-/* Email User 2FA Code  */
-if (isset($_GET['OTP']))
 
-    /* Confirm 2FA */
-    if (isset($_POST['Customer_Confirm_2FA'])) {
-        $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
-        $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
+/* Confirm 2FA */
+if (isset($_POST['Customer_Confirm_2FA'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $user_2fa_code = mysqli_real_escape_string($mysqli, $_POST['user_2fa_code']);
 
-        /* Login User Using This Code */
-        $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code  FROM users  WHERE 
-        user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
-        $stmt->execute();
-        $stmt->bind_result($user_id, $user_2fa_code);
-        $rs = $stmt->fetch();
-        /* Prepare */
-        if ($rs) {
-            /* Allow Login */
-            $_SESSION['success'] = 'Login success';
-            header('Location: ../');
-            exit;
-        } else {
-            $err = "Failed, please type the right code";
-        }
+    /* Login User Using This Code */
+    $stmt = $mysqli->prepare("SELECT user_id, user_2fa_code, user_access_level  FROM users  WHERE 
+    user_2fa_code = '{$user_2fa_code}' AND user_id = '{$user_id}' ");
+    $stmt->execute();
+    $stmt->bind_result($user_id, $user_2fa_code, $user_access_level);
+    $rs = $stmt->fetch();
+    /* Prepare */
+    if ($rs) {
+        /* Allow Login */
+        $_SESSION['user_access_level'] = $user_access_level;
+        $_SESSION['success'] = 'Login success';
+        header('Location: ../');
+        exit;
+    } else {
+        $err = "Failed, please type the right code";
     }
+}
 
 /* Register */
 if (isset($_POST['User_Register'])) {
