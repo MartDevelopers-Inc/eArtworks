@@ -80,15 +80,15 @@ if (isset($_POST['User_Login'])) {
         $_SESSION['user_access_level'] = $num['user_access_level'];
 
         /* Determiner Where To Redirect Based On Access Leveles */
-        if (($rs && $user_access_level == 'Administrator') ||  ($rs && $user_access_level == 'Staff)')) {
+        if (($num['user_access_level'] == 'Administrator') ||  ($num['user_access_level'] == 'Staff)')) {
             $_SESSION['success'] = "Welcome to back office module";
             header('Location: dashboard');
             exit;
-        } else if ($rs && $user_access_level == 'Customer') {
+        } else if ($num['user_access_level'] == 'Customer') {
             /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
-            if ($user_2fa_status == '1') {
+            if ($num['user_2fa_status'] == '1') {
                 /* Give User OTP Code*/
-                $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
+                $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$num['user_id']}'";
                 /* Mail That OTP Code  */
                 include('../app/mailers/otp.php');
                 if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
