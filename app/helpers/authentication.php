@@ -90,16 +90,23 @@ if (isset($_POST['User_Login'])) {
     } else if ($rs && $user_access_level == 'Customer') {
         /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
         if ($user_2fa_status == '1') {
-            /* Email User An OTP */
-            header('Location: landing_otp_confirm');
-            exit;
+            /* Give User OTP Code*/
+            $sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
+            /* Mail That OTP Code  */
+            include('../app/mailers/otp.php');
+            if (mysqli_query($mysqli, $sql) && $mail->send()) {
+                header('Location: landing_otp_confirm');
+                exit;
+            } else {
+                $err = "We're experiencing difficulty delivering your OTP code. Please retry later.";
+            }
         } else {
-            $_SESSION['success'] = 'Login success';
+            $_SESSION['success'] = 'Login was successful';
             header('Location: ../');
             exit;
         }
     } else {
-        $err = "Failed!, Incorrect Login Credentials";
+        $err = "Failed! Invalid Login Credentials";
     }
 }
 
@@ -121,7 +128,7 @@ if (isset($_POST['Customer_Confirm_2FA'])) {
         header('Location: ../');
         exit;
     } else {
-        $err = "Failed, please enter correct code";
+        $err = "Failed, please type the right code";
     }
 }
 
