@@ -64,6 +64,10 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/config.php');
+require_once('../app/settings/codeGen.php');
+require_once('../app/helpers/authentication.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -120,11 +124,11 @@ require_once('../app/partials/landing_head.php');
                                 <form method="post">
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>New Password *</label>
-                                        <input type="email" name="new_password" required />
+                                        <input type="password" name="new_password" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-half">
                                         <label>Confirm New Password *</label>
-                                        <input type="email" name="confirm_password" required />
+                                        <input type="password" name="confirm_password" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-btn">
                                         <button class="btn btn-primary" name="Reset_Password_Step_2" type="submit">Reset Password</button>
