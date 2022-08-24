@@ -88,15 +88,19 @@ if (isset($_POST['User_Login'])) {
             header('Location: dashboard');
             exit;
         } else if ($num['user_access_level'] == 'Customer') {
+
             /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
             if ($num['user_2fa_status'] == '1') {
+
                 /* Give User OTP Code*/
                 $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$num['user_id']}'";
+
                 /* Mail That OTP Code  */
                 include('../app/mailers/otp.php');
+
                 /* Preapare */
                 if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
-                    $_SESSION['success'] = 'Check your email We have sent you authentication code';
+                    $_SESSION['success'] = 'Check your email we have sent you authentication code';
                     header('Location: landing_otp_confirm');
                     exit;
                 } else {
@@ -126,7 +130,7 @@ if (isset($_POST['Resent_2FA_Code'])) {
     include('../app/mailers/otp.php');
     /* Preapare */
     if (mysqli_query($mysqli, $resent_sql) && $mail->send()) {
-        $_SESSION['success'] = 'Check your email We have sent you authentication code';
+        $_SESSION['success'] = 'Check your email we have sent you authentication code';
         header('Location: landing_otp_confirm');
         exit;
     } else {
