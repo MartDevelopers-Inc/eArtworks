@@ -2,9 +2,9 @@
     <div id="sidebar" class="sidebar ec-sidebar-footer">
 
         <div class="ec-brand">
-            <a href="index.html" title="Ekka">
-                <img class="ec-brand-icon" src="assets/img/logo/ec-site-logo.png" alt="" />
-                <span class="ec-brand-name text-truncate">Ekka</span>
+            <a href="dashboard" title="eArtworks">
+                <img class="ec-brand-icon" src="../public/backoffice_assets/img/logo/ec-site-logo.png" alt="" />
+                <span class="ec-brand-name text-truncate">eArtworks</span>
             </a>
         </div>
 
@@ -13,8 +13,8 @@
             <!-- sidebar menu -->
             <ul class="nav sidebar-inner" id="sidebar-menu">
                 <!-- Dashboard -->
-                <li class="active">
-                    <a class="sidenav-item-link" href="index.html">
+                <li>
+                    <a class="sidenav-item-link" href="dashboard">
                         <i class="mdi mdi-view-dashboard-outline"></i>
                         <span class="nav-text">Dashboard</span>
                     </a>
@@ -30,19 +30,14 @@
                     <div class="collapse">
                         <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
                             <li class="">
-                                <a class="sidenav-item-link" href="vendor-card.html">
-                                    <span class="nav-text">Vendor Grid</span>
+                                <a class="sidenav-item-link" href="backoffice_import_vendors">
+                                    <span class="nav-text">Bulk Import</span>
                                 </a>
                             </li>
 
                             <li class="">
-                                <a class="sidenav-item-link" href="vendor-list.html">
-                                    <span class="nav-text">Vendor List</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="vendor-profile.html">
-                                    <span class="nav-text">Vendors Profile</span>
+                                <a class="sidenav-item-link" href="backoffice_manage_vendors">
+                                    <span class="nav-text">Manage Vendors</span>
                                 </a>
                             </li>
                         </ul>
