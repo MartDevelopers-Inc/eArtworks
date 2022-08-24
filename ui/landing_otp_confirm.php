@@ -127,6 +127,11 @@ require_once('../app/partials/landing_head.php');
                                         <button class="btn btn-primary" name="Customer_Confirm_2FA" type="submit">Confirm Code</button>
                                     </span>
                                 </form>
+                                <form method="post">
+                                    <span class="ec-register-wrap ec-register-btn">
+                                        <button class="btn btn-primary" name="Resent_2FA_Code" type="submit">Resend Confirm Code</button>
+                                    </span>
+                                </form>
                             </div>
                         </div>
                     </div>
