@@ -95,8 +95,8 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="card card-mini dash-card card-1">
                                 <div class="card-body">
                                     <h2 class="mb-1">1,503</h2>
-                                    <p>Daily Signups</p>
-                                    <span class="mdi mdi-account-arrow-left"></span>
+                                    <p>Customers</p>
+                                    <span class="mdi mdi-account-group"></span>
                                 </div>
                             </div>
                         </div>
@@ -104,8 +104,8 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="card card-mini dash-card card-2">
                                 <div class="card-body">
                                     <h2 class="mb-1">79,503</h2>
-                                    <p>Daily Visitors</p>
-                                    <span class="mdi mdi-account-clock"></span>
+                                    <p>Staffs</p>
+                                    <span class="mdi mdi-account-group-outline"></span>
                                 </div>
                             </div>
                         </div>
@@ -113,250 +113,82 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="card card-mini dash-card card-3">
                                 <div class="card-body">
                                     <h2 class="mb-1">15,503</h2>
-                                    <p>Daily Order</p>
-                                    <span class="mdi mdi-package-variant"></span>
+                                    <p>Products</p>
+                                    <span class="mdi mdi-palette-advanced"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-4">
                                 <div class="card-body">
-                                    <h2 class="mb-1">$98,503</h2>
-                                    <p>Daily Revenue</p>
+                                    <h2 class="mb-1">Ksh 98,503</h2>
+                                    <p>Overall Revenue</p>
                                     <span class="mdi mdi-currency-usd"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Orders statistics -->
                     <div class="row">
-                        <div class="col-xl-8 col-md-12 p-b-15">
-                            <!-- Sales Graph -->
-                            <div id="user-acquisition" class="card card-default">
-                                <div class="card-header">
-                                    <h2>Sales Report</h2>
-                                </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-1">
                                 <div class="card-body">
-                                    <ul class="nav nav-tabs nav-style-border justify-content-between justify-content-lg-start border-bottom" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-bs-toggle="tab" href="#todays" role="tab" aria-selected="true">Today's</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#monthly" role="tab" aria-selected="false">Monthly </a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-bs-toggle="tab" href="#yearly" role="tab" aria-selected="false">Yearly</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content pt-4" id="salesReport">
-                                        <div class="tab-pane fade show active" id="source-medium" role="tabpanel">
-                                            <div class="mb-6" style="max-height:247px">
-                                                <canvas id="acquisition" class="chartjs2"></canvas>
-                                                <div id="acqLegend" class="customLegend mb-2"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <h2 class="mb-1">1,503</h2>
+                                    <p>Placed Orders</p>
+                                    <span class="mdi mdi-cart-plus"></span>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-xl-4 col-md-12 p-b-15">
-                            <!-- Doughnut Chart -->
-                            <div class="card card-default">
-                                <div class="card-header justify-content-center">
-                                    <h2>Orders Overview</h2>
-                                </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-2">
                                 <div class="card-body">
-                                    <canvas id="doChart"></canvas>
+                                    <h2 class="mb-1">79,503</h2>
+                                    <p>Awaiting Fulfilment</p>
+                                    <span class="mdi mdi-cart-arrow-down"></span>
                                 </div>
-                                <a href="#" class="pb-5 d-block text-center text-muted"><i class="mdi mdi-download mr-2"></i> Download overall report</a>
-                                <div class="card-footer d-flex flex-wrap bg-white p-0">
-                                    <div class="col-6">
-                                        <div class="p-20">
-                                            <ul class="d-flex flex-column justify-content-between">
-                                                <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #4c84ff"></i>Order Completed</li>
-                                                <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #80e1c1 "></i>Order Unpaid</li>
-                                                <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #ff7b7b "></i>Order returned</li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="col-6 border-left">
-                                        <div class="p-20">
-                                            <ul class="d-flex flex-column justify-content-between">
-                                                <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #8061ef"></i>Order Pending</li>
-                                                <li class="mb-2"><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #ffa128"></i>Order Canceled</li>
-                                                <li><i class="mdi mdi-checkbox-blank-circle-outline mr-2" style="color: #7be6ff"></i>Order Broken</li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-3">
+                                <div class="card-body">
+                                    <h2 class="mb-1">15,503</h2>
+                                    <p>Shipped Orders</p>
+                                    <span class="mdi mdi-car-limousine"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-4">
+                                <div class="card-body">
+                                    <h2 class="mb-1">Ksh 98,503</h2>
+                                    <p>Out For Delivery</p>
+                                    <span class="mdi mdi-dolly"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-1">
+                                <div class="card-body">
+                                    <h2 class="mb-1">1,503</h2>
+                                    <p>Delivered Orders</p>
+                                    <span class="mdi mdi-package-variant"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-sm-6 p-b-15 lbl-card">
+                            <div class="card card-mini dash-card card-2">
+                                <div class="card-body">
+                                    <h2 class="mb-1">79,503</h2>
+                                    <p>Returned Orders</p>
+                                    <span class="mdi mdi-account-clock"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-xl-8 col-md-12 p-b-15">
-                            <!-- User activity statistics -->
-                            <div class="card card-default" id="user-activity">
-                                <div class="no-gutters">
-                                    <div>
-                                        <div class="card-header justify-content-between">
-                                            <h2>User Activity</h2>
-                                            <div class="date-range-report ">
-                                                <span></span>
-                                            </div>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="tab-content" id="userActivityContent">
-                                                <div class="tab-pane fade show active" id="user" role="tabpanel">
-                                                    <canvas id="activity" class="chartjs"></canvas>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-footer d-flex flex-wrap bg-white border-top">
-                                            <a href="#" class="text-uppercase py-3">In-Detail Overview</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-md-12 p-b-15">
-                            <div class="card card-default">
-                                <div class="card-header flex-column align-items-start">
-                                    <h2>Current Users</h2>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="currentUser" class="chartjs"></canvas>
-                                </div>
-                                <div class="card-footer d-flex flex-wrap bg-white border-top">
-                                    <a href="#" class="text-uppercase py-3">In-Detail Overview</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-xl-8 col-12 p-b-15">
-                            <!-- World Chart -->
-                            <div class="card card-default" id="analytics-country">
-                                <div class="card-header justify-content-between">
-                                    <h2>Purchased by Country</h2>
-                                    <div class="date-range-report ">
-                                        <span></span>
-                                    </div>
-                                </div>
-                                <div class="card-body vector-map-world-2">
-                                    <div id="regions_purchase" style="height: 100%; width: 100%;"></div>
-                                </div>
-                                <div class="border-top mt-3">
-                                    <div class="row no-gutters">
-                                        <div class="col-lg-6">
-                                            <div class="world-data-chart border-bottom pt-15px pb-15px">
-                                                <canvas id="hbar1" class="chartjs"></canvas>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="world-data-chart pt-15px pb-15px">
-                                                <canvas id="hbar2" class="chartjs"></canvas>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex flex-wrap bg-white">
-                                    <a href="#" class="text-uppercase py-3">In-Detail Overview</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-12 p-b-15">
-                            <!-- Top Sell Table -->
-                            <div class="card card-default Sold-card-table">
-                                <div class="card-header justify-content-between">
-                                    <h2>Sold by Items</h2>
-                                    <div class="tools">
-                                        <button class="text-black-50 mr-2 font-size-20"><i class="mdi mdi-cached"></i></button>
-                                        <div class="dropdown show d-inline-block widget-dropdown">
-                                            <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-units" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li class="dropdown-item"><a href="#">Action</a></li>
-                                                <li class="dropdown-item"><a href="#">Another action</a></li>
-                                                <li class="dropdown-item"><a href="#">Something else here</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body py-0 compact-units" data-simplebar style="height: 534px;">
-                                    <table class="table ">
-                                        <tbody>
-                                            <tr>
-                                                <td class="text-dark">Backpack</td>
-                                                <td class="text-center">9</td>
-                                                <td class="text-right">33% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">T-Shirt</td>
-                                                <td class="text-center">6</td>
-                                                <td class="text-right">150% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">Coat</td>
-                                                <td class="text-center">3</td>
-                                                <td class="text-right">50% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">Necklace</td>
-                                                <td class="text-center">7</td>
-                                                <td class="text-right">150% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">Jeans Pant</td>
-                                                <td class="text-center">10</td>
-                                                <td class="text-right">300% <i class="mdi mdi-arrow-down-bold text-danger pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">Shoes</td>
-                                                <td class="text-center">5</td>
-                                                <td class="text-right">100% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">T-Shirt</td>
-                                                <td class="text-center">6</td>
-                                                <td class="text-right">150% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">Watches</td>
-                                                <td class="text-center">18</td>
-                                                <td class="text-right">160% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">Inner</td>
-                                                <td class="text-center">156</td>
-                                                <td class="text-right">120% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-dark">T-Shirt</td>
-                                                <td class="text-center">6</td>
-                                                <td class="text-right">150% <i class="mdi mdi-arrow-up-bold text-success pl-1 font-size-12"></i>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-                                <div class="card-footer d-flex flex-wrap bg-white">
-                                    <a href="#" class="text-uppercase py-3">View Report</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                     <div class="row">
                         <div class="col-12 p-b-15">
@@ -364,9 +196,12 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
                                 <div class="card-header justify-content-between">
                                     <h2>Recent Orders</h2>
-                                    <div class="date-range-report">
+                                    <!-- 
+                                        Enable This When You Know What You Are Doing
+                                        <div class="date-range-report">
                                         <span></span>
                                     </div>
+                                    -->
                                 </div>
                                 <div class="card-body pt-0 pb-5">
                                     <table class="table card-table table-responsive table-responsive-large" style="width:100%">
@@ -382,131 +217,67 @@ require_once('../app/partials/backoffice_head.php');
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>24541</td>
-                                                <td>
-                                                    <a class="text-dark" href="#"> Coach Swagger</a>
-                                                </td>
-                                                <td class="d-none d-lg-table-cell">1 Unit</td>
-                                                <td class="d-none d-lg-table-cell">Oct 20, 2018</td>
-                                                <td class="d-none d-lg-table-cell">$230</td>
-                                                <td>
-                                                    <span class="badge badge-success">Completed</span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown show d-inline-block widget-dropdown">
-                                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li class="dropdown-item">
-                                                                <a href="#">View</a>
-                                                            </li>
-                                                            <li class="dropdown-item">
-                                                                <a href="#">Remove</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>24541</td>
-                                                <td>
-                                                    <a class="text-dark" href="#"> Toddler Shoes, Gucci Watch</a>
-                                                </td>
-                                                <td class="d-none d-lg-table-cell">2 Units</td>
-                                                <td class="d-none d-lg-table-cell">Nov 15, 2018</td>
-                                                <td class="d-none d-lg-table-cell">$550</td>
-                                                <td>
-                                                    <span class="badge badge-primary">Delayed</span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown show d-inline-block widget-dropdown">
-                                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order2" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li class="dropdown-item">
-                                                                <a href="#">View</a>
-                                                            </li>
-                                                            <li class="dropdown-item">
-                                                                <a href="#">Remove</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>24541</td>
-                                                <td>
-                                                    <a class="text-dark" href="#"> Hat Black Suits</a>
-                                                </td>
-                                                <td class="d-none d-lg-table-cell">1 Unit</td>
-                                                <td class="d-none d-lg-table-cell">Nov 18, 2018</td>
-                                                <td class="d-none d-lg-table-cell">$325</td>
-                                                <td>
-                                                    <span class="badge badge-warning">On Hold</span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown show d-inline-block widget-dropdown">
-                                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order3" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li class="dropdown-item">
-                                                                <a href="#">View</a>
-                                                            </li>
-                                                            <li class="dropdown-item">
-                                                                <a href="#">Remove</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>24541</td>
-                                                <td>
-                                                    <a class="text-dark" href="#"> Backpack Gents, Swimming Cap Slin</a>
-                                                </td>
-                                                <td class="d-none d-lg-table-cell">5 Units</td>
-                                                <td class="d-none d-lg-table-cell">Dec 13, 2018</td>
-                                                <td class="d-none d-lg-table-cell">$200</td>
-                                                <td>
-                                                    <span class="badge badge-success">Completed</span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown show d-inline-block widget-dropdown">
-                                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order4" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li class="dropdown-item">
-                                                                <a href="#">View</a>
-                                                            </li>
-                                                            <li class="dropdown-item">
-                                                                <a href="#">Remove</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>24541</td>
-                                                <td>
-                                                    <a class="text-dark" href="#"> Speed 500 Ignite</a>
-                                                </td>
-                                                <td class="d-none d-lg-table-cell">1 Unit</td>
-                                                <td class="d-none d-lg-table-cell">Dec 23, 2018</td>
-                                                <td class="d-none d-lg-table-cell">$150</td>
-                                                <td>
-                                                    <span class="badge badge-danger">Cancelled</span>
-                                                </td>
-                                                <td class="text-right">
-                                                    <div class="dropdown show d-inline-block widget-dropdown">
-                                                        <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order5" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                        <ul class="dropdown-menu dropdown-menu-right">
-                                                            <li class="dropdown-item">
-                                                                <a href="#">View</a>
-                                                            </li>
-                                                            <li class="dropdown-item">
-                                                                <a href="#">Remove</a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                            <?php
+                                            /* Fetch All Orders - Sort Them By Date Added */
+                                            $orders_sql = mysqli_query(
+                                                $mysqli,
+                                                "SELECT * FROM orders o 
+                                                INNER JOIN products p 
+                                                ON p.product_id = o.order_product_id
+                                                WHERE o.order_delete_status = '0'
+                                                ORDER BY order_date ASC"
+                                            );
+                                            if (mysqli_num_rows($orders_sql) > 0) {
+                                                while ($orders = mysqli_fetch_array($orders_sql)) {
+                                            ?>
+                                                    <tr>
+                                                        <td><?php echo $orders['order_code']; ?></td>
+                                                        <td>
+                                                            <a class="text-dark" href="backoffice_products?view=<?php echo $orders['product_id']; ?>">Coach Swagger</a>
+                                                        </td>
+                                                        <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
+                                                        <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
+                                                        <td class="d-none d-lg-table-cell"><?php echo number_format($orders['order_cost']); ?></td>
+                                                        <td>
+                                                            <?php
+                                                            if ($orders['order_status'] == 'Order Placed') { ?>
+                                                                <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                            <?php } else if ($orders['order_status'] == 'Awaiting Fulfillment') { ?>
+                                                                <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                            <?php } else if ($orders['order_status'] == 'Shipped') { ?>
+                                                                <span class="badge badge-primary">Shipped</span>
+                                                            <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
+                                                                <span class="badge badge-primary">Out For Delivery</span>
+                                                            <?php } else if ($orders['order_status'] == 'Delivered') { ?>
+                                                                <span class="badge badge-success">Delivered</span>
+                                                            <?php } else { ?>
+                                                                <span class="badge badge-danger">Cancelled</span>
+                                                            <?php } ?>
+                                                        </td>
+                                                        <td class="text-right">
+                                                            <div class="dropdown show d-inline-block widget-dropdown">
+                                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
+                                                                <ul class="dropdown-menu dropdown-menu-right">
+                                                                    <li class="dropdown-item">
+                                                                        <a href="backoffice_order?view=">View</a>
+                                                                    </li>
+                                                                    <li class="dropdown-item">
+                                                                        <!-- Implement Delete Order Via Modal -->
+                                                                        <a href="#">Delete</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php }
+                                            } else {
+                                                /* No Orders To Fetch */ ?>
+                                                <tr>
+                                                    <td colspan="6" class="text-center">
+                                                        <span class="text-dark">There are no current orders posted.</span>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -520,132 +291,69 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="card ec-cust-card card-table-border-none card-default">
                                 <div class="card-header justify-content-between ">
                                     <h2>New Customers</h2>
-                                    <div>
-                                        <button class="text-black-50 mr-2 font-size-20">
-                                            <i class="mdi mdi-cached"></i>
-                                        </button>
-                                        <div class="dropdown show d-inline-block widget-dropdown">
-                                            <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-customar" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li class="dropdown-item"><a href="#">Action</a></li>
-                                                <li class="dropdown-item"><a href="#">Another action</a></li>
-                                                <li class="dropdown-item"><a href="#">Something else here</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="card-body pt-0 pb-15px">
                                     <table class="table ">
                                         <tbody>
-                                            <tr>
-                                                <td>
-                                                    <div class="media">
-                                                        <div class="media-image mr-3 rounded-circle">
-                                                            <a href="profile.html"><img class="profile-img rounded-circle w-45" src="assets/img/user/u1.jpg" alt="customer image"></a>
+                                            <?php
+                                            /* Fetch Top 10 Registered Customers - Sort Them By Date Added */
+                                            $users_sql = mysqli_query(
+                                                $mysqli,
+                                                "SELECT * FROM users
+                                                WHERE user_access_level = 'Customer'
+                                                AND user_delete_status = '0'
+                                                ORDER BY user_date_joined ASC
+                                                LIMIT 5"
+                                            );
+                                            if (mysqli_num_rows($users_sql) > 0) {
+                                                while ($customers = mysqli_fetch_array($users_sql)) {
+                                                    /* Load User Image */
+                                                    if ($customers['user_profile_picture'] == '') {
+                                                        $image_dir = "../public/uploads/users/no-profile.png";
+                                                    } else {
+                                                        $image_dir = "../public/uploads/users/" . $customers['user_profile_picture'];
+                                                    }
+                                            ?>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="media">
+                                                                <div class="media-image mr-3 rounded-circle">
+                                                                    <a href="backoffice_customer?view=<?php echo $customers['user_id']; ?>">
+                                                                        <img class="profile-img rounded-circle w-45" src="<?php echo $image_dir; ?>" alt="customer image">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="media-body align-self-center">
+                                                                    <a href="backoffice_customer?view=<?php echo $customers['user_id']; ?>">
+                                                                        <h6 class="mt-0 text-dark font-weight-medium">
+                                                                            <?php echo $customers['user_first_name'] . ' ' . $customers['user_last_name']; ?>
+                                                                        </h6>
+                                                                    </a>
+                                                                    <small><?php echo $customers['user_email']; ?></small>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <?php
+                                                }
+                                            } else
+                                            /* No Customers */ {
+                                                ?>
+                                                <tr>
+                                                    <td>
+                                                        <div class="media">
+                                                            <div class="media-image mr-3 rounded-circle">
+                                                                <img class="profile-img rounded-circle w-45" src="../public/uploads/users/no-profile.png" alt="customer image">
+                                                            </div>
+                                                            <div class="media-body align-self-center">
+                                                                <h6 class="mt-0 text-dark font-weight-medium">
+                                                                    There are currently no registered customers.
+                                                                </h6>
+                                                            </div>
                                                         </div>
-                                                        <div class="media-body align-self-center">
-                                                            <a href="profile.html">
-                                                                <h6 class="mt-0 text-dark font-weight-medium">Selena
-                                                                    Wagner</h6>
-                                                            </a>
-                                                            <small>@selena.oi</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>2 Orders</td>
-                                                <td class="text-dark d-none d-md-block">$150</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="media">
-                                                        <div class="media-image mr-3 rounded-circle">
-                                                            <a href="profile.html"><img class="profile-img rounded-circle w-45" src="assets/img/user/u2.jpg" alt="customer image"></a>
-                                                        </div>
-                                                        <div class="media-body align-self-center">
-                                                            <a href="profile.html">
-                                                                <h6 class="mt-0 text-dark font-weight-medium">Walter
-                                                                    Reuter</h6>
-                                                            </a>
-                                                            <small>@walter.me</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>5 Orders</td>
-                                                <td class="text-dark d-none d-md-block">$200</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="media">
-                                                        <div class="media-image mr-3 rounded-circle">
-                                                            <a href="profile.html"><img class="profile-img rounded-circle w-45" src="assets/img/user/u3.jpg" alt="customer image"></a>
-                                                        </div>
-                                                        <div class="media-body align-self-center">
-                                                            <a href="profile.html">
-                                                                <h6 class="mt-0 text-dark font-weight-medium">Larissa
-                                                                    Gebhardt</h6>
-                                                            </a>
-                                                            <small>@larissa.gb</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>1 Order</td>
-                                                <td class="text-dark d-none d-md-block">$50</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="media">
-                                                        <div class="media-image mr-3 rounded-circle">
-                                                            <a href="profile.html"><img class="profile-img rounded-circle w-45" src="assets/img/user/u4.jpg" alt="customer image"></a>
-                                                        </div>
-                                                        <div class="media-body align-self-center">
-                                                            <a href="profile.html">
-                                                                <h6 class="mt-0 text-dark font-weight-medium">Albrecht
-                                                                    Straub</h6>
-                                                            </a>
-                                                            <small>@albrech.as</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>2 Orders</td>
-                                                <td class="text-dark d-none d-md-block">$100</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="media">
-                                                        <div class="media-image mr-3 rounded-circle">
-                                                            <a href="profile.html"><img class="profile-img rounded-circle w-45" src="assets/img/user/u5.jpg" alt="customer image"></a>
-                                                        </div>
-                                                        <div class="media-body align-self-center">
-                                                            <a href="profile.html">
-                                                                <h6 class="mt-0 text-dark font-weight-medium">Leopold
-                                                                    Ebert</h6>
-                                                            </a>
-                                                            <small>@leopold.et</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>1 Order</td>
-                                                <td class="text-dark d-none d-md-block">$60</td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="media">
-                                                        <div class="media-image mr-3 rounded-circle">
-                                                            <a href="profile.html"><img class="profile-img rounded-circle w-45" src="assets/img/user/u3.jpg" alt="customer image"></a>
-                                                        </div>
-                                                        <div class="media-body align-self-center">
-                                                            <a href="profile.html">
-                                                                <h6 class="mt-0 text-dark font-weight-medium">Larissa
-                                                                    Gebhardt</h6>
-                                                            </a>
-                                                            <small>@larissa.gb</small>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>1 Order</td>
-                                                <td class="text-dark d-none d-md-block">$50</td>
-                                            </tr>
+                                                    </td>
+                                                </tr>
+                                            <?php } ?>
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -656,73 +364,62 @@ require_once('../app/partials/backoffice_head.php');
                             <!-- Top Products -->
                             <div class="card card-default ec-card-top-prod">
                                 <div class="card-header justify-content-between">
-                                    <h2>Top Products</h2>
-                                    <div>
-                                        <button class="text-black-50 mr-2 font-size-20"><i class="mdi mdi-cached"></i></button>
-                                        <div class="dropdown show d-inline-block widget-dropdown">
-                                            <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-product" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                            </a>
-                                            <ul class="dropdown-menu dropdown-menu-right">
-                                                <li class="dropdown-item"><a href="#">Update Data</a></li>
-                                                <li class="dropdown-item"><a href="#">Detailed Log</a></li>
-                                                <li class="dropdown-item"><a href="#">Statistics</a></li>
-                                                <li class="dropdown-item"><a href="#">Clear Data</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                                    <h2>Top Orders & Products</h2>
                                 </div>
                                 <div class="card-body mt-10px mb-10px py-0">
-                                    <div class="row media d-flex pt-15px pb-15px">
-                                        <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                            <a href="#"><img src="assets/img/products/p1.jpg" alt="customer image"></a>
+                                    <?php
+                                    /* Fetch Products With Top Sales -
+                                    Revise This Logic Later
+                                    */
+                                    $orders_sql = mysqli_query(
+                                        $mysqli,
+                                        "SELECT * FROM orders o 
+                                        INNER JOIN products p 
+                                        ON p.product_id = o.order_product_id
+                                        WHERE o.order_delete_status = '0'
+                                        ORDER BY o.order_qty ASC
+                                        LIMIT 5
+                                        "
+                                    );
+                                    if (mysqli_num_rows($orders_sql) > 0) {
+                                        while ($top_product = mysqli_fetch_array($orders_sql)) {
+                                            /* Load Product Image */
+                                            if ($top_product['product_image'] == '') {
+                                                $product_image_dir = "../public/uploads/products/no_image.png";
+                                            } else {
+                                                $product_image_dir = "../public/uploads/products/" . $top_product['product_image'];
+                                            }
+                                    ?>
+                                            <div class="row media d-flex pt-15px pb-15px">
+                                                <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
+                                                    <a href="#">
+                                                        <img src="<?php echo $product_image_dir; ?>" alt="Product Image">
+                                                    </a>
+                                                </div>
+                                                <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
+                                                    <a href="#">
+                                                        <h6 class="mb-10px text-dark font-weight-medium"><?php echo $top_product['product_name']; ?></h6>
+                                                    </a>
+                                                    <p class="float-md-right sale">
+                                                        <span class="mr-2"><?php echo $top_product['order_qty']; ?></span>Order Items
+                                                    </p>
+                                                    <p class="mb-0 ec-price">
+                                                        <span class="text-dark">Ksh <?php echo number_format($top_product['order_cost']); ?></span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        <?php }
+                                    } else { ?>
+                                        <div class="row media d-flex pt-15px pb-15px">
+                                            <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
+                                                <a href="#">
+                                                    <h6 class="mb-10px text-dark font-weight-medium">
+                                                        There are currently no top products or orders.
+                                                    </h6>
+                                                </a>
+                                            </div>
                                         </div>
-                                        <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                            <a href="#">
-                                                <h6 class="mb-10px text-dark font-weight-medium">Baby cotton shoes</h6>
-                                            </a>
-                                            <p class="float-md-right sale"><span class="mr-2">58</span>Sales</p>
-                                            <p class="d-none d-md-block">Statement belting with double-turnlock hardware
-                                                adds “swagger” to a simple.</p>
-                                            <p class="mb-0 ec-price">
-                                                <span class="text-dark">$520</span>
-                                                <del>$580</del>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row media d-flex pt-15px pb-15px">
-                                        <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                            <a href="#"><img src="assets/img/products/p2.jpg" alt="customer image"></a>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                            <a href="#">
-                                                <h6 class="mb-10px text-dark font-weight-medium">Hoodies for men</h6>
-                                            </a>
-                                            <p class="float-md-right sale"><span class="mr-2">20</span>Sales</p>
-                                            <p class="d-none d-md-block">Statement belting with double-turnlock hardware
-                                                adds “swagger” to a simple.</p>
-                                            <p class="mb-0 ec-price">
-                                                <span class="text-dark">$250</span>
-                                                <del>$300</del>
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row media d-flex pt-15px pb-15px">
-                                        <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                            <a href="#"><img src="assets/img/products/p3.jpg" alt="customer image"></a>
-                                        </div>
-                                        <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                            <a href="#">
-                                                <h6 class="mb-10px text-dark font-weight-medium">Long slive t-shirt</h6>
-                                            </a>
-                                            <p class="float-md-right sale"><span class="mr-2">10</span>Sales</p>
-                                            <p class="d-none d-md-block">Statement belting with double-turnlock hardware
-                                                adds “swagger” to a simple.</p>
-                                            <p class="mb-0 ec-price">
-                                                <span class="text-dark">$480</span>
-                                                <del>$654</del>
-                                            </p>
-                                        </div>
-                                    </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
