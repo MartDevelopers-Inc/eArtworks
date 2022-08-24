@@ -75,6 +75,7 @@ if (isset($_POST['User_Login'])) {
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
     $num = mysqli_fetch_array($ret);
     if ($num > 0) {
+        /* Persist Sessions */
         $_SESSION['user_id'] = $num['user_id'];
         $_SESSION['user_email'] = $num['user_email'];
         $_SESSION['user_phone_number'] = $num['user_phone_number'];
@@ -117,13 +118,14 @@ if (isset($_POST['User_Login'])) {
 /* Resent 2FA Code Incase User Missed It */
 if (isset($_POST['Resent_2FA_Code'])) {
     $user_email = mysqli_real_escape_string($mysqli, $_SESSION['user_email']);
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
 
     /* Persist */
-    $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_email = '{$user_email}'";
+    $resent_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
     /* Mail That OTP Code  */
     include('../app/mailers/otp.php');
     /* Preapare */
-    if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
+    if (mysqli_query($mysqli, $resent_sql) && $mail->send()) {
         $_SESSION['success'] = 'Check your email We have sent you authentication code';
         header('Location: landing_otp_confirm');
         exit;

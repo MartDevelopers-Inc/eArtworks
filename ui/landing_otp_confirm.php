@@ -66,6 +66,7 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+require_once('../app/settings/codeGen.php');
 require_once('../app/helpers/authentication.php');
 require_once('../app/partials/landing_head.php');
 ?>
@@ -129,7 +130,7 @@ require_once('../app/partials/landing_head.php');
                                 </form>
                                 <form method="post">
                                     <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Resent_2FA_Code" type="submit">Resend Confirm Code</button>
+                                        <button class="btn btn-primary" name="Resent_2FA_Code" type="submit">Resend Code</button>
                                     </span>
                                 </form>
                             </div>
