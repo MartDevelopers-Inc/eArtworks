@@ -5,9 +5,9 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="Ekka - Admin Dashboard eCommerce HTML Template.">
+    <meta name="description" content="eArtstore - The Ultimate Artworks Online Store.">
 
-    <title>eArtstore - The Ultimate Artworks Online Store.</title>
+    <title>eArtworks - The Ultimate Painting And Artworks Store.</title>
 
     <!-- GOOGLE FONTS -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,5 +25,13 @@
 
     <!-- FAVICON -->
     <link href="../public/backoffice_assets/img/favicon.png" rel="shortcut icon" />
-
+    <!-- Toastr -->
+    <link rel="stylesheet" href="../public/backoffice_assets/plugins/toastr/toastr.min.css">
+    <?php
+    /* Alert Sesion Via Alerts */
+    if (isset($_SESSION['success'])) {
+        $success = $_SESSION['success'];
+        unset($_SESSION['success']);
+    }
+    ?>
 </head>
