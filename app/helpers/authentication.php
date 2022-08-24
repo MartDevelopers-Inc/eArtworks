@@ -121,15 +121,21 @@ if (isset($_POST['User_Login'])) {
 
 /* Resent 2FA Code Incase User Missed It */
 if (isset($_POST['Resent_2FA_Code'])) {
+    $user_phone_number = mysqli_real_escape_string($mysqli, $_SESSION['user_phone_number']);
     $user_email = mysqli_real_escape_string($mysqli, $_SESSION['user_email']);
     $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
 
     /* Persist */
     $resent_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
+
     /* Mail That OTP Code  */
-    include('../app/mailers/otp.php');
+    //include('../app/mailers/otp.php');
+
+    /* Sent OTP Via SMS */
+    include('sms_handler.php');
+
     /* Preapare */
-    if (mysqli_query($mysqli, $resent_sql) && $mail->send()) {
+    if (mysqli_query($mysqli, $resent_sql)) {
         $_SESSION['success'] = 'Check your email we have sent you authentication code';
         header('Location: landing_otp_confirm');
         exit;
