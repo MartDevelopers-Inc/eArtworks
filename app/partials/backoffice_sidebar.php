@@ -21,51 +21,46 @@
                     <hr>
                 </li>
 
-                <!-- Vendors -->
+                <!-- Users -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="mdi mdi-account-group-outline"></i>
-                        <span class="nav-text">Vendors</span> <b class="caret"></b>
+                        <i class="mdi mdi-account-group"></i>
+                        <span class="nav-text">Staffs</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
-                        <ul class="sub-menu" id="vendors" data-parent="#sidebar-menu">
-                            <li class="">
-                                <a class="sidenav-item-link" href="backoffice_import_vendors">
+                        <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
+                            <li>
+                                <a class="sidenav-item-link" href="backoffice_import_users">
                                     <span class="nav-text">Bulk Import</span>
                                 </a>
                             </li>
 
                             <li class="">
                                 <a class="sidenav-item-link" href="backoffice_manage_vendors">
-                                    <span class="nav-text">Manage Vendors</span>
+                                    <span class="nav-text">Manage Staffs</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                <!-- Users -->
+                <!-- Customers -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="mdi mdi-account-group"></i>
-                        <span class="nav-text">Users</span> <b class="caret"></b>
+                        <i class="mdi mdi-account-group-outline"></i>
+                        <span class="nav-text">Customers</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
                         <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
                             <li>
-                                <a class="sidenav-item-link" href="user-card.html">
-                                    <span class="nav-text">User Grid</span>
+                                <a class="sidenav-item-link" href="backoffice_import_users">
+                                    <span class="nav-text">Bulk Import</span>
                                 </a>
                             </li>
 
                             <li class="">
-                                <a class="sidenav-item-link" href="user-list.html">
-                                    <span class="nav-text">User List</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="user-profile.html">
-                                    <span class="nav-text">Users Profile</span>
+                                <a class="sidenav-item-link" href="backoffice_manage_customers">
+                                    <span class="nav-text">Manage Customers</span>
                                 </a>
                             </li>
                         </ul>
@@ -82,13 +77,13 @@
                     <div class="collapse">
                         <ul class="sub-menu" id="categorys" data-parent="#sidebar-menu">
                             <li class="">
-                                <a class="sidenav-item-link" href="main-category.html">
-                                    <span class="nav-text">Main Category</span>
+                                <a class="sidenav-item-link" href="backoffice_import_categories">
+                                    <span class="nav-text">Bulk Import</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a class="sidenav-item-link" href="sub-category.html">
-                                    <span class="nav-text">Sub Category</span>
+                                <a class="sidenav-item-link" href="backoffice_manage_categories">
+                                    <span class="nav-text">Manage Categories</span>
                                 </a>
                             </li>
                         </ul>
@@ -104,23 +99,13 @@
                     <div class="collapse">
                         <ul class="sub-menu" id="products" data-parent="#sidebar-menu">
                             <li class="">
-                                <a class="sidenav-item-link" href="product-add.html">
-                                    <span class="nav-text">Add Product</span>
+                                <a class="sidenav-item-link" href="backoffice_import_products">
+                                    <span class="nav-text">Bulk Import</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a class="sidenav-item-link" href="product-list.html">
-                                    <span class="nav-text">List Product</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="product-grid.html">
-                                    <span class="nav-text">Grid Product</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="product-detail.html">
-                                    <span class="nav-text">Product Detail</span>
+                                <a class="sidenav-item-link" href="backoffice_manage_products">
+                                    <span class="nav-text">Manage Products</span>
                                 </a>
                             </li>
                         </ul>
@@ -136,105 +121,73 @@
                     <div class="collapse">
                         <ul class="sub-menu" id="orders" data-parent="#sidebar-menu">
                             <li class="">
-                                <a class="sidenav-item-link" href="new-order.html">
-                                    <span class="nav-text">New Order</span>
+                                <a class="sidenav-item-link" href="backoffice_manage_orders">
+                                    <span class="nav-text">Manage Orders</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a class="sidenav-item-link" href="order-history.html">
-                                    <span class="nav-text">Order History</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="order-detail.html">
-                                    <span class="nav-text">Order Detail</span>
-                                </a>
-                            </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="invoice.html">
-                                    <span class="nav-text">Invoice</span>
+                                <a class="sidenav-item-link" href="backoffice_manage_payments">
+                                    <span class="nav-text">Order Payments</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                <!-- Reviews -->
-                <li>
-                    <a class="sidenav-item-link" href="review-list.html">
-                        <i class="mdi mdi-star-half"></i>
-                        <span class="nav-text">Reviews</span>
-                    </a>
-                </li>
-
-                <!-- Brands -->
-                <li>
-                    <a class="sidenav-item-link" href="brand-list.html">
-                        <i class="mdi mdi-tag-faces"></i>
-                        <span class="nav-text">Brands</span>
-                    </a>
-                    <hr>
-                </li>
-
-                <!-- Authentication -->
+                <!-- Settings -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="mdi mdi-login"></i>
-                        <span class="nav-text">Authentication</span> <b class="caret"></b>
+                        <i class="mdi mdi-settings"></i>
+                        <span class="nav-text">Settings</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
-                        <ul class="sub-menu" id="authentication" data-parent="#sidebar-menu">
+                        <ul class="sub-menu" id="settings" data-parent="#sidebar-menu">
                             <li class="">
-                                <a href="sign-in.html">
-                                    <span class="nav-text">Sign In</span>
+                                <a class="sidenav-item-link" href="backoffice_settings_mailer">
+                                    <span class="nav-text">Mailer API</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a href="sign-up.html">
-                                    <span class="nav-text">Sign Up</span>
+                                <a class="sidenav-item-link" href="backoffice_settings_api">
+                                    <span class="nav-text">Thirdparty APIs</span>
+                                </a>
+                            </li>
+                            <li class="">
+                                <a class="sidenav-item-link" href="backoffice_settings_payments">
+                                    <span class="nav-text">Payments Methods</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
 
-                <!-- Icons -->
+                <!-- Lite CMS -->
                 <li class="has-sub">
                     <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="mdi mdi-diamond-stone"></i>
-                        <span class="nav-text">Icons</span> <b class="caret"></b>
+                        <i class="mdi mdi-cast"></i>
+                        <span class="nav-text">Lite CMS</span> <b class="caret"></b>
                     </a>
                     <div class="collapse">
-                        <ul class="sub-menu" id="icons" data-parent="#sidebar-menu">
+                        <ul class="sub-menu" id="settings" data-parent="#sidebar-menu">
                             <li class="">
-                                <a class="sidenav-item-link" href="material-icon.html">
-                                    <span class="nav-text">Material Icon</span>
+                                <a class="sidenav-item-link" href="backoffice_cms_toc">
+                                    <span class="nav-text">Terms & Conditions</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a class="sidenav-item-link" href="font-awsome-icons.html">
-                                    <span class="nav-text">Font Awsome Icon</span>
+                                <a class="sidenav-item-link" href="backoffice_cms_faq">
+                                    <span class="nav-text">FAQ</span>
                                 </a>
                             </li>
                             <li class="">
-                                <a class="sidenav-item-link" href="flag-icon.html">
-                                    <span class="nav-text">Flag Icon</span>
+                                <a class="sidenav-item-link" href="backoffice_cms_contacts">
+                                    <span class="nav-text">Contacts</span>
                                 </a>
                             </li>
-                        </ul>
-                    </div>
-                </li>
-
-                <!-- Other Pages -->
-                <li class="has-sub">
-                    <a class="sidenav-item-link" href="javascript:void(0)">
-                        <i class="mdi mdi-image-filter-none"></i>
-                        <span class="nav-text">Other Pages</span> <b class="caret"></b>
-                    </a>
-                    <div class="collapse">
-                        <ul class="sub-menu" id="otherpages" data-parent="#sidebar-menu">
-                            <li class="has-sub">
-                                <a href="404.html">404 Page</a>
+                            <li class="">
+                                <a class="sidenav-item-link" href="backoffice_cms_about">
+                                    <span class="nav-text">About Us</span>
+                                </a>
                             </li>
                         </ul>
                     </div>
