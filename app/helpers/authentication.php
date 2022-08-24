@@ -75,7 +75,10 @@ if (isset($_POST['User_Login'])) {
     WHERE user_email = '{$user_email}' AND user_password = '{$user_password}' AND user_delete_status != '1'");
     $num = mysqli_fetch_array($ret);
     if ($num > 0) {
+        /* Persist Sessions */
         $_SESSION['user_id'] = $num['user_id'];
+        $_SESSION['user_email'] = $num['user_email'];
+        $_SESSION['user_phone_number'] = $num['user_phone_number'];
 
         /* Determiner Where To Redirect Based On Access Leveles */
         if (($num['user_access_level'] == 'Administrator') ||  ($num['user_access_level'] == 'Staff)')) {
@@ -84,16 +87,20 @@ if (isset($_POST['User_Login'])) {
             $_SESSION['success'] = "Welcome to back office module";
             header('Location: dashboard');
             exit;
-            
         } else if ($num['user_access_level'] == 'Customer') {
+
             /* Nested If Statement On Customer Check If They Have Enaled 2FA  */
             if ($num['user_2fa_status'] == '1') {
+
                 /* Give User OTP Code*/
                 $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$num['user_id']}'";
+
                 /* Mail That OTP Code  */
                 include('../app/mailers/otp.php');
+
+                /* Preapare */
                 if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
-                    $_SESSION['success'] = 'Check your email We have sent you authentication code';
+                    $_SESSION['success'] = 'Check your email we have sent you authentication code';
                     header('Location: landing_otp_confirm');
                     exit;
                 } else {
@@ -109,6 +116,31 @@ if (isset($_POST['User_Login'])) {
         }
     } else {
         $err = "Failed! Invalid Login Credentials";
+    }
+}
+
+/* Resent 2FA Code Incase User Missed It */
+if (isset($_POST['Resent_2FA_Code'])) {
+    $user_phone_number = mysqli_real_escape_string($mysqli, $_SESSION['user_phone_number']);
+    $user_email = mysqli_real_escape_string($mysqli, $_SESSION['user_email']);
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+
+    /* Persist */
+    $resent_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
+
+    /* Mail That OTP Code  */
+    include('../app/mailers/otp.php');
+
+    /* Sent OTP Via SMS */
+    //include('sms_handler.php'); => Disable This Module - Its Unstable As Fuck.
+
+    /* Preapare */
+    if (mysqli_query($mysqli, $resent_sql) && $mail->send()) {
+        $_SESSION['success'] = 'Check your email we have sent you authentication code';
+        header('Location: landing_otp_confirm');
+        exit;
+    } else {
+        $err = "We're experiencing difficulty delivering your OTP code. Please retry later.";
     }
 }
 
