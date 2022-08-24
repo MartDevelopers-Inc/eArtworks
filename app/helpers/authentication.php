@@ -129,13 +129,13 @@ if (isset($_POST['Resent_2FA_Code'])) {
     $resent_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$user_id}'";
 
     /* Mail That OTP Code  */
-    //include('../app/mailers/otp.php');
+    include('../app/mailers/otp.php');
 
     /* Sent OTP Via SMS */
-    include('sms_handler.php');
+    //include('sms_handler.php'); => Disable This Module - Its Unstable As Fuck.
 
     /* Preapare */
-    if (mysqli_query($mysqli, $resent_sql)) {
+    if (mysqli_query($mysqli, $resent_sql) && $mail->send()) {
         $_SESSION['success'] = 'Check your email we have sent you authentication code';
         header('Location: landing_otp_confirm');
         exit;

@@ -65,10 +65,6 @@
  *
  */
 
-/* Load Composer PHPMAILER */
-/* require_once('../vendor/PHPMailer/src/SMTP.php');
-require_once('../vendor/PHPMailer/src/PHPMailer.php');
-require_once('../vendor/PHPMailer/src/Exception.php'); */
 
 include('../vendor/autoload.php');
 

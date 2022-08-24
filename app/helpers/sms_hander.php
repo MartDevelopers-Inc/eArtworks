@@ -65,6 +65,8 @@
  *
  */
 
+/* This Module Is Unstable, For Now Its Disabled  */
+
 
 /* This Helper File Will Process SMS OTP Sending Codes */
 include('../vendor/autoload.php');
@@ -77,8 +79,8 @@ use infobip\api\model\sms\mt\send\textual\SMSAdvancedTextualRequest;
 
 
 
-$username = "mbuvi.steve";
-$password = "M@Y@T@NU";
+$username = "";
+$password = "";
 
 $from = "40014";
 $to = $user_phone_number;
