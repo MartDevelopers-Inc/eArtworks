@@ -106,27 +106,19 @@ if (mysqli_num_rows($user_sql) > 0) {
                                     <img src="<?php echo $image_dir; ?>" class="img-circle" alt="User Image" />
                                     <div class="d-inline-block">
                                         <?php echo $user['user_first_name'] . ' ' . $user['user_last_name']; ?>
-                                        <small class="pt-1"><?php echo $user['user_acces_level']; ?></small>
+                                        <small class="pt-1"><?php echo $user['user_access_level']; ?></small>
                                     </div>
                                 </li>
                                 <li>
-                                    <a href="user-profile.html">
+                                    <a href="backoffice_user_profile">
                                         <i class="mdi mdi-account"></i> My Profile
                                     </a>
                                 </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="mdi mdi-email"></i> Message
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#"> <i class="mdi mdi-diamond-stone"></i> Projects </a>
-                                </li>
                                 <li class="right-sidebar-in">
-                                    <a href="javascript:0"> <i class="mdi mdi-settings-outline"></i> Setting </a>
+                                    <a href="backoffice_user_settings"> <i class="mdi mdi-settings-outline"></i> Settings </a>
                                 </li>
                                 <li class="dropdown-footer">
-                                    <a href="index.html"> <i class="mdi mdi-logout"></i> Log Out </a>
+                                    <a href="logout"> <i class="mdi mdi-logout"></i> Log Out </a>
                                 </li>
                             </ul>
                         </li>
