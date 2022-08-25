@@ -41,5 +41,5 @@ $response = $client->request(
     ]
 );
 
-echo("HTTP code: " . $response->getStatusCode() . PHP_EOL);
-echo("Response body: " . $response->getBody()->getContents() . PHP_EOL);
+echo ("HTTP code: " . $response->getStatusCode() . PHP_EOL);
+echo ("Response body: " . $response->getBody()->getContents() . PHP_EOL);
