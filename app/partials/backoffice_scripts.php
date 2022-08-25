@@ -7,19 +7,6 @@
 <script src="../public/backoffice_assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
 <script src="../public/backoffice_assets/plugins/slick/slick.min.js"></script>
 
-<!-- Chart -->
-<script src="../public/backoffice_assets/plugins/charts/Chart.min.js"></script>
-<script src="../public/backoffice_assets/js/chart.js"></script>
-
-<!-- Google map chart -->
-<script src="../public/backoffice_assets/plugins/charts/google-map-loader.js"></script>
-<script src="../public/backoffice_assets/plugins/charts/google-map.js"></script>
-
-<!-- Date Range Picker -->
-<script src="../public/backoffice_assets/plugins/daterangepicker/moment.min.js"></script>
-<script src="../public/backoffice_assets/plugins/daterangepicker/daterangepicker.js"></script>
-<script src="../public/backoffice_assets/js/date-range.js"></script>
-
 <!-- Option Switcher -->
 <script src="../public/backoffice_assets/plugins/options-sidebar/optionswitcher.js"></script>
 

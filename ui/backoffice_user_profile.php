@@ -74,7 +74,13 @@ require_once('../app/partials/backoffice_head.php');
 $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
 $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
 if (mysqli_num_rows($user_sql) > 0) {
-    while ($customer = mysqli_fetch_array($user_sql)) {
+    while ($staff = mysqli_fetch_array($user_sql)) {
+        /* Image Directory */
+        if ($staff['user_profile_picture'] == '') {
+            $image_dir = "../public/uploads/users/no-profile.png";
+        } else {
+            $image_dir = "../public/uploads/users/" . $staff['user_profile_picture'];
+        }
 ?>
 
         <body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
@@ -97,12 +103,9 @@ if (mysqli_num_rows($user_sql) > 0) {
                             <div class="breadcrumb-wrapper breadcrumb-contacts">
                                 <div>
                                     <h1>User Profile</h1>
-                                    <p class="breadcrumbs"><span><a href="index.html">Home</a></span>
+                                    <p class="breadcrumbs"><span><a href="../">Home</a></span>
                                         <span><i class="mdi mdi-chevron-right"></i></span>Profile
                                     </p>
-                                </div>
-                                <div>
-                                    <a href="user-list.html" class="btn btn-primary">Edit</a>
                                 </div>
                             </div>
                             <div class="card bg-white profile-content">
@@ -111,29 +114,28 @@ if (mysqli_num_rows($user_sql) > 0) {
                                         <div class="profile-content-left profile-left-spacing">
                                             <div class="text-center widget-profile px-0 border-0">
                                                 <div class="card-img mx-auto rounded-circle">
-                                                    <img src="assets/img/user/u1.jpg" alt="user image">
+                                                    <img src="<?php echo $image_dir; ?>" alt="user image">
                                                 </div>
                                                 <div class="card-body">
-                                                    <h4 class="py-2 text-dark">Mark deo</h4>
-                                                    <p>mark.example@gmail.com</p>
-                                                    <a class="btn btn-primary my-3" href="#">Follow</a>
+                                                    <h4 class="py-2 text-dark"><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></h4>
+                                                    <p><?php echo $staff['user_access_level']; ?></p>
                                                 </div>
                                             </div>
 
                                             <div class="d-flex justify-content-between ">
                                                 <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">546</h6>
-                                                    <p>Bought</p>
+                                                    <h6 class="text-dark pb-2"></h6>
+                                                    <p></p>
                                                 </div>
 
                                                 <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">32</h6>
-                                                    <p>Wish List</p>
+                                                    <h6 class="text-dark pb-2"></h6>
+                                                    <p></p>
                                                 </div>
 
                                                 <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">1150</h6>
-                                                    <p>Following</p>
+                                                    <h6 class="text-dark pb-2"></h6>
+                                                    <p></p>
                                                 </div>
                                             </div>
 
@@ -142,29 +144,13 @@ if (mysqli_num_rows($user_sql) > 0) {
                                             <div class="contact-info pt-4">
                                                 <h5 class="text-dark">Contact Information</h5>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Email address</p>
-                                                <p>mark.example@gmail.com</p>
+                                                <p><?php echo $staff['user_email']; ?></p>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Phone Number</p>
-                                                <p>+00 1234 5678 91</p>
+                                                <p><?php echo $staff['user_phone_number']; ?></p>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Birthday</p>
-                                                <p>Dec 10, 1991</p>
-                                                <p class="text-dark font-weight-medium pt-24px mb-2">Social Profile</p>
-                                                <p class="social-button">
-                                                    <a href="#" class="mb-1 btn btn-outline btn-twitter rounded-circle">
-                                                        <i class="mdi mdi-twitter"></i>
-                                                    </a>
-
-                                                    <a href="#" class="mb-1 btn btn-outline btn-linkedin rounded-circle">
-                                                        <i class="mdi mdi-linkedin"></i>
-                                                    </a>
-
-                                                    <a href="#" class="mb-1 btn btn-outline btn-facebook rounded-circle">
-                                                        <i class="mdi mdi-facebook"></i>
-                                                    </a>
-
-                                                    <a href="#" class="mb-1 btn btn-outline btn-skype rounded-circle">
-                                                        <i class="mdi mdi-skype"></i>
-                                                    </a>
-                                                </p>
+                                                <p><?php echo date('M, d Y', strtotime($staff['user_dob'])); ?></p>
+                                                <p class="text-dark font-weight-medium pt-24px mb-2">Address</p>
+                                                <p><?php echo $staff['user_default_address']; ?></p>
                                             </div>
                                         </div>
                                     </div>
