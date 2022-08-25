@@ -96,10 +96,13 @@ if (isset($_POST['User_Login'])) {
                 $two_fa_sql = "UPDATE users SET user_2fa_code = '{$two_fa_codes}' WHERE user_id = '{$num['user_id']}'";
 
                 /* Mail That OTP Code  */
-                include('../app/mailers/otp.php');
+                //include('../app/mailers/otp.php');
+
+                /* Send OTP Via SMS */
+                include('../app/helpers/sms_handler');
 
                 /* Preapare */
-                if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
+                if (mysqli_query($mysqli, $two_fa_sql) ) {
                     $_SESSION['success'] = 'Check your email we have sent you authentication code';
                     header('Location: landing_otp_confirm');
                     exit;

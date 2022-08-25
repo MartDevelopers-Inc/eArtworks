@@ -69,7 +69,7 @@
 
 
 /* This Helper File Will Process SMS OTP Sending Codes */
-include('../vendor/autoload.php');
+include('../../vendor/autoload.php');
 
 use infobip\api\client\SendMultipleTextualSmsAdvanced;
 use infobip\api\configuration\BasicAuthConfiguration;
@@ -79,11 +79,11 @@ use infobip\api\model\sms\mt\send\textual\SMSAdvancedTextualRequest;
 
 
 
-$username = "";
-$password = "";
+$username = "martdevelopers254";
+$password = "Martinez@2067";
 
-$from = "40014";
-$to = $user_phone_number;
+$from = "254740847563";
+$to = '254740847563';
 $to = preg_replace("/\s+/", "", $to);
 $arr = str_split($to);
 
@@ -94,7 +94,7 @@ $text_message = "Test SMS Success";
 // Additionally, note the use of http protocol in base path.
 // That is for tutorial purposes only and should not be done in production.
 // For production you can leave the baseUrl out and rely on the https based default value.
-$configuration = new BasicAuthConfiguration($username, $password, 'http://api.infobip.com/');
+$configuration = new BasicAuthConfiguration($username, $password, 'https://89y4k1.api.infobip.com');
 // Create a client for sending sms texts by passing it the configuration object
 $client = new SendMultipleTextualSmsAdvanced($configuration);
 
