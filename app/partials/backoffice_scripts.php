@@ -10,27 +10,16 @@
 <!-- Option Switcher -->
 <script src="../public/backoffice_assets/plugins/options-sidebar/optionswitcher.js"></script>
 
-<!-- Ekka Custom -->
-<script src="../public/backoffice_assets/js/ekka.js"></script>
 <!-- Toastr -->
 <script src="../public/backoffice_assets/plugins/toastr/toastr.min.js"></script>
 <!-- Inline Scripts -->
 <script>
-    /* Only Add Active To Active Class */
-    jQuery(function($) {
-        var path = window.location.href;
-        $('ul li').each(function() {
-            if (this.href === path) {
-                $(this).addClass('active');
-            }
-        });
-    });
-
     /* Prevent Double Submissions */
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
 </script>
+
 
 <!-- Init  Alerts -->
 <?php if (isset($success)) { ?>
@@ -90,3 +79,5 @@ if (isset($info)) { ?>
     </script>
 <?php }
 ?>
+<!-- Ekka Custom -->
+<script src="../public/backoffice_assets/js/ekka.js"></script>
