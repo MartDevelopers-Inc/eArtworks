@@ -205,9 +205,9 @@ if (mysqli_num_rows($user_sql) > 0) {
         </body>
 
         </html>
-    <?php
+<?php
     }
 } else {
     /* LOad 404 Page */
-    include('error_404.php'); ?>
-<?php } ?>
+    include('error_404.php');
+} ?>
