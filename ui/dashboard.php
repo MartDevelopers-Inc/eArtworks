@@ -69,6 +69,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
+require_once('../app/helpers/analytics.php');
 require_once('../app/partials/backoffice_head.php');
 ?>
 
@@ -94,7 +95,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-1">
                                 <div class="card-body">
-                                    <h2 class="mb-1">1,503</h2>
+                                    <h2 class="mb-1"><?php echo $customers; ?></h2>
                                     <p>Customers</p>
                                     <span class="mdi mdi-account-group"></span>
                                 </div>
@@ -103,7 +104,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-2">
                                 <div class="card-body">
-                                    <h2 class="mb-1">79,503</h2>
+                                    <h2 class="mb-1"><?php echo $staffs; ?></h2>
                                     <p>Staffs</p>
                                     <span class="mdi mdi-account-group-outline"></span>
                                 </div>
@@ -112,7 +113,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-3">
                                 <div class="card-body">
-                                    <h2 class="mb-1">15,503</h2>
+                                    <h2 class="mb-1"><?php echo $products; ?></h2>
                                     <p>Products</p>
                                     <span class="mdi mdi-palette-advanced"></span>
                                 </div>
@@ -121,7 +122,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-4">
                                 <div class="card-body">
-                                    <h2 class="mb-1">Ksh 98,503</h2>
+                                    <h2 class="mb-1">Ksh <?php echo number_format($payments); ?></h2>
                                     <p>Overall Revenue</p>
                                     <span class="mdi mdi-currency-usd"></span>
                                 </div>
@@ -134,7 +135,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-1">
                                 <div class="card-body">
-                                    <h2 class="mb-1">1,503</h2>
+                                    <h2 class="mb-1"><?php echo $placed_orders; ?></h2>
                                     <p>Placed Orders</p>
                                     <span class="mdi mdi-cart-plus"></span>
                                 </div>
@@ -143,7 +144,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-2">
                                 <div class="card-body">
-                                    <h2 class="mb-1">79,503</h2>
+                                    <h2 class="mb-1"><?php echo $awaiting_fulfillment; ?></h2>
                                     <p>Awaiting Fulfilment</p>
                                     <span class="mdi mdi-cart-arrow-down"></span>
                                 </div>
@@ -152,7 +153,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-3">
                                 <div class="card-body">
-                                    <h2 class="mb-1">15,503</h2>
+                                    <h2 class="mb-1"><?php echo $shipped; ?></h2>
                                     <p>Shipped Orders</p>
                                     <span class="mdi mdi-car-limousine"></span>
                                 </div>
@@ -161,7 +162,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-4">
                                 <div class="card-body">
-                                    <h2 class="mb-1">Ksh 98,503</h2>
+                                    <h2 class="mb-1"><?php echo $out_for_delivery; ?></h2>
                                     <p>Out For Delivery</p>
                                     <span class="mdi mdi-dolly"></span>
                                 </div>
@@ -172,7 +173,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-6 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-1">
                                 <div class="card-body">
-                                    <h2 class="mb-1">1,503</h2>
+                                    <h2 class="mb-1"><?php echo $delivered; ?></h2>
                                     <p>Delivered Orders</p>
                                     <span class="mdi mdi-package-variant"></span>
                                 </div>
@@ -181,7 +182,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="col-xl-6 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-2">
                                 <div class="card-body">
-                                    <h2 class="mb-1">79,503</h2>
+                                    <h2 class="mb-1"><?php echo $returned; ?></h2>
                                     <p>Returned Orders</p>
                                     <span class="mdi mdi-account-clock"></span>
                                 </div>

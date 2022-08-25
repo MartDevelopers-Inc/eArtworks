@@ -115,7 +115,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                     </a>
                                 </li>
                                 <li class="right-sidebar-in">
-                                    <a href="backoffice_user_settings"> <i class="mdi mdi-settings-outline"></i> Settings </a>
+                                    <a href="backoffice_user_settings"> <i class="mdi mdi-settings-outline"></i> Authentication Settings </a>
                                 </li>
                                 <li class="dropdown-footer">
                                     <a href="logout"> <i class="mdi mdi-logout"></i> Log Out </a>
