@@ -109,7 +109,25 @@ require_once('../app/partials/backoffice_head.php');
                     </div>
 
                     <div class="card card-default p-4 ec-card-space">
-                        
+                        <div class="card-body col-12">
+                            <p class="text-center">Upload a .xls, spreadsheet file with staff data. Kindly
+                                <a href="">Download a Template here</a>
+                            </p>
+                            <br><br>
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="form-group row mb-6">
+                                    <label class="col-sm-4 col-lg-2 col-form-label">Upload .XLS File</label>
+                                    <div class="col-sm-8 col-lg-10">
+                                        <div class="custom-file mb-1">
+                                            <input type="file" accept="" name="bulk_staff_file" class="custom-file-input">
+                                            <label class="custom-file-label">
+                                                Choose file...
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
 
                 </div> <!-- End Content -->
