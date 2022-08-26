@@ -66,5 +66,20 @@
  */
 
 
- /* Handle Bulk Imports */
- 
+/* Handle Bulk Staff Imports */
+if (isset($_POST['Bulk_Import_Staffs'])) {
+}
+
+
+/* Bulk Import Customers */
+if (isset($_POST['Bulk_Import_Customers'])) {
+}
+
+/* Bulk Import Product Categories */
+if (isset($_POST['Bulk_Import_Product_Categories'])) {
+}
+
+/* Bulk Import Products */
+if (isset($_POST['Bulk_Import_Products'])) {
+
+}

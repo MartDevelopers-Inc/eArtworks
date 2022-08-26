@@ -70,6 +70,7 @@ require_once('../app/settings/codeGen.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
 require_once('../app/helpers/users.php');
+require_once('../app/helpers/bulk_import.php');
 require_once('../app/partials/backoffice_head.php');
 ?>
 
@@ -130,7 +131,7 @@ require_once('../app/partials/backoffice_head.php');
                                 </div>
                                 <br>
                                 <div class="text-right">
-                                    <button type="submit" name="upload" class="btn btn-primary">Upload File</button>
+                                    <button type="submit" name="Bulk_Import_Staffs" class="btn btn-primary">Upload File</button>
                                 </div>
                                 <br>
                             </form>
