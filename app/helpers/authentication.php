@@ -183,7 +183,7 @@ if (isset($_POST['Resent_2FA_Code'])) {
 
         $to = "254" . substr($to, -9);
 
-        /* GENERATE API HEADERS & PAYLOAF */
+        /* GENERATE API HEADERS & PAYLOAD */
         $client = new Client([
             'base_uri' => "https://89y4k1.api.infobip.com/",
             'headers' => [
