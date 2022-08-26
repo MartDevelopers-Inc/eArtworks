@@ -112,7 +112,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="card-body col-12">
                             <p class="text-center">
                                 Allowed File Types: XLS, XLSX. Please,
-                                <a class="text-success" href="../public/uploads/templates/staffs_bulk_import.xls">Download</a>
+                                <a class="text-success" href="../public/uploads/templates/users.xlsx">Download</a>
                                 A Template File
                             </p>
                             <br><br>
