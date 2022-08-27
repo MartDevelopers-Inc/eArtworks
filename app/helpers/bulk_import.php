@@ -66,7 +66,7 @@
  */
 
 /* Load Composer Autoload */
-require_once('../vendor/autoload.php');
+require('../vendor/autoload.php');
 
 use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
@@ -130,7 +130,7 @@ if (isset($_POST['Bulk_Import_Staffs'])) {
             }
 
             /* Hidden Values That Cannot Be Posted Via XLS */
-            $user_password  = mysqli_real_escape_string($mysqli, 'Demo123@'); /* ALL PASSWORDS ARE SET TO DEFAULT SYSTEM PASSWORD */
+            $user_password  = sha1(md5(mysqli_real_escape_string($mysqli, 'Demo123@'))); /* ALL PASSWORDS ARE SET TO DEFAULT SYSTEM PASSWORD */
             $user_access_level = mysqli_real_escape_string($mysqli, 'Staff');
 
 
