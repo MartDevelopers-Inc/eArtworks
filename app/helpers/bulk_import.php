@@ -145,8 +145,8 @@ if (isset($_POST['Bulk_Import_Staffs'])) {
             } else {
                 if (!empty($user_email) || !empty($user_first_name) || !empty($user_phone_number)) {
                     /* Persist Bulk Imports If No Duplicates */
-                    $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_access_level)
-                    VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_access_level}')";
+                    $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_password,  user_default_address, user_access_level)
+                    VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_password}', '{$user_default_address}', '{$user_access_level}')";
 
                     /* Prepare */
                     if (mysqli_query($mysqli, $insert_sql) && unlink($targetPath)) {
