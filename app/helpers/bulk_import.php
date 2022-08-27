@@ -74,7 +74,6 @@ $Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 
 
 /* Handle Bulk Staff Imports */
-
 if (isset($_POST['Bulk_Import_Staffs'])) {
     $allowedFileType = [
         'application/vnd.ms-excel',
@@ -100,86 +99,60 @@ if (isset($_POST['Bulk_Import_Staffs'])) {
 
         for ($i = 1; $i <= $sheetCount; $i++) {
 
-            $user_number  = "";
+            $user_first_name  = "";
             if (isset($spreadSheetAry[$i][0])) {
-                $user_number  = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
+                $user_first_name  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][0]);
             }
 
-            $user_name  = "";
+            $user_last_name  = "";
             if (isset($spreadSheetAry[$i][1])) {
-                $user_name  = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
+                $user_last_name  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][1]);
             }
 
             $user_email   = "";
             if (isset($spreadSheetAry[$i][2])) {
-                $user_email   = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
+                $user_email   = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][2]);
             }
 
-            $user_phone   = "";
+            $user_dob   = "";
             if (isset($spreadSheetAry[$i][3])) {
-                $user_phone   = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+                $user_dob   = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][3]);
             }
 
-            $user_adr   = "";
+            $user_phone_number   = "";
             if (isset($spreadSheetAry[$i][4])) {
-                $user_adr   = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
+                $user_phone_number   = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][4]);
             }
 
-            /* User Access Level To Educational Admin */
-            $user_access_level  = 'lecturer';
+            $user_default_address   = "";
+            if (isset($spreadSheetAry[$i][5])) {
+                $user_default_address   = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][5]);
+            }
 
-            include('../config/codeGen.php');
-            /* User Password Reset Token */
-            $password_reset_token = $tk;
-            $activate_url = $account_password_set . $password_reset_token;
+            /* Hidden Values That Cannot Be Posted Via XLS */
+            $user_password  = mysqli_real_escape_string($mysqli, 'Demo123@'); /* ALL PASSWORDS ARE SET TO DEFAULT SYSTEM PASSWORD */
+            $user_access_level = mysqli_real_escape_string($mysqli, 'Staff');
 
-            /* Log Attributes */
-            $log_ip = $_SERVER['REMOTE_ADDR'];
-            $log_type = 'Bulk Imported ' . $user_name . ' ' . $user_name . ' Details';
-            $log_user_id = $_SESSION['user_id'];
 
-            /* Prevent Double Entries */
-            $sql = "SELECT * FROM users  WHERE user_email ='$user_email'  ";
+            /* Prevent Double Entries -  This may or not be triggered but the duplicate value will be skipped */
+            $sql = "SELECT * FROM users  WHERE user_email ='{$user_email}'  ";
             $res = mysqli_query($mysqli, $sql);
             if (mysqli_num_rows($res) > 0) {
                 $row = mysqli_fetch_assoc($res);
-                if (
-                    $user_email == $row['user_email']  ||
-                    $user_number == $row['user_number']
-                ) {
-                    $err = 'User With This Email : ' . $user_email . ' Or This  ' . $user_number . 'Already Exists';
+                if ($user_email == $row['user_email']  || $user_phone_number == $row['user_phone_number']) {
+                    $err = 'User With This Email : ' . $user_email . ' Or This  ' . $user_phone_number . 'Phone Number Already Exists';
                 }
             } else {
-                /* Persist Bulk Imports If No Duplicates */
-                if (!empty($user_number) || !empty($user_name)) {
-                    $query = "INSERT INTO  users (user_number, user_name, user_email, user_phone, user_access_level, user_adr, password_reset_token)
-                    VALUES(?,?,?,?,?,?,?)";
-                    $log = "INSERT INTO logs (log_ip, log_user_id,  log_type) VALUES(?,?,?)";
-                    $log_prepare = $mysqli->prepare($log);
-                    $log_bind = $log_prepare->bind_param(
-                        'sss',
-                        $log_ip,
-                        $log_user_id,
-                        $log_type
-                    );
-                    $log_prepare->execute();
-                    $paramType = "sssssss";
-                    $paramArray = array(
-                        $user_number,
-                        $user_name,
-                        $user_email,
-                        $user_phone,
-                        $user_access_level,
-                        $user_adr,
-                        $password_reset_token
-                    );
-                    $insertId = $db->insert($query, $paramType, $paramArray);
-                    /* Load Mailer */
-                    include('../mailers/new_user_account_mailer.php');
-                    if (!empty($insertId) && $log_prepare && $mail->send() && unlink($targetPath)) {
-                        $success = "Teaching Staff Data Is Imported ";
+                if (!empty($user_email) || !empty($user_first_name) || !empty($user_phone_number)) {
+                    /* Persist Bulk Imports If No Duplicates */
+                    $sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_access_level)
+                    VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_access_level}')";
+
+                    /* Prepare */
+                    if (mysqli_query($mysqli, $sql) && unlink($targetPath)) {
+                        $success = "Users data imported successfully";
                     } else {
-                        $err = "Error Occured While Importing Data $mail->ErrorInfo";
+                        $err = "Failed, please try again";
                     }
                 }
             }
