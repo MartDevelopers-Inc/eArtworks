@@ -12,12 +12,26 @@
 
 <!-- Toastr -->
 <script src="../public/backoffice_assets/plugins/toastr/toastr.min.js"></script>
+
+<!-- Custom File Upload Scripts -->
+<script src="../public/backoffice_assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
 <!-- Inline Scripts -->
 <script>
     /* Prevent Double Submissions */
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
+    /* Init Custom File Select */
+    $(document).ready(function() {
+        bsCustomFileInput.init();
+    });
+    /* Show Selected File Name */
+    document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+        var fileName = document.getElementById("myInput").files[0].name;
+        var nextSibling = e.target.nextElementSibling
+        nextSibling.innerText = fileName
+    })
 </script>
 
 

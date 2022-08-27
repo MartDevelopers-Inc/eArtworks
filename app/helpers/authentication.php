@@ -65,8 +65,13 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+require '../vendor/autoload.php';
+
+use GuzzleHttp\Client;
+use GuzzleHttp\RequestOptions;
 
 /* Login */
+
 if (isset($_POST['User_Login'])) {
     $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
     $user_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['user_password'])));
@@ -100,7 +105,45 @@ if (isset($_POST['User_Login'])) {
 
                 /* Preapare */
                 if (mysqli_query($mysqli, $two_fa_sql) && $mail->send()) {
-                    $_SESSION['success'] = 'Check your email we have sent you authentication code';
+
+                    /* SMS OTP Code */
+                    $to = $_SESSION['user_phone_number'];
+                    $to = preg_replace("/\s+/", "", $to);
+                    $arr = str_split($to);
+
+                    $to = "254" . substr($to, -9);
+
+                    /* GENERATE API HEADERS & PAYLOAF */
+                    $client = new Client([
+                        'base_uri' => "https://89y4k1.api.infobip.com/",
+                        'headers' => [
+                            'Authorization' => "App 2015dca8a64813666b47902dd6567af9-12ae6a93-ddb3-4af8-b01f-c82bab88a71c",
+                            'Content-Type' => 'application/json',
+                            'Accept' => 'application/json',
+                        ]
+                    ]);
+
+                    /* Prepare API REQUEST To Infobip */
+
+                    $response = $client->request(
+                        'POST',
+                        'sms/2/text/advanced',
+                        [
+                            RequestOptions::JSON => [
+                                'messages' => [
+                                    [
+                                        'from' => 'eArtworks',
+                                        'destinations' => [
+                                            ['to' => "$to"]
+                                        ],
+                                        'text' => 'This is your OTP Code: ' . $two_fa_codes,
+                                    ]
+                                ]
+                            ],
+                        ]
+                    );
+
+                    $_SESSION['success'] = 'Check your email or message we have sent you authentication code';
                     header('Location: landing_otp_confirm');
                     exit;
                 } else {
@@ -131,12 +174,48 @@ if (isset($_POST['Resent_2FA_Code'])) {
     /* Mail That OTP Code  */
     include('../app/mailers/otp.php');
 
-    /* Sent OTP Via SMS */
-    //include('sms_handler.php'); => Disable This Module - Its Unstable As Fuck.
-
     /* Preapare */
     if (mysqli_query($mysqli, $resent_sql) && $mail->send()) {
-        $_SESSION['success'] = 'Check your email we have sent you authentication code';
+        /* SMS OTP Code */
+        $to = $user_phone_number;
+        $to = preg_replace("/\s+/", "", $to);
+        $arr = str_split($to);
+
+        $to = "254" . substr($to, -9);
+
+        /* GENERATE API HEADERS & PAYLOAD */
+        $client = new Client([
+            'base_uri' => "https://89y4k1.api.infobip.com/",
+            'headers' => [
+                'Authorization' => "App 2015dca8a64813666b47902dd6567af9-12ae6a93-ddb3-4af8-b01f-c82bab88a71c",
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+            ]
+        ]);
+        
+
+        /* Prepare API REQUEST To Infobip */
+
+        $response = $client->request(
+            'POST',
+            'sms/2/text/advanced',
+            [
+                RequestOptions::JSON => [
+                    'messages' => [
+                        [
+                            'from' => 'eArtworks',
+                            'destinations' => [
+                                ['to' => "$to"]
+                            ],
+                            'text' => 'This is your OTP Code: ' . $two_fa_codes,
+                        ]
+                    ]
+                ],
+            ]
+        );
+
+        /* If the above logic is error free pass an alert message to users */
+        $_SESSION['success'] = 'Check your email or message we have sent you authentication code';
         header('Location: landing_otp_confirm');
         exit;
     } else {
