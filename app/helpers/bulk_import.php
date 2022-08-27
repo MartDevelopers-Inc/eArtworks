@@ -65,10 +65,128 @@
  *
  */
 
+/* Load Composer Autoload */
+require_once('../vendor/autoload.php');
+
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+
+$Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+
 
 /* Handle Bulk Staff Imports */
+
 if (isset($_POST['Bulk_Import_Staffs'])) {
-    
+    $allowedFileType = [
+        'application/vnd.ms-excel',
+        'text/xls',
+        'text/xlsx',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    /* Avoid Names Duplication And Replacement */
+    $temp_user_file = explode('.', $_FILES['file']['name']);
+    $new_user_file = 'BULK_IMPORT_USERS' . (round(microtime(true)) . '.' . end($temp_user_file));
+
+    /* Is File Extension Allowed */
+    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        $targetPath = "../public/uploads/users/xls_files/" . $new_user_file;
+        move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+
+
+        $spreadSheet = $Reader->load($targetPath);
+        $excelSheet = $spreadSheet->getActiveSheet();
+        $spreadSheetAry = $excelSheet->toArray();
+        $sheetCount = count($spreadSheetAry);
+
+
+        for ($i = 1; $i <= $sheetCount; $i++) {
+
+            $user_number  = "";
+            if (isset($spreadSheetAry[$i][0])) {
+                $user_number  = mysqli_real_escape_string($conn, $spreadSheetAry[$i][0]);
+            }
+
+            $user_name  = "";
+            if (isset($spreadSheetAry[$i][1])) {
+                $user_name  = mysqli_real_escape_string($conn, $spreadSheetAry[$i][1]);
+            }
+
+            $user_email   = "";
+            if (isset($spreadSheetAry[$i][2])) {
+                $user_email   = mysqli_real_escape_string($conn, $spreadSheetAry[$i][2]);
+            }
+
+            $user_phone   = "";
+            if (isset($spreadSheetAry[$i][3])) {
+                $user_phone   = mysqli_real_escape_string($conn, $spreadSheetAry[$i][3]);
+            }
+
+            $user_adr   = "";
+            if (isset($spreadSheetAry[$i][4])) {
+                $user_adr   = mysqli_real_escape_string($conn, $spreadSheetAry[$i][4]);
+            }
+
+            /* User Access Level To Educational Admin */
+            $user_access_level  = 'lecturer';
+
+            include('../config/codeGen.php');
+            /* User Password Reset Token */
+            $password_reset_token = $tk;
+            $activate_url = $account_password_set . $password_reset_token;
+
+            /* Log Attributes */
+            $log_ip = $_SERVER['REMOTE_ADDR'];
+            $log_type = 'Bulk Imported ' . $user_name . ' ' . $user_name . ' Details';
+            $log_user_id = $_SESSION['user_id'];
+
+            /* Prevent Double Entries */
+            $sql = "SELECT * FROM users  WHERE user_email ='$user_email'  ";
+            $res = mysqli_query($mysqli, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                $row = mysqli_fetch_assoc($res);
+                if (
+                    $user_email == $row['user_email']  ||
+                    $user_number == $row['user_number']
+                ) {
+                    $err = 'User With This Email : ' . $user_email . ' Or This  ' . $user_number . 'Already Exists';
+                }
+            } else {
+                /* Persist Bulk Imports If No Duplicates */
+                if (!empty($user_number) || !empty($user_name)) {
+                    $query = "INSERT INTO  users (user_number, user_name, user_email, user_phone, user_access_level, user_adr, password_reset_token)
+                    VALUES(?,?,?,?,?,?,?)";
+                    $log = "INSERT INTO logs (log_ip, log_user_id,  log_type) VALUES(?,?,?)";
+                    $log_prepare = $mysqli->prepare($log);
+                    $log_bind = $log_prepare->bind_param(
+                        'sss',
+                        $log_ip,
+                        $log_user_id,
+                        $log_type
+                    );
+                    $log_prepare->execute();
+                    $paramType = "sssssss";
+                    $paramArray = array(
+                        $user_number,
+                        $user_name,
+                        $user_email,
+                        $user_phone,
+                        $user_access_level,
+                        $user_adr,
+                        $password_reset_token
+                    );
+                    $insertId = $db->insert($query, $paramType, $paramArray);
+                    /* Load Mailer */
+                    include('../mailers/new_user_account_mailer.php');
+                    if (!empty($insertId) && $log_prepare && $mail->send() && unlink($targetPath)) {
+                        $success = "Teaching Staff Data Is Imported ";
+                    } else {
+                        $err = "Error Occured While Importing Data $mail->ErrorInfo";
+                    }
+                }
+            }
+        }
+    } else {
+        $info = "Invalid File Type. Upload Excel File.";
+    }
 }
 
 /* Bulk Import Customers */
