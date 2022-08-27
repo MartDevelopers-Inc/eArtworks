@@ -114,7 +114,6 @@ require_once('../app/partials/backoffice_head.php');
                                 Allowed File Types: XLS, XLSX. Please,
                                 <a class="text-success" href="../public/uploads/templates/users.xlsx">Download</a>
                                 A Template File
-                                <?php echo $error; ?>
                             </p>
                             <br><br>
                             <form method="post" enctype="multipart/form-data" role="form">

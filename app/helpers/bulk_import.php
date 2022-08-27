@@ -149,7 +149,7 @@ if (isset($_POST['Bulk_Import_Staffs'])) {
                     VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_password}', '{$user_default_address}', '{$user_access_level}')";
 
                     /* Prepare */
-                    if (mysqli_query($mysqli, $insert_sql) && unlink($targetPath)) {
+                    if (mysqli_query($mysqli, $insert_sql)) {
                         $success = "Users data imported successfully";
                     } else {
                         $err = "Failed, please try again";
@@ -157,6 +157,8 @@ if (isset($_POST['Bulk_Import_Staffs'])) {
                 }
             }
         }
+        /* Delete This File */
+        unlink($targetPath);
     } else {
         $info = "Invalid File Type. Upload Excel File.";
     }
