@@ -20,11 +20,16 @@
     <link href="../public/backoffice_assets/plugins/daterangepicker/daterangepicker.css" rel="stylesheet">
     <link href="../public/backoffice_assets/plugins/simplebar/simplebar.css" rel="stylesheet" />
 
-    <!-- Ekka CSS -->
+    <!-- Theme CSS -->
     <link id="ekka-css" href="../public/backoffice_assets/css/ekka.css" rel="stylesheet" />
 
     <!-- FAVICON -->
     <link href="../public/backoffice_assets/img/favicon.png" rel="shortcut icon" />
+
+    <!-- Data Tables -->
+    <link href='../public/backoffice_assets/plugins/data-tables/datatables.bootstrap5.min.css' rel='stylesheet'>
+    <link href='../public/backoffice_assets/plugins/data-tables/responsive.datatables.min.css' rel='stylesheet'>
+
     <!-- Toastr -->
     <link rel="stylesheet" href="../public/backoffice_assets/plugins/toastr/toastr.min.css">
     <?php
