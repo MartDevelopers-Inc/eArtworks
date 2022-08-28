@@ -214,8 +214,8 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="#">Edit</a>
-                                                                        <a class="dropdown-item" href="#">Delete</a>
+                                                                        <a class="dropdown-item" href="backoffice_manage_staff?view=<?php echo $staffs['user_id']; ?>">Edit</a>
+                                                                        <a class="dropdown-item" href="delete_staff_<?php echo $staffs['user_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
