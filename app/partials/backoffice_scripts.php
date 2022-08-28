@@ -7,6 +7,11 @@
 <script src="../public/backoffice_assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
 <script src="../public/backoffice_assets/plugins/slick/slick.min.js"></script>
 
+
+<!-- Data Tables -->
+<script src='../public/backoffice_assets/plugins/data-tables/jquery.datatables.min.js'></script>
+<script src='../public/backoffice_assets/plugins/data-tables/datatables.bootstrap5.min.js'></script>
+<script src='../public/backoffice_assets/plugins/data-tables/datatables.responsive.min.js'></script>
 <!-- Option Switcher -->
 <script src="../public/backoffice_assets/plugins/options-sidebar/optionswitcher.js"></script>
 

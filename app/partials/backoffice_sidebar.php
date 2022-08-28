@@ -36,7 +36,7 @@
                             </li>
 
                             <li class="">
-                                <a class="sidenav-item-link" href="backoffice_manage_vendors">
+                                <a class="sidenav-item-link" href="backoffice_manage_staffs">
                                     <span class="nav-text">Manage Staffs</span>
                                 </a>
                             </li>
