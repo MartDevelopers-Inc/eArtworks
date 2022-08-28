@@ -193,3 +193,9 @@ if (isset($_POST['Customer_2FA'])) {
         $err = "Failed!, Please Try Again";
     }
 }
+
+
+/* Register Staff */
+if (isset($_POST['Register_New_Staff'])) {
+}
+/* Delete Staff */

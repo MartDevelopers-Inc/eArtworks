@@ -69,6 +69,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
+require_once('../app/helpers/users.php');
 require_once('../app/partials/backoffice_head.php');
 ?>
 
