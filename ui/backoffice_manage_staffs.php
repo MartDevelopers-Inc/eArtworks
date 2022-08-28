@@ -208,9 +208,9 @@ require_once('../app/partials/backoffice_head.php');
                                                             <td><?php echo date('M d Y', strtotime($staffs['user_dob'])); ?></td>
                                                             <td>
                                                                 <div class="btn-group mb-1">
-                                                                    <button type="button" class="btn btn-outline-success">Info</button>
+                                                                    <button type="button" class="btn btn-outline-success">Manage</button>
                                                                     <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                                                        <span class="sr-only">Info</span>
+                                                                        <span class="sr-only">Manage</span>
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
