@@ -94,38 +94,46 @@ require_once('../app/partials/backoffice_head.php');
                     <div class="row">
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-1">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $customers; ?></h2>
-                                    <p>Customers</p>
-                                    <span class="mdi mdi-account-group"></span>
-                                </div>
+                                <a href="backoffice_manage_customers" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $customers; ?></h2>
+                                        <p>Customers</p>
+                                        <span class="mdi mdi-account-group"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-2">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $staffs; ?></h2>
-                                    <p>Staffs</p>
-                                    <span class="mdi mdi-account-group-outline"></span>
-                                </div>
+                                <a href="backoffice_manage_staffs" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $staffs; ?></h2>
+                                        <p>Staffs</p>
+                                        <span class="mdi mdi-account-group-outline"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-3">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $products; ?></h2>
-                                    <p>Products</p>
-                                    <span class="mdi mdi-palette-advanced"></span>
-                                </div>
+                                <a href="backoffice_manage_products" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $products; ?></h2>
+                                        <p>Products</p>
+                                        <span class="mdi mdi-palette-advanced"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-4">
-                                <div class="card-body">
-                                    <h2 class="mb-1">Ksh <?php echo number_format($payments); ?></h2>
-                                    <p>Overall Revenue</p>
-                                    <span class="mdi mdi-currency-usd"></span>
-                                </div>
+                                <a href="backoffice_manage_payments" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1">Ksh <?php echo number_format($payments); ?></h2>
+                                        <p>Overall Revenue</p>
+                                        <span class="mdi mdi-currency-usd"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -134,58 +142,70 @@ require_once('../app/partials/backoffice_head.php');
                     <div class="row">
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-1">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $placed_orders; ?></h2>
-                                    <p>Placed Orders</p>
-                                    <span class="mdi mdi-cart-plus"></span>
-                                </div>
+                                <a href="backoffice_manage_orders" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $placed_orders; ?></h2>
+                                        <p>Placed Orders</p>
+                                        <span class="mdi mdi-cart-plus"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-2">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $awaiting_fulfillment; ?></h2>
-                                    <p>Awaiting Fulfilment</p>
-                                    <span class="mdi mdi-cart-arrow-down"></span>
-                                </div>
+                                <a href="backoffice_manage_orders" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $awaiting_fulfillment; ?></h2>
+                                        <p>Awaiting Fulfilment</p>
+                                        <span class="mdi mdi-cart-arrow-down"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-3">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $shipped; ?></h2>
-                                    <p>Shipped Orders</p>
-                                    <span class="mdi mdi-car-limousine"></span>
-                                </div>
+                                <a href="backoffice_manage_orders" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $shipped; ?></h2>
+                                        <p>Shipped Orders</p>
+                                        <span class="mdi mdi-car-limousine"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-4">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $out_for_delivery; ?></h2>
-                                    <p>Out For Delivery</p>
-                                    <span class="mdi mdi-dolly"></span>
-                                </div>
+                                <a href="backoffice_manage_orders" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $out_for_delivery; ?></h2>
+                                        <p>Out For Delivery</p>
+                                        <span class="mdi mdi-dolly"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-xl-6 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-1">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $delivered; ?></h2>
-                                    <p>Delivered Orders</p>
-                                    <span class="mdi mdi-package-variant"></span>
-                                </div>
+                                <a href="backoffice_manage_orders" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $delivered; ?></h2>
+                                        <p>Delivered Orders</p>
+                                        <span class="mdi mdi-package-variant"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                         <div class="col-xl-6 col-sm-6 p-b-15 lbl-card">
                             <div class="card card-mini dash-card card-2">
-                                <div class="card-body">
-                                    <h2 class="mb-1"><?php echo $returned; ?></h2>
-                                    <p>Returned Orders</p>
-                                    <span class="mdi mdi-account-clock"></span>
-                                </div>
+                                <a href="backoffice_manage_orders" class="text-dark">
+                                    <div class="card-body">
+                                        <h2 class="mb-1"><?php echo $returned; ?></h2>
+                                        <p>Returned Orders</p>
+                                        <span class="mdi mdi-account-clock"></span>
+                                    </div>
+                                </a>
                             </div>
                         </div>
                     </div>
