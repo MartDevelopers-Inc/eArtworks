@@ -235,7 +235,7 @@ if (isset($_POST['Register_New_Staff'])) {
         } else {
             /* Persist */
             $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
-            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$confirm_password}', '{$user_access_level}', '{$user_profile_picture}')";
+            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$confirm_password}', '{$user_access_level}', '{$new_user_image}')";
 
             /* Prepare */
             if (mysqli_query($mysqli, $insert_sql)) {

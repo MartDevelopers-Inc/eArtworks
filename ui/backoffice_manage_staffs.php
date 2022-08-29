@@ -165,7 +165,7 @@ require_once('../app/partials/backoffice_head.php');
                                             <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Profile Photo</label>
                                             <div class="col-sm-12 col-lg-12">
                                                 <div class="custom-file mb-1">
-                                                    <input type="file" accept=".png, .jpg" required name="user_profile_picture" class="custom-file-input">
+                                                    <input type="file" accept=".png, .jpg, .jpeg" required name="user_profile_picture" class="custom-file-input">
                                                     <label class="custom-file-label" for="coverImage">
                                                         Choose file...
                                                     </label>
