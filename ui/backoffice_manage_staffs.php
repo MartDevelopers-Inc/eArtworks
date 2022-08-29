@@ -137,9 +137,17 @@ require_once('../app/partials/backoffice_head.php');
                                                 <input type="email" required class="form-control" name="user_email">
                                             </div>
 
-                                            <div class="form-group col-lg-8">
+                                            <div class="form-group col-lg-4">
                                                 <label for="email">Phone Number</label>
                                                 <input type="text" required class="form-control" name="user_phone_number">
+                                            </div>
+
+                                            <div class="form-group col-lg-4">
+                                                <label for="email">Access Level</label>
+                                                <select type="text" required class="form-control" name="user_access_level">
+                                                    <option>Staff</option>
+                                                    <option>Administrator</option>
+                                                </select>
                                             </div>
 
                                             <div class="form-group col-lg-4">
@@ -157,7 +165,7 @@ require_once('../app/partials/backoffice_head.php');
                                             <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Profile Photo</label>
                                             <div class="col-sm-12 col-lg-12">
                                                 <div class="custom-file mb-1">
-                                                    <input type="file" accept=".png, .jpg" name="user_profile_picture" class="custom-file-input">
+                                                    <input type="file" accept=".png, .jpg" required name="user_profile_picture" class="custom-file-input">
                                                     <label class="custom-file-label" for="coverImage">
                                                         Choose file...
                                                     </label>
@@ -168,7 +176,7 @@ require_once('../app/partials/backoffice_head.php');
 
                                     <div class="modal-footer px-4">
                                         <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" type="Register_New_Staff" class="btn btn-primary btn-pill">Register Staff</button>
+                                        <button type="submit" name="Register_New_Staff" class="btn btn-primary btn-pill">Register Staff</button>
                                     </div>
                                 </form>
                             </div>

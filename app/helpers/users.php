@@ -196,13 +196,61 @@ if (isset($_POST['Customer_2FA'])) {
 
 /* Register Staff */
 if (isset($_POST['Register_New_Staff'])) {
+    /*
+     The following functionalities has been removed
+     1. Automated email with a link to create new password
+     2. Automated welcome email to help user set up account
+     3. Password is given by the entity who is registering the account
+    */
+    $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
+    $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_dob  = mysqli_real_escape_string($mysqli, $_POST['user_dob']);
+    $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
+    $user_access_level  = mysqli_real_escape_string($mysqli, $_POST['user_access_level']);
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+    /* Process User Image */
+    $temp_user_image = explode('.', $_FILES['user_profile_picture']['name']);
+    $new_user_image = $user_access_level . '_' . (round(microtime(true)) . '.' . end($temp_user_image));
+    move_uploaded_file(
+        $_FILES['user_profile_picture']['tmp_name'],
+        '../public/uploads/users/' . $new_user_image
+    );
+    /* Check If Passwords Match */
+    if ($new_password != $confirm_password) {
+        $err = "Passwords Does Not Match";
+    } else {
+        /* Avoid Duplications */
+        $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
+            ) {
+                $err = 'Phone Number Or Email Already Exists';
+            }
+        } else {
+            /* Persist */
+            $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
+            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$confirm_password}', '{$user_access_level}', '{$user_profile_picture}')";
+
+            /* Prepare */
+            if (mysqli_query($mysqli, $insert_sql)) {
+                $success = "User registered";
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
+        }
+    }
 }
 
 /*
 The following are common functions that are can be accessed by
 all access levels
 */
-
 
 /* Delete Users */
 if (isset($_POST['Delete_User'])) {
