@@ -73,7 +73,7 @@
 
 /* Update Customer Account */
 if (isset($_POST['Update_Customer_Profile'])) {
-    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
     $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
     $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
     $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);

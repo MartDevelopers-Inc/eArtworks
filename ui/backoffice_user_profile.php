@@ -172,6 +172,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label for="firstName">First name</label>
+                                                                        <input type="hidden" required value="<?php echo $staff['user_id']; ?>" class="form-control" name="user_id">
                                                                         <input type="text" required value="<?php echo $staff['user_first_name']; ?>" class="form-control" name="user_first_name">
                                                                     </div>
                                                                 </div>

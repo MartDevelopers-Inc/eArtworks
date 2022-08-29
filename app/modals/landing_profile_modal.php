@@ -8,6 +8,7 @@
                             <form class="row g-3" method="POST" enctype="multipart/form-data">
                                 <div class="col-md-6 space-t-15">
                                     <label class="form-label">First name</label>
+                                    <input type="hidden" name="user_id" value="<?php echo $customer['user_id']; ?>" required class="form-control">
                                     <input type="text" name="user_first_name" value="<?php echo $customer['user_first_name']; ?>" required class="form-control">
                                 </div>
                                 <div class="col-md-6 space-t-15">
