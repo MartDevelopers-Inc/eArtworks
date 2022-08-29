@@ -111,7 +111,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                             </div>
                             <div class="card bg-white profile-content">
                                 <div class="row">
-                                    <div class="col-lg-4 col-xl-3">
+                                    <div class="col-lg-5 col-xl-4">
                                         <div class="profile-content-left profile-left-spacing">
                                             <div class="text-center widget-profile px-0 border-0">
                                                 <div class="card-img mx-auto rounded-circle">
@@ -156,7 +156,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-8 col-xl-9">
+                                    <div class="col-lg-7 col-xl-8">
                                         <div class="profile-content-right profile-right-spacing py-5">
                                             <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myProfileTab" role="tablist">
                                                 <li class="nav-item" role="presentation">

@@ -114,7 +114,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                         <i class="mdi mdi-account"></i> My Profile
                                     </a>
                                 </li>
-                                <li class="right-sidebar-in">
+                                <li>
                                     <a href="backoffice_user_settings"> <i class="mdi mdi-settings-outline"></i> Authentication Settings </a>
                                 </li>
                                 <li class="dropdown-footer">
