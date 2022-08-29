@@ -71,7 +71,66 @@
 
 /* Register Customer */
 
-/* Update Customer */
+if (isset($_POST['Register_New_Customer'])) {
+    /*
+     The following functionalities has been removed
+     1. Automated email with a link to create new password
+     2. Automated welcome email to help user set up account
+     3. Password is given by the entity who is registering the account
+    */
+    $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
+    $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_dob  = mysqli_real_escape_string($mysqli, $_POST['user_dob']);
+    $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
+    $user_access_level  = mysqli_real_escape_string($mysqli, $_POST['user_access_level']);
+    $user_password = sha1(md5(mysqli_real_escape_string($mysqli, 'Demo123@'))); /* Default User Password - Update This Password */
+    if (!empty($_FILES['user_profile_picture']['name'])) {
+        /* Process User Image */
+        $temp_user_image = explode('.', $_FILES['user_profile_picture']['name']);
+        $new_user_image = 'Customer_' . (round(microtime(true)) . '.' . end($temp_user_image));
+        move_uploaded_file(
+            $_FILES['user_profile_picture']['tmp_name'],
+            '../public/uploads/users/' . $new_user_image
+        );
+
+        /* Avoid Duplications */
+        $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
+            ) {
+                $err = 'Phone Number Or Email Already Exists';
+            }
+        } else {
+            /* Persist */
+            $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
+                VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}', '{$new_user_image}')";
+
+            /* Prepare */
+            if (mysqli_query($mysqli, $insert_sql)) {
+                $success = "User registered";
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
+        }
+    } else {
+        /* Persist Without Profile Photo */
+        $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level)
+        VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}')";
+
+        /* Prepare */
+        if (mysqli_query($mysqli, $insert_sql)) {
+            $success = "User registered";
+        } else {
+            $err = "Failed!, Please Try Again";
+        }
+    }
+}
+
 
 
 /* Update Customer Account */
@@ -215,8 +274,7 @@ if (isset($_POST['Register_New_Staff'])) {
     $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
     $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
     $user_access_level  = mysqli_real_escape_string($mysqli, $_POST['user_access_level']);
-    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
-    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+    $user_password = sha1(md5(mysqli_real_escape_string($mysqli, 'Demo123@'))); /* Default User Password - Update This Password */
     /* Process User Image */
     $temp_user_image = explode('.', $_FILES['user_profile_picture']['name']);
     $new_user_image = $user_access_level . '_' . (round(microtime(true)) . '.' . end($temp_user_image));
@@ -241,7 +299,7 @@ if (isset($_POST['Register_New_Staff'])) {
         } else {
             /* Persist */
             $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
-            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$confirm_password}', '{$user_access_level}', '{$new_user_image}')";
+            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}', '{$new_user_image}')";
 
             /* Prepare */
             if (mysqli_query($mysqli, $insert_sql)) {
@@ -273,8 +331,6 @@ if (isset($_POST['Update_Staff_Password'])) {
         }
     }
 }
-
-
 
 /* ___________________________________________________________________________________________________ */
 
