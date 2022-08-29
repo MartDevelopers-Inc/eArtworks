@@ -233,7 +233,7 @@ if (mysqli_num_rows($staff_sql) > 0) {
 
                                                 <div class="tab-pane" id="profile_settings" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
-                                                        <form method="post" enctype="multipart/form-data">
+                                                        <form method="post" autocomplete="off" enctype="multipart/form-data">
                                                             <div class="row mb-2">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
