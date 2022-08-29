@@ -165,10 +165,13 @@ if (mysqli_num_rows($staff_sql) > 0) {
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Edit Profile</button>
                                                 </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#profile_settings" type="button" role="tab">Change Password</button>
+                                                </li>
                                             </ul>
                                             <div class="tab-content px-3 px-xl-5" id="myTabContent">
 
-                                                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
                                                         <form method="post" enctype="multipart/form-data">
                                                             <div class="row mb-2">
@@ -227,7 +230,37 @@ if (mysqli_num_rows($staff_sql) > 0) {
                                                         </form>
                                                     </div>
                                                 </div>
+
+                                                <div class="tab-pane" id="profile_settings" role="tabpanel">
+                                                    <div class="tab-pane-content mt-5">
+                                                        <form method="post" enctype="multipart/form-data">
+                                                            <div class="row mb-2">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label for="firstName">New Password</label>
+                                                                        <input type="password" required class="form-control" name="new_password">
+                                                                        <input type="hidden" required value="<?php echo $staff['user_id']; ?>" class="form-control" name="user_id">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label for="lastName">Confirm Password</label>
+                                                                        <input type="password" required class="form-control" name="confirm_password">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end mt-5">
+                                                                <button type="submit" name="Update_Staff_Password" class="btn btn-primary mb-2 btn-pill">
+                                                                    Update Password
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
                                             </div>
+
                                         </div>
                                     </div>
 

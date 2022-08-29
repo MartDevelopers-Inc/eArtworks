@@ -65,6 +65,9 @@
  *
  */
 
+/* _____________________________________________________________________________________________________ */
+
+/* Customers Helpers */
 
 /* Register Customer */
 
@@ -193,6 +196,9 @@ if (isset($_POST['Customer_2FA'])) {
     }
 }
 
+/* __________________________________________________________________________________________________ */
+
+/* STAFF HELPERS */
 
 /* Register Staff */
 if (isset($_POST['Register_New_Staff'])) {
@@ -246,6 +252,34 @@ if (isset($_POST['Register_New_Staff'])) {
         }
     }
 }
+
+/* Update Staff Password */
+if (isset($_POST['Update_Staff_Password'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    /* Does passwords match */
+    if ($confirm_password != $new_password) {
+        $err = "Passwords does not match";
+    } else {
+        /* Persist */
+        $sql = "UPDATE users SET user_password = '{$confirm_password}' WHERE user_id = '{$user_id}'";
+
+        if (mysqli_query($mysqli, $sql)) {
+            $success = "Password updated";
+        } else {
+            $err = "Failed, try again";
+        }
+    }
+}
+
+
+
+/* ___________________________________________________________________________________________________ */
+
+
+/* COMMON HELPERS */
 
 /*
 The following are common functions that are can be accessed by
