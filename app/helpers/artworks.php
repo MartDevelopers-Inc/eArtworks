@@ -65,7 +65,7 @@
 *
 */
 
-/* ----------------- Categories Helpers -------------------------------------------------------- */
+/* ---------------------------- Categories Helpers -------------------------------------------------------- */
 
 /* Add Category */
 if (isset($_POST['Register_New_Category'])) {
@@ -95,9 +95,36 @@ if (isset($_POST['Register_New_Category'])) {
 }
 
 /* Update Category */
+if (isset($_POST['Update_Product_Category'])) {
+    $category_id = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+    $category_name = mysqli_real_escape_string($mysqli, $_POST['category_name']);
+    $category_details = mysqli_real_escape_string($mysqli, $_POST['category_details']);
+
+    /* Persist */
+    $sql = "UPDATE categories SET category_name = '{$category_name}', category_details = '{$category_details}' WHERE category_id = '{$category_id}'";
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Category updated";
+    } else {
+        $err = "Failed, try again";
+    }
+}
 
 
 /* Delete Category */
+if (isset($_POST['Delete_Product_Category'])) {
+    $category_id = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+    $category_delete_status = mysqli_real_escape_string($mysqli, '1');
+
+    /* Persist*/
+    $sql = "UPDATE categories SET category_delete_status = '{$category_delete_status}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Product category moved to trash";
+    } else {
+        $err = "Failed, try again later";
+    }
+}
+
 
 
 /* ----------------------------- Product Helpers ------------------------------------------------ */

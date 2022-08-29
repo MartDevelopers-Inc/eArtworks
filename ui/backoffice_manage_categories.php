@@ -148,33 +148,23 @@ require_once('../app/partials/backoffice_head.php');
                                         <table id="responsive-data-table" class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Profile</th>
+                                                    <th>Code</th>
                                                     <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                    <th>DOB</th>
+                                                    <th>Description</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 <?php
-                                                $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'");
-                                                if (mysqli_num_rows($user_sql) > 0) {
-                                                    while ($customers = mysqli_fetch_array($user_sql)) {
-                                                        /* Image Directory */
-                                                        if ($customers['user_profile_picture'] == '') {
-                                                            $image_dir = "../public/uploads/users/no-profile.png";
-                                                        } else {
-                                                            $image_dir = "../public/uploads/users/" . $customers['user_profile_picture'];
-                                                        }
+                                                $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
+                                                if (mysqli_num_rows($categories_sql) > 0) {
+                                                    while ($categories = mysqli_fetch_array($categories_sql)) {
                                                 ?>
                                                         <tr>
-                                                            <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="user profile" /></td>
-                                                            <td><?php echo $customers['user_first_name'] . ' ' . $customers['user_last_name']; ?></td>
-                                                            <td><?php echo $customers['user_email']; ?></td>
-                                                            <td><?php echo $customers['user_phone_number']; ?></td>
-                                                            <td><?php echo date('M d Y', strtotime($customers['user_dob'])); ?></td>
+                                                            <td><?php echo $categories['category_code']; ?></td>
+                                                            <td><?php echo $categories['category_name']; ?></td>
+                                                            <td><?php echo $categories['category_details']; ?></td>
                                                             <td>
                                                                 <div class="btn-group mb-1">
                                                                     <button type="button" class="btn btn-outline-success">Manage</button>
@@ -183,16 +173,14 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="backoffice_manage_customer?view=<?php echo $customers['user_id']; ?>">Edit</a>
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_staff_<?php echo $customers['user_id']; ?>">Delete</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#update_category_<?php echo $categories['category_id']; ?>">Edit</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_category_<?php echo $categories['category_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
-                                                        <!-- Delete Staff Modal -->
-                                                        <?php include('../app/modals/delete_customer.php'); ?>
-                                                        <!-- End Modal -->
-                                                <?php }
+                                                <?php include('../app/modals/delete_categories.php');
+                                                    }
                                                 } ?>
                                             </tbody>
                                         </table>
