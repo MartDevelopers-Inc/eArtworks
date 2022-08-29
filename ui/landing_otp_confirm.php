@@ -111,7 +111,7 @@ require_once('../app/partials/landing_head.php');
                         <h2 class="ec-bg-title">Confirm Code</h2>
                         <h2 class="ec-title">Confirm Code</h2>
                         <p class="sub-title mb-3">
-                            Enter the two factor authentication code sent in your email.
+                            Enter the two factor authentication code sent in your email or phone number you registered with.
                         </p>
                     </div>
                 </div>
@@ -121,7 +121,7 @@ require_once('../app/partials/landing_head.php');
                             <div class="ec-register-form">
                                 <form method="post">
                                     <span class="ec-register-wrap">
-                                        <label>Enter The Code In Your Email*</label>
+                                        <label>Enter The Code Sent To Your Email Or Phone Number *</label>
                                         <input type="text" name="user_2fa_code" required />
                                     </span>
                                     <span class="ec-register-wrap ec-register-btn">
