@@ -323,7 +323,7 @@ require_once('../app/partials/backoffice_head.php');
                                                 "SELECT * FROM users
                                                 WHERE user_access_level = 'Customer'
                                                 AND user_delete_status = '0'
-                                                ORDER BY user_date_joined ASC
+                                                ORDER BY user_date_joined DESC
                                                 LIMIT 5"
                                             );
                                             if (mysqli_num_rows($users_sql) > 0) {
@@ -339,12 +339,12 @@ require_once('../app/partials/backoffice_head.php');
                                                         <td>
                                                             <div class="media">
                                                                 <div class="media-image mr-3 rounded-circle">
-                                                                    <a href="backoffice_customer?view=<?php echo $customers['user_id']; ?>">
+                                                                    <a href="backoffice_manage_customer?view=<?php echo $customers['user_id']; ?>">
                                                                         <img class="profile-img rounded-circle w-45" src="<?php echo $image_dir; ?>" alt="customer image">
                                                                     </a>
                                                                 </div>
                                                                 <div class="media-body align-self-center">
-                                                                    <a href="backoffice_customer?view=<?php echo $customers['user_id']; ?>">
+                                                                    <a href="backoffice_manage_customer?view=<?php echo $customers['user_id']; ?>">
                                                                         <h6 class="mt-0 text-dark font-weight-medium">
                                                                             <?php echo $customers['user_first_name'] . ' ' . $customers['user_last_name']; ?>
                                                                         </h6>
