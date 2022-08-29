@@ -15,7 +15,7 @@
                     <!-- Hide This -->
                     <input type="hidden" name="category_id" value="<?php echo $categories['category_id']; ?>">
                     <button type="button" class="text-center btn btn-success" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="text-center btn btn-danger" name="Delete_Category">Yes, Delete</button>
+                    <button type="submit" class="text-center btn btn-danger" name="Delete_Product_Category">Yes, Delete</button>
                 </div>
             </form>
         </div>

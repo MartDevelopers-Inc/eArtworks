@@ -116,7 +116,7 @@ if (isset($_POST['Delete_Product_Category'])) {
     $category_delete_status = mysqli_real_escape_string($mysqli, '1');
 
     /* Persist*/
-    $sql = "UPDATE categories SET category_delete_status = '{$category_delete_status}'";
+    $sql = "UPDATE categories SET category_delete_status = '{$category_delete_status}' WHERE category_id = '{$category_id}'";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Product category moved to trash";
