@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Thu Aug 18 2022
+ *   Crafted On Fri Aug 26 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -67,88 +67,89 @@
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
-require_once('../app/helpers/authentication.php');
-require_once('../app/partials/landing_head.php');
+require_once('../app/settings/checklogin.php');
+checklogin();
+require_once('../app/helpers/bulk_import.php');
+require_once('../app/partials/backoffice_head.php');
 ?>
 
-<body>
-    <div id="ec-overlay"><span class="loader_img"></span></div>
+<body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
 
-    <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
-    <!-- Header End  -->
+    <!-- WRAPPER -->
+    <div class="wrapper">
 
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Confirm Code</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Confirm Code</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
+        <!-- LEFT MAIN SIDEBAR -->
+        <?php require_once('../app/partials/backoffice_sidebar.php'); ?>
 
-    <!-- Ec login page -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-title">
-                        <h2 class="ec-bg-title">Confirm Code</h2>
-                        <h2 class="ec-title">Confirm Code</h2>
-                        <p class="sub-title mb-3">
-                            Enter the two factor authentication code sent in your email or phone number you registered with.
-                        </p>
-                    </div>
-                </div>
-                <div class="ec-register-wrapper">
-                    <div class="ec-register-wrapper">
-                        <div class="ec-register-container">
-                            <div class="ec-register-form">
-                                <form method="post">
-                                    <span class="ec-register-wrap">
-                                        <label>Enter The Code Sent To Your Email Or Phone Number *</label>
-                                        <input type="text" name="user_2fa_code" required />
-                                    </span>
-                                    <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Customer_Confirm_2FA" type="submit">Confirm Code</button>
-                                    </span>
-                                </form>
-                                <form method="post">
-                                    <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Resent_2FA_Code" type="submit">Resend Code</button>
-                                    </span>
-                                </form>
-                            </div>
+        <!-- PAGE WRAPPER -->
+        <div class="ec-page-wrapper">
+
+            <!-- Header -->
+            <?php require_once('../app/partials/backoffice_header.php'); ?>
+
+            <!-- CONTENT WRAPPER -->
+            <div class="ec-content-wrapper ec-vendor-wrapper">
+                <div class="content">
+                    <div class="breadcrumb-wrapper d-flex align-items-center justify-content-between">
+                        <div>
+                            <h1>Bulk Import Customers</h1>
+                            <p class="breadcrumbs">
+                                <span>
+                                    <a href="dashboard">Home</a>
+                                </span>
+                                <span>
+                                    <i class="mdi mdi-chevron-right"></i>
+                                    <a href="">Customers</a>
+                                </span>
+                                <span>
+                                    <i class="mdi mdi-chevron-right"></i>
+                                </span> Bulk Import
+                            </p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- Footer Start -->
-    <?php require_once('../app/partials/landing_footer.php'); ?>
-    <!-- Footer Area End -->
+                    <div class="card card-default p-4 ec-card-space">
+                        <div class="card-body col-12">
+                            <p class="text-center">
+                                Allowed File Types: XLS, XLSX. Please,
+                                <a class="text-success" href="../public/uploads/templates/users.xlsx">Download</a>
+                                A Template File
+                            </p>
+                            <br><br>
+                            <form method="post" enctype="multipart/form-data" role="form">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="exampleInputFile">Select File</label>
+                                        <div class="input-group">
+                                            <div class="custom-file">
+                                                <input required name="file" accept=".xls,.xlsx" type="file" class="custom-file-input">
+                                                <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="text-right">
+                                    <button type="submit" name="Bulk_Import_Customers" class="btn btn-primary">Upload File</button>
+                                </div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
 
-    <!-- Feature tools end -->
-    <?php require_once('../app/partials/landing_scripts.php'); ?>
+                </div> <!-- End Content -->
+            </div> <!-- End Content Wrapper -->
+
+            <!-- Footer -->
+            <?php require_once('../app/partials/backoffice_footer.php'); ?>
+
+        </div> <!-- End Page Wrapper -->
+    </div> <!-- End Wrapper -->
+
+    <!-- Common Javascript -->
 
 </body>
+<?php require_once('../app/partials/backoffice_scripts.php'); ?>
 
 
 </html>

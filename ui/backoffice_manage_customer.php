@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Thu Aug 25 2022
+ *   Crafted On Mon Aug 29 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -64,6 +64,7 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
@@ -71,16 +72,16 @@ require_once('../app/settings/checklogin.php');
 checklogin();
 require_once('../app/helpers/users.php');
 require_once('../app/partials/backoffice_head.php');
-/* Load This Page With Logged In User Session */
-$user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
-$user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
-if (mysqli_num_rows($user_sql) > 0) {
-    while ($staff = mysqli_fetch_array($user_sql)) {
+/* Load This Page With Variable From GET Function */
+$get_id = mysqli_real_escape_string($mysqli, $_GET['view']);
+$customer_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$get_id}'");
+if (mysqli_num_rows($customer_sql) > 0) {
+    while ($customer = mysqli_fetch_array($customer_sql)) {
         /* Image Directory */
-        if ($staff['user_profile_picture'] == '') {
-            $image_dir = "../public/uploads/users/no-profile.png";
+        if ($customer['user_profile_picture'] == '') {
+            $profile_photo_directory = "../public/uploads/users/no-profile.png";
         } else {
-            $image_dir = "../public/uploads/users/" . $staff['user_profile_picture'];
+            $profile_photo_directory = "../public/uploads/users/" . $customer['user_profile_picture'];
         }
 ?>
 
@@ -103,23 +104,26 @@ if (mysqli_num_rows($user_sql) > 0) {
                         <div class="content">
                             <div class="breadcrumb-wrapper breadcrumb-contacts">
                                 <div>
-                                    <h1>User Profile</h1>
-                                    <p class="breadcrumbs"><span><a href="dashboard">Home</a></span>
-                                        <span><i class="mdi mdi-chevron-right"></i></span>Profile
+                                    <h1><?php echo $customer['user_access_level']; ?> Profile</h1>
+                                    <p class="breadcrumbs">
+                                        <span><a href="dashboard">Home</a></span>
+                                        <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_customers">Customers</a>
+                                        <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_customers">Manage Customers</a>
+                                        <span><i class="mdi mdi-chevron-right"></i><?php echo $customer['user_first_name'] . ' ' . $customer['user_last_name']; ?></span>
                                     </p>
                                 </div>
                             </div>
                             <div class="card bg-white profile-content">
                                 <div class="row">
-                                    <div class="col-lg-5 col-xl-4">
+                                    <div class="col-lg-4 col-xl-3">
                                         <div class="profile-content-left profile-left-spacing">
                                             <div class="text-center widget-profile px-0 border-0">
                                                 <div class="card-img mx-auto rounded-circle">
-                                                    <img src="<?php echo $image_dir; ?>" alt="user image">
+                                                    <img src="<?php echo $profile_photo_directory; ?>" alt="user image">
                                                 </div>
                                                 <div class="card-body">
-                                                    <h4 class="py-2 text-dark"><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></h4>
-                                                    <p><?php echo $staff['user_access_level']; ?></p>
+                                                    <h4 class="py-2 text-dark"><?php echo $customer['user_first_name'] . ' ' . $customer['user_last_name']; ?></h4>
+                                                    <p><?php echo $customer['user_access_level']; ?></p>
                                                 </div>
                                             </div>
 
@@ -145,63 +149,66 @@ if (mysqli_num_rows($user_sql) > 0) {
                                             <div class="contact-info pt-4">
                                                 <h5 class="text-dark">Contact Information</h5>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Email address</p>
-                                                <p><?php echo $staff['user_email']; ?></p>
+                                                <p><?php echo $customer['user_email']; ?></p>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Phone Number</p>
-                                                <p><?php echo $staff['user_phone_number']; ?></p>
+                                                <p><?php echo $customer['user_phone_number']; ?></p>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Birthday</p>
-                                                <p><?php echo date('M, d Y', strtotime($staff['user_dob'])); ?></p>
+                                                <p><?php echo date('M, d Y', strtotime($customer['user_dob'])); ?></p>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Address</p>
-                                                <p><?php echo $staff['user_default_address']; ?></p>
+                                                <p><?php echo $customer['user_default_address']; ?></p>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="col-lg-7 col-xl-8">
+                                    <div class="col-lg-8 col-xl-9">
                                         <div class="profile-content-right profile-right-spacing py-5">
                                             <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myProfileTab" role="tablist">
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Edit Profile</button>
                                                 </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#profile_settings" type="button" role="tab">Change Password</button>
+                                                </li>
                                             </ul>
                                             <div class="tab-content px-3 px-xl-5" id="myTabContent">
 
-                                                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
                                                         <form method="post" enctype="multipart/form-data">
                                                             <div class="row mb-2">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label for="firstName">First name</label>
-                                                                        <input type="hidden" required value="<?php echo $staff['user_id']; ?>" class="form-control" name="user_id">
-                                                                        <input type="text" required value="<?php echo $staff['user_first_name']; ?>" class="form-control" name="user_first_name">
+                                                                        <input type="text" required value="<?php echo $customer['user_first_name']; ?>" class="form-control" name="user_first_name">
+                                                                        <input type="hidden" required value="<?php echo $customer['user_id']; ?>" class="form-control" name="user_id">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
                                                                         <label for="lastName">Last name</label>
-                                                                        <input type="text" required value="<?php echo $staff['user_last_name']; ?>" class="form-control" name="user_last_name">
+                                                                        <input type="text" required value="<?php echo $customer['user_last_name']; ?>" class="form-control" name="user_last_name">
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="form-group col-lg-12">
                                                                     <label for="email">Email</label>
-                                                                    <input type="email" required value="<?php echo $staff['user_email']; ?>" class="form-control" name="user_email">
+                                                                    <input type="email" required value="<?php echo $customer['user_email']; ?>" class="form-control" name="user_email">
                                                                 </div>
 
                                                                 <div class="form-group col-lg-8">
                                                                     <label for="email">Phone Number</label>
-                                                                    <input type="text" required value="<?php echo $staff['user_phone_number']; ?>" class="form-control" name="user_phone_number">
+                                                                    <input type="text" required value="<?php echo $customer['user_phone_number']; ?>" class="form-control" name="user_phone_number">
                                                                 </div>
 
                                                                 <div class="form-group col-lg-4">
                                                                     <label for="email">Date Of Birth</label>
-                                                                    <input type="date" required value="<?php echo $staff['user_dob']; ?>" class="form-control" name="user_dob">
+                                                                    <input type="date" required value="<?php echo $customer['user_dob']; ?>" class="form-control" name="user_dob">
                                                                 </div>
 
                                                                 <div class="form-group col-lg-12">
                                                                     <label for="email">Address</label>
-                                                                    <textarea class="form-control" required name="user_default_address"><?php echo $staff['user_default_address']; ?></textarea>
+                                                                    <textarea class="form-control" required name="user_default_address"><?php echo $customer['user_default_address']; ?></textarea>
                                                                 </div>
                                                             </div>
                                                             <hr>
@@ -224,7 +231,37 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                         </form>
                                                     </div>
                                                 </div>
+
+                                                <div class="tab-pane" id="profile_settings" role="tabpanel">
+                                                    <div class="tab-pane-content mt-5">
+                                                        <form method="post" autocomplete="off" enctype="multipart/form-data">
+                                                            <div class="row mb-2">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label for="firstName">New Password</label>
+                                                                        <input type="password" required class="form-control" name="new_password">
+                                                                        <input type="hidden" required value="<?php echo $customer['user_id']; ?>" class="form-control" name="user_id">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label for="lastName">Confirm Password</label>
+                                                                        <input type="password" required class="form-control" name="confirm_password">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end mt-5">
+                                                                <button type="submit" name="Update_Staff_Password" class="btn btn-primary mb-2 btn-pill">
+                                                                    Update Password
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
                                             </div>
+
                                         </div>
                                     </div>
 

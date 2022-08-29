@@ -93,16 +93,16 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Staffs</h1>
+                            <h1>Customers</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Staffs</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Staffs
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_customers">Customers</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Customers
                             </p>
                         </div>
                         <div>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
-                                Register Staff
+                                Register Customer
                             </button>
                         </div>
                     </div>
@@ -113,7 +113,7 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="modal-content">
                                 <form method="POST" enctype="multipart/form-data">
                                     <div class="modal-header px-4">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Staff</h5>
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Customer</h5>
                                     </div>
 
                                     <div class="modal-body px-4">
@@ -121,6 +121,7 @@ require_once('../app/partials/backoffice_head.php');
                                             <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="firstName">First name</label>
+                                                    <input type="hidden" value="Customer" required class="form-control" name="user_access_level">
                                                     <input type="text" required class="form-control" name="user_first_name">
                                                 </div>
                                             </div>
@@ -137,17 +138,9 @@ require_once('../app/partials/backoffice_head.php');
                                                 <input type="email" required class="form-control" name="user_email">
                                             </div>
 
-                                            <div class="form-group col-lg-4">
+                                            <div class="form-group col-lg-8">
                                                 <label for="email">Phone Number</label>
                                                 <input type="text" required class="form-control" name="user_phone_number">
-                                            </div>
-
-                                            <div class="form-group col-lg-4">
-                                                <label for="email">Access Level</label>
-                                                <select type="text" required class="form-control" name="user_access_level">
-                                                    <option>Staff</option>
-                                                    <option>Administrator</option>
-                                                </select>
                                             </div>
 
                                             <div class="form-group col-lg-4">
@@ -165,7 +158,7 @@ require_once('../app/partials/backoffice_head.php');
                                             <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Profile Photo</label>
                                             <div class="col-sm-12 col-lg-12">
                                                 <div class="custom-file mb-1">
-                                                    <input type="file" accept=".png, .jpg, .jpeg" required name="user_profile_picture" class="custom-file-input">
+                                                    <input type="file" accept=".png, .jpg, .jpeg" name="user_profile_picture" class="custom-file-input">
                                                     <label class="custom-file-label" for="coverImage">
                                                         Choose file...
                                                     </label>
@@ -176,7 +169,7 @@ require_once('../app/partials/backoffice_head.php');
 
                                     <div class="modal-footer px-4">
                                         <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" name="Register_New_Staff" class="btn btn-primary btn-pill">Register Staff</button>
+                                        <button type="submit" name="Register_New_Customer" class="btn btn-primary btn-pill">Register Customer</button>
                                     </div>
                                 </form>
                             </div>
@@ -201,22 +194,22 @@ require_once('../app/partials/backoffice_head.php');
 
                                             <tbody>
                                                 <?php
-                                                $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'");
+                                                $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'");
                                                 if (mysqli_num_rows($user_sql) > 0) {
-                                                    while ($staffs = mysqli_fetch_array($user_sql)) {
+                                                    while ($customers = mysqli_fetch_array($user_sql)) {
                                                         /* Image Directory */
-                                                        if ($staffs['user_profile_picture'] == '') {
+                                                        if ($customers['user_profile_picture'] == '') {
                                                             $image_dir = "../public/uploads/users/no-profile.png";
                                                         } else {
-                                                            $image_dir = "../public/uploads/users/" . $staffs['user_profile_picture'];
+                                                            $image_dir = "../public/uploads/users/" . $customers['user_profile_picture'];
                                                         }
                                                 ?>
                                                         <tr>
                                                             <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="user profile" /></td>
-                                                            <td><?php echo $staffs['user_first_name'] . ' ' . $staffs['user_last_name']; ?></td>
-                                                            <td><?php echo $staffs['user_email']; ?></td>
-                                                            <td><?php echo $staffs['user_phone_number']; ?></td>
-                                                            <td><?php echo date('M d Y', strtotime($staffs['user_dob'])); ?></td>
+                                                            <td><?php echo $customers['user_first_name'] . ' ' . $customers['user_last_name']; ?></td>
+                                                            <td><?php echo $customers['user_email']; ?></td>
+                                                            <td><?php echo $customers['user_phone_number']; ?></td>
+                                                            <td><?php echo date('M d Y', strtotime($customers['user_dob'])); ?></td>
                                                             <td>
                                                                 <div class="btn-group mb-1">
                                                                     <button type="button" class="btn btn-outline-success">Manage</button>
@@ -225,14 +218,14 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="backoffice_manage_staff?view=<?php echo $staffs['user_id']; ?>">Edit</a>
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_staff_<?php echo $staffs['user_id']; ?>">Delete</a>
+                                                                        <a class="dropdown-item" href="backoffice_manage_customer?view=<?php echo $customers['user_id']; ?>">Edit</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_staff_<?php echo $customers['user_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <!-- Delete Staff Modal -->
-                                                        <?php include('../app/modals/delete_staff.php'); ?>
+                                                        <?php include('../app/modals/delete_customer.php'); ?>
                                                         <!-- End Modal -->
                                                 <?php }
                                                 } ?>

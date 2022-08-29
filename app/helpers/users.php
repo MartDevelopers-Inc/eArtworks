@@ -65,16 +65,77 @@
  *
  */
 
+/* _____________________________________________________________________________________________________ */
+
+/* Customers Helpers */
 
 /* Register Customer */
 
-/* Update Customer */
+if (isset($_POST['Register_New_Customer'])) {
+    /*
+     The following functionalities has been removed
+     1. Automated email with a link to create new password
+     2. Automated welcome email to help user set up account
+     3. Password is given by the entity who is registering the account
+    */
+    $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
+    $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_dob  = mysqli_real_escape_string($mysqli, $_POST['user_dob']);
+    $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
+    $user_access_level  = mysqli_real_escape_string($mysqli, $_POST['user_access_level']);
+    $user_password = sha1(md5(mysqli_real_escape_string($mysqli, 'Demo123@'))); /* Default User Password - Update This Password */
+    if (!empty($_FILES['user_profile_picture']['name'])) {
+        /* Process User Image */
+        $temp_user_image = explode('.', $_FILES['user_profile_picture']['name']);
+        $new_user_image = 'Customer_' . (round(microtime(true)) . '.' . end($temp_user_image));
+        move_uploaded_file(
+            $_FILES['user_profile_picture']['tmp_name'],
+            '../public/uploads/users/' . $new_user_image
+        );
 
-/* Delete Customer */
+        /* Avoid Duplications */
+        $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
+            ) {
+                $err = 'Phone Number Or Email Already Exists';
+            }
+        } else {
+            /* Persist */
+            $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
+                VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}', '{$new_user_image}')";
+
+            /* Prepare */
+            if (mysqli_query($mysqli, $insert_sql)) {
+                $success = "User registered";
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
+        }
+    } else {
+        /* Persist Without Profile Photo */
+        $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level)
+        VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}')";
+
+        /* Prepare */
+        if (mysqli_query($mysqli, $insert_sql)) {
+            $success = "User registered";
+        } else {
+            $err = "Failed!, Please Try Again";
+        }
+    }
+}
+
+
 
 /* Update Customer Account */
 if (isset($_POST['Update_Customer_Profile'])) {
-    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
     $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
     $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
     $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
@@ -194,8 +255,104 @@ if (isset($_POST['Customer_2FA'])) {
     }
 }
 
+/* __________________________________________________________________________________________________ */
+
+/* STAFF HELPERS */
 
 /* Register Staff */
 if (isset($_POST['Register_New_Staff'])) {
+    /*
+     The following functionalities has been removed
+     1. Automated email with a link to create new password
+     2. Automated welcome email to help user set up account
+     3. Password is given by the entity who is registering the account
+    */
+    $user_first_name = mysqli_real_escape_string($mysqli, $_POST['user_first_name']);
+    $user_last_name  = mysqli_real_escape_string($mysqli, $_POST['user_last_name']);
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
+    $user_dob  = mysqli_real_escape_string($mysqli, $_POST['user_dob']);
+    $user_phone_number  = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_default_address  = mysqli_real_escape_string($mysqli, $_POST['user_default_address']);
+    $user_access_level  = mysqli_real_escape_string($mysqli, $_POST['user_access_level']);
+    $user_password = sha1(md5(mysqli_real_escape_string($mysqli, 'Demo123@'))); /* Default User Password - Update This Password */
+    /* Process User Image */
+    $temp_user_image = explode('.', $_FILES['user_profile_picture']['name']);
+    $new_user_image = $user_access_level . '_' . (round(microtime(true)) . '.' . end($temp_user_image));
+    move_uploaded_file(
+        $_FILES['user_profile_picture']['tmp_name'],
+        '../public/uploads/users/' . $new_user_image
+    );
+    /* Check If Passwords Match */
+    if ($new_password != $confirm_password) {
+        $err = "Passwords Does Not Match";
+    } else {
+        /* Avoid Duplications */
+        $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $row = mysqli_fetch_assoc($res);
+            if (
+                $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
+            ) {
+                $err = 'Phone Number Or Email Already Exists';
+            }
+        } else {
+            /* Persist */
+            $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
+            VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}', '{$new_user_image}')";
+
+            /* Prepare */
+            if (mysqli_query($mysqli, $insert_sql)) {
+                $success = "User registered";
+            } else {
+                $err = "Failed!, Please Try Again";
+            }
+        }
+    }
 }
-/* Delete Staff */
+
+/* Update Staff Password */
+if (isset($_POST['Update_Staff_Password'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
+    $new_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['new_password'])));
+    $confirm_password = sha1(md5(mysqli_real_escape_string($mysqli, $_POST['confirm_password'])));
+
+    /* Does passwords match */
+    if ($confirm_password != $new_password) {
+        $err = "Passwords does not match";
+    } else {
+        /* Persist */
+        $sql = "UPDATE users SET user_password = '{$confirm_password}' WHERE user_id = '{$user_id}'";
+
+        if (mysqli_query($mysqli, $sql)) {
+            $success = "Password updated";
+        } else {
+            $err = "Failed, try again";
+        }
+    }
+}
+
+/* ___________________________________________________________________________________________________ */
+
+
+/* COMMON HELPERS */
+
+/*
+The following are common functions that are can be accessed by
+all access levels
+*/
+
+/* Delete Users */
+if (isset($_POST['Delete_User'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
+    $user_delete_status = mysqli_real_escape_string($mysqli, '1'); /* Move This record to trash */
+
+    /* Persist */
+    $sql = "UPDATE users SET user_delete_status = '{$user_delete_status}' WHERE user_id = '{$user_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "User moved to recycle bin";
+    } else {
+        $err = "Error, please try again";
+    }
+}

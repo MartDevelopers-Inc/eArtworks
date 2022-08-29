@@ -53,7 +53,7 @@
                     <div class="collapse">
                         <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
                             <li>
-                                <a class="sidenav-item-link" href="backoffice_import_users">
+                                <a class="sidenav-item-link" href="backoffice_import_customers">
                                     <span class="nav-text">Bulk Import</span>
                                 </a>
                             </li>

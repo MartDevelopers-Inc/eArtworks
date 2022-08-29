@@ -72,15 +72,15 @@ checklogin();
 require_once('../app/helpers/users.php');
 require_once('../app/partials/backoffice_head.php');
 /* Load This Page With Variable From GET Function */
-$user_id = mysqli_real_escape_string($mysqli, $_GET['view']);
-$user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
-if (mysqli_num_rows($user_sql) > 0) {
-    while ($staff = mysqli_fetch_array($user_sql)) {
+$get_id = mysqli_real_escape_string($mysqli, $_GET['view']);
+$staff_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$get_id}'");
+if (mysqli_num_rows($staff_sql) > 0) {
+    while ($staff = mysqli_fetch_array($staff_sql)) {
         /* Image Directory */
         if ($staff['user_profile_picture'] == '') {
-            $image_dir = "../public/uploads/users/no-profile.png";
+            $profile_photo_directory = "../public/uploads/users/no-profile.png";
         } else {
-            $image_dir = "../public/uploads/users/" . $staff['user_profile_picture'];
+            $profile_photo_directory = "../public/uploads/users/" . $staff['user_profile_picture'];
         }
 ?>
 
@@ -103,10 +103,12 @@ if (mysqli_num_rows($user_sql) > 0) {
                         <div class="content">
                             <div class="breadcrumb-wrapper breadcrumb-contacts">
                                 <div>
-                                    <h1><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></h1>
-                                    <p class="breadcrumbs"><span><a href="dashboard">Home</a></span>
-                                        <span><a href="backoffice_manage_staffs">Staffs</a></span>
-                                        <span><i class="mdi mdi-chevron-right"></i></span>Profile
+                                    <h1><?php echo $staff['user_access_level']; ?> Profile</h1>
+                                    <p class="breadcrumbs">
+                                        <span><a href="dashboard">Home</a></span>
+                                        <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Staffs</a>
+                                        <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Manage Staffs</a>
+                                        <span><i class="mdi mdi-chevron-right"></i><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></span>
                                     </p>
                                 </div>
                             </div>
@@ -116,7 +118,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                         <div class="profile-content-left profile-left-spacing">
                                             <div class="text-center widget-profile px-0 border-0">
                                                 <div class="card-img mx-auto rounded-circle">
-                                                    <img src="<?php echo $image_dir; ?>" alt="user image">
+                                                    <img src="<?php echo $profile_photo_directory; ?>" alt="user image">
                                                 </div>
                                                 <div class="card-body">
                                                     <h4 class="py-2 text-dark"><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></h4>
@@ -163,10 +165,13 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                 <li class="nav-item" role="presentation">
                                                     <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Edit Profile</button>
                                                 </li>
+                                                <li class="nav-item" role="presentation">
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#profile_settings" type="button" role="tab">Change Password</button>
+                                                </li>
                                             </ul>
                                             <div class="tab-content px-3 px-xl-5" id="myTabContent">
 
-                                                <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                                <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
                                                         <form method="post" enctype="multipart/form-data">
                                                             <div class="row mb-2">
@@ -174,6 +179,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                                     <div class="form-group">
                                                                         <label for="firstName">First name</label>
                                                                         <input type="text" required value="<?php echo $staff['user_first_name']; ?>" class="form-control" name="user_first_name">
+                                                                        <input type="hidden" required value="<?php echo $staff['user_id']; ?>" class="form-control" name="user_id">
                                                                     </div>
                                                                 </div>
 
@@ -224,7 +230,37 @@ if (mysqli_num_rows($user_sql) > 0) {
                                                         </form>
                                                     </div>
                                                 </div>
+
+                                                <div class="tab-pane" id="profile_settings" role="tabpanel">
+                                                    <div class="tab-pane-content mt-5">
+                                                        <form method="post" autocomplete="off" enctype="multipart/form-data">
+                                                            <div class="row mb-2">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label for="firstName">New Password</label>
+                                                                        <input type="password" required class="form-control" name="new_password">
+                                                                        <input type="hidden" required value="<?php echo $staff['user_id']; ?>" class="form-control" name="user_id">
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <label for="lastName">Confirm Password</label>
+                                                                        <input type="password" required class="form-control" name="confirm_password">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex justify-content-end mt-5">
+                                                                <button type="submit" name="Update_Staff_Password" class="btn btn-primary mb-2 btn-pill">
+                                                                    Update Password
+                                                                </button>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+
                                             </div>
+
                                         </div>
                                     </div>
 
