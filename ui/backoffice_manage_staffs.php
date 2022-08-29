@@ -94,13 +94,15 @@ require_once('../app/partials/backoffice_head.php');
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
                             <h1>Staffs</h1>
-                            <p class="breadcrumbs"><span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Staffs
+                            <p class="breadcrumbs">
+                                <span><a href="dashboard">Home</a></span>
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Staffs</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Staffs
                             </p>
                         </div>
                         <div>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
-                                Register User
+                                Register Staff
                             </button>
                         </div>
                     </div>
@@ -191,7 +193,7 @@ require_once('../app/partials/backoffice_head.php');
 
                                             <tbody>
                                                 <?php
-                                                $user_sql = mysqli_query($mysqli, "SELECT * FROM users");
+                                                $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'");
                                                 if (mysqli_num_rows($user_sql) > 0) {
                                                     while ($staffs = mysqli_fetch_array($user_sql)) {
                                                         /* Image Directory */
@@ -216,11 +218,14 @@ require_once('../app/partials/backoffice_head.php');
 
                                                                     <div class="dropdown-menu">
                                                                         <a class="dropdown-item" href="backoffice_manage_staff?view=<?php echo $staffs['user_id']; ?>">Edit</a>
-                                                                        <a class="dropdown-item" href="delete_staff_<?php echo $staffs['user_id']; ?>">Delete</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_staff_<?php echo $staffs['user_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
+                                                        <!-- Delete Staff Modal -->
+                                                        <?php include('../app/modals/delete_staff.php'); ?>
+                                                        <!-- End Modal -->
                                                 <?php }
                                                 } ?>
                                             </tbody>

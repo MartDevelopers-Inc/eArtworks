@@ -70,7 +70,6 @@
 
 /* Update Customer */
 
-/* Delete Customer */
 
 /* Update Customer Account */
 if (isset($_POST['Update_Customer_Profile'])) {
@@ -198,4 +197,24 @@ if (isset($_POST['Customer_2FA'])) {
 /* Register Staff */
 if (isset($_POST['Register_New_Staff'])) {
 }
-/* Delete Staff */
+
+/*
+The following are common functions that are can be accessed by
+all access levels
+*/
+
+
+/* Delete Users */
+if (isset($_POST['Delete_User'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
+    $user_delete_status = mysqli_real_escape_string($mysqli, '1'); /* Move This record to trash */
+
+    /* Persist */
+    $sql = "UPDATE users SET user_delete_status = '{$user_delete_status}' WHERE user_id = '{$user_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "User moved to recycle bin";
+    } else {
+        $err = "Error, please try again";
+    }
+}
