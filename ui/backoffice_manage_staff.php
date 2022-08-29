@@ -72,15 +72,15 @@ checklogin();
 require_once('../app/helpers/users.php');
 require_once('../app/partials/backoffice_head.php');
 /* Load This Page With Variable From GET Function */
-$user_id = mysqli_real_escape_string($mysqli, $_GET['view']);
-$user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$user_id}'");
-if (mysqli_num_rows($user_sql) > 0) {
-    while ($staff = mysqli_fetch_array($user_sql)) {
+$get_id = mysqli_real_escape_string($mysqli, $_GET['view']);
+$staff_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_id = '{$get_id}'");
+if (mysqli_num_rows($staff_sql) > 0) {
+    while ($staff = mysqli_fetch_array($staff_sql)) {
         /* Image Directory */
         if ($staff['user_profile_picture'] == '') {
-            $image_dir = "../public/uploads/users/no-profile.png";
+            $profile_photo_directory = "../public/uploads/users/no-profile.png";
         } else {
-            $image_dir = "../public/uploads/users/" . $staff['user_profile_picture'];
+            $profile_photo_directory = "../public/uploads/users/" . $staff['user_profile_picture'];
         }
 ?>
 
@@ -103,10 +103,12 @@ if (mysqli_num_rows($user_sql) > 0) {
                         <div class="content">
                             <div class="breadcrumb-wrapper breadcrumb-contacts">
                                 <div>
-                                    <h1><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></h1>
-                                    <p class="breadcrumbs"><span><a href="dashboard">Home</a></span>
-                                        <span><a href="backoffice_manage_staffs">Staffs</a></span>
-                                        <span><i class="mdi mdi-chevron-right"></i></span>Profile
+                                    <h1><?php echo $staff['user_access_level']; ?> Profile</h1>
+                                    <p class="breadcrumbs">
+                                        <span><a href="dashboard">Home</a></span>
+                                        <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Staffs</a>
+                                        <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Manage Staffs</a>
+                                        <span><i class="mdi mdi-chevron-right"></i><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></span>
                                     </p>
                                 </div>
                             </div>
@@ -116,7 +118,7 @@ if (mysqli_num_rows($user_sql) > 0) {
                                         <div class="profile-content-left profile-left-spacing">
                                             <div class="text-center widget-profile px-0 border-0">
                                                 <div class="card-img mx-auto rounded-circle">
-                                                    <img src="<?php echo $image_dir; ?>" alt="user image">
+                                                    <img src="<?php echo $profile_photo_directory; ?>" alt="user image">
                                                 </div>
                                                 <div class="card-body">
                                                     <h4 class="py-2 text-dark"><?php echo $staff['user_first_name'] . ' ' . $staff['user_last_name']; ?></h4>
