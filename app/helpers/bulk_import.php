@@ -355,20 +355,20 @@ if (isset($_POST['Bulk_Import_Products'])) {
             if (isset($spreadSheetAry[$i][0])) {
                 $product_name  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][0]);
             }
-
-            $product_details  = "";
-            if (isset($spreadSheetAry[$i][1])) {
-                $product_details  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][1]);
-            }
-
+            
             $product_qty_in_stock  = "";
-            if (isset($spreadSheetAry[$i][2])) {
-                $product_qty_in_stock  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][2]);
+            if (isset($spreadSheetAry[$i][1])) {
+                $product_qty_in_stock  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][1]);
             }
 
             $product_price  = "";
+            if (isset($spreadSheetAry[$i][2])) {
+                $product_price  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][2]);
+            }
+
+            $product_details  = "";
             if (isset($spreadSheetAry[$i][3])) {
-                $product_price  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][3]);
+                $product_details  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][3]);
             }
 
             /* Hidden Values That Cannot Be Posted Via XLS */

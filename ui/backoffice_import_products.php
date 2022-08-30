@@ -112,7 +112,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="card-body col-12">
                             <p class="text-center">
                                 Allowed File Types: XLS, XLSX. Please,
-                                <a class="text-success" href="../public/uploads/templates/categories.xlsx">Download</a>
+                                <a class="text-success" href="../public/uploads/templates/products.xlsx">Download</a>
                                 A Template File
                             </p>
                             <br><br>
@@ -120,7 +120,7 @@ require_once('../app/partials/backoffice_head.php');
                                 <div class="row">
                                     <div class="form-group col-lg-8">
                                         <label for="email">Select Product Seller</label>
-                                        <select type="text" required class="form-control basic_select" name="user_access_level">
+                                        <select type="text" required class="form-control basic_select" name="product_seller_id">
                                             <?php
                                             $sellers_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' 
                                             AND user_access_level = 'Customer' ORDER BY user_first_name ASC");
@@ -134,7 +134,7 @@ require_once('../app/partials/backoffice_head.php');
                                     </div>
                                     <div class="form-group col-lg-4">
                                         <label for="email">Select Product Category</label>
-                                        <select type="text" required class="form-control basic_select" name="user_access_level">
+                                        <select type="text" required class="form-control basic_select" name="product_category_id">
                                             <?php
                                             $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0' ORDER BY category_name ASC");
                                             if (mysqli_num_rows($categories_sql) > 0) {
@@ -157,7 +157,7 @@ require_once('../app/partials/backoffice_head.php');
                                 </div>
                                 <br>
                                 <div class="text-right">
-                                    <button type="submit" name="Bulk_Import_Product_Categories" class="btn btn-primary">Upload File</button>
+                                    <button type="submit" name="Bulk_Import_Products" class="btn btn-primary">Upload File</button>
                                 </div>
                                 <br>
                             </form>
