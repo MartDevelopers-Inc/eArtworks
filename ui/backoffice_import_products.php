@@ -127,7 +127,7 @@ require_once('../app/partials/backoffice_head.php');
                                             if (mysqli_num_rows($sellers_sql) > 0) {
                                                 while ($sellers = mysqli_fetch_array($sellers_sql)) {
                                             ?>
-                                                    <option value="<?php echo $sellers['use_id']; ?>"><?php echo $sellers['user_first_name'] . ' ' . $sellers['user_last_name'] . '.  Phone Number: ' . $sellers['user_phone_number']; ?></option>
+                                                    <option value="<?php echo $sellers['user_id']; ?>"><?php echo $sellers['user_first_name'] . ' ' . $sellers['user_last_name'] . '.  Phone Number: ' . $sellers['user_phone_number']; ?></option>
                                             <?php }
                                             } ?>
                                         </select>

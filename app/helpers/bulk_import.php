@@ -397,8 +397,6 @@ if (isset($_POST['Bulk_Import_Products'])) {
                     } else {
                         $err = "Failed, please try again";
                     }
-                } else {
-                    $err = "Fill all fields in your spreadsheet file";
                 }
             }
         }
