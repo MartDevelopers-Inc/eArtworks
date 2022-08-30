@@ -129,6 +129,33 @@ if (isset($_POST['Delete_Product_Category'])) {
 
 /* ----------------------------- Product Helpers ------------------------------------------------ */
 /* Add Product */
+if (isset($_POST['Register_New_Product'])) {
+    $product_category_id = mysqli_real_escape_string($mysqli, $_POST['product_category_id']);
+    $product_seller_id = mysqli_real_escape_string($mysqli, $_POST['product_seller_id']);
+    $product_sku_code = mysqli_real_escape_string($mysqli, $_POST['product_sku_code']);
+    $product_name = mysqli_real_escape_string($mysqli, $_POST['product_name']);
+    $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
+    $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
+    $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
+
+    /* Process Product Image */
+    $temp_product_image = explode('.', $_FILES['product_image']['name']);
+    $new_product_image = $product_sku_code . '_' . (round(microtime(true)) . '.' . end($temp_user_image));
+    move_uploaded_file(
+        $_FILES['product_image']['tmp_name'],
+        '../public/uploads/products/' . $new_product_image
+    );
+
+    /* Persist */
+    $sql = "INSERT INTO products (product_category_id, product_seller_id, product_sku_code, product_name, product_details, product_qty_in_stock, product_price, product_image)
+    VALUES('{$product_category_id}', '{$product_seller_id}', '{$product_sku_code}', '{$product_name}', '{$product_details}', '{$product_qty_in_stock}', '{$product_price}', '{$new_product_image}')";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Product added";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
 
 /* Update Product */
 
