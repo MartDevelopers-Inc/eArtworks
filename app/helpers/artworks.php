@@ -140,7 +140,7 @@ if (isset($_POST['Register_New_Product'])) {
 
     /* Process Product Image */
     $temp_product_image = explode('.', $_FILES['product_image']['name']);
-    $new_product_image = $product_sku_code . '_' . (round(microtime(true)) . '.' . end($temp_user_image));
+    $new_product_image = $product_sku_code . '-' . (round(microtime(true)) . '.' . end($temp_product_image));
     move_uploaded_file(
         $_FILES['product_image']['tmp_name'],
         '../public/uploads/products/' . $new_product_image
