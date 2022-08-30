@@ -327,4 +327,82 @@ if (isset($_POST['Bulk_Import_Product_Categories'])) {
 
 /* Bulk Import Products */
 if (isset($_POST['Bulk_Import_Products'])) {
+    $allowedFileType = [
+        'application/vnd.ms-excel',
+        'text/xls',
+        'text/xlsx',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ];
+    /* Avoid Names Duplication And Replacement */
+    $temp_file = explode('.', $_FILES['file']['name']);
+    $new_product_file = 'BULK_IMPORT_PRODUCTS' . (round(microtime(true)) . '.' . end($temp_file));
+
+    /* Is File Extension Allowed */
+    if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+        $targetPath = "../public/uploads/products/xls_files/" . $new_product_file;
+        move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+
+
+        $spreadSheet = $Reader->load($targetPath);
+        $excelSheet = $spreadSheet->getActiveSheet();
+        $spreadSheetAry = $excelSheet->toArray();
+        $sheetCount = count($spreadSheetAry);
+
+
+        for ($i = 1; $i <= $sheetCount; $i++) {
+
+            $product_name  = "";
+            if (isset($spreadSheetAry[$i][0])) {
+                $product_name  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][0]);
+            }
+            
+            $product_qty_in_stock  = "";
+            if (isset($spreadSheetAry[$i][1])) {
+                $product_qty_in_stock  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][1]);
+            }
+
+            $product_price  = "";
+            if (isset($spreadSheetAry[$i][2])) {
+                $product_price  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][2]);
+            }
+
+            $product_details  = "";
+            if (isset($spreadSheetAry[$i][3])) {
+                $product_details  = mysqli_real_escape_string($mysqli, $spreadSheetAry[$i][3]);
+            }
+
+            /* Hidden Values That Cannot Be Posted Via XLS */
+            $product_sku_code  = 'PRD-' . date('dmY') . '-' . substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 5);
+            $product_category_id = mysqli_real_escape_string($mysqli, $_POST['product_category_id']);
+            $product_seller_id = mysqli_real_escape_string($mysqli, $_POST['product_seller_id']);
+
+
+            /* Prevent Double Entries -  This may or not be triggered but the duplicate value will be skipped */
+            $sql = "SELECT * FROM products  WHERE product_sku_code ='{$product_sku_code}'  ";
+            $res = mysqli_query($mysqli, $sql);
+            if (mysqli_num_rows($res) > 0) {
+                $row = mysqli_fetch_assoc($res);
+                if ($product_sku_code == $row['product_sku_code']) {
+                    $err = 'SKU code already exists';
+                }
+            } else {
+                if (!empty($product_name) || !empty($product_details) || !empty($product_qty_in_stock) || !empty($product_price)) {
+                    /* Persist Bulk Imports If No Duplicates */
+                    $insert_sql = "INSERT INTO products (product_category_id, product_seller_id, product_sku_code, product_name, product_details, product_qty_in_stock, product_price)
+                    VALUES('{$product_category_id}', '{$product_seller_id}', '{$product_sku_code}', '{$product_name}', '{$product_details}', '{$product_qty_in_stock}', '{$product_price}')";
+
+                    /* Prepare */
+                    if (mysqli_query($mysqli, $insert_sql)) {
+                        $success = "Product data imported successfully";
+                    } else {
+                        $err = "Failed, please try again";
+                    }
+                }
+            }
+        }
+        /* Delete This File */
+        unlink($targetPath);
+    } else {
+        $info = "Invalid File Type. Upload Excel File.";
+    }
 }

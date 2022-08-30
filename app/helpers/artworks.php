@@ -129,7 +129,89 @@ if (isset($_POST['Delete_Product_Category'])) {
 
 /* ----------------------------- Product Helpers ------------------------------------------------ */
 /* Add Product */
+if (isset($_POST['Register_New_Product'])) {
+    $product_category_id = mysqli_real_escape_string($mysqli, $_POST['product_category_id']);
+    $product_seller_id = mysqli_real_escape_string($mysqli, $_POST['product_seller_id']);
+    $product_sku_code = mysqli_real_escape_string($mysqli, $_POST['product_sku_code']);
+    $product_name = mysqli_real_escape_string($mysqli, $_POST['product_name']);
+    $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
+    $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
+    $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
+
+    /* Process Product Image */
+    $temp_product_image = explode('.', $_FILES['product_image']['name']);
+    $new_product_image = $product_sku_code . '-' . (round(microtime(true)) . '.' . end($temp_product_image));
+    move_uploaded_file(
+        $_FILES['product_image']['tmp_name'],
+        '../public/uploads/products/' . $new_product_image
+    );
+
+    /* Persist */
+    $sql = "INSERT INTO products (product_category_id, product_seller_id, product_sku_code, product_name, product_details, product_qty_in_stock, product_price, product_image)
+    VALUES('{$product_category_id}', '{$product_seller_id}', '{$product_sku_code}', '{$product_name}', '{$product_details}', '{$product_qty_in_stock}', '{$product_price}', '{$new_product_image}')";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Product added";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
 
 /* Update Product */
+if (isset($_POST['Update_Product'])) {
+    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
+    $product_category_id = mysqli_real_escape_string($mysqli, $_POST['product_category_id']);
+    $product_seller_id = mysqli_real_escape_string($mysqli, $_POST['product_seller_id']);
+    $product_sku_code = mysqli_real_escape_string($mysqli, $_POST['product_sku_code']);
+    $product_name = mysqli_real_escape_string($mysqli, $_POST['product_name']);
+    $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
+    $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
+    $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
+
+    /* Check If Posted Update Has Image */
+    if (!empty($_FILES['product_image']['name'])) {
+        /* Process Product Image */
+        $temp_product_image = explode('.', $_FILES['product_image']['name']);
+        $new_product_image = $product_sku_code . '-' . (round(microtime(true)) . '.' . end($temp_product_image));
+        move_uploaded_file(
+            $_FILES['product_image']['tmp_name'],
+            '../public/uploads/products/' . $new_product_image
+        );
+
+        /* Persist */
+        $sql = "UPDATE products SET product_category_id = '{$product_category_id}', product_seller_id = '{$product_seller_id}', product_sku_code= '{$product_sku_code}',
+        product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}', product_image = '{$new_product_image}'
+        WHERE product_id = '{$product_id}'";
+
+        if (mysqli_query($mysqli, $sql)) {
+            $success = "Product updated";
+        } else {
+            $err = "Failed, please try again";
+        }
+    } else {
+        /* Persist Update Without affecting the image */
+        $sql = "UPDATE products SET product_category_id = '{$product_category_id}', product_seller_id = '{$product_seller_id}', product_sku_code= '{$product_sku_code}',
+        product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}'
+        WHERE product_id = '{$product_id}'";
+
+        if (mysqli_query($mysqli, $sql)) {
+            $success = "Product updated";
+        } else {
+            $err = "Failed, please try again";
+        }
+    }
+}
 
 /* Delete Product */
+if (isset($_POST['Delete_Product'])) {
+    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
+
+    /* Persist */
+    $sql = "UPDATE products SET product_delete_status = '1' WHERE product_id = '{$product_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Product moved to recycle bin";
+    } else {
+        $err = "Failed please try again";
+    }
+}

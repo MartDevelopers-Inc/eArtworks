@@ -106,3 +106,6 @@ $two_fa_codes = substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 6
 $confirm_url =  'landing_confirm_email?email=';
 
 $reset_password = '';
+
+/* Product SKU Code */
+$sku_code  = 'PRD-' . date('dmY') . '-' . substr(str_shuffle("QWERTYUIOPLKJHGFDSAZXCVBNM1234567890"), 1, 5);

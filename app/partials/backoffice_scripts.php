@@ -7,6 +7,8 @@
 <script src="../public/backoffice_assets/plugins/jquery-zoom/jquery.zoom.min.js"></script>
 <script src="../public/backoffice_assets/plugins/slick/slick.min.js"></script>
 
+<!-- Select 2 -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <!-- Data Tables -->
 <script src='../public/backoffice_assets/plugins/data-tables/jquery.datatables.min.js'></script>
@@ -37,6 +39,11 @@
         var nextSibling = e.target.nextElementSibling
         nextSibling.innerText = fileName
     })
+
+    /* Initialize Select 2 Plugin */
+    $(document).ready(function() {
+        $('.basic_select').select2();
+    });
 </script>
 
 

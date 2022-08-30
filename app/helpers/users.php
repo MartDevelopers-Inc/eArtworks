@@ -282,31 +282,27 @@ if (isset($_POST['Register_New_Staff'])) {
         $_FILES['user_profile_picture']['tmp_name'],
         '../public/uploads/users/' . $new_user_image
     );
-    /* Check If Passwords Match */
-    if ($new_password != $confirm_password) {
-        $err = "Passwords Does Not Match";
+
+    /* Avoid Duplications */
+    $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
+    $res = mysqli_query($mysqli, $sql);
+    if (mysqli_num_rows($res) > 0) {
+        $row = mysqli_fetch_assoc($res);
+        if (
+            $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
+        ) {
+            $err = 'Phone Number Or Email Already Exists';
+        }
     } else {
-        /* Avoid Duplications */
-        $sql = "SELECT * FROM  users   WHERE user_email = '{$user_email}' AND  user_phone_number = '{$user_phone_number}'";
-        $res = mysqli_query($mysqli, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $row = mysqli_fetch_assoc($res);
-            if (
-                $user_email == $row['user_email'] || $user_phone_number == $row['user_phone_number']
-            ) {
-                $err = 'Phone Number Or Email Already Exists';
-            }
-        } else {
-            /* Persist */
-            $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
+        /* Persist */
+        $insert_sql = "INSERT INTO users (user_first_name, user_last_name, user_email, user_dob, user_phone_number, user_default_address, user_password, user_access_level, user_profile_picture)
             VALUES('{$user_first_name}', '{$user_last_name}', '{$user_email}', '{$user_dob}', '{$user_phone_number}', '{$user_default_address}', '{$user_password}', '{$user_access_level}', '{$new_user_image}')";
 
-            /* Prepare */
-            if (mysqli_query($mysqli, $insert_sql)) {
-                $success = "User registered";
-            } else {
-                $err = "Failed!, Please Try Again";
-            }
+        /* Prepare */
+        if (mysqli_query($mysqli, $insert_sql)) {
+            $success = "User registered";
+        } else {
+            $err = "Failed!, Please Try Again";
         }
     }
 }
