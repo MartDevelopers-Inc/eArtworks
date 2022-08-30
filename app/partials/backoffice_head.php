@@ -29,7 +29,8 @@
     <!-- Data Tables -->
     <link href='../public/backoffice_assets/plugins/data-tables/datatables.bootstrap5.min.css' rel='stylesheet'>
     <link href='../public/backoffice_assets/plugins/data-tables/responsive.datatables.min.css' rel='stylesheet'>
-
+    <!-- Select 2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Toastr -->
     <link rel="stylesheet" href="../public/backoffice_assets/plugins/toastr/toastr.min.css">
     <?php
