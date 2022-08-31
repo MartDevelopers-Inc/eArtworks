@@ -307,6 +307,82 @@ if (mysqli_num_rows($product_sql) > 0) {
                                     </div>
                                 </div>
                             </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-12 p-b-15">
+                                    <!-- Recent Order Table -->
+                                    <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
+                                        <div class="card-header justify-content-between">
+                                            <h2>Purchase History</h2>
+                                        </div>
+                                        <div class="card-body pt-0 pb-5">
+                                            <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Order ID</th>
+                                                        <th>Customer Name</th>
+                                                        <th class="d-none d-lg-table-cell">Units</th>
+                                                        <th class="d-none d-lg-table-cell">Order Date</th>
+                                                        <th class="d-none d-lg-table-cell">Order Cost</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    /* Fetch All Orders Made To This Product - Sort Them By Date Added */
+                                                    $orders_sql = mysqli_query(
+                                                        $mysqli,
+                                                        "SELECT * FROM orders o 
+                                                        INNER JOIN users u 
+                                                        ON u.user_id = o.order_user_id
+                                                        WHERE o.order_delete_status = '0'
+                                                        AND u.user_delete_status = '0'
+                                                        AND o.order_product_id = '{$get_id}'
+                                                        ORDER BY order_date ASC"
+                                                    );
+                                                    if (mysqli_num_rows($orders_sql) > 0) {
+                                                        while ($orders = mysqli_fetch_array($orders_sql)) {
+                                                    ?>
+                                                            <tr>
+                                                                <td><?php echo $orders['order_code']; ?></td>
+                                                                <td>
+                                                                    <a class="text-dark" href="backoffice_manage_customer?view=<?php echo $orders['user_id']; ?>"><?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?></a>
+                                                                </td>
+                                                                <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
+                                                                <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
+                                                                <td class="d-none d-lg-table-cell">Ksh <?php echo number_format($orders['order_cost']); ?></td>
+                                                                <td>
+                                                                    <?php
+                                                                    if ($orders['order_status'] == 'Placed Orders') { ?>
+                                                                        <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                    <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
+                                                                        <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                    <?php } else if ($orders['order_status'] == 'Shipped') { ?>
+                                                                        <span class="badge badge-primary">Shipped</span>
+                                                                    <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
+                                                                        <span class="badge badge-primary">Out For Delivery</span>
+                                                                    <?php } else if ($orders['order_status'] == 'Delivered') { ?>
+                                                                        <span class="badge badge-success">Delivered</span>
+                                                                    <?php } else { ?>
+                                                                        <span class="badge badge-danger">Cancelled</span>
+                                                                    <?php } ?>
+                                                                </td>
+                                                            </tr>
+                                                        <?php }
+                                                    } else {
+                                                        /* No Orders To Fetch */ ?>
+                                                        <tr>
+                                                            <td colspan="6" class="text-center">
+                                                                <span class="text-dark">There are no current orders posted.</span>
+                                                            </td>
+                                                        </tr>
+                                                    <?php } ?>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div> <!-- End Content -->
                     </div> <!-- End Content Wrapper -->
 

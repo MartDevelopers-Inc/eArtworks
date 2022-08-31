@@ -191,10 +191,8 @@ if (isset($_POST['Update_Product'])) {
             $old_product_photo_location = '../public/uploads/products/' . $old_product_photo;
             /* Delete It */
             unlink($old_product_photo_location);
-        } else {
-            $err = "Failed to delete old photo";
         }
-
+        
         /* Persist */
         $sql = "UPDATE products SET product_category_id = '{$product_category_id}', product_seller_id = '{$product_seller_id}', product_sku_code= '{$product_sku_code}',
         product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}', product_image = '{$new_product_image}'

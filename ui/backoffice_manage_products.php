@@ -249,7 +249,7 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $products['product_id']; ?>">Edit</a>
+                                                                        <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $products['product_id']; ?>">View</a>
                                                                         <a class="dropdown-item" data-bs-toggle="modal" href="#delete_product_<?php echo $products['product_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
