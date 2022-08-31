@@ -70,6 +70,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
+require_once('../app/helpers/artworks.php');
 require_once('../app/partials/backoffice_head.php');
 /* Load This Page With Variable From GET Function */
 $get_id = mysqli_real_escape_string($mysqli, $_GET['view']);
@@ -134,15 +135,15 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                     <p><?php echo $product['product_sku_code']; ?></p>
                                                 </div>
                                             </div>
-
+                                            <hr>
                                             <div class="d-flex justify-content-between ">
                                                 <div class="text-center pb-4">
                                                     <h6 class="text-dark pb-2">Category</h6>
-                                                    <p><?php echo $product['category_code'] . ' ' . $product['category_name']; ?></p>
+                                                    <p><?php echo $product['category_name']; ?></p>
                                                 </div>
 
                                                 <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">Quantity In Stock</h6>
+                                                    <h6 class="text-dark pb-2">Quantity</h6>
                                                     <p><?php echo $product['product_qty_in_stock']; ?></p>
                                                 </div>
 
@@ -173,108 +174,110 @@ if (mysqli_num_rows($product_sql) > 0) {
                                         <div class="profile-content-right profile-right-spacing py-5">
                                             <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myProfileTab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Edit Profile</button>
+                                                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Product Details</button>
                                                 </li>
+
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#profile_settings" type="button" role="tab">Change Password</button>
+                                                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#profile_settings" type="button" role="tab">Edit Product</button>
                                                 </li>
                                             </ul>
                                             <div class="tab-content px-3 px-xl-5" id="myTabContent">
 
                                                 <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
-                                                        <form method="post" enctype="multipart/form-data">
-                                                            <div class="row mb-2">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="firstName">First name</label>
-                                                                        <input type="text" required value="<?php echo $customer['user_first_name']; ?>" class="form-control" name="user_first_name">
-                                                                        <input type="hidden" required value="<?php echo $customer['user_id']; ?>" class="form-control" name="user_id">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="lastName">Last name</label>
-                                                                        <input type="text" required value="<?php echo $customer['user_last_name']; ?>" class="form-control" name="user_last_name">
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group col-lg-12">
-                                                                    <label for="email">Email</label>
-                                                                    <input type="email" required value="<?php echo $customer['user_email']; ?>" class="form-control" name="user_email">
-                                                                </div>
-
-                                                                <div class="form-group col-lg-8">
-                                                                    <label for="email">Phone Number</label>
-                                                                    <input type="text" required value="<?php echo $customer['user_phone_number']; ?>" class="form-control" name="user_phone_number">
-                                                                </div>
-
-                                                                <div class="form-group col-lg-4">
-                                                                    <label for="email">Date Of Birth</label>
-                                                                    <input type="date" required value="<?php echo $customer['user_dob']; ?>" class="form-control" name="user_dob">
-                                                                </div>
-
-                                                                <div class="form-group col-lg-12">
-                                                                    <label for="email">Address</label>
-                                                                    <textarea class="form-control" required name="user_default_address"><?php echo $customer['user_default_address']; ?></textarea>
-                                                                </div>
-                                                            </div>
-                                                            <hr>
-                                                            <div class="form-group row mb-6">
-                                                                <label for="coverImage" class="col-sm-4 col-lg-2 col-form-label">Profile Photo</label>
-                                                                <div class="col-sm-8 col-lg-10">
-                                                                    <div class="custom-file mb-1">
-                                                                        <input type="file" accept=".png, .jpg" name="user_profile_picture" class="custom-file-input">
-                                                                        <label class="custom-file-label" for="coverImage">
-                                                                            Choose file...
-                                                                        </label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="d-flex justify-content-end mt-5">
-                                                                <button type="submit" name="Update_Customer_Profile" class="btn btn-primary mb-2 btn-pill">
-                                                                    Update Profile
-                                                                </button>
-                                                            </div>
-                                                        </form>
+                                                        <?php echo $product['product_details']; ?>
                                                     </div>
                                                 </div>
 
                                                 <div class="tab-pane" id="profile_settings" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
-                                                        <form method="post" autocomplete="off" enctype="multipart/form-data">
-                                                            <div class="row mb-2">
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="firstName">New Password</label>
-                                                                        <input type="password" required class="form-control" name="new_password">
-                                                                        <input type="hidden" required value="<?php echo $customer['user_id']; ?>" class="form-control" name="user_id">
+                                                        <form method="POST" enctype="multipart/form-data">
+                                                            <div class="modal-body px-4">
+                                                                <div class="row mb-2">
+                                                                    <div class="col-lg-12">
+                                                                        <div class="form-group">
+                                                                            <label for="firstName">Product Name</label>
+                                                                            <input type="hidden" required class="form-control" name="product_id" value="<?php echo $product['product_id']; ?>">
+                                                                            <input type="text" required class="form-control" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                        </div>
                                                                     </div>
-                                                                </div>
 
-                                                                <div class="col-lg-6">
-                                                                    <div class="form-group">
-                                                                        <label for="lastName">Confirm Password</label>
-                                                                        <input type="password" required class="form-control" name="confirm_password">
+                                                                    <div class="col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label for="lastName">SKU Code</label>
+                                                                            <input type="text" required class="form-control" name="product_sku_code" value="<?php echo $product['product_sku_code']; ?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-lg-4">
+                                                                        <label for="email">Product price (Ksh)</label>
+                                                                        <input type="number" required class="form-control" name="product_price" value="<?php echo $product['product_price']; ?>">
+                                                                    </div>
+
+                                                                    <div class="form-group col-lg-4">
+                                                                        <label for="email">Quantity In Stock</label>
+                                                                        <input type="number" required class="form-control" name="product_qty_in_stock" value="<?php echo $product['product_qty_in_stock']; ?>">
+                                                                    </div>
+                                                                    <div class="form-row">
+                                                                        <div class="form-group col-lg-8">
+                                                                            <label for="email">Select Product Seller</label>
+                                                                            <select type="text" required class="form-control" name="product_seller_id">
+                                                                                <option value="<?php echo $product['user_id']; ?>"><?php echo $product['user_first_name'] . ' ' . $product['user_last_name'] . '.  Phone Number: ' . $product['user_phone_number'];; ?></option>
+                                                                                <?php
+                                                                                /* Fetch Sellers ID And Avoid Replication */
+                                                                                $sellers_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0'  
+                                                                                AND user_id != '{$product['user_id']}' AND user_access_level = 'Customer' ORDER BY user_first_name ASC");
+                                                                                if (mysqli_num_rows($sellers_sql) > 0) {
+                                                                                    while ($sellers = mysqli_fetch_array($sellers_sql)) {
+                                                                                ?>
+                                                                                        <option value="<?php echo $sellers['user_id']; ?>"><?php echo $sellers['user_first_name'] . ' ' . $sellers['user_last_name'] . '.  Phone Number: ' . $sellers['user_phone_number']; ?></option>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div class="form-group col-lg-4">
+                                                                            <label for="email">Select Product Category</label>
+                                                                            <select type="text" required class="form-control" name="product_category_id">
+                                                                                <option value="<?php echo $product['category_id']; ?>"><?php echo $product['category_code'] . ' ' .  $product['category_name']; ?></option>
+                                                                                <?php
+                                                                                /* Fetch Other Categories */
+                                                                                $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories 
+                                                                                WHERE category_delete_status = '0' AND category_id != '{$product['category_id']}' ORDER BY category_name ASC");
+                                                                                if (mysqli_num_rows($categories_sql) > 0) {
+                                                                                    while ($product_categories = mysqli_fetch_array($categories_sql)) {
+                                                                                ?>
+                                                                                        <option value="<?php echo $product_categories['category_id']; ?>"><?php echo $product_categories['category_code'] . ' ' .  $product_categories['category_name']; ?></option>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group row mb-6">
+                                                                        <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Product Image</label>
+                                                                        <div class="col-sm-12 col-lg-12">
+                                                                            <div class="custom-file mb-1">
+                                                                                <input type="file" accept=".png, .jpg, .jpeg" name="product_image" class="custom-file-input">
+                                                                                <label class="custom-file-label" for="coverImage">
+                                                                                    Choose file...
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group col-lg-12">
+                                                                        <label for="email">Product Details</label>
+                                                                        <textarea class="form-control" rows="5" required name="product_details"><?php echo $product['product_details']; ?></textarea>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="d-flex justify-content-end mt-5">
-                                                                <button type="submit" name="Update_Staff_Password" class="btn btn-primary mb-2 btn-pill">
-                                                                    Update Password
-                                                                </button>
+
+                                                            <div class="modal-footer px-4">
+                                                                <button type="submit" name="Update_Product" class="btn btn-primary btn-pill">Update Product</button>
                                                             </div>
                                                         </form>
                                                     </div>
                                                 </div>
-
                                             </div>
-
                                         </div>
                                     </div>
-
-
                                 </div>
                             </div>
                         </div> <!-- End Content -->

@@ -178,6 +178,23 @@ if (isset($_POST['Update_Product'])) {
             '../public/uploads/products/' . $new_product_image
         );
 
+        /*Check If Product Had 
+        Existing  Photo And If It
+        Was There Delete It From Storage Then Replace With New One
+        */
+        $sql = "SELECT * FROM  products WHERE  product_id = '{$product_id}'";
+        $res = mysqli_query($mysqli, $sql);
+        $row = mysqli_fetch_assoc($res);
+        if (!empty($row['product_image'])) {
+            /* User Has Old Photo */
+            $old_product_photo = $row['product_image'];
+            $old_product_photo_location = '../public/uploads/products/' . $old_product_photo;
+            /* Delete It */
+            unlink($old_product_photo_location);
+        } else {
+            $err = "Failed to delete old photo";
+        }
+
         /* Persist */
         $sql = "UPDATE products SET product_category_id = '{$product_category_id}', product_seller_id = '{$product_seller_id}', product_sku_code= '{$product_sku_code}',
         product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}', product_image = '{$new_product_image}'
