@@ -264,9 +264,155 @@ if (mysqli_num_rows($customer_sql) > 0) {
 
                                         </div>
                                     </div>
-
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12 p-b-15">
+                                        <!-- Recent Order Table -->
+                                        <div class="card-table-border-none card-default recent-orders" id="recent-orders">
+                                            <div class="card-header justify-content-between">
+                                                <h2>Orders History</h2>
+                                            </div>
+                                            <div class="card-body pt-0 pb-5">
+                                                <table class="table card-table table-responsive table-responsive-large" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Order ID</th>
+                                                            <th>Product Name</th>
+                                                            <th class="d-none d-lg-table-cell">Units</th>
+                                                            <th class="d-none d-lg-table-cell">Order Date</th>
+                                                            <th class="d-none d-lg-table-cell">Order Cost</th>
+                                                            <th>Status</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <?php
+                                                        /* Fetch All Orders Made By This Fella - Sort Them By Date Added */
+                                                        $orders_sql = mysqli_query(
+                                                            $mysqli,
+                                                            "SELECT * FROM orders o 
+                                                                INNER JOIN products p 
+                                                                ON p.product_id = o.order_product_id
+                                                                WHERE o.order_delete_status = '0'
+                                                                AND p.product_delete_status = '0'
+                                                                AND o.order_product_id = '{$get_id}'
+                                                                ORDER BY order_date ASC"
+                                                        );
+                                                        if (mysqli_num_rows($orders_sql) > 0) {
+                                                            while ($orders = mysqli_fetch_array($orders_sql)) {
+                                                        ?>
+                                                                <tr>
+                                                                    <td><?php echo $orders['order_code']; ?></td>
+                                                                    <td>
+                                                                        <a class="text-dark" href="backoffice_manage_customer?view=<?php echo $orders['user_id']; ?>"><?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?></a>
+                                                                    </td>
+                                                                    <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
+                                                                    <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
+                                                                    <td class="d-none d-lg-table-cell">Ksh <?php echo number_format($orders['order_cost']); ?></td>
+                                                                    <td>
+                                                                        <?php
+                                                                        if ($orders['order_status'] == 'Placed Orders') { ?>
+                                                                            <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                        <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
+                                                                            <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                        <?php } else if ($orders['order_status'] == 'Shipped') { ?>
+                                                                            <span class="badge badge-primary">Shipped</span>
+                                                                        <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
+                                                                            <span class="badge badge-primary">Out For Delivery</span>
+                                                                        <?php } else if ($orders['order_status'] == 'Delivered') { ?>
+                                                                            <span class="badge badge-success">Delivered</span>
+                                                                        <?php } else { ?>
+                                                                            <span class="badge badge-danger">Cancelled</span>
+                                                                        <?php } ?>
+                                                                    </td>
+                                                                </tr>
+                                                            <?php }
+                                                        } else {
+                                                            /* No Orders To Fetch */ ?>
+                                                            <tr>
+                                                                <td colspan="6" class="text-center">
+                                                                    <span class="text-dark">There are no current orders posted.</span>
+                                                                </td>
+                                                            </tr>
+                                                        <?php } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="ec-vendor-list card card-default">
+                                        <div class="card-header justify-content-between">
+                                            <h2>Products Selling</h2>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table id="responsive-data-table" class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Image</th>
+                                                            <th>SKU</th>
+                                                            <th>Name</th>
+                                                            <th>QTY</th>
+                                                            <th>Price</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        <?php
+                                                        $products_sql = mysqli_query(
+                                                            $mysqli,
+                                                            "SELECT * FROM products p
+                                                            INNER JOIN users u ON u.user_id = p.product_seller_id
+                                                            INNER JOIN categories c ON c.category_id = p.product_category_id
+                                                            WHERE u.user_delete_status = '0' 
+                                                            AND c.category_delete_status = '0'
+                                                            AND p.product_delete_status = '0'
+                                                            AND p.product_seller_id = '{$get_id}'"
+                                                        );
+                                                        if (mysqli_num_rows($products_sql) > 0) {
+                                                            while ($products = mysqli_fetch_array($products_sql)) {
+                                                                /* Image Directory */
+                                                                if ($products['product_image'] == '') {
+                                                                    $image_dir = "../public/uploads/products/no_image.png";
+                                                                } else {
+                                                                    $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                                }
+                                                        ?>
+                                                                <tr>
+                                                                    <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
+                                                                    <td><?php echo $products['product_sku_code']; ?></td>
+                                                                    <td><?php echo $products['product_name']; ?></td>
+                                                                    <td><?php echo $products['product_qty_in_stock']; ?></td>
+                                                                    <td>Ksh <?php echo number_format($products['product_price'], 2); ?></td>
+                                                                    <td>
+                                                                        <div class="btn-group mb-1">
+                                                                            <button type="button" class="btn btn-outline-success">Manage</button>
+                                                                            <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                                                                <span class="sr-only">Manage</span>
+                                                                            </button>
+
+                                                                            <div class="dropdown-menu">
+                                                                                <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $products['product_id']; ?>">View</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php }
+                                                        } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div> <!-- End Content -->
                     </div> <!-- End Content Wrapper -->
 

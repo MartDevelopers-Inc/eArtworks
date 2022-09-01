@@ -217,12 +217,6 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="card card-table-border-none card-default recent-orders" id="recent-orders">
                                 <div class="card-header justify-content-between">
                                     <h2>Recent Orders</h2>
-                                    <!-- 
-                                        Enable This When You Know What You Are Doing
-                                        <div class="date-range-report">
-                                        <span></span>
-                                    </div>
-                                    -->
                                 </div>
                                 <div class="card-body pt-0 pb-5">
                                     <table class="table card-table table-responsive table-responsive-large" style="width:100%">
@@ -252,18 +246,22 @@ require_once('../app/partials/backoffice_head.php');
                                                 while ($orders = mysqli_fetch_array($orders_sql)) {
                                             ?>
                                                     <tr>
-                                                        <td><?php echo $orders['order_code']; ?></td>
                                                         <td>
-                                                            <a class="text-dark" href="backoffice_products?view=<?php echo $orders['product_id']; ?>">Coach Swagger</a>
+                                                            <a href="backoffice_manage_order?view=<?php echo $orders['order_id']; ?>">
+                                                                <?php echo $orders['order_code']; ?>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="text-dark" href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>"><?php echo $orders['product_name']; ?></a>
                                                         </td>
                                                         <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
                                                         <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
-                                                        <td class="d-none d-lg-table-cell"><?php echo number_format($orders['order_cost']); ?></td>
+                                                        <td class="d-none d-lg-table-cell">Ksh <?php echo number_format($orders['order_cost']); ?></td>
                                                         <td>
                                                             <?php
-                                                            if ($orders['order_status'] == 'Order Placed') { ?>
+                                                            if ($orders['order_status'] == 'Placed Orders') { ?>
                                                                 <span class="badge badge-warning">Awaiting Fulfillment</span>
-                                                            <?php } else if ($orders['order_status'] == 'Awaiting Fulfillment') { ?>
+                                                            <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
                                                                 <span class="badge badge-warning">Awaiting Fulfillment</span>
                                                             <?php } else if ($orders['order_status'] == 'Shipped') { ?>
                                                                 <span class="badge badge-primary">Shipped</span>
@@ -274,20 +272,6 @@ require_once('../app/partials/backoffice_head.php');
                                                             <?php } else { ?>
                                                                 <span class="badge badge-danger">Cancelled</span>
                                                             <?php } ?>
-                                                        </td>
-                                                        <td class="text-right">
-                                                            <div class="dropdown show d-inline-block widget-dropdown">
-                                                                <a class="dropdown-toggle icon-burger-mini" href="#" role="button" id="dropdown-recent-order1" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static"></a>
-                                                                <ul class="dropdown-menu dropdown-menu-right">
-                                                                    <li class="dropdown-item">
-                                                                        <a href="backoffice_order?view=">View</a>
-                                                                    </li>
-                                                                    <li class="dropdown-item">
-                                                                        <!-- Implement Delete Order Via Modal -->
-                                                                        <a href="#">Delete</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </div>
                                                         </td>
                                                     </tr>
                                                 <?php }
@@ -413,12 +397,12 @@ require_once('../app/partials/backoffice_head.php');
                                     ?>
                                             <div class="row media d-flex pt-15px pb-15px">
                                                 <div class="col-lg-3 col-md-3 col-2 media-image align-self-center rounded">
-                                                    <a href="#">
+                                                    <a href="backoffice_manage_product?view=<?php echo $top_product['product_id']; ?>">
                                                         <img src="<?php echo $product_image_dir; ?>" alt="Product Image">
                                                     </a>
                                                 </div>
                                                 <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
-                                                    <a href="#">
+                                                    <a href="backoffice_manage_product?view=<?php echo $top_product['product_id']; ?>">
                                                         <h6 class="mb-10px text-dark font-weight-medium"><?php echo $top_product['product_name']; ?></h6>
                                                     </a>
                                                     <p class="float-md-right sale">
