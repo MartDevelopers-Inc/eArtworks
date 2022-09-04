@@ -158,7 +158,7 @@ require_once('../app/partials/landing_head.php');
                                                         </a>
                                                     </h5>
                                                     <div class="ec-pro-list-desc">
-                                                       <?php echo $products['product_details']; ?>
+                                                        <?php echo $products['product_details']; ?>
                                                     </div>
                                                     <span class="ec-price">
                                                         <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
@@ -166,8 +166,25 @@ require_once('../app/partials/landing_head.php');
                                                 </div>
                                             </div>
                                         </div>
-                                <?php }
-                                } ?>
+                                    <?php }
+                                } else { ?>
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                        <div class="ec-product-inner">
+                                            <div class="ec-pro-image-outer">
+                                                <div class="ec-pro-image">
+                                                    <a href="" class="image">
+                                                        <img class="main-image" src="../public/uploads/products/no_image.png" alt="Product" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="ec-pro-content">
+                                                <h5 class="ec-pro-title">
+                                                    No available artworks for the moment
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
