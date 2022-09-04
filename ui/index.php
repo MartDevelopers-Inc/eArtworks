@@ -178,7 +178,7 @@ require_once('../app/partials/landing_head.php');
                         </div>
                         <div class="ec-pro-content">
                           <h5 class="ec-pro-title">
-                            <a href="landing_product"><?php echo $products['product_name']; ?></a>
+                            <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>"><?php echo $products['product_name']; ?></a>
                           </h5>
                           <span class="ec-price">
                             <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
