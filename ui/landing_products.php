@@ -145,14 +145,14 @@ require_once('../app/partials/landing_head.php');
                                             <div class="ec-product-inner">
                                                 <div class="ec-pro-image-outer">
                                                     <div class="ec-pro-image">
-                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>" class="image">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
                                                             <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="ec-pro-content">
                                                     <h5 class="ec-pro-title">
-                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>">
                                                             <?php echo $products['product_name']; ?>
                                                         </a>
                                                     </h5>
