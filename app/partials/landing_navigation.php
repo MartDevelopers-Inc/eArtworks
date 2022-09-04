@@ -324,9 +324,21 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <li>
                             <a href="javascript:void(0)">Shop By Categories</a>
                             <ul class="sub-menu">
-                                <li>
-                                    <a href="shop_by_categories?category=">Category Name</a>
-                                </li>
+                                <?php
+                                /* Fetch All Categories */
+                                $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
+                                if (mysqli_num_rows($categories_sql) > 0) {
+                                    while ($categories = mysqli_fetch_array($categories_sql)) {
+                                ?>
+                                        <li>
+                                            <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a>
+                                        </li>
+                                    <?php }
+                                } else { ?>
+                                    <li>
+                                        <a href="#">No Categories</a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                         </li>
                         <li><a href="landing_products">Products</a></li>
@@ -581,7 +593,21 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 <li class="dropdown">
                                     <a href="javascript:void(0)">Shop By Categories</a>
                                     <ul class="sub-menu">
-                                        <li><a href="shop_by_categories?category=">Category Name</a></li>
+                                        <?php
+                                        /* Fetch All Categories */
+                                        $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
+                                        if (mysqli_num_rows($categories_sql) > 0) {
+                                            while ($categories = mysqli_fetch_array($categories_sql)) {
+                                        ?>
+                                                <li>
+                                                    <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a>
+                                                </li>
+                                            <?php }
+                                        } else { ?>
+                                            <li>
+                                                <a href="#">No Categories</a>
+                                            </li>
+                                        <?php } ?>
                                     </ul>
                                 </li>
                                 <li><a href="landing_products">Products</a></li>
@@ -607,9 +633,21 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <li>
                             <a href="javascript:void(0)">Shop By Categories</a>
                             <ul class="sub-menu">
-                                <li>
-                                    <a href="shop_by_categories?category=">Category Name</a>
-                                </li>
+                                <?php
+                                /* Fetch All Categories */
+                                $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
+                                if (mysqli_num_rows($categories_sql) > 0) {
+                                    while ($categories = mysqli_fetch_array($categories_sql)) {
+                                ?>
+                                        <li>
+                                            <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a>
+                                        </li>
+                                    <?php }
+                                } else { ?>
+                                    <li>
+                                        <a href="#">No Categories</a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                         </li>
                         <li><a href="landing_products">Products</a></li>
