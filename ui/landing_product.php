@@ -84,7 +84,7 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Single Products</h2>
+                            <h2 class="ec-breadcrumb-title">Single Product</h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
@@ -103,149 +103,113 @@ require_once('../app/partials/landing_head.php');
     <!-- Ec breadcrumb end -->
 
     <!-- Sart Single product -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="ec-pro-rightside ec-common-rightside col-lg-12 order-lg-last col-md-12 order-md-first">
+    <?php
+    $product_id = mysqli_real_escape_string($mysqli, $_GET['view']);
+    $products_sql = mysqli_query(
+        $mysqli,
+        "SELECT * FROM products p
+        INNER JOIN users u ON u.user_id = p.product_seller_id
+        INNER JOIN categories c ON c.category_id = p.product_category_id
+        WHERE u.user_delete_status = '0' 
+        AND c.category_delete_status = '0'
+        AND p.product_delete_status = '0'
+        AND p.product_id = '{$product_id}'
+        "
+    );
+    if (mysqli_num_rows($products_sql) > 0) {
+        while ($products = mysqli_fetch_array($products_sql)) {
+            /* Image Directory */
+            if ($products['product_image'] == '') {
+                $image_dir = "../public/uploads/products/no_image.png";
+            } else {
+                $image_dir = "../public/uploads/products/" . $products['product_image'];
+            }
+    ?>
+            <section class="ec-page-content section-space-p">
+                <div class="container">
+                    <div class="row">
+                        <div class="ec-pro-rightside ec-common-rightside col-lg-12 order-lg-last col-md-12 order-md-first">
 
-                    <!-- Single product content Start -->
-                    <div class="single-pro-block">
-                        <div class="single-pro-inner">
-                            <div class="row">
-                                <div class="single-pro-img">
-                                    <div class="single-product-scroll">
-                                        <div class="single-product-cover">
-                                            <div class="single-slide zoom-image-hover">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_1.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide zoom-image-hover">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_2.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide zoom-image-hover">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_3.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide zoom-image-hover">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_4.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide zoom-image-hover">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_3.jpg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="single-nav-thumb">
-                                            <div class="single-slide">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_1.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_2.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_3.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_4.jpg" alt="">
-                                            </div>
-                                            <div class="single-slide">
-                                                <img class="img-responsive" src="../public/landing_assets/images/product-image/9_3.jpg" alt="">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="single-pro-desc">
-                                    <div class="single-pro-content">
-                                        <h5 class="ec-single-title">Unisex Cotton Neck Hoodie</h5>
-                                        <div class="ec-single-rating-wrap">
-                                            <div class="ec-single-rating">
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                            </div>
-                                        </div>
-                                        <div class="ec-single-desc">Lorem Ipsum is simply dummy text of the printing and
-                                            typesetting industry. Lorem Ipsum has been the industry's standard dummy
-                                            text ever since the 1990</div>
-
-                                        <div class="ec-single-sales">
-                                            <div class="ec-single-sales-inner">
-                                                <div class="ec-single-sales-title">sales accelerators</div>
-                                                <div class="ec-single-sales-visitor">real time <span>24</span> visitor
-                                                    right now!</div>
-                                                <div class="ec-single-sales-progress">
-                                                    <span class="ec-single-progress-desc">Hurry up!left 29 in
-                                                        stock</span>
-                                                    <span class="ec-single-progressbar"></span>
-                                                </div>
-                                                <div class="ec-single-sales-countdown">
-                                                    <div class="ec-single-countdown"><span id="ec-single-countdown"></span></div>
-                                                    <div class="ec-single-count-desc">Time is Running Out!</div>
+                            <!-- Single product content Start -->
+                            <div class="single-pro-block">
+                                <div class="single-pro-inner">
+                                    <div class="row">
+                                        <div class="single-pro-img">
+                                            <div class="single-product-scroll">
+                                                <div class="single-product-cover">
+                                                    <div class="single-slide zoom-image-hover">
+                                                        <img class="img-responsive" src="<?php echo $image_dir; ?>" alt="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="ec-single-price-stoke">
-                                            <div class="ec-single-price">
-                                                <span class="ec-single-ps-title">As low as</span>
-                                                <span class="new-price">$97.00</span>
-                                            </div>
-                                            <div class="ec-single-stoke">
-                                                <span class="ec-single-ps-title">IN STOCK</span>
-                                                <span class="ec-single-sku">SKU#: WH12</span>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="ec-single-qty">
-                                            <div class="qty-plus-minus">
-                                                <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                                            </div>
-                                            <div class="ec-single-cart ">
-                                                <button class="btn btn-primary">Add To Cart</button>
-                                            </div>
-                                            <div class="ec-single-wishlist">
-                                                <a class="ec-btn-group wishlist" title="Wishlist"><img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt="" /></a>
+                                        <div class="single-pro-desc">
+                                            <div class="single-pro-content">
+                                                <h5 class="ec-single-title"><?php echo $products['product_name']; ?></h5>
+                                                <div class="ec-single-rating-wrap">
+                                                    <div class="ec-single-rating">
+                                                        <i class="ecicon eci-star fill"></i>
+                                                        <i class="ecicon eci-star fill"></i>
+                                                        <i class="ecicon eci-star fill"></i>
+                                                        <i class="ecicon eci-star fill"></i>
+                                                        <i class="ecicon eci-star fill"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="ec-single-price-stoke">
+                                                    <div class="ec-single-price">
+                                                        <span class="ec-single-ps-title">As low as</span>
+                                                        <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                                                    </div>
+                                                    <div class="ec-single-stoke">
+                                                        <span class="ec-single-ps-title">IN STOCK</span>
+                                                        <span class="ec-single-sku">SKU#: <?php echo $products['product_sku_code']; ?></span>
+                                                    </div>
+                                                </div>
+
+                                                <div class="ec-single-qty">
+                                                    <div class="qty-plus-minus">
+                                                        <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                                    </div>
+                                                    <div class="ec-single-cart ">
+                                                        <button class="btn btn-primary">Add To Cart</button>
+                                                    </div>
+                                                    <div class="ec-single-wishlist">
+                                                        <a class="ec-btn-group wishlist" title="Wishlist"><img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt="" /></a>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <!--Single product content End -->
-                    <!-- Single product tab start -->
-                    <div class="ec-single-pro-tab">
-                        <div class="ec-single-pro-tab-wrapper">
-                            <div class="ec-single-pro-tab-nav">
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Details</a>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="tab-content  ec-single-pro-tab-content">
-                                <div id="ec-spt-nav-details" class="tab-pane fade show active">
-                                    <div class="ec-single-pro-tab-desc">
-                                        <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                            Lorem Ipsum has been the industry's standard dummy text ever since the
-                                            1500s, when an unknown printer took a galley of type and scrambled it to
-                                            make a type specimen book. It has survived not only five centuries, but also
-                                            the leap into electronic typesetting, remaining essentially unchanged.
-                                        </p>
-                                        <ul>
-                                            <li>Any Product types that You want - Simple, Configurable</li>
-                                            <li>Downloadable/Digital Products, Virtual Products</li>
-                                            <li>Inventory Management with Backordered items</li>
-                                            <li>Flatlock seams throughout.</li>
+                            <!--Single product content End -->
+                            <!-- Single product tab start -->
+                            <div class="ec-single-pro-tab">
+                                <div class="ec-single-pro-tab-wrapper">
+                                    <div class="ec-single-pro-tab-nav">
+                                        <ul class="nav nav-tabs">
+                                            <li class="nav-item">
+                                                <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details" role="tablist">Details</a>
+                                            </li>
                                         </ul>
                                     </div>
+                                    <div class="tab-content  ec-single-pro-tab-content">
+                                        <div id="ec-spt-nav-details" class="tab-pane fade show active">
+                                            <div class="ec-single-pro-tab-desc">
+                                                <?php echo $products['product_details']; ?>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <!-- product details description area end -->
                         </div>
                     </div>
-                    <!-- product details description area end -->
                 </div>
-            </div>
-        </div>
-    </section>
-    <!-- End Single product -->
+            </section>
+            <!-- End Single product -->
+    <?php }
+    } ?>
 
     <!-- Related Product Start -->
     <section class="section ec-releted-product section-space-p">
@@ -261,31 +225,55 @@ require_once('../app/partials/landing_head.php');
             </div>
             <div class="row margin-minus-b-30">
                 <!-- Related Product Content -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
-                    <div class="ec-product-inner">
-                        <div class="ec-pro-image-outer">
-                            <div class="ec-pro-image">
-                                <a href="landing_product?view=" class="image">
-                                    <img class="main-image" src="../public/landing_assets/images/product-image/6_1.jpg" alt="Product" />
-                                </a>
+                <?php
+                $category = mysqli_real_escape_string($mysqli, $_GET['category']);
+                $products_sql = mysqli_query(
+                    $mysqli,
+                    "SELECT * FROM products p
+                    INNER JOIN users u ON u.user_id = p.product_seller_id
+                    INNER JOIN categories c ON c.category_id = p.product_category_id
+                    WHERE u.user_delete_status = '0' 
+                    AND c.category_delete_status = '0'
+                    AND p.product_delete_status = '0'
+                    AND c.category_id = '{$category}' 
+                    AND p.product_id != '{$product_id}'
+                    "
+                );
+                if (mysqli_num_rows($products_sql) > 0) {
+                    while ($products = mysqli_fetch_array($products_sql)) {
+                        /* Image Directory */
+                        if ($products['product_image'] == '') {
+                            $image_dir = "../public/uploads/products/no_image.png";
+                        } else {
+                            $image_dir = "../public/uploads/products/" . $products['product_image'];
+                        }
+                ?>
+                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                            <div class="ec-product-inner">
+                                <div class="ec-pro-image-outer">
+                                    <div class="ec-pro-image">
+                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
+                                            <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="ec-pro-content">
+                                    <h5 class="ec-pro-title"><a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>"><?php echo $products['product_name']; ?></a></h5>
+                                    <div class="ec-pro-rating">
+                                        <i class="ecicon eci-star fill"></i>
+                                        <i class="ecicon eci-star fill"></i>
+                                        <i class="ecicon eci-star fill"></i>
+                                        <i class="ecicon eci-star fill"></i>
+                                        <i class="ecicon eci-star fill"></i>
+                                    </div>
+                                    <span class="ec-price">
+                                        <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                        <div class="ec-pro-content">
-                            <h5 class="ec-pro-title"><a href="landing_product?view=">Round Neck T-Shirt</a></h5>
-                            <div class="ec-pro-rating">
-                                <i class="ecicon eci-star fill"></i>
-                                <i class="ecicon eci-star fill"></i>
-                                <i class="ecicon eci-star fill"></i>
-                                <i class="ecicon eci-star fill"></i>
-                                <i class="ecicon eci-star fill"></i>
-                            </div>
-                            <div class="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
-                            <span class="ec-price">
-                                <span class="new-price">$22.00</span>
-                            </span>
-                        </div>
-                    </div>
-                </div>
+                <?php }
+                } ?>
             </div>
         </div>
     </section>

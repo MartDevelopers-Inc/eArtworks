@@ -85,12 +85,13 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Products</h2>
+                            <h2 class="ec-breadcrumb-title">Products Under <?php echo $_GET['name']; ?></h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
+                                <li class="ec-breadcrumb-item"><a href="">Categories</a></li>
                                 <li class="ec-breadcrumb-item active">Products</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
@@ -123,6 +124,7 @@ require_once('../app/partials/landing_head.php');
                         <div class="shop-pro-inner">
                             <div class="row">
                                 <?php
+                                $category_id = mysqli_real_escape_string($mysqli, $_GET['category']);
                                 $products_sql = mysqli_query(
                                     $mysqli,
                                     "SELECT * FROM products p
@@ -130,7 +132,9 @@ require_once('../app/partials/landing_head.php');
                                     INNER JOIN categories c ON c.category_id = p.product_category_id
                                     WHERE u.user_delete_status = '0' 
                                     AND c.category_delete_status = '0'
-                                    AND p.product_delete_status = '0'"
+                                    AND p.product_delete_status = '0'
+                                    AND c.category_id = '{$category_id}'
+                                    "
                                 );
                                 if (mysqli_num_rows($products_sql) > 0) {
                                     while ($products = mysqli_fetch_array($products_sql)) {
@@ -145,14 +149,14 @@ require_once('../app/partials/landing_head.php');
                                             <div class="ec-product-inner">
                                                 <div class="ec-pro-image-outer">
                                                     <div class="ec-pro-image">
-                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>" class="image">
                                                             <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
                                                         </a>
                                                     </div>
                                                 </div>
                                                 <div class="ec-pro-content">
                                                     <h5 class="ec-pro-title">
-                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>">
                                                             <?php echo $products['product_name']; ?>
                                                         </a>
                                                     </h5>
