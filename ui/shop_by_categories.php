@@ -124,7 +124,7 @@ require_once('../app/partials/landing_head.php');
                         <div class="shop-pro-inner">
                             <div class="row">
                                 <?php
-                                $category_id = mysqli_real_escape_string($mysqli, $_GET['view']);
+                                $category_id = mysqli_real_escape_string($mysqli, $_GET['category']);
                                 $products_sql = mysqli_query(
                                     $mysqli,
                                     "SELECT * FROM products p
@@ -133,7 +133,8 @@ require_once('../app/partials/landing_head.php');
                                     WHERE u.user_delete_status = '0' 
                                     AND c.category_delete_status = '0'
                                     AND p.product_delete_status = '0'
-                                    LIMIT 6"
+                                    AND c.category_id = '{$category_id}'
+                                    "
                                 );
                                 if (mysqli_num_rows($products_sql) > 0) {
                                     while ($products = mysqli_fetch_array($products_sql)) {
