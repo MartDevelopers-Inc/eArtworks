@@ -145,55 +145,66 @@ require_once('../app/partials/landing_head.php');
             <!-- 1st Product tab start -->
             <div class="tab-pane fade show active" id="tab-pro-for-all">
               <div class="row">
-                <!-- Product Content -->
-                <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 ec-product-content" data-animation="fadeIn">
-                  <div class="ec-product-inner">
-                    <div class="ec-pro-image-outer">
-                      <div class="ec-pro-image">
-                        <a href="product-left-sidebar.html" class="image">
-                          <img class="main-image" src="../public/landing_assets/images/product-image/6_1.jpg" alt="Product" />
-                          <img class="hover-image" src="../public/landing_assets/images/product-image/6_2.jpg" alt="Product" />
-                        </a>
-                        <span class="percentage">20%</span>
-                        <a href="#" class="quickview" data-link-action="quickview" title="Quick view" data-bs-toggle="modal" data-bs-target="#ec_quickview_modal"><img src="../public/landing_assets/images/icons/quickview.svg" class="svg_img pro_svg" alt="" /></a>
-                        <div class="ec-pro-actions">
-                          <a href="compare.html" class="ec-btn-group compare" title="Compare"><img src="../public/landing_assets/images/icons/compare.svg" class="svg_img pro_svg" alt="" /></a>
-                          <button title="Add To Cart" class="add-to-cart">
-                            <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img pro_svg" alt="" />
-                            Add To Cart
-                          </button>
-                          <a class="ec-btn-group wishlist" title="Wishlist"><img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt="" /></a>
+                <?php
+                $products_sql = mysqli_query(
+                  $mysqli,
+                  "SELECT * FROM products p
+                  INNER JOIN users u ON u.user_id = p.product_seller_id
+                  INNER JOIN categories c ON c.category_id = p.product_category_id
+                  WHERE u.user_delete_status = '0' 
+                  AND c.category_delete_status = '0'
+                  AND p.product_delete_status != '0'
+                  LIMIT 6"
+                );
+                if (mysqli_num_rows($products_sql) > 0) {
+                  while ($products = mysqli_fetch_array($products_sql)) {
+                    /* Image Directory */
+                    if ($products['product_image'] == '') {
+                      $image_dir = "../public/uploads/products/no_image.png";
+                    } else {
+                      $image_dir = "../public/uploads/products/" . $products['product_image'];
+                    }
+                ?>
+                    <!-- Product Content -->
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-6 ec-product-content" data-animation="fadeIn">
+                      <div class="ec-product-inner">
+                        <div class="ec-pro-image-outer">
+                          <div class="ec-pro-image">
+                            <a href="product-left-sidebar.html" class="image">
+                              <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
+                            </a>
+                            <span class="percentage"><?php echo $products['product_sku_code']; ?></span>
+                          </div>
+                        </div>
+                        <div class="ec-pro-content">
+                          <h5 class="ec-pro-title">
+                            <a href="landing_product"><?php echo $products['product_name']; ?></a>
+                          </h5>
+                          <span class="ec-price">
+                            <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                          </span>
                         </div>
                       </div>
                     </div>
-                    <div class="ec-pro-content">
-                      <h5 class="ec-pro-title">
-                        <a href="landing_product">Round Neck T-Shirt</a>
-                      </h5>
-                      <div class="ec-pro-rating">
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star fill"></i>
-                        <i class="ecicon eci-star"></i>
-                      </div>
-                      <span class="ec-price">
-                        <span class="old-price">$27.00</span>
-                        <span class="new-price">$22.00</span>
-                      </span>
-                      <div class="ec-pro-option">
-                        <div class="ec-pro-color">
-                          <ul class="ec-opt-swatch ec-change-img">
-                            <li class="active">
-                              <a href="#" class="ec-opt-clr-img" data-src="../public/landing_assets/images/product-image/6_1.jpg" data-src-hover="../public/landing_assets/images/product-image/6_1.jpg" data-tooltip="Gray"><span style="background-color: #e8c2ff"></span></a>
-                            </li>
-                          </ul>
+                  <?php }
+                } else { ?>
+                  <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-6 ec-product-content" data-animation="fadeIn">
+                    <div class="ec-product-inner">
+                      <div class="ec-pro-image-outer">
+                        <div class="ec-pro-image">
+                          <a href="" class="image">
+                            <img class="main-image" src="../public/uploads/products/no_image.png" alt="Product" />
+                          </a>
                         </div>
+                      </div>
+                      <div class="ec-pro-content">
+                        <h5 class="ec-pro-title">
+                          <a href="">No available products at the moment</a>
+                        </h5>
                       </div>
                     </div>
                   </div>
-                </div>
-
+                <?php } ?>
                 <div class="col-sm-12 shop-all-btn">
                   <a href="landing_products">Shop All Collection</a>
                 </div>
