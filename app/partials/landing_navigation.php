@@ -293,7 +293,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                         while ($categories = mysqli_fetch_array($categories_sql)) {
                                     ?>
                                             <ul class="sub-menu">
-                                                <li><a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a></li>
+                                                <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
                                             </ul>
                                         <?php }
                                     } else { ?>
@@ -331,7 +331,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     while ($categories = mysqli_fetch_array($categories_sql)) {
                                 ?>
                                         <li>
-                                            <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a>
+                                            <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
                                         </li>
                                     <?php }
                                 } else { ?>
@@ -600,7 +600,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                             while ($categories = mysqli_fetch_array($categories_sql)) {
                                         ?>
                                                 <li>
-                                                    <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a>
+                                                    <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
                                                 </li>
                                             <?php }
                                         } else { ?>
@@ -640,7 +640,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     while ($categories = mysqli_fetch_array($categories_sql)) {
                                 ?>
                                         <li>
-                                            <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>"><?php echo $categories['category_name']; ?></a>
+                                            <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
                                         </li>
                                     <?php }
                                 } else { ?>
