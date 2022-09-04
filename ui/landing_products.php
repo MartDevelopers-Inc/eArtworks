@@ -122,37 +122,52 @@ require_once('../app/partials/landing_head.php');
                     <div class="shop-pro-content">
                         <div class="shop-pro-inner">
                             <div class="row">
-                                <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
-                                    <div class="ec-product-inner">
-                                        <div class="ec-pro-image-outer">
-                                            <div class="ec-pro-image">
-                                                <a href="landing_product?view=" class="image">
-                                                    <img class="main-image" src="../public/landing_assets/images/product-image/6_1.jpg" alt="Product" />
-                                                </a>
+                                <?php
+                                $products_sql = mysqli_query(
+                                    $mysqli,
+                                    "SELECT * FROM products p
+                                    INNER JOIN users u ON u.user_id = p.product_seller_id
+                                    INNER JOIN categories c ON c.category_id = p.product_category_id
+                                    WHERE u.user_delete_status = '0' 
+                                    AND c.category_delete_status = '0'
+                                    AND p.product_delete_status = '0'
+                                    LIMIT 6"
+                                );
+                                if (mysqli_num_rows($products_sql) > 0) {
+                                    while ($products = mysqli_fetch_array($products_sql)) {
+                                        /* Image Directory */
+                                        if ($products['product_image'] == '') {
+                                            $image_dir = "../public/uploads/products/no_image.png";
+                                        } else {
+                                            $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                        }
+                                ?>
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                            <div class="ec-product-inner">
+                                                <div class="ec-pro-image-outer">
+                                                    <div class="ec-pro-image">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>" class="image">
+                                                            <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="ec-pro-content">
+                                                    <h5 class="ec-pro-title">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>">
+                                                            <?php echo $products['product_name']; ?>
+                                                        </a>
+                                                    </h5>
+                                                    <div class="ec-pro-list-desc">
+                                                       <?php echo $products['product_details']; ?>
+                                                    </div>
+                                                    <span class="ec-price">
+                                                        <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="ec-pro-content">
-                                            <h5 class="ec-pro-title">
-                                                <a href="landing_product?view=">
-                                                    Round Neck T-Shirt
-                                                </a>
-                                            </h5>
-                                            <div class="ec-pro-rating">
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                            </div>
-                                            <div class="ec-pro-list-desc">
-                                                Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.
-                                            </div>
-                                            <span class="ec-price">
-                                                <span class="new-price">$22.00</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php }
+                                } ?>
                             </div>
                         </div>
                     </div>
