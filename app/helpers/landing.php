@@ -81,7 +81,7 @@ if (isset($_POST['Add_To_WishList'])) {
         }
     } else {
         /* Persist */
-        $sql = "INSERT INTO wishlist (wishlist_product_id, wishlist_user_id) VALUES('{$wishlist_product_id}', '{$wishlist_user_id}')";
+        $sql = "INSERT INTO wishlists (wishlist_product_id, wishlist_user_id) VALUES('{$wishlist_product_id}', '{$wishlist_user_id}')";
 
         if (mysqli_query($mysqli, $sql)) {
             $success = "Product added to wishlist";
@@ -96,7 +96,7 @@ if (isset($_POST['Remove_From_WishList'])) {
     $wishlist_id  = mysqli_real_escape_string($mysqli, $_POST['wishlist_id']);
 
     /* Persist */
-    $sql = "DELETE FROM wishlist WHERE wishlist_id = '{$wishlist_id}'";
+    $sql = "DELETE FROM wishlists WHERE wishlist_id = '{$wishlist_id}'";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Product removed from wishlist";
