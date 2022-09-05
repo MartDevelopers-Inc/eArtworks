@@ -198,11 +198,11 @@ require_once('../app/partials/backoffice_head.php');
                                             <thead>
                                                 <tr>
                                                     <th>Image</th>
-                                                    <th>SKU</th>
-                                                    <th>Name</th>
-                                                    <th>Seller</th>
+                                                    <th>Product</th>
+                                                    <th>Customer</th>
                                                     <th>QTY</th>
                                                     <th>Price</th>
+                                                    <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -211,12 +211,14 @@ require_once('../app/partials/backoffice_head.php');
                                                 <?php
                                                 $orders_sql = mysqli_query(
                                                     $mysqli,
-                                                    "SELECT * FROM products p
-                                                    INNER JOIN users u ON u.user_id = p.product_seller_id
+                                                    "SELECT * FROM orders o  
+                                                    INNER JOIN products p ON p.product_id = o.order_product_id
+                                                    INNER JOIN users u ON u.user_id = o.order_user_id
                                                     INNER JOIN categories c ON c.category_id = p.product_category_id
                                                     WHERE u.user_delete_status = '0' 
                                                     AND c.category_delete_status = '0'
-                                                    AND p.product_delete_status = '0'"
+                                                    AND p.product_delete_status = '0'
+                                                    AND o.order_delete_status = '0'"
                                                 );
                                                 if (mysqli_num_rows($orders_sql) > 0) {
                                                     while ($orders = mysqli_fetch_array($orders_sql)) {
@@ -229,11 +231,32 @@ require_once('../app/partials/backoffice_head.php');
                                                 ?>
                                                         <tr>
                                                             <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
-                                                            <td><?php echo $orders['product_sku_code']; ?></td>
-                                                            <td><?php echo $orders['product_name']; ?></td>
-                                                            <td><?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?></td>
-                                                            <td><?php echo $orders['product_qty_in_stock']; ?></td>
-                                                            <td>Ksh <?php echo number_format($orders['product_price'], 2); ?></td>
+                                                            <td>
+                                                                SKU: <?php echo $orders['product_sku_code']; ?><br>
+                                                                Name: <?php echo $orders['product_name']; ?>
+                                                            </td>
+                                                            <td>
+                                                                Name: <?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?><br>
+                                                                Phone: <?php echo $orders['user_phone_number']; ?>
+                                                            </td>
+                                                            <td><?php echo $orders['order_qty']; ?></td>
+                                                            <td>Ksh <?php echo number_format($orders['order_cost'], 2); ?></td>
+                                                            <td>
+                                                                <?php
+                                                                if ($orders['order_status'] == 'Placed Orders') { ?>
+                                                                    <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
+                                                                    <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                <?php } else if ($orders['order_status'] == 'Shipped') { ?>
+                                                                    <span class="badge badge-primary">Shipped</span>
+                                                                <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
+                                                                    <span class="badge badge-primary">Out For Delivery</span>
+                                                                <?php } else if ($orders['order_status'] == 'Delivered') { ?>
+                                                                    <span class="badge badge-success">Delivered</span>
+                                                                <?php } else { ?>
+                                                                    <span class="badge badge-danger">Cancelled</span>
+                                                                <?php } ?>
+                                                            </td>
                                                             <td>
                                                                 <div class="btn-group mb-1">
                                                                     <button type="button" class="btn btn-outline-success">Manage</button>
