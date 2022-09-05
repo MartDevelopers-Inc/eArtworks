@@ -66,6 +66,8 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+require_once('../app/settings/checklogin.php');
+checklogin();
 require_once('../app/partials/landing_head.php');
 ?>
 
