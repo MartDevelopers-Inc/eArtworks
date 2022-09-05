@@ -136,4 +136,21 @@ if (isset($_POST['Delete_Order'])) {
     }
 }
 
- /* Add Payment */
+/* Add Payment */
+if (isset($_POST['Add_Order_Payment'])) {
+    /* Add Extra Payment Methods Handlers Here */
+    $payment_order_id = mysqli_real_escape_string($mysqli, $_POST['payment_order_id']);
+    $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
+    $payment_amount = mysqli_real_escape_string($mysqli, $_POST['payment_amount']);
+    $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
+
+    /* Persist */
+    $sql = "INSERT INTO payments (payment_order_id, payment_means_id, payment_amount, payment_ref_code) 
+    VALUES('{$payments_order_id}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Payment reference $payment_ref_code confirmed";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
