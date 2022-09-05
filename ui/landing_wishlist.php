@@ -113,34 +113,50 @@ require_once('../app/partials/landing_head.php');
                     <div class="ec-compare-content">
                         <div class="ec-compare-inner">
                             <div class="row margin-minus-b-30">
-
-                                <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-6 pro-gl-content">
-                                    <div class="ec-product-inner">
-                                        <div class="ec-pro-image-outer">
-                                            <div class="ec-pro-image">
-                                                <a href="landing_product" class="image">
-                                                    <img class="main-image" src="../public/landing_assets/images/product-image/7_1.jpg" alt="Product" />
-                                                </a>
-                                                <span class="ec-com-remove ec-remove-wish"><a href="javascript:void(0)">×</a></span>
+                                <?php
+                                $products_sql = mysqli_query(
+                                    $mysqli,
+                                    "SELECT * FROM wishlists w
+                                    INNER JOIN products p ON w.wishlist_product_id = p.product_id
+                                    INNER JOIN users u ON u.user_id = p.product_seller_id
+                                    INNER JOIN categories c ON c.category_id = p.product_category_id
+                                    WHERE u.user_delete_status = '0' 
+                                    AND c.category_delete_status = '0'
+                                    AND p.product_delete_status = '0'"
+                                );
+                                if (mysqli_num_rows($products_sql) > 0) {
+                                    while ($products = mysqli_fetch_array($products_sql)) {
+                                        /* Image Directory */
+                                        if ($products['product_image'] == '') {
+                                            $image_dir = "../public/uploads/products/no_image.png";
+                                        } else {
+                                            $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                        }
+                                ?>
+                                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                            <div class="ec-product-inner">
+                                                <div class="ec-pro-image-outer">
+                                                    <div class="ec-pro-image">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
+                                                            <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
+                                                        </a>
+                                                        <span class="ec-com-remove ec-remove-wish"><a href="javascript:void(0)">×</a></span>
+                                                    </div>
+                                                </div>
+                                                <div class="ec-pro-content">
+                                                    <h5 class="ec-pro-title">
+                                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>">
+                                                            <?php echo $products['product_name']; ?>
+                                                        </a>
+                                                    </h5>
+                                                    <span class="ec-price">
+                                                        <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="ec-pro-content">
-                                            <h5 class="ec-pro-title"><a href="landing_product">Full Sleeve Shirt</a></h5>
-                                            <div class="ec-pro-rating">
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                                <i class="ecicon eci-star fill"></i>
-                                            </div>
-                                            <div class="ec-pro-list-desc">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dutmmy text ever since the 1500s, when an unknown printer took a galley.</div>
-                                            <span class="ec-price">
-                                                <span class="old-price">$12.00</span>
-                                                <span class="new-price">$10.00</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php }
+                                } ?>
                             </div>
                         </div>
                     </div>
