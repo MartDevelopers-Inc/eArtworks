@@ -132,7 +132,7 @@ require_once('../app/partials/landing_head.php');
                                     WHERE u.user_delete_status = '0' 
                                     AND c.category_delete_status = '0'
                                     AND p.product_delete_status = '0'
-                                    AND p.product_name = '{$search_params}'"
+                                    AND p.product_name LIKE '%" . $search_params . "%'"
                                 );
                                 if (mysqli_num_rows($products_sql) > 0) {
                                     while ($products = mysqli_fetch_array($products_sql)) {
