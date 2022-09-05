@@ -69,6 +69,7 @@ require_once('../app/settings/checklogin.php');
 checklogin();
 require_once('../app/settings/config.php');
 require_once('../app/helpers/users.php');
+require_once('../app/helpers/landing.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -140,10 +141,15 @@ require_once('../app/partials/landing_head.php');
                                                         <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
                                                             <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
                                                         </a>
-                                                        <span class="ec-com-remove ec-remove-wish"><a href="javascript:void(0)">×</a></span>
+                                                        <form method="POST" id="remove_item">
+                                                            <input type="hidden" name="wishlist_id" value="<?php echo $products['wishlist_id']; ?>">
+                                                            <button type="submit" name="Remove_From_WishList" class="ec-com-remove">
+                                                                    x
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </div>
-                                                <div class="ec-pro-content">
+                                                <div class=" ec-pro-content">
                                                     <h5 class="ec-pro-title">
                                                         <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>">
                                                             <?php echo $products['product_name']; ?>
@@ -155,8 +161,25 @@ require_once('../app/partials/landing_head.php');
                                                 </div>
                                             </div>
                                         </div>
-                                <?php }
-                                } ?>
+                                    <?php }
+                                } else { ?>
+                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                        <div class="ec-product-inner">
+                                            <div class="ec-pro-image-outer">
+                                                <div class="ec-pro-image">
+                                                    <a href="" class="image">
+                                                        <img class="main-image" src="../public/uploads/products/no_image.png" alt="Product" />
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class=" ec-pro-content">
+                                                <h5 class="ec-pro-title">
+                                                    No available artworks in your wishlist for the moment
+                                                </h5>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                             </div>
                         </div>
                     </div>
