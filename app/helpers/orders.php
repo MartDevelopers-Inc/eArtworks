@@ -71,6 +71,7 @@ if (isset($_POST['Add_Order'])) {
     $order_user_id = mysqli_real_escape_string($mysqli, $_POST['order_user_id']);
     $order_product_id = mysqli_real_escape_string($mysqli, $_POST['order_product_id']);
     $order_code = mysqli_real_escape_string($mysqli, $a . $b);
+    $order_qty = mysqli_real_escape_string($mysqli, $_POST['order_qty']);
     $order_date = mysqli_real_escape_string($mysqli, date('d M Y'));
     $order_cost  = mysqli_real_escape_string($mysqli, $_POST['order_cost']);
     $order_status  = mysqli_real_escape_string($mysqli, $_POST['order_status']);
@@ -78,8 +79,8 @@ if (isset($_POST['Add_Order'])) {
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
     /* Persist */
-    $sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_cost, order_status, order_payment_status, order_estimated_delivery_date) VALUES(
-    '{$order_user_id}', '{$order_product_id}', '{$order_code}', '{$order_date}', '{$order_cost}', '{$order_status}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
+    $sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_cost, order_status, order_qty,  order_payment_status, order_estimated_delivery_date) VALUES(
+    '{$order_user_id}', '{$order_product_id}', '{$order_code}', '{$order_date}', '{$order_cost}', '{$order_status}', '{$order_qty}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Order $order_code Added";
@@ -88,10 +89,51 @@ if (isset($_POST['Add_Order'])) {
     }
 }
 
- /* Update Orders */
+/* Update Orders */
+if (isset($_POST['Update_Order'])) {
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_qty = mysqli_real_escape_string($mysqli, $_POST['order_qty']);
+    $order_cost  = mysqli_real_escape_string($mysqli, $_POST['order_cost']);
+    $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
- /* Update Order Status */
+    /* Persist */
+    $sql = "UPDATE orders SET order_cost = '{$order_cost}', order_qty = '{$order_qty}', order_estimated_delivery_date = '{$order_estimated_delivery_date}'
+    WHERE order_id ='{$order_id}'";
 
- /* Delete Order */
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Order Updated";
+    } else {
+        $err = "Failed, try again";
+    }
+}
+
+/* Update Order Status */
+if (isset($_POST['Update_Order_Status'])) {
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_status = mysqli_real_escape_string($mysqli, $_POST['order_status']);
+
+    /* Persist */
+    $sql  = "UPDATE orders SET order_status = '{$order_status}' WHERE order_id = '{$order_id}'";
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Order status updated";
+    } else {
+        $err = "Failed, try gain";
+    }
+}
+
+/* Delete Order */
+if (isset($_POST['Delete_Order'])) {
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_delete_status = mysqli_real_escape_string($mysqli, '1');
+
+    /* Persist */
+    $sql = "UPDATE orders SET order_delete_status = '{$order_delete_status}' WHERE order_id = '{$order_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Order moved to recycle bin";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
 
  /* Add Payment */
