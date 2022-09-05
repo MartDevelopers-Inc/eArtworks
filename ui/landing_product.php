@@ -165,6 +165,15 @@ require_once('../app/partials/landing_head.php');
                                                         <span class="ec-single-sku">SKU#: <?php echo $products['product_sku_code']; ?></span>
                                                     </div>
                                                 </div>
+                                                <div class="ec-single-price-stoke">
+                                                    <div class="ec-single-price">
+                                                        <span class="ec-single-ps-title">Seller Details</span>
+                                                        <span class="new-price">Name : <?php echo $products['user_first_name'] . ' ' . $products['user_last_name']; ?> </span>
+                                                        <span class="new-price">Email : <?php echo $products['user_email']; ?> </span>
+                                                        <span class="new-price">Contacts : <?php echo $products['user_phone_number']; ?></span>
+
+                                                    </div>
+                                                </div>
 
                                                 <div class="ec-single-qty">
                                                     <div class="qty-plus-minus">
