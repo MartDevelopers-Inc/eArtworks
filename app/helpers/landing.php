@@ -91,4 +91,16 @@ if (isset($_POST['Add_To_WishList'])) {
     }
 }
 
- /* Remove From Wishlist */
+/* Remove From Wishlist */
+if (isset($_POST['Remove_From_WishList'])) {
+    $wishlist_id  = mysqli_real_escape_string($mysqli, $_POST['wishlist_id']);
+
+    /* Persist */
+    $sql = "DELETE FROM wishlist WHERE wishlist_id = '{$wishlist_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Product removed from wishlist";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
