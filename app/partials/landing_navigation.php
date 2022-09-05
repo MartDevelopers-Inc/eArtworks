@@ -199,8 +199,8 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Search Start -->
                         <div class="align-self-center">
                             <div class="header-search">
-                                <form class="ec-btn-group-form" action="#">
-                                    <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                                <form class="ec-btn-group-form" action="landing_search" method="get">
+                                    <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                     <button class="submit" type="submit">
                                         <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                     </button>
@@ -269,10 +269,10 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Search Start -->
                     <div class="col">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="#">
-                                <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                            <form class="ec-btn-group-form" action="landing_search" method="get">
+                                <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                 <button class="submit" type="submit">
-                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="icon" />
+                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                 </button>
                             </form>
                         </div>
@@ -525,8 +525,8 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Search Start -->
                         <div class="align-self-center">
                             <div class="header-search">
-                                <form class="ec-btn-group-form" action="#">
-                                    <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                                <form class="ec-btn-group-form" action="landing_search" method="get">
+                                    <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                     <button class="submit" type="submit">
                                         <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                     </button>
@@ -553,10 +553,10 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Search Start -->
                     <div class="col">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="#">
-                                <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                            <form class="ec-btn-group-form" action="landing_search" method="get">
+                                <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                 <button class="submit" type="submit">
-                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="icon" />
+                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                 </button>
                             </form>
                         </div>
