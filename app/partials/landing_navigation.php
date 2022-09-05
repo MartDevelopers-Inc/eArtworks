@@ -141,10 +141,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li>
-                                        <a class="dropdown-item" href="register">Register</a>
+                                        <a class="dropdown-item" href="landing_profile">My Profile</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="login">Login</a>
+                                        <a class="dropdown-item" href="landing_purchase_history">Recent Orders</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="landing_track_order">Track Orders</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="logout">Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -286,22 +292,25 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 <li><a href="../">Home</a></li>
                                 <li class="dropdown">
                                     <a href="javascript:void(0)">Shop By Categories</a>
-                                    <?php
-                                    /* Fetch All Categories */
-                                    $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
-                                    if (mysqli_num_rows($categories_sql) > 0) {
-                                        while ($categories = mysqli_fetch_array($categories_sql)) {
-                                    ?>
-                                            <ul class="sub-menu">
-                                                <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
-                                            </ul>
-                                        <?php }
-                                    } else { ?>
-                                        <ul class="sub-menu">
-                                            <li><a href="">No Categories</a></li>
-                                        </ul>
-                                    <?php } ?>
+                                    <ul class="sub-menu">
+                                        <?php
+                                        /* Fetch All Categories */
+                                        $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
+                                        if (mysqli_num_rows($categories_sql) > 0) {
+                                            while ($categories = mysqli_fetch_array($categories_sql)) {
+                                        ?>
+                                                <li>
+                                                    <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
+                                                </li>
+                                            <?php }
+                                        } else { ?>
+                                            <li>
+                                                <a href="#">No Categories</a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
                                 </li>
+                                <li><a href="landing_products">Products</a></li>
                             </ul>
                         </div>
                     </div>
@@ -525,27 +534,6 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             </div>
                         </div>
                         <!-- Ec Header Search End -->
-
-                        <!-- Ec Header Button Start -->
-                        <div class="align-self-center">
-                            <div class="ec-header-bottons">
-                                <!-- Header User Start -->
-                                <div class="ec-header-user dropdown">
-                                    <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-item" href="register">Register</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="login">Login</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Header User End -->
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -607,6 +595,8 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     </ul>
                                 </li>
                                 <li><a href="landing_products">Products</a></li>
+                                <li><a href="register">Register</a></li>
+                                <li><a href="login">Login</a></li>
                             </ul>
                         </div>
                     </div>
