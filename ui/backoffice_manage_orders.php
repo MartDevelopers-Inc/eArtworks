@@ -93,16 +93,16 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Products</h1>
+                            <h1>Orders</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_products">Products</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Products
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_orders">Orders</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Orders
                             </p>
                         </div>
                         <div>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
-                                Register Product
+                                Register Order
                             </button>
                         </div>
                     </div>
@@ -113,84 +113,77 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="modal-content">
                                 <form method="POST" enctype="multipart/form-data">
                                     <div class="modal-header px-4">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Product</h5>
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Order</h5>
                                     </div>
 
                                     <div class="modal-body px-4">
                                         <div class="row mb-2">
-                                            <div class="col-lg-12">
-                                                <div class="form-group">
-                                                    <label for="firstName">Product Name</label>
-                                                    <input type="text" required class="form-control" name="product_name">
+                                            <div class="form-row">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="email">Select Customer</label>
+                                                    <select type="text" required class="form-control" name="order_user_id">
+                                                        <?php
+                                                        $customer_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' 
+                                                        AND user_access_level = 'Customer' ORDER BY user_first_name ASC");
+                                                        if (mysqli_num_rows($customer_sql) > 0) {
+                                                            while ($customers = mysqli_fetch_array($customer_sql)) {
+                                                        ?>
+                                                                <option value="<?php echo $customers['user_id']; ?>"><?php echo $customers['user_first_name'] . ' ' . $customers['user_last_name'] . '.  Phone Number: ' . $customers['user_phone_number']; ?></option>
+                                                        <?php }
+                                                        } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group col-lg-8">
+                                                    <label for="email">Select Product</label>
+                                                    <select type="text" required class="form-control" name="order_product_id">
+                                                        <option>Select Product</option>
+                                                        <?php
+                                                        $products_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE product_delete_status = '0'");
+                                                        if (mysqli_num_rows($products_sql) > 0) {
+                                                            while ($products = mysqli_fetch_array($products_sql)) {
+                                                        ?>
+                                                                <option value="<?php echo $products['product_id']; ?>"><?php echo $products['product_name']; ?></option>
+                                                        <?php }
+                                                        } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-lg-4">
+                                                    <div class="form-group">
+                                                        <label for="firstName">Order Qty</label>
+                                                        <input type="number" required class="form-control" name="product_name">
+                                                    </div>
                                                 </div>
                                             </div>
 
                                             <div class="col-lg-4">
                                                 <div class="form-group">
-                                                    <label for="lastName">SKU Code</label>
-                                                    <input type="text" required class="form-control" value="<?php echo $sku_code; ?>" name="product_sku_code">
+                                                    <label for="lastName">Order Status</label>
+                                                    <select type="text" required class="form-control" name="order_status">
+                                                        <option value="Placed Orders">Order Placed</option>
+                                                        <option>Awaiting Fullfilment</option>
+                                                        <option>Shipped</option>
+                                                        <option>Out For Delivery</option>
+                                                        <option>Delivered</option>
+                                                        <option>Returned</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="form-group col-lg-4">
-                                                <label for="email">Product price (Ksh)</label>
-                                                <input type="number" required class="form-control" name="product_price">
+                                                <label for="email">Order Amount (Ksh)</label>
+                                                <input type="number" id="Order_Amount" readonly required class="form-control" name="order_cost">
                                             </div>
 
                                             <div class="form-group col-lg-4">
-                                                <label for="email">Quantity In Stock</label>
-                                                <input type="number" required class="form-control" name="product_qty_in_stock">
+                                                <label for="email">Estimated Delivery Date</label>
+                                                <input type="date" required class="form-control" name="order_estimated_delivery_date">
                                             </div>
-                                            <div class="form-row">
-                                                <div class="form-group col-lg-8">
-                                                    <label for="email">Select Product Seller</label>
-                                                    <select type="text" required class="form-control" name="product_seller_id">
-                                                        <?php
-                                                        $sellers_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' 
-                                                    AND user_access_level = 'Customer' ORDER BY user_first_name ASC");
-                                                        if (mysqli_num_rows($sellers_sql) > 0) {
-                                                            while ($sellers = mysqli_fetch_array($sellers_sql)) {
-                                                        ?>
-                                                                <option value="<?php echo $sellers['user_id']; ?>"><?php echo $sellers['user_first_name'] . ' ' . $sellers['user_last_name'] . '.  Phone Number: ' . $sellers['user_phone_number']; ?></option>
-                                                        <?php }
-                                                        } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-lg-4">
-                                                    <label for="email">Select Product Category</label>
-                                                    <select type="text" required class="form-control" name="product_category_id">
-                                                        <?php
-                                                        $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0' ORDER BY category_name ASC");
-                                                        if (mysqli_num_rows($categories_sql) > 0) {
-                                                            while ($product_categories = mysqli_fetch_array($categories_sql)) {
-                                                        ?>
-                                                                <option value="<?php echo $product_categories['category_id']; ?>"><?php echo $product_categories['category_code'] . ' ' .  $product_categories['category_name']; ?></option>
-                                                        <?php }
-                                                        } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="form-group row mb-6">
-                                                <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Product Image</label>
-                                                <div class="col-sm-12 col-lg-12">
-                                                    <div class="custom-file mb-1">
-                                                        <input type="file" accept=".png, .jpg, .jpeg" name="product_image" class="custom-file-input">
-                                                        <label class="custom-file-label" for="coverImage">
-                                                            Choose file...
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="form-group col-lg-12">
-                                                <label for="email">Product Details</label>
-                                                <textarea class="form-control" required name="product_details"></textarea>
-                                            </div>
+
                                         </div>
                                     </div>
 
                                     <div class="modal-footer px-4">
                                         <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" name="Register_New_Product" class="btn btn-primary btn-pill">Register Product</button>
+                                        <button type="submit" name="Add_Order" class="btn btn-primary btn-pill">Register Order</button>
                                     </div>
                                 </form>
                             </div>
@@ -216,7 +209,7 @@ require_once('../app/partials/backoffice_head.php');
 
                                             <tbody>
                                                 <?php
-                                                $products_sql = mysqli_query(
+                                                $orders_sql = mysqli_query(
                                                     $mysqli,
                                                     "SELECT * FROM products p
                                                     INNER JOIN users u ON u.user_id = p.product_seller_id
@@ -225,22 +218,22 @@ require_once('../app/partials/backoffice_head.php');
                                                     AND c.category_delete_status = '0'
                                                     AND p.product_delete_status = '0'"
                                                 );
-                                                if (mysqli_num_rows($products_sql) > 0) {
-                                                    while ($products = mysqli_fetch_array($products_sql)) {
+                                                if (mysqli_num_rows($orders_sql) > 0) {
+                                                    while ($orders = mysqli_fetch_array($orders_sql)) {
                                                         /* Image Directory */
-                                                        if ($products['product_image'] == '') {
+                                                        if ($orders['product_image'] == '') {
                                                             $image_dir = "../public/uploads/products/no_image.png";
                                                         } else {
-                                                            $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                            $image_dir = "../public/uploads/products/" . $orders['product_image'];
                                                         }
                                                 ?>
                                                         <tr>
                                                             <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
-                                                            <td><?php echo $products['product_sku_code']; ?></td>
-                                                            <td><?php echo $products['product_name']; ?></td>
-                                                            <td><?php echo $products['user_first_name'] . ' ' . $products['user_last_name']; ?></td>
-                                                            <td><?php echo $products['product_qty_in_stock']; ?></td>
-                                                            <td>Ksh <?php echo number_format($products['product_price'], 2); ?></td>
+                                                            <td><?php echo $orders['product_sku_code']; ?></td>
+                                                            <td><?php echo $orders['product_name']; ?></td>
+                                                            <td><?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?></td>
+                                                            <td><?php echo $orders['product_qty_in_stock']; ?></td>
+                                                            <td>Ksh <?php echo number_format($orders['product_price'], 2); ?></td>
                                                             <td>
                                                                 <div class="btn-group mb-1">
                                                                     <button type="button" class="btn btn-outline-success">Manage</button>
@@ -249,8 +242,8 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $products['product_id']; ?>">View</a>
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_product_<?php echo $products['product_id']; ?>">Delete</a>
+                                                                        <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>">View</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_product_<?php echo $orders['product_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
