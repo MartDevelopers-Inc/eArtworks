@@ -242,7 +242,7 @@ require_once('../app/partials/backoffice_head.php');
                                                             <td>
                                                                 <?php
                                                                 if ($orders['order_status'] == 'Placed Orders') { ?>
-                                                                    <span class="badge badge-warning">Awaiting Fulfillment</span>
+                                                                    <span class="badge badge-warning">Order Placed</span>
                                                                 <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
                                                                     <span class="badge badge-warning">Awaiting Fulfillment</span>
                                                                 <?php } else if ($orders['order_status'] == 'Shipped') { ?>

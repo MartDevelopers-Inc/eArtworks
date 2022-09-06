@@ -57,3 +57,43 @@
     </div>
 </div>
 <!-- End Modal -->
+
+<!-- Update Order Status -->
+<div class="modal fade" id="update_order_status<?php echo $orders['order_id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Update Order # <?php echo $orders['order_code']; ?> Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="modal-body px-4">
+                    <div class="row mb-2">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="lastName">Order Status</label>
+                                <!-- Hide This -->
+                                <input type="hidden" name="order_id" value="<?php echo $orders['order_id']; ?>">
+                                <select type="text" required class="form-control" name="order_status">
+                                    <option value="Placed Orders">Order Placed</option>
+                                    <option>Awaiting Fullfilment</option>
+                                    <option>Shipped</option>
+                                    <option>Out For Delivery</option>
+                                    <option>Delivered</option>
+                                    <option>Returned</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="modal-footer px-4">
+                    <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="Update_Order_Status" class="btn btn-primary btn-pill">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Modal -->
