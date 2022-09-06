@@ -73,31 +73,45 @@ if (isset($_POST['Add_Order'])) {
     $order_code = mysqli_real_escape_string($mysqli, $a . $b);
     $order_qty = mysqli_real_escape_string($mysqli, $_POST['order_qty']);
     $order_date = mysqli_real_escape_string($mysqli, date('d M Y'));
-    $order_cost  = mysqli_real_escape_string($mysqli, $_POST['order_cost']);
     $order_status  = mysqli_real_escape_string($mysqli, $_POST['order_status']);
-    $order_payment_status = mysqli_real_escape_string($mysqli, $_POST['order_payment_status']);
+    $order_payment_status = mysqli_real_escape_string($mysqli, 'Pending');
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
-    /* Persist */
-    $sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_cost, order_status, order_qty,  order_payment_status, order_estimated_delivery_date) VALUES(
-    '{$order_user_id}', '{$order_product_id}', '{$order_code}', '{$order_date}', '{$order_cost}', '{$order_status}', '{$order_qty}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
+    $product_sql = mysqli_query(
+        $mysqli,
+        "SELECT * FROM products WHERE product_delete_status = '0' AND product_id = '{$order_product_id}'"
+    );
+    if (mysqli_num_rows($product_sql) > 0) {
+        while ($product = mysqli_fetch_array($product_sql)) {
+            /* Get Product Price Based On Product ID Posted From The Form */
+            $order_cost = mysqli_real_escape_string($mysqli, ($product['product_price'] * $order_qty));
+            /* Deduct Products From Stock */
+            $new_product_qty = $product['product_qty_in_stock'] - $order_qty;
 
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Order $order_code Added";
-    } else {
-        $err = "Failed, try again";
+            /* Update Product Stock */
+            $update_sql = "UPDATE products SET product_qty_in_stock ='{$new_product_qty}' WHERE product_id = '{$order_product_id}'";
+
+            /* Persist */
+            $sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_cost, order_status, order_qty,  order_payment_status, order_estimated_delivery_date) VALUES(
+            '{$order_user_id}', '{$order_product_id}', '{$order_code}', '{$order_date}', '{$order_cost}', '{$order_status}', '{$order_qty}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
+
+            if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $update_sql)) {
+                $success = "Order $order_code Added";
+            } else {
+                $err = "Failed, try again";
+            }
+        }
     }
 }
 
 /* Update Orders */
 if (isset($_POST['Update_Order'])) {
     $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
-    $order_qty = mysqli_real_escape_string($mysqli, $_POST['order_qty']);
     $order_cost  = mysqli_real_escape_string($mysqli, $_POST['order_cost']);
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
     /* Persist */
-    $sql = "UPDATE orders SET order_cost = '{$order_cost}', order_qty = '{$order_qty}', order_estimated_delivery_date = '{$order_estimated_delivery_date}'
+    $sql = "UPDATE orders SET order_cost = '{$order_cost}',  order_estimated_delivery_date = '{$order_estimated_delivery_date}'
     WHERE order_id ='{$order_id}'";
 
     if (mysqli_query($mysqli, $sql)) {
@@ -150,6 +164,23 @@ if (isset($_POST['Add_Order_Payment'])) {
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Payment reference $payment_ref_code confirmed";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+
+/* Delete Payment*/
+if (isset($_POST['Delete_Payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+
+    /* Persist */
+    $sql = "UPDATE payments SET payment_delete_status = '1' WHERE payment_id = '{$payment_id}'";
+    $order_sql = "UPDATE orders SET order_payment_status = 'Pending' WHERE order_id = '{$order_id}'";
+
+    if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_sql)) {
+        $success = "Payment moved to recycle bin";
     } else {
         $err = "Failed, please try again";
     }

@@ -344,7 +344,11 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                         while ($orders = mysqli_fetch_array($orders_sql)) {
                                                     ?>
                                                             <tr>
-                                                                <td><?php echo $orders['order_code']; ?></td>
+                                                                <td>
+                                                                    <a class="text-dark" href="backoffice_manage_order?view=<?php echo $orders['order_id']; ?>">
+                                                                        <?php echo $orders['order_code']; ?>
+                                                                    </a>
+                                                                </td>
                                                                 <td>
                                                                     <a class="text-dark" href="backoffice_manage_customer?view=<?php echo $orders['user_id']; ?>"><?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?></a>
                                                                 </td>

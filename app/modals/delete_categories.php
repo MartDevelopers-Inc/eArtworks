@@ -29,7 +29,7 @@
         <div class="modal-content">
             <form method="POST" enctype="multipart/form-data">
                 <div class="modal-header px-4">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Register New Category</h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Update Category</h5>
                 </div>
 
                 <div class="modal-body px-4">
