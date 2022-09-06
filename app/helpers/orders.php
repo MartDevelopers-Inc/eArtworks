@@ -74,15 +74,15 @@ if (isset($_POST['Add_Order'])) {
     $order_qty = mysqli_real_escape_string($mysqli, $_POST['order_qty']);
     $order_date = mysqli_real_escape_string($mysqli, date('d M Y'));
     $order_status  = mysqli_real_escape_string($mysqli, $_POST['order_status']);
-    $order_payment_status = mysqli_real_escape_string($mysqli, $_POST['order_payment_status']);
+    $order_payment_status = mysqli_real_escape_string($mysqli, 'Pending');
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
-    $produt_sql = mysqli_query(
+    $product_sql = mysqli_query(
         $mysqli,
         "SELECT * FROM products WHERE product_delete_status = '0' AND product_id = '{$order_product_id}'"
     );
-    if (mysqli_num_rows($produt_sql) > 0) {
-        while ($product = mysqli_fetch_array($product)) {
+    if (mysqli_num_rows($product_sql) > 0) {
+        while ($product = mysqli_fetch_array($product_sql)) {
             /* Get Product Price Based On Product ID Posted From The Form */
             $order_cost = mysqli_real_escape_string($mysqli, ($product['product_price'] * $order_qty));
             /* Deduct Products From Stock */

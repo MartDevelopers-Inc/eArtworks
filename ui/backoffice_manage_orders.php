@@ -150,7 +150,7 @@ require_once('../app/partials/backoffice_head.php');
                                                 <div class="col-lg-4">
                                                     <div class="form-group">
                                                         <label for="firstName">Order Qty</label>
-                                                        <input type="number" required class="form-control" name="product_name">
+                                                        <input type="number" required class="form-control" name="order_qty">
                                                     </div>
                                                 </div>
                                             </div>
