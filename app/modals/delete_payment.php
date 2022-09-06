@@ -12,9 +12,10 @@
                     </h4>
                     <br>
                     <!-- Hide This -->
-                    <input type="hidden" name="payment_id" value="<?php echo $customers['user_id']; ?>">
+                    <input type="hidden" name="order_id" value="<?php echo $payments['payment_order_id']; ?>">
+                    <input type="hidden" name="payment_id" value="<?php echo $payments['payment_id']; ?>">
                     <button type="button" class="text-center btn btn-success" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="text-center btn btn-danger" name="Delete_User">Yes, Delete</button>
+                    <button type="submit" class="text-center btn btn-danger" name="Delete_Payment">Yes, Delete</button>
                 </div>
             </form>
         </div>
