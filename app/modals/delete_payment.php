@@ -8,7 +8,7 @@
             <form method="POST">
                 <div class="modal-body text-center ">
                     <h4 class="text-danger">
-                        Delete <?php echo  $payments['payment_ref'] ?>?
+                        Delete <?php echo  $payments['payment_ref_code'] ?>?
                     </h4>
                     <br>
                     <!-- Hide This -->

@@ -179,7 +179,7 @@ if (isset($_POST['Delete_Payment'])) {
     $sql = "UPDATE payments SET payment_delete_status = '1' WHERE payment_id = '{$payment_id}'";
     $order_sql = "UPDATE orders SET order_payment_status = 'Pending' WHERE order_id = '{$order_id}'";
 
-    if (mysqli_query($mysqli, $sql)) {
+    if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_sql)) {
         $success = "Payment moved to recycle bin";
     } else {
         $err = "Failed, please try again";
