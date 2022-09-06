@@ -155,7 +155,7 @@ require_once('../app/partials/backoffice_head.php');
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-6">
                                                 <div class="form-group">
                                                     <label for="lastName">Order Status</label>
                                                     <select type="text" required class="form-control" name="order_status">
@@ -168,12 +168,8 @@ require_once('../app/partials/backoffice_head.php');
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="form-group col-lg-4">
-                                                <label for="email">Order Amount (Ksh)</label>
-                                                <input type="number" id="Order_Amount" readonly required class="form-control" name="order_cost">
-                                            </div>
 
-                                            <div class="form-group col-lg-4">
+                                            <div class="form-group col-lg-6">
                                                 <label for="email">Estimated Delivery Date</label>
                                                 <input type="date" required class="form-control" name="order_estimated_delivery_date">
                                             </div>
