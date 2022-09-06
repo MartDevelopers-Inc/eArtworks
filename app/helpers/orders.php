@@ -107,12 +107,11 @@ if (isset($_POST['Add_Order'])) {
 /* Update Orders */
 if (isset($_POST['Update_Order'])) {
     $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
-    $order_qty = mysqli_real_escape_string($mysqli, $_POST['order_qty']);
     $order_cost  = mysqli_real_escape_string($mysqli, $_POST['order_cost']);
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
     /* Persist */
-    $sql = "UPDATE orders SET order_cost = '{$order_cost}', order_qty = '{$order_qty}', order_estimated_delivery_date = '{$order_estimated_delivery_date}'
+    $sql = "UPDATE orders SET order_cost = '{$order_cost}',  order_estimated_delivery_date = '{$order_estimated_delivery_date}'
     WHERE order_id ='{$order_id}'";
 
     if (mysqli_query($mysqli, $sql)) {

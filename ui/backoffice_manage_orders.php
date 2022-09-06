@@ -228,8 +228,10 @@ require_once('../app/partials/backoffice_head.php');
                                                         <tr>
                                                             <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
                                                             <td>
-                                                                SKU: <?php echo $orders['product_sku_code']; ?><br>
-                                                                Name: <?php echo $orders['product_name']; ?>
+                                                                <a href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>" class="text-dark">
+                                                                    SKU: <?php echo $orders['product_sku_code']; ?><br>
+                                                                    Name: <?php echo $orders['product_name']; ?>
+                                                                </a>
                                                             </td>
                                                             <td>
                                                                 Name: <?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?><br>
@@ -261,14 +263,16 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>">View</a>
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_product_<?php echo $orders['product_id']; ?>">Delete</a>
+                                                                        <a class="dropdown-item" href="backoffice_manage_order?view=<?php echo $orders['order_id']; ?>">View</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#update_order_status<?php echo $orders['order_id']; ?>">Update Status</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#update_order_<?php echo $orders['order_id']; ?>">Edit</a>
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_order_<?php echo $orders['order_id']; ?>">Delete</a>
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <!-- Delete Staff Modal -->
-                                                        <?php include('../app/modals/delete_product.php'); ?>
+                                                        <?php include('../app/modals/manage_order.php'); ?>
                                                         <!-- End Modal -->
                                                 <?php }
                                                 } ?>
