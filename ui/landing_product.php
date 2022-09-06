@@ -66,6 +66,9 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+require_once('../app/settings/checklogin.php');
+checklogin();
+require_once('../app/helpers/landing.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -165,18 +168,34 @@ require_once('../app/partials/landing_head.php');
                                                         <span class="ec-single-sku">SKU#: <?php echo $products['product_sku_code']; ?></span>
                                                     </div>
                                                 </div>
+                                                <?php if ($_SESSION['user_access_level'] == 'Customer') { ?>
+                                                    <div class="ec-single-price-stoke">
+                                                        <div class="ec-single-price">
+                                                            <span class="ec-single-ps-title">Seller Details</span>
+                                                            <span class="new-price">Name : <?php echo $products['user_first_name'] . ' ' . $products['user_last_name']; ?> </span>
+                                                            <span class="new-price">Email : <?php echo $products['user_email']; ?> </span>
+                                                            <span class="new-price">Contacts : <?php echo $products['user_phone_number']; ?></span>
 
-                                                <div class="ec-single-qty">
-                                                    <div class="qty-plus-minus">
-                                                        <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                                        </div>
                                                     </div>
-                                                    <div class="ec-single-cart ">
-                                                        <button class="btn btn-primary">Add To Cart</button>
+
+                                                    <div class="ec-single-qty">
+                                                        <div class="qty-plus-minus">
+                                                            <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
+                                                        </div>
+                                                        <div class="ec-single-cart ">
+                                                            <button class="btn btn-primary">Add To Cart</button>
+                                                        </div>
+                                                        <div class="ec-single-wishlist">
+                                                            <form method="post">
+                                                                <!-- Hidden Values -->
+                                                                <input type="hidden" name="wishlist_product_id" value="<?php echo $products['product_id']; ?>">
+                                                                <input type="hidden" name="wishlist_user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                                                <button type="submit" name="Add_To_WishList" class="ec-btn-group wishlist"><img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt="" /></button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                    <div class="ec-single-wishlist">
-                                                        <a class="ec-btn-group wishlist" title="Wishlist"><img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img pro_svg" alt="" /></a>
-                                                    </div>
-                                                </div>
+                                                <?php } ?>
                                             </div>
                                         </div>
                                     </div>

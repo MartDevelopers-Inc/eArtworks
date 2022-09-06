@@ -65,6 +65,15 @@
  *
  */
 if ($_SESSION['user_access_level'] == 'Customer') {
+    /* Get Logged In User Items Count In Wishlist */
+    $user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+    $query = "SELECT COUNT(*)  FROM wishlists WHERE wishlist_user_id = '{$user_id}'";
+    $stmt = $mysqli->prepare($query);
+    $stmt->execute();
+    $stmt->bind_result($items_in_my_wishlist);
+    $stmt->fetch();
+    $stmt->close();
+
 ?>
     <header class="ec-header">
         <!--Ec Header Top Start -->
@@ -95,7 +104,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Header Top Message Start -->
                     <div class="col text-center header-top-center">
                         <div class="header-top-message text-upper">
-                            <span>Free Shipping</span>This Week Order Over - $75
+                            <span>Free Shipping</span>This Week Order Over - Ksh 7,500
                         </div>
                     </div>
                     <!-- Header Top Message End -->
@@ -141,10 +150,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 </button>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li>
-                                        <a class="dropdown-item" href="register">Register</a>
+                                        <a class="dropdown-item" href="landing_profile">My Profile</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="login">Login</a>
+                                        <a class="dropdown-item" href="landing_purchase_history">Recent Orders</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="landing_track_order">Track Orders</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="logout">Logout</a>
                                     </li>
                                 </ul>
                             </div>
@@ -154,7 +169,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 <div class="header-icon">
                                     <img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                                 </div>
-                                <span class="ec-header-count">4</span>
+                                <span class="ec-header-count"><?php echo $items_in_my_wishlist; ?></span>
                             </a>
                             <!-- Header Cart End -->
                             <!-- Header Cart Start -->
@@ -162,7 +177,6 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 <div class="header-icon">
                                     <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
                                 </div>
-                                <span class="ec-header-count cart-count-lable">3</span>
                             </a>
                             <!-- Header Cart End -->
                             <!-- Header menu Start -->
@@ -193,8 +207,8 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Search Start -->
                         <div class="align-self-center">
                             <div class="header-search">
-                                <form class="ec-btn-group-form" action="#">
-                                    <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                                <form class="ec-btn-group-form" action="landing_search" method="get">
+                                    <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                     <button class="submit" type="submit">
                                         <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                     </button>
@@ -232,7 +246,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     <div class="header-icon">
                                         <img src="../public/landing_assets/images/icons/wishlist.svg" class="svg_img header_svg" alt="" />
                                     </div>
-                                    <span class="ec-header-count">4</span>
+                                    <span class="ec-header-count"><?php echo $items_in_my_wishlist; ?></span>
                                 </a>
                                 <!-- Header wishlist End -->
                                 <!-- Header Cart Start -->
@@ -263,10 +277,10 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Search Start -->
                     <div class="col">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="#">
-                                <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                            <form class="ec-btn-group-form" action="landing_search" method="get">
+                                <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                 <button class="submit" type="submit">
-                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="icon" />
+                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                 </button>
                             </form>
                         </div>
@@ -286,24 +300,25 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 <li><a href="../">Home</a></li>
                                 <li class="dropdown">
                                     <a href="javascript:void(0)">Shop By Categories</a>
-                                    <?php
-                                    /* Fetch All Categories */
-                                    $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
-                                    if (mysqli_num_rows($categories_sql) > 0) {
-                                        while ($categories = mysqli_fetch_array($categories_sql)) {
-                                    ?>
-                                            <ul class="sub-menu">
-                                                <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
-                                            </ul>
-                                        <?php }
-                                    } else { ?>
-                                        <ul class="sub-menu">
-                                            <li><a href="">No Categories</a></li>
-                                        </ul>
-                                    <?php } ?>
+                                    <ul class="sub-menu">
+                                        <?php
+                                        /* Fetch All Categories */
+                                        $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
+                                        if (mysqli_num_rows($categories_sql) > 0) {
+                                            while ($categories = mysqli_fetch_array($categories_sql)) {
+                                        ?>
+                                                <li>
+                                                    <a href="shop_by_categories?category=<?php echo $categories['category_id']; ?>&name=<?php echo $categories['category_name']; ?>"><?php echo $categories['category_name']; ?></a>
+                                                </li>
+                                            <?php }
+                                        } else { ?>
+                                            <li>
+                                                <a href="#">No Categories</a>
+                                            </li>
+                                        <?php } ?>
+                                    </ul>
                                 </li>
                                 <li><a href="landing_products">Products</a></li>
-                                <li><a href="landing_shops">Shops</a></li>
                             </ul>
                         </div>
                     </div>
@@ -342,8 +357,6 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             </ul>
                         </li>
                         <li><a href="landing_products">Products</a></li>
-                        <li><a href="landing_artists">Artists</a></li>
-                        <li><a href="landing_shops">Shops</a></li>
                     </ul>
                 </div>
                 <div class="header-res-lan-curr">
@@ -520,8 +533,8 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Search Start -->
                         <div class="align-self-center">
                             <div class="header-search">
-                                <form class="ec-btn-group-form" action="#">
-                                    <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                                <form class="ec-btn-group-form" action="landing_search" method="get">
+                                    <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                     <button class="submit" type="submit">
                                         <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                     </button>
@@ -529,27 +542,6 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             </div>
                         </div>
                         <!-- Ec Header Search End -->
-
-                        <!-- Ec Header Button Start -->
-                        <div class="align-self-center">
-                            <div class="ec-header-bottons">
-                                <!-- Header User Start -->
-                                <div class="ec-header-user dropdown">
-                                    <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-item" href="register">Register</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="login">Login</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Header User End -->
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -569,10 +561,10 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Search Start -->
                     <div class="col">
                         <div class="header-search">
-                            <form class="ec-btn-group-form" action="#">
-                                <input class="form-control ec-search-bar" placeholder="Search products..." type="text" />
+                            <form class="ec-btn-group-form" action="landing_search" method="get">
+                                <input class="form-control ec-search-bar" name="search_params" placeholder="Search products..." type="text" />
                                 <button class="submit" type="submit">
-                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="icon" />
+                                    <img src="../public/landing_assets/images/icons/search.svg" class="svg_img header_svg" alt="" />
                                 </button>
                             </form>
                         </div>
@@ -611,8 +603,8 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     </ul>
                                 </li>
                                 <li><a href="landing_products">Products</a></li>
-                                <li><a href="landing_artists">Artists</a></li>
-                                <li><a href="landing_shops">Shops</a></li>
+                                <li><a href="register">Register</a></li>
+                                <li><a href="login">Login</a></li>
                             </ul>
                         </div>
                     </div>
@@ -651,8 +643,6 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             </ul>
                         </li>
                         <li><a href="landing_products">Products</a></li>
-                        <li><a href="landing_artists">Artists</a></li>
-                        <li><a href="landing_shops">Shops</a></li>
                     </ul>
                 </div>
                 <div class="header-res-lan-curr">

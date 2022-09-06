@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Sun Aug 21 2022
+ *   Crafted On Thu Aug 18 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -65,19 +65,18 @@
  *
  */
 session_start();
-require_once('../app/settings/checklogin.php');
-checklogin();
 require_once('../app/settings/config.php');
-require_once('../app/helpers/users.php');
-require_once('../app/helpers/landing.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
-<body class="compare_page">
+<body class="shop_page">
     <div id="ec-overlay"><span class="loader_img"></span></div>
 
     <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
+    <?php require_once('../app/partials/landing_navigation.php');
+
+    $search_params = mysqli_real_escape_string($mysqli, $_GET['search_params']);
+    ?>
     <!-- Header End  -->
 
     <!-- Ec breadcrumb start -->
@@ -87,13 +86,13 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Wishlist</h2>
+                            <h2 class="ec-breadcrumb-title">Search Results For : <?php echo $search_params; ?></h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Wishlist</li>
+                                <li class="ec-breadcrumb-item active">Products</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
                         </div>
@@ -104,26 +103,36 @@ require_once('../app/partials/landing_head.php');
     </div>
     <!-- Ec breadcrumb end -->
 
-    <!-- Ec Wishlist page -->
+    <!-- Ec Shop page -->
     <section class="ec-page-content section-space-p">
         <div class="container">
             <div class="row">
-                <!-- Compare Content Start -->
-                <div class="ec-wish-rightside col-lg-12 col-md-12">
-                    <!-- Compare content Start -->
-                    <div class="ec-compare-content">
-                        <div class="ec-compare-inner">
-                            <div class="row margin-minus-b-30">
+                <div class="ec-shop-rightside col-lg-12 order-lg-last col-md-12 order-md-first margin-b-30">
+                    <!-- Shop Top Start -->
+                    <div class="ec-pro-list-top d-flex">
+                        <div class="col-md-6 ec-grid-list">
+                            <div class="ec-gl-btn">
+                                <button class="btn btn-grid active"><img src="../public/landing_assets/images/icons/grid.svg" class="svg_img gl_svg" alt="" /></button>
+                                <button class="btn btn-list"><img src="../public/landing_assets/images/icons/list.svg" class="svg_img gl_svg" alt="" /></button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Shop Top End -->
+
+                    <!-- Shop content Start -->
+                    <div class="shop-pro-content">
+                        <div class="shop-pro-inner">
+                            <div class="row">
                                 <?php
                                 $products_sql = mysqli_query(
                                     $mysqli,
-                                    "SELECT * FROM wishlists w
-                                    INNER JOIN products p ON w.wishlist_product_id = p.product_id
+                                    "SELECT * FROM products p
                                     INNER JOIN users u ON u.user_id = p.product_seller_id
                                     INNER JOIN categories c ON c.category_id = p.product_category_id
                                     WHERE u.user_delete_status = '0' 
                                     AND c.category_delete_status = '0'
-                                    AND p.product_delete_status = '0'"
+                                    AND p.product_delete_status = '0'
+                                    AND p.product_name LIKE '%" . $search_params . "%'"
                                 );
                                 if (mysqli_num_rows($products_sql) > 0) {
                                     while ($products = mysqli_fetch_array($products_sql)) {
@@ -134,27 +143,24 @@ require_once('../app/partials/landing_head.php');
                                             $image_dir = "../public/uploads/products/" . $products['product_image'];
                                         }
                                 ?>
-                                        <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                        <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
                                             <div class="ec-product-inner">
                                                 <div class="ec-pro-image-outer">
                                                     <div class="ec-pro-image">
                                                         <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
                                                             <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
                                                         </a>
-                                                        <form method="POST" id="remove_item">
-                                                            <input type="hidden" name="wishlist_id" value="<?php echo $products['wishlist_id']; ?>">
-                                                            <button type="submit" name="Remove_From_WishList" class="ec-com-remove">
-                                                                    x
-                                                            </button>
-                                                        </form>
                                                     </div>
                                                 </div>
-                                                <div class=" ec-pro-content">
+                                                <div class="ec-pro-content">
                                                     <h5 class="ec-pro-title">
                                                         <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>">
                                                             <?php echo $products['product_name']; ?>
                                                         </a>
                                                     </h5>
+                                                    <div class="ec-pro-list-desc">
+                                                        <?php echo $products['product_details']; ?>
+                                                    </div>
                                                     <span class="ec-price">
                                                         <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
                                                     </span>
@@ -163,7 +169,7 @@ require_once('../app/partials/landing_head.php');
                                         </div>
                                     <?php }
                                 } else { ?>
-                                    <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
                                         <div class="ec-product-inner">
                                             <div class="ec-pro-image-outer">
                                                 <div class="ec-pro-image">
@@ -172,9 +178,9 @@ require_once('../app/partials/landing_head.php');
                                                     </a>
                                                 </div>
                                             </div>
-                                            <div class=" ec-pro-content">
+                                            <div class="ec-pro-content">
                                                 <h5 class="ec-pro-title">
-                                                    No available artworks in your wishlist for the moment
+                                                    No available artworks for the moment
                                                 </h5>
                                             </div>
                                         </div>
@@ -183,12 +189,13 @@ require_once('../app/partials/landing_head.php');
                             </div>
                         </div>
                     </div>
-                    <!--compare content End -->
+                    <!--Shop content End -->
                 </div>
-                <!-- Compare Content end -->
+
             </div>
         </div>
     </section>
+    <!-- End Shop page -->
 
     <!-- Footer Start -->
     <?php require_once('../app/partials/landing_footer.php'); ?>
@@ -196,7 +203,6 @@ require_once('../app/partials/landing_head.php');
 
     <!-- Vendor JS -->
     <?php require_once('../app/partials/landing_scripts.php'); ?>
-
 
 </body>
 
