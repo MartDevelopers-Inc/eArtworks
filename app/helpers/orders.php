@@ -168,3 +168,20 @@ if (isset($_POST['Add_Order_Payment'])) {
         $err = "Failed, please try again";
     }
 }
+
+
+/* Delete Payment*/
+if (isset($_POST['Delete_Payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+
+    /* Persist */
+    $sql = "UPDATE payments SET payment_delete_status = '1' WHERE payment_id = '{$payment_id}'";
+    $order_sql = "UPDATE orders SET order_payment_status = 'Pending' WHERE order_id = '{$order_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Payment moved to recycle bin";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
