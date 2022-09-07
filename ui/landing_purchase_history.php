@@ -127,21 +127,47 @@ require_once('../app/partials/landing_head.php');
                                             <th scope="col">Image</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col">QTY</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Status</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row"><span>225</span></th>
-                                            <td><img class="prod-img" src="../public/landing_assets/images/product-image/1.jpg" alt="product image"></td>
-                                            <td><span>Stylish baby shoes</span></td>
-                                            <td><span>16 Jul 2021</span></td>
-                                            <td><span>$65</span></td>
-                                            <td><span>Active</span></td>
-                                            <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_product">View</a></span></td>
-                                        </tr>
+                                        <?php
+                                        /* Pull Recent Purchases Made By This User */
+                                        $order_user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+                                        $orders_sql = mysqli_query(
+                                            $mysqli,
+                                            "SELECT * FROM orders o  
+                                            INNER JOIN products p ON p.product_id = o.order_product_id
+                                            INNER JOIN users u ON u.user_id = o.order_user_id
+                                            INNER JOIN categories c ON c.category_id = p.product_category_id
+                                            WHERE u.user_delete_status = '0' 
+                                            AND c.category_delete_status = '0'
+                                            AND p.product_delete_status = '0'
+                                            AND o.order_delete_status = '0'
+                                            AND u.user_id = '{$order_user_id}'"
+                                        );
+                                        if (mysqli_num_rows($orders_sql) > 0) {
+                                            while ($orders = mysqli_fetch_array($orders_sql)) {
+                                                /* Image Directory */
+                                                if ($orders['product_image'] == '') {
+                                                    $product_image_dir = "../public/uploads/products/no_image.png";
+                                                } else {
+                                                    $product_image_dir = "../public/uploads/products/" . $orders['product_image'];
+                                                }
+                                        ?>
+                                                <tr>
+                                                    <th scope="row"><span><?php echo $orders['order_code']; ?></span></th>
+                                                    <td><img class="prod-img" src="<?php echo $product_image_dir; ?>" alt="product image"></td>
+                                                    <td><span><?php echo $orders['product_name']; ?></span></td>
+                                                    <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
+                                                    <td><span><?php echo $orders['order_qty']; ?></span></td>
+                                                    <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
+                                                    <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_product?view=<?php echo $orders['product_id']; ?>&category=<?php echo $orders['product_category_id']; ?>">View</a></span></td>
+                                                </tr>
+                                        <?php  }
+                                        } ?>
                                     </tbody>
                                 </table>
                             </div>
