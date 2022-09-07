@@ -67,8 +67,8 @@
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
-checklogin();
 require_once('../app/helpers/landing.php');
+require_once('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -179,13 +179,22 @@ require_once('../app/partials/landing_head.php');
                                                         </div>
                                                     </div>
 
+
                                                     <div class="ec-single-qty">
-                                                        <div class="qty-plus-minus">
-                                                            <input class="qty-input" type="text" name="ec_qtybtn" value="1" />
-                                                        </div>
-                                                        <div class="ec-single-cart ">
-                                                            <button class="btn btn-primary">Add To Cart</button>
-                                                        </div>
+
+                                                        <form method="post">
+                                                            <!-- Hidden -->
+                                                            <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                                            <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
+                                                            <div class="qty-plus-minus">
+                                                                <input class="qty-input" type="text" name="cart_qty" value="1" />
+                                                            </div>
+                                                            <br>
+                                                            <div class="ec-single-cart ">
+                                                                <button type="submit" name="Add_To_Cart" class="btn btn-primary">Add To Cart</button>
+                                                            </div>
+                                                        </form>
+
                                                         <div class="ec-single-wishlist">
                                                             <form method="post">
                                                                 <!-- Hidden Values -->
