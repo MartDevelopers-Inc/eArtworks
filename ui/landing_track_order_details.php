@@ -130,7 +130,7 @@ require_once('../app/partials/landing_head.php');
                             <div class="ec-trackorder-top">
                                 <h2 class="ec-order-id">Order #<?php echo $orders['order_code']; ?></h2>
                                 <div class="ec-order-detail">
-                                    <div>Expected arrival <?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></div>
+                                    <div>Expected arrival: <?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></div>
                                     <div><?php echo $orders['product_sku_code']; ?> <span><?php echo $orders['product_name']; ?></span></div>
                                 </div>
                             </div>
@@ -343,8 +343,10 @@ require_once('../app/partials/landing_head.php');
                                                     order <br> Delivered
                                                 </span>
                                             </li>
+                                        <?php } else if ($orders['order_status'] == 'Cancelled') { ?>
+                                            <h4 class="text-center text-danger">This order has been Cancelled.</h4>
                                         <?php } else { ?>
-                                            <span class="badge badge-danger">Cancelled</span>
+                                            <h4 class="text-center text-danger">We are unable to track this order.</h4>
                                         <?php } ?>
                                     </ul>
                                 </div>
