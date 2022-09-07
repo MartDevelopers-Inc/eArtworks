@@ -125,23 +125,28 @@ require_once('../app/partials/landing_head.php');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td data-label="Product" class="ec-cart-pro-name">
-                                                        <a href="product-left-sidebar.html">
-                                                            <img class="ec-cart-pro-img mr-4" src="../public/landing_assets/images/product-image/1.jpg" alt="" />Stylish Baby Shoes
-                                                        </a>
-                                                    </td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$56.00</span></td>
-                                                    <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
-                                                        <div class="cart-qty-plus-minus">
-                                                            <input class="cart-plus-minus" type="text" name="cartqtybutton" value="1" />
-                                                        </div>
-                                                    </td>
-                                                    <td data-label="Total" class="ec-cart-pro-subtotal">$56.00</td>
-                                                    <td data-label="Remove" class="ec-cart-pro-remove">
-                                                        <a href="#"><i class="ecicon eci-trash-o"></i></a>
-                                                    </td>
-                                                </tr>
+                                                <?php
+                                                foreach ($_SESSION["cart_item"] as $item) {
+                                                    $item_price = $item["quantity"] * $item["product_price"];
+                                                ?>
+                                                    <tr>
+                                                        <td data-label="Product" class="ec-cart-pro-name">
+                                                            <a href="product-left-sidebar.html">
+                                                                <img class="ec-cart-pro-img mr-4" src="../public/landing_assets/images/product-image/1.jpg" alt="" />Stylish Baby Shoes
+                                                            </a>
+                                                        </td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$56.00</span></td>
+                                                        <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
+                                                            <div class="cart-qty-plus-minus">
+                                                                <input class="cart-plus-minus" type="text" name="cartqtybutton" value="1" />
+                                                            </div>
+                                                        </td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">$56.00</td>
+                                                        <td data-label="Remove" class="ec-cart-pro-remove">
+                                                            <a href="#"><i class="ecicon eci-trash-o"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>
@@ -149,7 +154,7 @@ require_once('../app/partials/landing_head.php');
                                         <div class="col-lg-12">
                                             <div class="ec-cart-update-bottom">
                                                 <a href="landing_products">Continue Shopping</a>
-                                                <button  class="btn btn-primary">Check Out</button>
+                                                <button class="btn btn-primary">Check Out</button>
                                             </div>
                                         </div>
                                     </div>
