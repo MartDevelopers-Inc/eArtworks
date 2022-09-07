@@ -126,6 +126,7 @@ require_once('../app/partials/landing_head.php');
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $total_payable_amount = 0;
                                             $products_sql = mysqli_query(
                                                 $mysqli,
                                                 "SELECT * FROM shopping_cart sc 
@@ -146,17 +147,20 @@ require_once('../app/partials/landing_head.php');
                                                         $image_dir = "../public/uploads/products/" . $products['product_image'];
                                                     }
                                                     /* Compute Price Amount */
-                                                    $total_amount = number_format(($products['product_price'] * $products['cart_qty']), 2);
+                                                    $total_amount = ($products['product_price'] * $products['cart_qty']);
+                                                    /* Compute Total Payable Amount */
+                                                    $total_payable_amount += $total_amount
+
                                             ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">
                                                             <a href="product-left-sidebar.html">
-                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $products['product_name'] . '' . $_SESSION['user_id']; ?>
+                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $products['product_name']; ?>
                                                             </a>
                                                         </td>
                                                         <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo number_format($products['product_price'], 2); ?></span></td>
                                                         <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $products['cart_qty']; ?></span></td>
-                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo $total_amount; ?></td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_amount, 2); ?></td>
                                                         <td data-label="Remove" class="ec-cart-pro-remove text-center">
                                                             <form method="post">
                                                                 <!-- Hide This -->
@@ -218,25 +222,15 @@ require_once('../app/partials/landing_head.php');
                                     <div class="ec-cart-summary">
                                         <div>
                                             <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">$80.00</span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_payable_amount, 2); ?></span>
                                         </div>
                                         <div>
                                             <span class="text-left">Delivery Charges</span>
-                                            <span class="text-right">$80.00</span>
-                                        </div>
-                                        <div>
-                                            <span class="text-left">Coupon Discount</span>
-                                            <span class="text-right"><a class="ec-cart-coupan">Apply Coupan</a></span>
-                                        </div>
-                                        <div class="ec-cart-coupan-content">
-                                            <form class="ec-cart-coupan-form" name="ec-cart-coupan-form" method="post" action="#">
-                                                <input class="ec-coupan" type="text" required="" placeholder="Enter Your Coupan Code" name="ec-coupan" value="">
-                                                <button class="ec-coupan-btn button btn-primary" type="submit" name="subscribe" value="">Apply</button>
-                                            </form>
+                                            <span class="text-right">Ksh 0</span>
                                         </div>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
-                                            <span class="text-right">$80.00</span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_payable_amount, 2); ?></span>
                                         </div>
                                     </div>
                                 </div>
