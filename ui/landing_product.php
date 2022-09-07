@@ -183,10 +183,10 @@ require_once('../app/partials/landing_head.php');
                                                     <div class="ec-single-qty">
 
                                                         <form method="post">
+                                                            <!-- Hidden -->
+                                                            <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                                            <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
                                                             <div class="qty-plus-minus">
-                                                                <!-- Hidden -->
-                                                                <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                                                                <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
                                                                 <input class="qty-input" type="text" name="cart_qty" value="1" />
                                                             </div>
                                                             <br>

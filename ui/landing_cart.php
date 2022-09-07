@@ -118,7 +118,7 @@ require_once('../app/partials/landing_head.php');
                                         <thead>
                                             <tr>
                                                 <th>Product</th>
-                                                <th>Price</th>
+                                                <th>Unit Price</th>
                                                 <th style="text-align: center;">Quantity</th>
                                                 <th>Total</th>
                                                 <th>Action</th>
@@ -129,14 +129,13 @@ require_once('../app/partials/landing_head.php');
                                             $products_sql = mysqli_query(
                                                 $mysqli,
                                                 "SELECT * FROM shopping_cart sc 
-                                                    INNER JOIN  products p ON p.product_id = sc.cart_product_id
-                                                    INNER JOIN users u ON u.user_id = p.product_seller_id
-                                                    INNER JOIN categories c ON c.category_id = p.product_category_id
-                                                    WHERE u.user_delete_status = '0' 
-                                                    AND c.category_delete_status = '0'
-                                                    AND p.product_delete_status = '0'
-                                                    AND  sc.cart_user_id = '{$user_id}'
-                                                    "
+                                                INNER JOIN  products p ON p.product_id = sc.cart_product_id
+                                                INNER JOIN users u ON u.user_id = p.product_seller_id
+                                                INNER JOIN categories c ON c.category_id = p.product_category_id
+                                                WHERE u.user_delete_status = '0' 
+                                                AND c.category_delete_status = '0'
+                                                AND p.product_delete_status = '0'
+                                                AND  sc.cart_user_id = '{$user_id}'"
                                             );
                                             if (mysqli_num_rows($products_sql) > 0) {
                                                 while ($products = mysqli_fetch_array($products_sql)) {
@@ -155,10 +154,10 @@ require_once('../app/partials/landing_head.php');
                                                                 <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $products['product_name'] . '' . $_SESSION['user_id']; ?>
                                                             </a>
                                                         </td>
-                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo number_format($products['product_price'], 2); ?></span></td>
-                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo $products['cart_qty']; ?></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo number_format($products['product_price'], 2); ?></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $products['cart_qty']; ?></span></td>
                                                         <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo $total_amount; ?></td>
-                                                        <td data-label="Remove" class="ec-cart-pro-remove">
+                                                        <td data-label="Remove" class="ec-cart-pro-remove text-center">
                                                             <form method="post">
                                                                 <!-- Hide This -->
                                                                 <input type="hidden" name="cart_id" value="<?php echo $products['cart_id']; ?>">
