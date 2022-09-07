@@ -166,8 +166,12 @@ require_once('../app/partials/landing_head.php');
                                                     <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
                                                     <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_product?view=<?php echo $orders['product_id']; ?>&category=<?php echo $orders['product_category_id']; ?>">View</a></span></td>
                                                 </tr>
-                                        <?php  }
-                                        } ?>
+                                            <?php  }
+                                        } else { ?>
+                                            <tr>
+                                                <th scope="row">No Recent Orders</th>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
