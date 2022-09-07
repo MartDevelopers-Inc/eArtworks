@@ -70,17 +70,34 @@ if (isset($_POST['Add_To_Cart'])) {
     $cart_user_id = mysqli_real_escape_string($mysqli, $_POST['cart_user_id']);
     $cart_product_id  = mysqli_real_escape_string($mysqli, $_POST['cart_product_id']);
     $cart_qty = mysqli_real_escape_string($mysqli, $_POST['cart_qty']);
+    /* To avoid duplication, Just sum the new product qty */
+    $sql = "SELECT * FROM shopping_cart  WHERE cart_product_id ='{$cart_product_id}' AND  cart_user_id = '{$cart_user_id}'";
+    $res = mysqli_query($mysqli, $sql);
+    if (mysqli_num_rows($res) > 0) {
+        $row = mysqli_fetch_assoc($res);
+        if ($cart_product_id == $row['cart_product_id'] && $cart_user_id == $row['cart_user_id']) {
+            /* New Product Qty*/
+            $new_qty = $cart_qty + $row['cart_qty'];
 
-
-    /* Persist */
-    $sql = "INSERT INTO shopping_cart (cart_user_id, cart_product_id, cart_qty) 
-    VALUES('{$cart_user_id}', '{$cart_product_id}', '{$cart_qty}')";
-
-    /* Persist */
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Added to cart";
+            /* Persist */
+            $qty_sql = "UPDATE shopping_cart SET cart_qty = '{$new_qty}' WHERE cart_id = '{$row['cart_id']}'";
+            if (mysqli_query($mysqli, $qty_sql)) {
+                $success = "Added to cart";
+            } else {
+                $err = "Failed, try again";
+            }
+        }
     } else {
-        $err = "Failed!, please try again";
+        /* Persist */
+        $sql = "INSERT INTO shopping_cart (cart_user_id, cart_product_id, cart_qty) 
+        VALUES('{$cart_user_id}', '{$cart_product_id}', '{$cart_qty}')";
+
+        /* Persist */
+        if (mysqli_query($mysqli, $sql)) {
+            $success = "Added to cart";
+        } else {
+            $err = "Failed!, please try again";
+        }
     }
 }
 
