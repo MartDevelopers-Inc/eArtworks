@@ -68,6 +68,7 @@ session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 require_once('../app/helpers/landing.php');
+require_once('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -186,7 +187,7 @@ require_once('../app/partials/landing_head.php');
                                                                 <!-- Hidden -->
                                                                 <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
                                                                 <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
-                                                                <input class="qty-input" type="text" name="quantity" value="1" />
+                                                                <input class="qty-input" type="text" name="cart_qty" value="1" />
                                                             </div>
                                                             <br>
                                                             <div class="ec-single-cart ">
