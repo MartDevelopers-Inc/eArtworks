@@ -137,46 +137,215 @@ require_once('../app/partials/landing_head.php');
                             <div class="ec-trackorder-bottom">
                                 <div class="ec-progress-track">
                                     <ul id="ec-progressbar">
-                                        <li class="step0 active">
-                                            <span class="ec-track-icon">
-                                                <img src="../public/landing_assets/images/icons/track_1.png" alt="track_order">
-                                            </span>
-                                            <span class="ec-progressbar-track"></span>
-                                            <span class="ec-track-title">
-                                                order <br>processed
-                                            </span>
-                                        </li>
-                                        <li class="step0 active">
-                                            <span class="ec-track-icon">
-                                                <img src="../public/landing_assets/images/icons/track_2.png" alt="track_order"></span>
-                                            <span class="ec-progressbar-track"></span>
-                                            <span class="ec-track-title">
-                                                order <br>designing</span>
-                                        </li>
-                                        <li class="step0 active">
-                                            <span class="ec-track-icon">
-                                                <img src="../public/landing_assets/images/icons/track_3.png" alt="track_order"></span>
-                                            <span class="ec-progressbar-track"></span>
-                                            <span class="ec-track-title">
-                                                order <br>shipped
-                                            </span>
-                                        </li>
-                                        <li class="step0 active">
-                                            <span class="ec-track-icon">
-                                                <img src="../public/landing_assets/images/icons/track_4.png" alt="track_order"></span>
-                                            <span class="ec-progressbar-track"></span>
-                                            <span class="ec-track-title">
-                                                order <br>enroute
-                                            </span>
-                                        </li>
-                                        <li class="step0">
-                                            <span class="ec-track-icon">
-                                                <img src="../public/landing_assets/images/icons/track_5.png" alt="track_order"></span>
-                                            <span class="ec-progressbar-track"></span>
-                                            <span class="ec-track-title">
-                                                order <br>arrived
-                                            </span>
-                                        </li>
+                                        <?php
+                                        if ($orders['order_status'] == 'Placed Orders') { ?>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_1.png" alt="track_order">
+                                                </span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>processing
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_2.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Awaiting <br>Fullfilment</span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_3.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>shipped
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_4.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Out For <br> Delivery
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_5.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>arrived
+                                                </span>
+                                            </li>
+                                        <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_1.png" alt="track_order">
+                                                </span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>processing
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_2.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Awaiting <br>Fullfilment</span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_3.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>shipped
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_4.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Out For <br> Delivery
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_5.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>arrived
+                                                </span>
+                                            </li>
+                                        <?php } else if ($orders['order_status'] == 'Shipped') { ?>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_1.png" alt="track_order">
+                                                </span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>processing
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_2.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Awaiting <br>Fullfilment</span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_3.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>shipped
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_4.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Out For <br> Delivery
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_5.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>arrived
+                                                </span>
+                                            </li>
+                                        <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_1.png" alt="track_order">
+                                                </span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>processing
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_2.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Awaiting <br>Fullfilment</span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_3.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>shipped
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_4.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Out For <br> Delivery
+                                                </span>
+                                            </li>
+                                            <li class="step0">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_5.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>arrived
+                                                </span>
+                                            </li>
+                                        <?php } else if ($orders['order_status'] == 'Delivered') { ?>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_1.png" alt="track_order">
+                                                </span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>processing
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_2.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Awaiting <br>Fullfilment</span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_3.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br>shipped
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_4.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    Out For <br> Delivery
+                                                </span>
+                                            </li>
+                                            <li class="step0 active">
+                                                <span class="ec-track-icon">
+                                                    <img src="../public/landing_assets/images/icons/track_5.png" alt="track_order"></span>
+                                                <span class="ec-progressbar-track"></span>
+                                                <span class="ec-track-title">
+                                                    order <br> Delivered
+                                                </span>
+                                            </li>
+                                        <?php } else { ?>
+                                            <span class="badge badge-danger">Cancelled</span>
+                                        <?php } ?>
                                     </ul>
                                 </div>
                             </div>
