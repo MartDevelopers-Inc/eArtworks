@@ -75,8 +75,7 @@ require_once('../app/partials/landing_head.php');
     <div id="ec-overlay"><span class="loader_img"></span></div>
 
     <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php');
-    echo $_SESSION["cart_item"]; ?>
+    <?php require_once('../app/partials/landing_navigation.php'); ?>
     <!-- Header End  -->
 
 
@@ -181,23 +180,20 @@ require_once('../app/partials/landing_head.php');
 
 
                                                     <div class="ec-single-qty">
-                                                        <?php
-                                                        /* Seperate Fetch Logic To Put Current Product Into A Cart Array */
-                                                        $product_array = $db_handler->runQuery("SELECT * FROM products WHERE product_id = '{$product_id}'");
-                                                        if (!empty($product_array)) {
-                                                            foreach ($product_array as $key => $value) {
-                                                        ?>
-                                                                <form method="post" action="landing_product?view=<?php echo $product_id; ?>&category=<?php echo $products['category_id']; ?>action=add&SKU=<?php echo $product_array[$key]["product_sku_code"]; ?>">
-                                                                    <div class="qty-plus-minus">
-                                                                        <input class="qty-input" type="text" name="quantity" value="1" />
-                                                                    </div>
-                                                                    <br>
-                                                                    <div class="ec-single-cart ">
-                                                                        <button type="submit" class="btn btn-primary">Add To Cart</button>
-                                                                    </div>
-                                                                </form>
-                                                        <?php }
-                                                        } ?>
+
+                                                        <form method="post">
+                                                            <div class="qty-plus-minus">
+                                                                <!-- Hidden -->
+                                                                <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                                                <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
+                                                                <input class="qty-input" type="text" name="quantity" value="1" />
+                                                            </div>
+                                                            <br>
+                                                            <div class="ec-single-cart ">
+                                                                <button type="submit" name="Add_To_Cart" class="btn btn-primary">Add To Cart</button>
+                                                            </div>
+                                                        </form>
+
                                                         <div class="ec-single-wishlist">
                                                             <form method="post">
                                                                 <!-- Hidden Values -->
