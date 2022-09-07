@@ -68,6 +68,7 @@ session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
+require_once('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -112,53 +113,76 @@ require_once('../app/partials/landing_head.php');
                     <div class="ec-cart-content">
                         <div class="ec-cart-inner">
                             <div class="row">
-                                <form action="#">
-                                    <div class="table-content cart-table-content">
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>Product</th>
-                                                    <th>Price</th>
-                                                    <th style="text-align: center;">Quantity</th>
-                                                    <th>Total</th>
-                                                    <th></th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <?php
-                                                foreach ($_SESSION["cart_item"] as $item) {
-                                                    $item_price = $item["quantity"] * $item["product_price"];
-                                                ?>
+                                <div class="table-content cart-table-content">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th style="text-align: center;">Quantity</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $products_sql = mysqli_query(
+                                                $mysqli,
+                                                "SELECT * FROM shopping_cart sc 
+                                                    INNER JOIN  products p ON p.product_id = sc.cart_product_id
+                                                    INNER JOIN users u ON u.user_id = p.product_seller_id
+                                                    INNER JOIN categories c ON c.category_id = p.product_category_id
+                                                    WHERE u.user_delete_status = '0' 
+                                                    AND c.category_delete_status = '0'
+                                                    AND p.product_delete_status = '0'
+                                                    AND  sc.cart_user_id = '{$user_id}'
+                                                    "
+                                            );
+                                            if (mysqli_num_rows($products_sql) > 0) {
+                                                while ($products = mysqli_fetch_array($products_sql)) {
+                                                    /* Image Directory */
+                                                    if ($products['product_image'] == '') {
+                                                        $image_dir = "../public/uploads/products/no_image.png";
+                                                    } else {
+                                                        $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                    }
+                                                    /* Compute Price Amount */
+                                                    $total_amount = number_format(($products['product_price'] * $products['cart_qty']), 2);
+                                            ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">
                                                             <a href="product-left-sidebar.html">
-                                                                <img class="ec-cart-pro-img mr-4" src="../public/landing_assets/images/product-image/1.jpg" alt="" />Stylish Baby Shoes
+                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $products['product_name'] . '' . $_SESSION['user_id']; ?>
                                                             </a>
                                                         </td>
-                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">$56.00</span></td>
-                                                        <td data-label="Quantity" class="ec-cart-pro-qty" style="text-align: center;">
-                                                            <div class="cart-qty-plus-minus">
-                                                                <input class="cart-plus-minus" type="text" name="cartqtybutton" value="1" />
-                                                            </div>
-                                                        </td>
-                                                        <td data-label="Total" class="ec-cart-pro-subtotal">$56.00</td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo number_format($products['product_price'], 2); ?></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo $products['cart_qty']; ?></span></td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo $total_amount; ?></td>
                                                         <td data-label="Remove" class="ec-cart-pro-remove">
-                                                            <a href="#"><i class="ecicon eci-trash-o"></i></a>
+                                                            <form method="post">
+                                                                <!-- Hide This -->
+                                                                <input type="hidden" name="cart_id" value="<?php echo $products['cart_id']; ?>">
+                                                                <button name="Remove_Item" type="submit"><i class="ecicon eci-trash-o"></i></button></a>
+                                                            </form>
                                                         </td>
                                                     </tr>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="ec-cart-update-bottom">
-                                                <a href="landing_products">Continue Shopping</a>
-                                                <button class="btn btn-primary">Check Out</button>
-                                            </div>
+                                                <?php }
+                                            } else { ?>
+                                                <tr class="text-center">
+                                                    <td>No items in the cart.</td>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="ec-cart-update-bottom">
+                                            <a href="landing_products">Continue Shopping</a>
+                                            <button class="btn btn-primary">Check Out</button>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>

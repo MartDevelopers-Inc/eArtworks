@@ -76,6 +76,7 @@ if (isset($_POST['Add_To_Cart'])) {
     if (mysqli_num_rows($res) > 0) {
         $row = mysqli_fetch_assoc($res);
         if ($cart_product_id == $row['cart_product_id'] && $cart_user_id == $row['cart_user_id']) {
+
             /* New Product Qty*/
             $new_qty = $cart_qty + $row['cart_qty'];
 
@@ -101,6 +102,17 @@ if (isset($_POST['Add_To_Cart'])) {
     }
 }
 
- /* Update Cart */
+/* Update Cart */
 
- /* Delete Cart */
+/* Delete Cart */
+if (isset($_POST['Remove_Item'])) {
+    $cart_id = mysqli_real_escape_string($mysqli, $_POST['cart_id']);
+
+    /* Persist */
+    $sql = "DELETE FROM shopping_cart WHERE cart_id = '{$cart_id}'";
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Removed from cart";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
