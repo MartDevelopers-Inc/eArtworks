@@ -276,7 +276,7 @@ require_once('../app/partials/landing_head.php');
                                                 <input type="hidden" name="order_status" value="Placed Orders">
                                                 <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
                                                 <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                                                <button type="submit" name="Cart_Checkout" class="btn btn-primary">Checkout</button>
+                                                <button type="submit" name="Process_Cart" class="btn btn-primary">Checkout</button>
                                             </div>
                                         </form>
                                     <?php } ?>

@@ -127,7 +127,7 @@ if (!empty($_GET["action"])) {
 }
 
 /* Process Cart Data */
-if (isset($_POST['Cart_Checkout'])) {
+if (isset($_POST['Process_Cart'])) {
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
     $order_user_id = mysqli_real_escape_string($mysqli, $_POST['order_user_id']);
     $order_code = mysqli_real_escape_string($mysqli, $a . $b);
