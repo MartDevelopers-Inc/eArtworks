@@ -235,10 +235,13 @@ require_once('../app/partials/landing_head.php');
                                             <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
                                         </div>
                                     </div><br>
-                                    <div class="cart_btn text-right">
-                                        <a href="cart.html" class="btn btn-danger">Clear Cart</a>
-                                        <a href="" class="btn btn-primary">Checkout</a>
-                                    </div>
+                                    <?php
+                                    if (isset($_SESSION["cart_item"])) { ?>
+                                        <div class="cart_btn text-right">
+                                            <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
+                                            <a href="" class="btn btn-primary">Checkout</a>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@
 
 Lightweight Online Gallery for artists.
 
-# About eArtworks
+# About
 
 eArtworks "Prototype" is an online gallery and marketplace for artists' works, regardless of their nationality, gender, or other specific criteria.
 by way of auction. Makers like painters, writers, and musicians have a wealth of options in the age of internet enterprise.
@@ -10,10 +10,12 @@ artists and designers to get support for their artistic endeavors as well as to 
 
 # Known issues / bugs so far
 
--> Only imports products which belong to one seller and one category <br>
--> Staffs accounts and bulk imported users are all given system generated password "Demo123@" <br>
--> Imports on products has no images so the system assigns them default image <br>
--> All uploaded XLS Files are deleted upoun processing to avoid storage consumption <br>
--> Staffs accounts has no feature to verify their emails - Assumption that all staff emails are valid <br>
--> Cart is not retained after a user has logged out. The logout session is destroying clearing cart by default <br>
--> Delivery charges are set to a constant $15 dollars - This is hard coded. It should be updated later.
+1. Only imports goods from a single vendor and a single category. <br>
+2. The system generates the password "Demo123@" for all staff accounts and bulk imported users. <br>
+3. The system uses the default picture for products imported without images. <br>
+4. To save storage space, all submitted XLS files are erased prior to processing. <br>
+5. Since there is no facility for staff accounts to validate their emails, it is assumed that all staff emails are legitimate. <br>
+6. After a user logs out, the cart is no longer saved. <br>
+7. By default, the logout session deletes the clearing cart. <br>
+8. The fixed rate for delivery fees is $15; this is hard programmed. Later, it ought to be updated. <br>
+9. All prices are in Kenyan Shillings; dynamic pricing is not yet in place.
