@@ -151,8 +151,7 @@ require_once('../app/partials/landing_head.php');
                                                     $total_amount = ($products['product_price'] * $products['cart_qty']);
                                                     /* Compute Total Payable Amount */
                                                     $total_payable_amount += $total_amount
-                                                    /* Put Everthing In Cart Array */
-                                                    $cart_items[] = $products['']
+                                                   
                                             ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">

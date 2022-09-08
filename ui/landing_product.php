@@ -67,8 +67,63 @@
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
+checklogin();
 require_once('../app/helpers/landing.php');
 require_once('../app/helpers/cart.php');
+require_once('../app/settings/cart_db_controller.php');
+$db_handle = new DBController();
+if (!empty($_GET["action"])) {
+    switch ($_GET["action"]) {
+        case "add":
+            if (!empty($_POST["quantity"])) {
+                $productByCode = $db_handle->runQuery("SELECT * FROM products WHERE product_id='" . $_GET["product_id"] . "'");
+                $itemArray = array(
+                    $productByCode[0]["product_sku_code"] => array(
+                        'product_name' => $productByCode[0]["product_name"],
+                        'product_sku_code' => $productByCode[0]["product_sku_code"],
+                        'quantity' => $_POST["quantity"],
+                        'product_price' => ($productByCode[0]["product_price"]),
+                        'product_id' => $productByCode[0]["product_id"],
+                    )
+                );
+                $success = "Added to cart";
+
+                if (!empty($_SESSION["cart_item"])) {
+                    if (in_array($productByCode[0]["product_sku_code"], array_keys($_SESSION["cart_item"]))) {
+                        foreach ($_SESSION["cart_item"] as $k => $v) {
+                            if ($productByCode[0]["product_sku_code"] == $k) {
+                                if (empty($_SESSION["cart_item"][$k]["quantity"])) {
+                                    $_SESSION["cart_item"][$k]["quantity"] = 0;
+                                }
+                                $_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
+                            }
+                        }
+                    } else {
+                        $success = "Added to cart";
+                        $_SESSION["cart_item"] = array_merge($_SESSION["cart_item"], $itemArray);
+                    }
+                } else {
+                    $success = "Added to cart";
+                    $_SESSION["cart_item"] = $itemArray;
+                }
+            }
+            break;
+
+        case "remove":
+            if (!empty($_SESSION["cart_item"])) {
+                foreach ($_SESSION["cart_item"] as $k => $v) {
+                    if ($_GET["product_sku_code"] == $k)
+                        unset($_SESSION["cart_item"][$k]);
+                    if (empty($_SESSION["cart_item"]))
+                        unset($_SESSION["cart_item"]);
+                }
+            }
+            break;
+        case "empty":
+            unset($_SESSION["cart_item"]);
+            break;
+    }
+}
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -181,20 +236,24 @@ require_once('../app/partials/landing_head.php');
 
 
                                                     <div class="ec-single-qty">
-
-                                                        <form method="post">
-                                                            <!-- Hidden -->
-                                                            <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                                                            <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
-                                                            <div class="qty-plus-minus">
-                                                                <input class="qty-input" type="text" name="cart_qty" value="1" />
-                                                            </div>
-                                                            <br>
-                                                            <div class="ec-single-cart ">
-                                                                <button type="submit" name="Add_To_Cart" class="btn btn-primary">Add To Cart</button>
-                                                            </div>
-                                                        </form>
-
+                                                        <?php
+                                                        $product_array = $db_handle->runQuery("SELECT * FROM products WHERE product_id = '{$product_id}' ");
+                                                        if (!empty($product_array)) {
+                                                            foreach ($product_array as $key => $value) {
+                                                        ?>
+                                                                <form method="post" action="landing_product?view=<?php echo $product_id; ?>&category=<?php echo $products['category_id']; ?>&action=add&product_id=<?php echo $product_array[$key]["product_id"]; ?>">
+                                                                    <!-- Hidden -->
+                                                                    <div class="qty-plus-minus">
+                                                                        <input class="qty-input" type="text" name="quantity" value="1" />
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="ec-single-cart ">
+                                                                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                                                                    </div>
+                                                                </form>
+                                                        <?php
+                                                            }
+                                                        } ?>
                                                         <div class="ec-single-wishlist">
                                                             <form method="post">
                                                                 <!-- Hidden Values -->
