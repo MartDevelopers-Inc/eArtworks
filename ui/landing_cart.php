@@ -159,15 +159,16 @@ require_once('../app/partials/landing_head.php');
                                                     </tr>
                                                 <?php
                                                     /* Compute Quantity And Amount Supposed To Be Paid */
-
                                                     $total_quantity += $item["quantity"];
                                                     $total_price += ($item["product_price"] * $item["quantity"]);
+                                                    /* DeliverY Fee */
+                                                    $constant_delivery_fee = '1500';
                                                 }
 
                                                 ?>
                                                 <tr>
                                                     <td data-label="Product" class="ec-cart-pro-name">
-                                                        <b>Total</b>
+                                                        <b>Sub Total</b>
                                                     </td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $total_quantity; ?></span></td>
@@ -228,11 +229,11 @@ require_once('../app/partials/landing_head.php');
                                         </div>
                                         <div>
                                             <span class="text-left">Delivery Charges</span>
-                                            <span class="text-right">Ksh 0</span>
+                                            <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
                                         </div>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
                                         </div>
                                     </div><br>
                                     <?php
