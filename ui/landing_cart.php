@@ -221,41 +221,65 @@ require_once('../app/partials/landing_head.php');
                                 </div>
                             </div>
                             <div class="ec-sb-block-content">
-                                <div class="ec-cart-summary-bottom">
-                                    <div class="ec-cart-summary">
-                                        <div>
-                                            <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
-                                        </div>
-                                        <div>
-                                            <span class="text-left">Delivery Charges</span>
-                                            <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
-                                        </div>
-                                        <?php
-                                        /* Show This If Cart Already Has Something */
-                                        if (isset($_SESSION['cart_item'])) {
-                                            /* Add 7 Days To Todays Date */
-                                            $delivery_date = strtotime("+7 day");
-
-                                        ?>
+                                <form method="post">
+                                    <div class="ec-cart-summary-bottom">
+                                        <div class="ec-cart-summary">
                                             <div>
-                                                <span class="text-left">Estimated Delivery Date: </span>
-                                                <span class="text-right"><?php echo date('M d, Y', $delivery_date); ?></span>
+                                                <span class="text-left">Sub-Total</span>
+                                                <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
+                                            </div>
+                                            <div>
+                                                <span class="text-left">Delivery Charges</span>
+                                                <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
+                                            </div>
+                                            <?php
+                                            /* Show This If Cart Already Has Something */
+                                            if (isset($_SESSION['cart_item'])) {
+                                                /* Add 7 Days To Todays Date */
+                                                $delivery_date = strtotime("+7 day");
+                                            ?>
+                                                <div>
+                                                    <span class="text-left">Estimated Delivery Date: </span>
+                                                    <span class="text-right"><?php echo date('d M, Y', $delivery_date); ?></span>
+                                                </div>
+                                            <?php } ?>
+                                            <div class="ec-cart-summary-total">
+                                                <span class="text-left">Total Amount</span>
+                                                <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
+                                            </div>
+                                            <div class="ec-cart-summary-total">
+                                                <span class="text-left">Payment Method</span>
+                                                <span class="text-right">
+                                                    <select name="sale_payment_method">
+                                                        <option>Select Method</option>
+                                                        <?php
+                                                        /* Select Payment Method */
+                                                        $payment_methods_sql = mysqli_query($mysqli, "SELECT * FROM payment_means WHERE means_delete_status = '0'");
+                                                        if (mysqli_num_rows($payment_methods_sql) > 0) {
+                                                            while ($payment_methods = mysqli_fetch_array($payment_methods_sql)) {
+                                                        ?>
+                                                                <option value="<?php echo $payment_methods['means_id']; ?>"><?php echo $payment_methods['means_name']; ?></option>
+                                                            <?php }
+                                                        } else { ?>
+                                                            <option>No means available</option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </span>
+                                            </div>
+                                        </div><br>
+                                        <?php
+                                        if (isset($_SESSION["cart_item"])) { ?>
+                                            <div class="cart_btn text-right">
+                                                <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
+                                                <!-- Hide This Please -->
+                                                <input type="hidden" name="order_status" value="Placed Orders">
+                                                <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
+                                                <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                                <button type="submit" name="Cart_Checkout" class="btn btn-primary">Checkout</button>
                                             </div>
                                         <?php } ?>
-                                        <div class="ec-cart-summary-total">
-                                            <span class="text-left">Total Amount</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
-                                        </div>
-                                    </div><br>
-                                    <?php
-                                    if (isset($_SESSION["cart_item"])) { ?>
-                                        <div class="cart_btn text-right">
-                                            <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
-                                            <a href="" class="btn btn-primary">Checkout</a>
-                                        </div>
-                                    <?php } ?>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
