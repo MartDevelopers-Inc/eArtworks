@@ -127,6 +127,7 @@ require_once('../app/partials/landing_head.php');
                                         <tbody>
                                             <?php
                                             $total_payable_amount = 0;
+                                            $cart_items = [];
                                             $products_sql = mysqli_query(
                                                 $mysqli,
                                                 "SELECT * FROM shopping_cart sc 
@@ -150,7 +151,8 @@ require_once('../app/partials/landing_head.php');
                                                     $total_amount = ($products['product_price'] * $products['cart_qty']);
                                                     /* Compute Total Payable Amount */
                                                     $total_payable_amount += $total_amount
-
+                                                    /* Put Everthing In Cart Array */
+                                                    $cart_items[] = $products['']
                                             ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">
@@ -182,7 +184,12 @@ require_once('../app/partials/landing_head.php');
                                     <div class="col-lg-12">
                                         <div class="ec-cart-update-bottom">
                                             <a href="landing_products">Continue Shopping</a>
-                                            <button class="btn btn-primary">Check Out</button>
+                                            <form method="POST">
+                                                <input type="hidden" name="order_user_id" value="">
+                                                <input type="hidden" name="order_status" value="Placed Orders">
+                                                <input type="hidden" name="order_payment_status" value="Pending">
+                                                <button class="btn btn-primary" type="submit" name="Add_Order">Check Out</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
