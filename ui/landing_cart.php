@@ -66,9 +66,9 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+require_once('../app/settings/cart_db_controller.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
-require_once('../app/settings/cart_db_controller.php');
 include('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
@@ -221,31 +221,25 @@ require_once('../app/partials/landing_head.php');
                                 </div>
                             </div>
                             <div class="ec-sb-block-content">
-                                <form method="post">
-                                    <div class="ec-cart-summary-bottom">
-                                        <div class="ec-cart-summary">
+                                <div class="ec-cart-summary-bottom">
+                                    <div class="ec-cart-summary">
+                                        <div>
+                                            <span class="text-left">Sub-Total</span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
+                                        </div>
+                                        <div>
+                                            <span class="text-left">Delivery Charges</span>
+                                            <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
+                                        </div>
+                                        <?php
+                                        /* Show This If Cart Already Has Something */
+                                        if (isset($_SESSION['cart_item'])) {
+                                            /* Add 7 Days To Todays Date */
+                                            $delivery_date = strtotime("+7 day");
+                                        ?>
                                             <div>
-                                                <span class="text-left">Sub-Total</span>
-                                                <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
-                                            </div>
-                                            <div>
-                                                <span class="text-left">Delivery Charges</span>
-                                                <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
-                                            </div>
-                                            <?php
-                                            /* Show This If Cart Already Has Something */
-                                            if (isset($_SESSION['cart_item'])) {
-                                                /* Add 7 Days To Todays Date */
-                                                $delivery_date = strtotime("+7 day");
-                                            ?>
-                                                <div>
-                                                    <span class="text-left">Estimated Delivery Date: </span>
-                                                    <span class="text-right"><?php echo date('d M, Y', $delivery_date); ?></span>
-                                                </div>
-                                            <?php } ?>
-                                            <div class="ec-cart-summary-total">
-                                                <span class="text-left">Total Amount</span>
-                                                <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
+                                                <span class="text-left">Estimated Delivery Date: </span>
+                                                <span class="text-right"><?php echo date('d M, Y', $delivery_date); ?></span>
                                             </div>
                                             <div class="ec-cart-summary-total">
                                                 <span class="text-left">Payment Method</span>
@@ -266,9 +260,16 @@ require_once('../app/partials/landing_head.php');
                                                     </select>
                                                 </span>
                                             </div>
-                                        </div><br>
-                                        <?php
-                                        if (isset($_SESSION["cart_item"])) { ?>
+                                        <?php } ?>
+                                        <div class="ec-cart-summary-total">
+                                            <span class="text-left">Total Amount</span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
+                                        </div>
+
+                                    </div><br>
+                                    <?php
+                                    if (isset($_SESSION["cart_item"])) { ?>
+                                        <form method="POST">
                                             <div class="cart_btn text-right">
                                                 <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
                                                 <!-- Hide This Please -->
@@ -277,9 +278,9 @@ require_once('../app/partials/landing_head.php');
                                                 <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
                                                 <button type="submit" name="Cart_Checkout" class="btn btn-primary">Checkout</button>
                                             </div>
-                                        <?php } ?>
-                                    </div>
-                                </form>
+                                        </form>
+                                    <?php } ?>
+                                </div>
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
