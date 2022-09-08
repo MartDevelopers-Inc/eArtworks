@@ -114,7 +114,7 @@ require_once('../app/partials/landing_head.php');
                     <div class="ec-cart-content">
                         <div class="ec-cart-inner">
                             <div class="row">
-                                <div class="table-content cart-table-content">
+                                <div class="table-content cart-table-">
                                     <table>
                                         <thead>
                                             <tr>
@@ -138,12 +138,12 @@ require_once('../app/partials/landing_head.php');
                                                     if ($item['product_image'] == '') {
                                                         $image_dir = "../public/uploads/products/no_image.png";
                                                     } else {
-                                                        $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                        $image_dir = "../public/uploads/products/" . $item['product_image'];
                                                     }
                                             ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">
-                                                            <a href="product-left-sidebar.html">
+                                                            <a href="">
                                                                 <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $item['product_name']; ?>
                                                             </a>
                                                         </td>
@@ -157,8 +157,23 @@ require_once('../app/partials/landing_head.php');
                                                             </form>
                                                         </td>
                                                     </tr>
-                                                <?php }
-                                            } else { ?>
+                                                <?php
+                                                    /* Compute Quantity And Amount Supposed To Be Paid */
+
+                                                    $total_quantity += $item["quantity"];
+                                                    $total_price += ($item["product_price"] * $item["quantity"]);
+                                                }
+
+                                                ?>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Total</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $total_quantity; ?></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
+                                                </tr>
+                                            <?php } else { ?>
                                                 <tr class="text-center">
                                                     <td>No items in the cart.</td>
                                                 </tr>
@@ -209,7 +224,7 @@ require_once('../app/partials/landing_head.php');
                                     <div class="ec-cart-summary">
                                         <div>
                                             <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_payable_amount, 2); ?></span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
                                         </div>
                                         <div>
                                             <span class="text-left">Delivery Charges</span>
@@ -217,8 +232,12 @@ require_once('../app/partials/landing_head.php');
                                         </div>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_payable_amount, 2); ?></span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
                                         </div>
+                                    </div><br>
+                                    <div class="cart_btn text-right">
+                                        <a href="cart.html" class="btn btn-danger">Clear Cart</a>
+                                        <a href="" class="btn btn-primary">Checkout</a>
                                     </div>
                                 </div>
                             </div>
