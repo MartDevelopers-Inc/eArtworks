@@ -1,13 +1,19 @@
-# eArtworks - A Prototype.
+# eArtworks
 
-eArtworks 'Prototype' is an online platform which is used to display and sell art works of artist irrespective of their nationality, gender and other narrow consideration,
-through auction. In the era of online entrepreneurship, there is an abundance of opportunities for makers such as artists,
-illustrators and designers to obtain funding for creative projects, as well as to sustain income through selling artworks online.
+Lightweight Online Gallery for artists.
 
-# Known issues
+# About eArtworks
 
--> Only imports products which belong to one seller and one category
--> Staffs accounts and bulk imported users are all given system generated password "Demo123@"
--> Imports on products has no images
--> All uploaded XLS Files are deleted upoun processing to avoid storage consumption
--> Staffs accounts has no feature to verify their emails
+eArtworks "Prototype" is an online gallery and marketplace for artists' works, regardless of their nationality, gender, or other specific criteria.
+by way of auction. Makers like painters, writers, and musicians have a wealth of options in the age of internet enterprise.
+artists and designers to get support for their artistic endeavors as well as to make a living by selling their works online.
+
+# Known issues / bugs so far
+
+-> Only imports products which belong to one seller and one category <br>
+-> Staffs accounts and bulk imported users are all given system generated password "Demo123@" <br>
+-> Imports on products has no images so the system assigns them default image <br>
+-> All uploaded XLS Files are deleted upoun processing to avoid storage consumption <br>
+-> Staffs accounts has no feature to verify their emails - Assumption that all staff emails are valid <br>
+-> Cart is not retained after a user has logged out. The logout session is destroying clearing cart by default <br>
+-> Delivery charges are set to a constant $15 dollars - This is hard coded. It should be updated later.
