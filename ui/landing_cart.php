@@ -66,9 +66,11 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+require_once('../app/settings/cart_db_controller.php');
 require_once('../app/settings/checklogin.php');
+require_once('../app/settings/codeGen.php');
 checklogin();
-require_once('../app/helpers/cart.php');
+include('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -113,7 +115,7 @@ require_once('../app/partials/landing_head.php');
                     <div class="ec-cart-content">
                         <div class="ec-cart-inner">
                             <div class="row">
-                                <div class="table-content cart-table-content">
+                                <div class="table-content cart-table-">
                                     <table>
                                         <thead>
                                             <tr>
@@ -126,51 +128,54 @@ require_once('../app/partials/landing_head.php');
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $total_payable_amount = 0;
-                                            $products_sql = mysqli_query(
-                                                $mysqli,
-                                                "SELECT * FROM shopping_cart sc 
-                                                INNER JOIN  products p ON p.product_id = sc.cart_product_id
-                                                INNER JOIN users u ON u.user_id = p.product_seller_id
-                                                INNER JOIN categories c ON c.category_id = p.product_category_id
-                                                WHERE u.user_delete_status = '0' 
-                                                AND c.category_delete_status = '0'
-                                                AND p.product_delete_status = '0'
-                                                AND  sc.cart_user_id = '{$user_id}'"
-                                            );
-                                            if (mysqli_num_rows($products_sql) > 0) {
-                                                while ($products = mysqli_fetch_array($products_sql)) {
-                                                    /* Image Directory */
-                                                    if ($products['product_image'] == '') {
+                                            /* Fetch Everything In My Shopping Cart */
+                                            if (isset($_SESSION["cart_item"])) {
+                                                $total_quantity = 0;
+                                                $total_price = 0;
+                                                /* Populate Them */
+                                                foreach ($_SESSION["cart_item"] as $item) {
+                                                    $item_price = $item["quantity"] * $item["product_price"];
+                                                    /* Check If This Product Has An Image */
+                                                    if ($item['product_image'] == '') {
                                                         $image_dir = "../public/uploads/products/no_image.png";
                                                     } else {
-                                                        $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                        $image_dir = "../public/uploads/products/" . $item['product_image'];
                                                     }
-                                                    /* Compute Price Amount */
-                                                    $total_amount = ($products['product_price'] * $products['cart_qty']);
-                                                    /* Compute Total Payable Amount */
-                                                    $total_payable_amount += $total_amount
-
                                             ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">
-                                                            <a href="product-left-sidebar.html">
-                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $products['product_name']; ?>
+                                                            <a href="">
+                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $item['product_name']; ?>
                                                             </a>
                                                         </td>
-                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo number_format($products['product_price'], 2); ?></span></td>
-                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $products['cart_qty']; ?></span></td>
-                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_amount, 2); ?></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo number_format($item['product_price'], 2); ?></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $item['quantity']; ?></span></td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($item_price, 2); ?></td>
                                                         <td data-label="Remove" class="ec-cart-pro-remove text-center">
-                                                            <form method="post">
+                                                            <form method="post" action="landing_cart?action=remove&product_sku_code=<?php echo $item["product_sku_code"]; ?>">
                                                                 <!-- Hide This -->
-                                                                <input type="hidden" name="cart_id" value="<?php echo $products['cart_id']; ?>">
                                                                 <button name="Remove_Item" type="submit"><i class="ecicon eci-trash-o"></i></button></a>
                                                             </form>
                                                         </td>
                                                     </tr>
-                                                <?php }
-                                            } else { ?>
+                                                <?php
+                                                    /* Compute Quantity And Amount Supposed To Be Paid */
+                                                    $total_quantity += $item["quantity"];
+                                                    $total_price += ($item["product_price"] * $item["quantity"]);
+                                                    /* DeliverY Fee */
+                                                    $constant_delivery_fee = '1500';
+                                                }
+
+                                                ?>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Sub Total</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $total_quantity; ?></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
+                                                </tr>
+                                            <?php } else { ?>
                                                 <tr class="text-center">
                                                     <td>No items in the cart.</td>
                                                 </tr>
@@ -182,7 +187,6 @@ require_once('../app/partials/landing_head.php');
                                     <div class="col-lg-12">
                                         <div class="ec-cart-update-bottom">
                                             <a href="landing_products">Continue Shopping</a>
-                                            <button class="btn btn-primary">Check Out</button>
                                         </div>
                                     </div>
                                 </div>
@@ -222,21 +226,45 @@ require_once('../app/partials/landing_head.php');
                                     <div class="ec-cart-summary">
                                         <div>
                                             <span class="text-left">Sub-Total</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_payable_amount, 2); ?></span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price, 2); ?></span>
                                         </div>
                                         <div>
                                             <span class="text-left">Delivery Charges</span>
-                                            <span class="text-right">Ksh 0</span>
+                                            <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
                                         </div>
+                                        <?php
+                                        /* Show This If Cart Already Has Something */
+                                        if (isset($_SESSION['cart_item'])) {
+                                            /* Add 7 Days To Todays Date */
+                                            $delivery_date = strtotime("+7 day");
+                                        ?>
+                                            <div>
+                                                <span class="text-left">Estimated Delivery Date: </span>
+                                                <span class="text-right"><?php echo date('d M, Y', $delivery_date); ?></span>
+                                            </div>
+                                        <?php } ?>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
-                                            <span class="text-right">Ksh <?php echo number_format($total_payable_amount, 2); ?></span>
+                                            <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
                                         </div>
-                                    </div>
+
+                                    </div><br>
+                                    <?php
+                                    if (isset($_SESSION["cart_item"])) { ?>
+                                        <div class="cart_btn text-right">
+                                            <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
+                                            <!-- Hide This Please -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal">
+                                                Checkout
+                                            </button>
+                                        </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
+                        <?php include('../app/modals/checkout_modal.php'); ?>
+                        <!-- Trigger Checkout Modal -->
                     </div>
                 </div>
             </div>

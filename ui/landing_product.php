@@ -67,8 +67,10 @@
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
+checklogin();
 require_once('../app/helpers/landing.php');
-require_once('../app/helpers/cart.php');
+require_once('../app/settings/cart_db_controller.php');
+include('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -181,20 +183,24 @@ require_once('../app/partials/landing_head.php');
 
 
                                                     <div class="ec-single-qty">
-
-                                                        <form method="post">
-                                                            <!-- Hidden -->
-                                                            <input type="hidden" name="cart_user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                                                            <input type="hidden" name="cart_product_id" value="<?php echo $products['product_id']; ?>">
-                                                            <div class="qty-plus-minus">
-                                                                <input class="qty-input" type="text" name="cart_qty" value="1" />
-                                                            </div>
-                                                            <br>
-                                                            <div class="ec-single-cart ">
-                                                                <button type="submit" name="Add_To_Cart" class="btn btn-primary">Add To Cart</button>
-                                                            </div>
-                                                        </form>
-
+                                                        <?php
+                                                        $product_array = $db_handle->runQuery("SELECT * FROM products WHERE product_id = '{$product_id}' ");
+                                                        if (!empty($product_array)) {
+                                                            foreach ($product_array as $key => $value) {
+                                                        ?>
+                                                                <form method="post" action="landing_product?view=<?php echo $product_id; ?>&category=<?php echo $products['category_id']; ?>&action=add&product_id=<?php echo $product_array[$key]["product_id"]; ?>">
+                                                                    <!-- Hidden -->
+                                                                    <div class="qty-plus-minus">
+                                                                        <input class="qty-input" type="text" name="quantity" value="1" />
+                                                                    </div>
+                                                                    <br>
+                                                                    <div class="ec-single-cart ">
+                                                                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+                                                                    </div>
+                                                                </form>
+                                                        <?php
+                                                            }
+                                                        } ?>
                                                         <div class="ec-single-wishlist">
                                                             <form method="post">
                                                                 <!-- Hidden Values -->

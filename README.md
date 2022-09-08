@@ -1,13 +1,22 @@
-# eArtworks - A Prototype.
+# eArtworks
 
-eArtworks 'Prototype' is an online platform which is used to display and sell art works of artist irrespective of their nationality, gender and other narrow consideration,
-through auction. In the era of online entrepreneurship, there is an abundance of opportunities for makers such as artists,
-illustrators and designers to obtain funding for creative projects, as well as to sustain income through selling artworks online.
+Lightweight Online Gallery for artists.
 
-# Known issues
+# About
 
--> Only imports products which belong to one seller and one category
--> Staffs accounts and bulk imported users are all given system generated password "Demo123@"
--> Imports on products has no images
--> All uploaded XLS Files are deleted upoun processing to avoid storage consumption
--> Staffs accounts has no feature to verify their emails
+eArtworks "Prototype" is an online gallery and marketplace for artists' works, regardless of their nationality, gender, or other specific criteria.
+by way of auction. Makers like painters, writers, and musicians have a wealth of options in the age of internet enterprise.
+artists and designers to get support for their artistic endeavors as well as to make a living by selling their works online.
+
+# Known issues / bugs so far
+
+1. Only imports goods from a single vendor and a single category. <br>
+2. The system generates the password "Demo123@" for all staff accounts and bulk imported users. <br>
+3. The system uses the default picture for products imported without images. <br>
+4. To save storage space, all submitted XLS files are erased prior to processing. <br>
+5. Since there is no facility for staff accounts to validate their emails, it is assumed that all staff emails are legitimate. <br>
+6. After a user logs out, the cart is no longer saved. <br>
+7. By default, the logout session deletes the clearing cart. <br>
+8. The fixed rate for delivery fees is $15; this is hard programmed. Later, it ought to be updated. <br>
+9. All prices are in Kenyan Shillings; dynamic pricing is not yet in place. <br>
+10. Estimated delivery date is one week (7 Days) from the day you made your order.

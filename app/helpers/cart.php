@@ -65,54 +65,109 @@
  *
  */
 
-/* Add To Cart */
-if (isset($_POST['Add_To_Cart'])) {
-    $cart_user_id = mysqli_real_escape_string($mysqli, $_POST['cart_user_id']);
-    $cart_product_id  = mysqli_real_escape_string($mysqli, $_POST['cart_product_id']);
-    $cart_qty = mysqli_real_escape_string($mysqli, $_POST['cart_qty']);
-    /* To avoid duplication, Just sum the new product qty */
-    $sql = "SELECT * FROM shopping_cart  WHERE cart_product_id ='{$cart_product_id}' AND  cart_user_id = '{$cart_user_id}'";
-    $res = mysqli_query($mysqli, $sql);
-    if (mysqli_num_rows($res) > 0) {
-        $row = mysqli_fetch_assoc($res);
-        if ($cart_product_id == $row['cart_product_id'] && $cart_user_id == $row['cart_user_id']) {
 
-            /* New Product Qty*/
-            $new_qty = $cart_qty + $row['cart_qty'];
+$db_handle = new DBController();
+if (!empty($_GET["action"])) {
+    switch ($_GET["action"]) {
+        case "add":
+            /* Add Items To Cart */
+            if (!empty($_POST["quantity"])) {
+                $productByCode = $db_handle->runQuery("SELECT * FROM products WHERE product_id='" . $_GET["product_id"] . "'");
+                $itemArray = array(
+                    $productByCode[0]["product_sku_code"] => array(
+                        'product_name' => $productByCode[0]["product_name"],
+                        'product_sku_code' => $productByCode[0]["product_sku_code"],
+                        'quantity' => $_POST["quantity"],
+                        'product_price' => ($productByCode[0]["product_price"]),
+                        'product_id' => $productByCode[0]["product_id"],
+                        'product_image' => $productByCode[0]["product_image"],
+                    )
+                );
+                $success = "Item added to cart";
 
-            /* Persist */
-            $qty_sql = "UPDATE shopping_cart SET cart_qty = '{$new_qty}' WHERE cart_id = '{$row['cart_id']}'";
-            if (mysqli_query($mysqli, $qty_sql)) {
-                $success = "Added to cart";
-            } else {
-                $err = "Failed, try again";
+                if (!empty($_SESSION["cart_item"])) {
+                    if (in_array($productByCode[0]["product_sku_code"], array_keys($_SESSION["cart_item"]))) {
+                        foreach ($_SESSION["cart_item"] as $k => $v) {
+                            if ($productByCode[0]["product_sku_code"] == $k) {
+                                if (empty($_SESSION["cart_item"][$k]["quantity"])) {
+                                    $_SESSION["cart_item"][$k]["quantity"] = 0;
+                                }
+                                $_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
+                            }
+                        }
+                    } else {
+                        $success = "Item added to cart";
+                        $_SESSION["cart_item"] = array_merge($_SESSION["cart_item"], $itemArray);
+                    }
+                } else {
+                    $success = "Item added to cart";
+                    $_SESSION["cart_item"] = $itemArray;
+                }
             }
-        }
-    } else {
-        /* Persist */
-        $sql = "INSERT INTO shopping_cart (cart_user_id, cart_product_id, cart_qty) 
-        VALUES('{$cart_user_id}', '{$cart_product_id}', '{$cart_qty}')";
+            break;
 
-        /* Persist */
-        if (mysqli_query($mysqli, $sql)) {
-            $success = "Added to cart";
-        } else {
-            $err = "Failed!, please try again";
-        }
+
+        case "remove":
+            /* Remove Items From Cart */
+            if (!empty($_SESSION["cart_item"])) {
+                foreach ($_SESSION["cart_item"] as $k => $v) {
+                    if ($_GET["product_sku_code"] == $k)
+                        unset($_SESSION["cart_item"][$k]);
+                    if (empty($_SESSION["cart_item"]))
+                        unset($_SESSION["cart_item"]);
+                }
+                $success = "Item removed from cart";
+            }
+            break;
+        case "empty":
+            /* Empty Cart */
+            $success = "Cart cleared";
+            unset($_SESSION["cart_item"]);
+            break;
     }
 }
 
-/* Update Cart */
+/* Process Cart Data */
+if (isset($_POST['Process_Cart'])) {
+    $cart_products = $_SESSION['cart_item'];
+    $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
+    $order_user_id = mysqli_real_escape_string($mysqli, $_POST['order_user_id']);
+    $order_code = mysqli_real_escape_string($mysqli, $a . $b);
+    $sale_payment_method = $_POST['sale_payment_method']; /* At First Treat Every Payment Method As COD */
+    $order_date = mysqli_real_escape_string($mysqli, date('Y-m-d'));
+    $order_status = mysqli_real_escape_string($mysqli, $_POST['order_status']);
+    $order_payment_status = mysqli_real_escape_string($mysqli, 'Pending');
 
-/* Delete Cart */
-if (isset($_POST['Remove_Item'])) {
-    $cart_id = mysqli_real_escape_string($mysqli, $_POST['cart_id']);
+    /* Populate Items In the Cart Array  */
+    foreach ($cart_products as $cart_products) {
+        $order_qty = $cart_products['quantity'];
+        $order_product_id = $cart_products['product_id'];
+        /* Get Existing Product Details  */
+        $sql = "SELECT * FROM  products  WHERE product_id = '{$order_product_id}'";
+        $res = mysqli_query($mysqli, $sql);
+        if (mysqli_num_rows($res) > 0) {
+            $products = mysqli_fetch_assoc($res);
 
-    /* Persist */
-    $sql = "DELETE FROM shopping_cart WHERE cart_id = '{$cart_id}'";
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Removed from cart";
-    } else {
-        $err = "Failed, please try again";
+            /* Update Products Count */
+            $new_product_qty = $products['product_qty_in_stock'] - $order_qty;
+            /* Get Overall Order Cost */
+            $total_order_cost = $products['product_price'] * $order_qty;
+
+            /* Persist */
+            $update_sql = "UPDATE products SET product_qty_in_stock = '{$new_product_qty}' WHERE product_id = '{$order_product_id}'";
+            $order_sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_qty, order_cost, order_status, order_payment_status, order_estimated_delivery_date)
+            VALUES('{$order_user_id}', '{$order_product_id}','{$order_code}', '{$order_date}', '{$order_qty}', '{$total_order_cost}', '{$order_status}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
+
+            if (mysqli_query($mysqli, $update_sql) && mysqli_query($mysqli, $order_sql)) {
+                /*
+            -> To do
+            Email user with a confirmation mail that we have received his/her order.
+             */
+                $success = "Order $order_code submitted";
+            } else {
+                //$err = "Failed, please try again";
+                echo $order_sql;
+            }
+        }
     }
 }

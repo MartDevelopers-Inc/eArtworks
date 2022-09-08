@@ -74,14 +74,6 @@ if ($_SESSION['user_access_level'] == 'Customer') {
     $stmt->fetch();
     $stmt->close();
 
-    /* Get Details On Items In Cart */
-    $query = "SELECT COUNT(*)  FROM shopping_cart 
-    WHERE cart_user_id = '{$user_id}'";
-    $stmt = $mysqli->prepare($query);
-    $stmt->execute();
-    $stmt->bind_result($items_in_cart);
-    $stmt->fetch();
-    $stmt->close();
 
 ?>
     <header class="ec-header">
@@ -191,7 +183,15 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             <!-- Header menu Start -->
                             <a href="#ec-mobile-menu" class="ec-header-btn ec-side-toggle d-lg-none">
                                 <img src="../public/landing_assets/images/icons/menu.svg" class="svg_img header_svg" alt="icon" />
-                                <span class="ec-header-count"><?php echo $items_in_cart; ?></span>
+                                <span class="ec-header-count">
+                                    <?php
+                                    /* Count Number Of Items In My Cart */
+                                    if (isset($_SESSION['cart_item'])) {
+                                        echo sizeof($_SESSION["cart_item"]);
+                                    } else {
+                                        echo "0";
+                                    } ?>
+                                </span>
                             </a>
                             <!-- Header menu End -->
                         </div>
@@ -263,7 +263,15 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                 <a href="landing_cart" class="ec-header-btn">
                                     <div class="header-icon">
                                         <img src="../public/landing_assets/images/icons/cart.svg" class="svg_img header_svg" alt="" />
-                                        <span class="ec-header-count"><?php echo $items_in_cart; ?></span>
+                                        <span class="ec-header-count">
+                                            <?php
+                                            /* Count Number Of Items In My Cart */
+                                            if (isset($_SESSION['cart_item'])) {
+                                                echo sizeof($_SESSION["cart_item"]);
+                                            } else {
+                                                echo "0";
+                                            } ?>
+                                        </span>
                                     </div>
                                 </a>
                                 <!-- Header Cart End -->
