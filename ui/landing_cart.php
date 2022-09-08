@@ -68,7 +68,8 @@ session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
-require_once('../app/helpers/cart.php');
+require_once('../app/settings/cart_db_controller.php');
+include('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -126,46 +127,32 @@ require_once('../app/partials/landing_head.php');
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $total_payable_amount = 0;
-                                            $cart_items = [];
-                                            $products_sql = mysqli_query(
-                                                $mysqli,
-                                                "SELECT * FROM shopping_cart sc 
-                                                INNER JOIN  products p ON p.product_id = sc.cart_product_id
-                                                INNER JOIN users u ON u.user_id = p.product_seller_id
-                                                INNER JOIN categories c ON c.category_id = p.product_category_id
-                                                WHERE u.user_delete_status = '0' 
-                                                AND c.category_delete_status = '0'
-                                                AND p.product_delete_status = '0'
-                                                AND  sc.cart_user_id = '{$user_id}'"
-                                            );
-                                            if (mysqli_num_rows($products_sql) > 0) {
-                                                while ($products = mysqli_fetch_array($products_sql)) {
-                                                    /* Image Directory */
-                                                    if ($products['product_image'] == '') {
+                                            /* Fetch Everything In My Shopping Cart */
+                                            if (isset($_SESSION["cart_item"])) {
+                                                $total_quantity = 0;
+                                                $total_price = 0;
+                                                /* Populate Them */
+                                                foreach ($_SESSION["cart_item"] as $item) {
+                                                    $item_price = $item["quantity"] * $item["product_price"];
+                                                    /* Check If This Product Has An Image */
+                                                    if ($item['product_image'] == '') {
                                                         $image_dir = "../public/uploads/products/no_image.png";
                                                     } else {
                                                         $image_dir = "../public/uploads/products/" . $products['product_image'];
                                                     }
-                                                    /* Compute Price Amount */
-                                                    $total_amount = ($products['product_price'] * $products['cart_qty']);
-                                                    /* Compute Total Payable Amount */
-                                                    $total_payable_amount += $total_amount
-                                                   
                                             ?>
                                                     <tr>
                                                         <td data-label="Product" class="ec-cart-pro-name">
                                                             <a href="product-left-sidebar.html">
-                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $products['product_name']; ?>
+                                                                <img class="ec-cart-pro-img mr-4" src="<?php echo $image_dir; ?>" alt="" /><?php echo $item['product_name']; ?>
                                                             </a>
                                                         </td>
-                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo number_format($products['product_price'], 2); ?></span></td>
-                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $products['cart_qty']; ?></span></td>
-                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_amount, 2); ?></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount">Ksh <?php echo number_format($item['product_price'], 2); ?></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"><?php echo $item['quantity']; ?></span></td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($item_price, 2); ?></td>
                                                         <td data-label="Remove" class="ec-cart-pro-remove text-center">
-                                                            <form method="post">
+                                                            <form method="post" action="landing_cart?action=remove&product_sku_code=<?php echo $item["product_sku_code"]; ?>">
                                                                 <!-- Hide This -->
-                                                                <input type="hidden" name="cart_id" value="<?php echo $products['cart_id']; ?>">
                                                                 <button name="Remove_Item" type="submit"><i class="ecicon eci-trash-o"></i></button></a>
                                                             </form>
                                                         </td>
@@ -183,12 +170,6 @@ require_once('../app/partials/landing_head.php');
                                     <div class="col-lg-12">
                                         <div class="ec-cart-update-bottom">
                                             <a href="landing_products">Continue Shopping</a>
-                                            <form method="POST">
-                                                <input type="hidden" name="order_user_id" value="">
-                                                <input type="hidden" name="order_status" value="Placed Orders">
-                                                <input type="hidden" name="order_payment_status" value="Pending">
-                                                <button class="btn btn-primary" type="submit" name="Add_Order">Check Out</button>
-                                            </form>
                                         </div>
                                     </div>
                                 </div>

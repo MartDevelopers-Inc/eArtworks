@@ -65,54 +65,59 @@
  *
  */
 
-/* Add To Cart */
-if (isset($_POST['Add_To_Cart'])) {
-    $cart_user_id = mysqli_real_escape_string($mysqli, $_POST['cart_user_id']);
-    $cart_product_id  = mysqli_real_escape_string($mysqli, $_POST['cart_product_id']);
-    $cart_qty = mysqli_real_escape_string($mysqli, $_POST['cart_qty']);
-    /* To avoid duplication, Just sum the new product qty */
-    $sql = "SELECT * FROM shopping_cart  WHERE cart_product_id ='{$cart_product_id}' AND  cart_user_id = '{$cart_user_id}'";
-    $res = mysqli_query($mysqli, $sql);
-    if (mysqli_num_rows($res) > 0) {
-        $row = mysqli_fetch_assoc($res);
-        if ($cart_product_id == $row['cart_product_id'] && $cart_user_id == $row['cart_user_id']) {
+$db_handle = new DBController();
+if (!empty($_GET["action"])) {
+    switch ($_GET["action"]) {
+        case "add":
+            if (!empty($_POST["quantity"])) {
+                $productByCode = $db_handle->runQuery("SELECT * FROM products WHERE product_id='" . $_GET["product_id"] . "'");
+                $itemArray = array(
+                    $productByCode[0]["product_sku_code"] => array(
+                        'product_name' => $productByCode[0]["product_name"],
+                        'product_sku_code' => $productByCode[0]["product_sku_code"],
+                        'quantity' => $_POST["quantity"],
+                        'product_price' => ($productByCode[0]["product_price"]),
+                        'product_id' => $productByCode[0]["product_id"],
+                        'product_image' => $productByCode[0]["product_image"],
+                    )
+                );
+                $success = "Item added to cart";
 
-            /* New Product Qty*/
-            $new_qty = $cart_qty + $row['cart_qty'];
-
-            /* Persist */
-            $qty_sql = "UPDATE shopping_cart SET cart_qty = '{$new_qty}' WHERE cart_id = '{$row['cart_id']}'";
-            if (mysqli_query($mysqli, $qty_sql)) {
-                $success = "Added to cart";
-            } else {
-                $err = "Failed, try again";
+                if (!empty($_SESSION["cart_item"])) {
+                    if (in_array($productByCode[0]["product_sku_code"], array_keys($_SESSION["cart_item"]))) {
+                        foreach ($_SESSION["cart_item"] as $k => $v) {
+                            if ($productByCode[0]["product_sku_code"] == $k) {
+                                if (empty($_SESSION["cart_item"][$k]["quantity"])) {
+                                    $_SESSION["cart_item"][$k]["quantity"] = 0;
+                                }
+                                $_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
+                            }
+                        }
+                    } else {
+                        $success = "Item added to cart";
+                        $_SESSION["cart_item"] = array_merge($_SESSION["cart_item"], $itemArray);
+                    }
+                } else {
+                    $success = "Item added to cart";
+                    $_SESSION["cart_item"] = $itemArray;
+                }
             }
-        }
-    } else {
-        /* Persist */
-        $sql = "INSERT INTO shopping_cart (cart_user_id, cart_product_id, cart_qty) 
-        VALUES('{$cart_user_id}', '{$cart_product_id}', '{$cart_qty}')";
+            break;
 
-        /* Persist */
-        if (mysqli_query($mysqli, $sql)) {
-            $success = "Added to cart";
-        } else {
-            $err = "Failed!, please try again";
-        }
-    }
-}
-
-/* Update Cart */
-
-/* Delete Cart */
-if (isset($_POST['Remove_Item'])) {
-    $cart_id = mysqli_real_escape_string($mysqli, $_POST['cart_id']);
-
-    /* Persist */
-    $sql = "DELETE FROM shopping_cart WHERE cart_id = '{$cart_id}'";
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Removed from cart";
-    } else {
-        $err = "Failed, please try again";
+        case "remove":
+            if (!empty($_SESSION["cart_item"])) {
+                foreach ($_SESSION["cart_item"] as $k => $v) {
+                    if ($_GET["product_sku_code"] == $k)
+                        unset($_SESSION["cart_item"][$k]);
+                    if (empty($_SESSION["cart_item"]))
+                        unset($_SESSION["cart_item"]);
+                }
+                $success = "Item removed from cart";
+            }
+            break;
+        case "empty":
+            $success = "Cart cleared";
+            unset($_SESSION["cart_item"]);
+            break;
     }
 }

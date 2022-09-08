@@ -69,61 +69,8 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
 require_once('../app/helpers/landing.php');
-require_once('../app/helpers/cart.php');
 require_once('../app/settings/cart_db_controller.php');
-$db_handle = new DBController();
-if (!empty($_GET["action"])) {
-    switch ($_GET["action"]) {
-        case "add":
-            if (!empty($_POST["quantity"])) {
-                $productByCode = $db_handle->runQuery("SELECT * FROM products WHERE product_id='" . $_GET["product_id"] . "'");
-                $itemArray = array(
-                    $productByCode[0]["product_sku_code"] => array(
-                        'product_name' => $productByCode[0]["product_name"],
-                        'product_sku_code' => $productByCode[0]["product_sku_code"],
-                        'quantity' => $_POST["quantity"],
-                        'product_price' => ($productByCode[0]["product_price"]),
-                        'product_id' => $productByCode[0]["product_id"],
-                    )
-                );
-                $success = "Added to cart";
-
-                if (!empty($_SESSION["cart_item"])) {
-                    if (in_array($productByCode[0]["product_sku_code"], array_keys($_SESSION["cart_item"]))) {
-                        foreach ($_SESSION["cart_item"] as $k => $v) {
-                            if ($productByCode[0]["product_sku_code"] == $k) {
-                                if (empty($_SESSION["cart_item"][$k]["quantity"])) {
-                                    $_SESSION["cart_item"][$k]["quantity"] = 0;
-                                }
-                                $_SESSION["cart_item"][$k]["quantity"] += $_POST["quantity"];
-                            }
-                        }
-                    } else {
-                        $success = "Added to cart";
-                        $_SESSION["cart_item"] = array_merge($_SESSION["cart_item"], $itemArray);
-                    }
-                } else {
-                    $success = "Added to cart";
-                    $_SESSION["cart_item"] = $itemArray;
-                }
-            }
-            break;
-
-        case "remove":
-            if (!empty($_SESSION["cart_item"])) {
-                foreach ($_SESSION["cart_item"] as $k => $v) {
-                    if ($_GET["product_sku_code"] == $k)
-                        unset($_SESSION["cart_item"][$k]);
-                    if (empty($_SESSION["cart_item"]))
-                        unset($_SESSION["cart_item"]);
-                }
-            }
-            break;
-        case "empty":
-            unset($_SESSION["cart_item"]);
-            break;
-    }
-}
+include('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
