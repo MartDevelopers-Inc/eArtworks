@@ -65,6 +65,7 @@
  *
  */
 
+
 $db_handle = new DBController();
 if (!empty($_GET["action"])) {
     switch ($_GET["action"]) {
@@ -128,21 +129,21 @@ if (!empty($_GET["action"])) {
 
 /* Process Cart Data */
 if (isset($_POST['Process_Cart'])) {
+    $cart_products = $_SESSION['cart_item'];
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
     $order_user_id = mysqli_real_escape_string($mysqli, $_POST['order_user_id']);
     $order_code = mysqli_real_escape_string($mysqli, $a . $b);
     $sale_payment_method = $_POST['sale_payment_method']; /* At First Treat Every Payment Method As COD */
-    $cart_items = $_SESSION['cart_item'];
     $order_date = mysqli_real_escape_string($mysqli, date('Y-m-d'));
     $order_status = mysqli_real_escape_string($mysqli, $_POST['order_status']);
     $order_payment_status = mysqli_real_escape_string($mysqli, 'Pending');
 
     /* Populate Items In the Cart Array  */
-    foreach ($cart_items as $cart_items) {
-        $order_qty = $cart_items['quantity'];
-        $order_product_id = $cart_items['product_id'];
-        /* Get Existing Product Details */
-        $sql = "SELECT * FROM  products  WHERE product_id = '{$sale_product_id}'";
+    foreach ($cart_products as $cart_products) {
+        $order_qty = $cart_products['quantity'];
+        $order_product_id = $cart_products['product_id'];
+        /* Get Existing Product Details  */
+        $sql = "SELECT * FROM  products  WHERE product_id = '{$order_product_id}'";
         $res = mysqli_query($mysqli, $sql);
         if (mysqli_num_rows($res) > 0) {
             $products = mysqli_fetch_assoc($res);
@@ -153,18 +154,19 @@ if (isset($_POST['Process_Cart'])) {
             $total_order_cost = $products['product_price'] * $order_qty;
 
             /* Persist */
-            $update_sql = "UPDATE products SET product_qty_in_stock = '{$new_product_qty}' WHERE product_id = '{$product_id}'";
+            $update_sql = "UPDATE products SET product_qty_in_stock = '{$new_product_qty}' WHERE product_id = '{$order_product_id}'";
             $order_sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_qty, order_cost, order_status, order_payment_status, order_estimated_delivery_date)
             VALUES('{$order_user_id}', '{$order_product_id}','{$order_code}', '{$order_date}', '{$order_qty}', '{$total_order_cost}', '{$order_status}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
 
             if (mysqli_query($mysqli, $update_sql) && mysqli_query($mysqli, $order_sql)) {
                 /*
-                -> To do
-                Email user with a confirmation mail that we have received his/her order.
-                 */
+            -> To do
+            Email user with a confirmation mail that we have received his/her order.
+             */
                 $success = "Order $order_code submitted";
             } else {
-                $err = "Failed, please try again";
+                //$err = "Failed, please try again";
+                echo $order_sql;
             }
         }
     }

@@ -68,6 +68,7 @@ session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/cart_db_controller.php');
 require_once('../app/settings/checklogin.php');
+require_once('../app/settings/codeGen.php');
 checklogin();
 include('../app/helpers/cart.php');
 require_once('../app/partials/landing_head.php');
@@ -241,25 +242,6 @@ require_once('../app/partials/landing_head.php');
                                                 <span class="text-left">Estimated Delivery Date: </span>
                                                 <span class="text-right"><?php echo date('d M, Y', $delivery_date); ?></span>
                                             </div>
-                                            <div class="ec-cart-summary-total">
-                                                <span class="text-left">Payment Method</span>
-                                                <span class="text-right">
-                                                    <select name="sale_payment_method">
-                                                        <option>Select Method</option>
-                                                        <?php
-                                                        /* Select Payment Method */
-                                                        $payment_methods_sql = mysqli_query($mysqli, "SELECT * FROM payment_means WHERE means_delete_status = '0'");
-                                                        if (mysqli_num_rows($payment_methods_sql) > 0) {
-                                                            while ($payment_methods = mysqli_fetch_array($payment_methods_sql)) {
-                                                        ?>
-                                                                <option value="<?php echo $payment_methods['means_id']; ?>"><?php echo $payment_methods['means_name']; ?></option>
-                                                            <?php }
-                                                        } else { ?>
-                                                            <option>No means available</option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </span>
-                                            </div>
                                         <?php } ?>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
@@ -269,21 +251,20 @@ require_once('../app/partials/landing_head.php');
                                     </div><br>
                                     <?php
                                     if (isset($_SESSION["cart_item"])) { ?>
-                                        <form method="POST">
-                                            <div class="cart_btn text-right">
-                                                <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
-                                                <!-- Hide This Please -->
-                                                <input type="hidden" name="order_status" value="Placed Orders">
-                                                <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
-                                                <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                                                <button type="submit" name="Process_Cart" class="btn btn-primary">Checkout</button>
-                                            </div>
-                                        </form>
+                                        <div class="cart_btn text-right">
+                                            <a href="?action=empty" class="btn btn-danger">Clear Cart</a>
+                                            <!-- Hide This Please -->
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal">
+                                                Checkout
+                                            </button>
+                                        </div>
                                     <?php } ?>
                                 </div>
                             </div>
                         </div>
                         <!-- Sidebar Summary Block -->
+                        <?php include('../app/modals/checkout_modal.php'); ?>
+                        <!-- Trigger Checkout Modal -->
                     </div>
                 </div>
             </div>
