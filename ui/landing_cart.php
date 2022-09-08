@@ -231,6 +231,18 @@ require_once('../app/partials/landing_head.php');
                                             <span class="text-left">Delivery Charges</span>
                                             <span class="text-right">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></span>
                                         </div>
+                                        <?php
+                                        /* Show This If Cart Already Has Something */
+                                        if (isset($_SESSION['cart_item'])) {
+                                            /* Add 7 Days To Todays Date */
+                                            $delivery_date = strtotime("+7 day");
+
+                                        ?>
+                                            <div>
+                                                <span class="text-left">Estimated Delivery Date: </span>
+                                                <span class="text-right"><?php echo date('M d, Y', $delivery_date); ?></span>
+                                            </div>
+                                        <?php } ?>
                                         <div class="ec-cart-summary-total">
                                             <span class="text-left">Total Amount</span>
                                             <span class="text-right">Ksh <?php echo number_format($total_price + $constant_delivery_fee, 2); ?></span>
