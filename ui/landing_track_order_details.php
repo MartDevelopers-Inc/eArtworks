@@ -76,7 +76,7 @@ require_once('../app/partials/landing_head.php');
 
     <!-- Header start  -->
     <?php require_once('../app/partials/landing_navigation.php');
-    $order_id = mysqli_real_escape_string($mysqli, $_GET['view']);
+    $order_code = mysqli_real_escape_string($mysqli, $_GET['view']);
     /* Pull Recent Purchases Made By This User */
     $order_user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
     $orders_sql = mysqli_query(
@@ -89,7 +89,8 @@ require_once('../app/partials/landing_head.php');
         AND c.category_delete_status = '0'
         AND p.product_delete_status = '0'
         AND o.order_delete_status = '0'
-        AND o.order_id = '{$order_id}'"
+        AND o.order_code = '{$order_code}'
+        GROUP BY o.order_code"
     );
     if (mysqli_num_rows($orders_sql) > 0) {
         while ($orders = mysqli_fetch_array($orders_sql)) {
@@ -130,8 +131,7 @@ require_once('../app/partials/landing_head.php');
                             <div class="ec-trackorder-top">
                                 <h2 class="ec-order-id">Order #<?php echo $orders['order_code']; ?></h2>
                                 <div class="ec-order-detail">
-                                    <div>Expected arrival: <?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></div>
-                                    <div><?php echo $orders['product_sku_code']; ?> <span><?php echo $orders['product_name']; ?></span></div>
+                                    <div>Expected arrival date: <?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></div>
                                 </div>
                             </div>
                             <div class="ec-trackorder-bottom">
@@ -349,6 +349,103 @@ require_once('../app/partials/landing_head.php');
                                             <h4 class="text-center text-danger">We are unable to track this order.</h4>
                                         <?php } ?>
                                     </ul>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="ec-vendor-card-header text-center">
+                                <h5>Items In This Order</h5>
+                            </div>
+                            <br>
+                            <div class="ec-vendor-card-body">
+                                <div class="ec-vendor-card-table">
+                                    <table class="table ec-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Item SKU</th>
+                                                <th scope="col">Item Name</th>
+                                                <th scope="col">Item QTY</th>
+                                                <th scope="col">Item Cost</th>
+                                                <th scope="col">Total Cost</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $total_quantity = 0;
+                                            $total_price = 0;
+                                            /* Pull Recent Purchases Made By This User */
+                                            $order_user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
+                                            $orders_sql = mysqli_query(
+                                                $mysqli,
+                                                "SELECT * FROM orders o  
+                                                INNER JOIN products p ON p.product_id = o.order_product_id
+                                                INNER JOIN users u ON u.user_id = o.order_user_id
+                                                INNER JOIN categories c ON c.category_id = p.product_category_id
+                                                WHERE u.user_delete_status = '0' 
+                                                AND c.category_delete_status = '0'
+                                                AND p.product_delete_status = '0'
+                                                AND o.order_delete_status = '0'
+                                                AND u.user_id = '{$order_user_id}'
+                                                AND o.order_code = '{$order_code}'"
+                                            );
+                                            if (mysqli_num_rows($orders_sql) > 0) {
+                                                while ($orders = mysqli_fetch_array($orders_sql)) {
+                                                    /* Sum Number Of Items In The Order */
+                                                    $query = "SELECT COUNT(*)  FROM orders WHERE order_code = '{$orders['order_code']}'";
+                                                    $stmt = $mysqli->prepare($query);
+                                                    $stmt->execute();
+                                                    $stmt->bind_result($items_in_my_order);
+                                                    $stmt->fetch();
+                                                    $stmt->close();
+                                                    /* Compute Quantity And Amount Supposed To Be Paid */
+                                                    $total_quantity += $orders["order_qty"];
+                                                    $total_price += $orders['order_cost'] * $orders['order_qty'];
+                                                    /* DeliverY Fee */
+                                                    $constant_delivery_fee = '1500';
+                                            ?>
+                                                    <tr>
+                                                        <td><span><?php echo $orders['product_sku_code']; ?></span></td>
+                                                        <td><span><?php echo $orders['product_name']; ?></span></td>
+                                                        <td><span><?php echo $orders['order_qty']; ?></span></td>
+                                                        <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
+                                                        <td><span>Ksh <?php echo number_format(($orders['order_cost'] * $orders['order_qty']), 2); ?></span></td>
+                                                    </tr>
+
+                                                <?php  } ?>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Sub Total Payable Amount</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo $total_quantity; ?></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Delivery Fee</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Total Payable Amount</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format(($total_price + $constant_delivery_fee), 2); ?></td>
+                                                </tr>
+
+                                            <?php } else { ?>
+                                                <tr>
+                                                    <th scope="row">No Items In Your Order</th>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

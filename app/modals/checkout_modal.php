@@ -15,7 +15,7 @@
                                 <input type="hidden" name="order_status" value="Placed Orders">
                                 <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
                                 <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
-                                <select name="sale_payment_method" class="form-control">
+                                <select name="order_payment_means" class="form-control">
                                     <option>Select Method</option>
                                     <?php
                                     /* Select Payment Method */

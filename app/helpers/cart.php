@@ -133,10 +133,11 @@ if (isset($_POST['Process_Cart'])) {
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
     $order_user_id = mysqli_real_escape_string($mysqli, $_POST['order_user_id']);
     $order_code = mysqli_real_escape_string($mysqli, $a . $b);
-    $sale_payment_method = $_POST['sale_payment_method']; /* At First Treat Every Payment Method As COD */
+    $order_payment_means = mysqli_real_escape_string($mysqli, $_POST['order_payment_means']); /* At First Treat Every Payment Method As COD */
     $order_date = mysqli_real_escape_string($mysqli, date('Y-m-d'));
     $order_status = mysqli_real_escape_string($mysqli, $_POST['order_status']);
     $order_payment_status = mysqli_real_escape_string($mysqli, 'Pending');
+
 
     /* Populate Items In the Cart Array  */
     foreach ($cart_products as $cart_products) {
@@ -155,8 +156,8 @@ if (isset($_POST['Process_Cart'])) {
 
             /* Persist */
             $update_sql = "UPDATE products SET product_qty_in_stock = '{$new_product_qty}' WHERE product_id = '{$order_product_id}'";
-            $order_sql = "INSERT INTO orders (order_user_id, order_product_id, order_code, order_date, order_qty, order_cost, order_status, order_payment_status, order_estimated_delivery_date)
-            VALUES('{$order_user_id}', '{$order_product_id}','{$order_code}', '{$order_date}', '{$order_qty}', '{$total_order_cost}', '{$order_status}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
+            $order_sql = "INSERT INTO orders (order_user_id, order_product_id, order_payment_means,  order_code, order_date, order_qty, order_cost, order_status, order_payment_status, order_estimated_delivery_date)
+            VALUES('{$order_user_id}', '{$order_product_id}', '{$order_payment_means}', '{$order_code}', '{$order_date}', '{$order_qty}', '{$total_order_cost}', '{$order_status}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
 
             if (mysqli_query($mysqli, $update_sql) && mysqli_query($mysqli, $order_sql)) {
                 /*
@@ -164,9 +165,10 @@ if (isset($_POST['Process_Cart'])) {
             Email user with a confirmation mail that we have received his/her order.
              */
                 $success = "Order $order_code submitted";
+                /* Clear Cart */
+                unset($_SESSION["cart_item"]);
             } else {
-                //$err = "Failed, please try again";
-                echo $order_sql;
+                $err = "Failed, please try again";
             }
         }
     }

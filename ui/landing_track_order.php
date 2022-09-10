@@ -123,11 +123,9 @@ require_once('../app/partials/landing_head.php');
                                     <thead>
                                         <tr>
                                             <th scope="col">ID</th>
-                                            <th scope="col">Image</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Date</th>
-                                            <th scope="col">QTY</th>
-                                            <th scope="col">Price</th>
+                                            <th scope="col">Number Of Items</th>
+                                            <th scope="col">Order Date</th>
+                                            <th scope="col">Estimated Delivery Date</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
@@ -145,25 +143,25 @@ require_once('../app/partials/landing_head.php');
                                             AND c.category_delete_status = '0'
                                             AND p.product_delete_status = '0'
                                             AND o.order_delete_status = '0'
-                                            AND u.user_id = '{$order_user_id}'"
+                                            AND u.user_id = '{$order_user_id}'
+                                            GROUP BY o.order_code"
                                         );
                                         if (mysqli_num_rows($orders_sql) > 0) {
                                             while ($orders = mysqli_fetch_array($orders_sql)) {
-                                                /* Image Directory */
-                                                if ($orders['product_image'] == '') {
-                                                    $product_image_dir = "../public/uploads/products/no_image.png";
-                                                } else {
-                                                    $product_image_dir = "../public/uploads/products/" . $orders['product_image'];
-                                                }
+                                                /* Sum Number Of Items In The Order */
+                                                $query = "SELECT COUNT(*)  FROM orders WHERE order_code = '{$orders['order_code']}'";
+                                                $stmt = $mysqli->prepare($query);
+                                                $stmt->execute();
+                                                $stmt->bind_result($items_in_my_order);
+                                                $stmt->fetch();
+                                                $stmt->close();
                                         ?>
                                                 <tr>
                                                     <th scope="row"><span><?php echo $orders['order_code']; ?></span></th>
-                                                    <td><img class="prod-img" src="<?php echo $product_image_dir; ?>" alt="product image"></td>
-                                                    <td><span><?php echo $orders['product_name']; ?></span></td>
+                                                    <td><span><?php echo $items_in_my_order; ?> Items</span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
-                                                    <td><span><?php echo $orders['order_qty']; ?></span></td>
-                                                    <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
-                                                    <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_id']; ?>">Track</a></span></td>
+                                                    <td><span><?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></span></td>
+                                                    <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track</a></span></td>
                                                 </tr>
                                             <?php  }
                                         } else { ?>
