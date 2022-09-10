@@ -413,13 +413,32 @@ require_once('../app/partials/landing_head.php');
                                                 <?php  } ?>
                                                 <tr>
                                                     <td data-label="Product" class="ec-cart-pro-name">
-                                                        <b>Total Payable Amount</b>
+                                                        <b>Sub Total Payable Amount</b>
                                                     </td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo $total_quantity; ?></span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
                                                     <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
                                                 </tr>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Delivery Fee</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Total Payable Amount</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format(($total_price + $constant_delivery_fee), 2); ?></td>
+                                                </tr>
+
                                             <?php } else { ?>
                                                 <tr>
                                                     <th scope="row">No Items In Your Order</th>
