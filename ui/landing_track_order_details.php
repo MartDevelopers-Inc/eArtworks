@@ -365,6 +365,7 @@ require_once('../app/partials/landing_head.php');
                                                 <th scope="col">Item Name</th>
                                                 <th scope="col">Item QTY</th>
                                                 <th scope="col">Item Cost</th>
+                                                <th scope="col">Total Cost</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -399,7 +400,7 @@ require_once('../app/partials/landing_head.php');
                                                         <td><span><?php echo $orders['product_name']; ?></span></td>
                                                         <td><span><?php echo $orders['order_qty']; ?></span></td>
                                                         <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
-                                                        <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track</a></span></td>
+                                                        <td><span>Ksh <?php echo number_format(($orders['order_cost'] * $orders['order_qty']), 2); ?></span></td>
                                                     </tr>
                                                 <?php  }
                                             } else { ?>
