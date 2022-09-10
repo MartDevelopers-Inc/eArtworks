@@ -155,15 +155,13 @@ require_once('../app/partials/landing_head.php');
                                                 $stmt->bind_result($items_in_my_order);
                                                 $stmt->fetch();
                                                 $stmt->close();
-
-
                                         ?>
                                                 <tr>
                                                     <th scope="row"><span><?php echo $orders['order_code']; ?></span></th>
                                                     <td><span><?php echo $items_in_my_order; ?> Items</span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></span></td>
-                                                    <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_id']; ?>">Track</a></span></td>
+                                                    <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track</a></span></td>
                                                 </tr>
                                             <?php  }
                                         } else { ?>
