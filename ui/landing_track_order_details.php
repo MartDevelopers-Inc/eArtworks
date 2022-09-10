@@ -370,6 +370,8 @@ require_once('../app/partials/landing_head.php');
                                         </thead>
                                         <tbody>
                                             <?php
+                                            $total_quantity = 0;
+                                            $total_price = 0;
                                             /* Pull Recent Purchases Made By This User */
                                             $order_user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
                                             $orders_sql = mysqli_query(
@@ -394,6 +396,11 @@ require_once('../app/partials/landing_head.php');
                                                     $stmt->bind_result($items_in_my_order);
                                                     $stmt->fetch();
                                                     $stmt->close();
+                                                    /* Compute Quantity And Amount Supposed To Be Paid */
+                                                    $total_quantity += $orders["order_qty"];
+                                                    $total_price += $orders['order_cost'] * $orders['order_qty'];
+                                                    /* DeliverY Fee */
+                                                    $constant_delivery_fee = '1500';
                                             ?>
                                                     <tr>
                                                         <td><span><?php echo $orders['product_sku_code']; ?></span></td>
@@ -402,8 +409,18 @@ require_once('../app/partials/landing_head.php');
                                                         <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
                                                         <td><span>Ksh <?php echo number_format(($orders['order_cost'] * $orders['order_qty']), 2); ?></span></td>
                                                     </tr>
-                                                <?php  }
-                                            } else { ?>
+
+                                                <?php  } ?>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                        <b>Total Payable Amount</b>
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo $total_quantity; ?></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
+                                                </tr>
+                                            <?php } else { ?>
                                                 <tr>
                                                     <th scope="row">No Items In Your Order</th>
                                                 </tr>
