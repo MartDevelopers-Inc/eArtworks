@@ -1,5 +1,5 @@
 <!-- Delete Modal -->
-<div class="modal fade" id="delete_order_<?php echo $orders['order_id']; ?>" tabindex="-1" role="dialog">
+<div class="modal fade" id="delete_order_<?php echo $orders['order_code']; ?>" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,7 +13,7 @@
                     </h4>
                     <br>
                     <!-- Hide This -->
-                    <input type="hidden" name="order_id" value="<?php echo $orders['order_id']; ?>">
+                    <input type="hidden" name="order_code" value="<?php echo $orders['order_code']; ?>">
                     <button type="button" class="text-center btn btn-success" data-bs-dismiss="modal">No</button>
                     <button type="submit" class="text-center btn btn-danger" name="Delete_Order">Yes, Delete</button>
                 </div>
@@ -24,7 +24,7 @@
 <!-- End Modal -->
 
 <!-- Update Modal -->
-<div class="modal fade modal-add-contact" id="update_order_<?php echo $orders['order_id']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade modal-add-contact" id="update_order_<?php echo $orders['order_code']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <form method="POST" enctype="multipart/form-data">
@@ -38,7 +38,7 @@
                             <div class="form-group">
                                 <label for="firstName">Order Cost (Ksh)</label>
                                 <input type="number" value="<?php echo $orders['order_cost']; ?>" required class="form-control" name="order_cost">
-                                <input type="hidden" required class="form-control" value="<?php echo $orders['order_id']; ?>" name="order_id">
+                                <input type="hidden" required class="form-control" value="<?php echo $orders['order_code']; ?>" name="order_code">
                             </div>
                         </div>
                         <div class="form-group col-lg-6">
@@ -59,7 +59,7 @@
 <!-- End Modal -->
 
 <!-- Update Order Status -->
-<div class="modal fade" id="update_order_status<?php echo $orders['order_id']; ?>" tabindex="-1" role="dialog">
+<div class="modal fade" id="update_order_status<?php echo $orders['order_code']; ?>" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,7 +73,7 @@
                             <div class="form-group">
                                 <label for="lastName">Order Status</label>
                                 <!-- Hide This -->
-                                <input type="hidden" name="order_id" value="<?php echo $orders['order_id']; ?>">
+                                <input type="hidden" name="order_code" value="<?php echo $orders['order_code']; ?>">
                                 <select type="text" required class="form-control" name="order_status">
                                     <option value="Placed Orders">Order Placed</option>
                                     <option>Awaiting Fullfilment</option>

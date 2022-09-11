@@ -223,12 +223,10 @@ require_once('../app/partials/backoffice_head.php');
                                         <thead>
                                             <tr>
                                                 <th>Order ID</th>
-                                                <th>Product Name</th>
-                                                <th class="d-none d-lg-table-cell">Units</th>
+                                                <th>Customer Details</th>
+                                                <th class="d-none d-lg-table-cell">No Of Products</th>
                                                 <th class="d-none d-lg-table-cell">Order Date</th>
-                                                <th class="d-none d-lg-table-cell">Order Cost</th>
                                                 <th>Status</th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -237,26 +235,39 @@ require_once('../app/partials/backoffice_head.php');
                                             $orders_sql = mysqli_query(
                                                 $mysqli,
                                                 "SELECT * FROM orders o 
+                                                INNER JOIN users u ON u.user_id  = o.order_user_id
                                                 INNER JOIN products p 
                                                 ON p.product_id = o.order_product_id
                                                 WHERE o.order_delete_status = '0'
-                                                ORDER BY order_date ASC"
+                                                GROUP BY order_code
+                                                ORDER BY order_date ASC
+                                                "
                                             );
                                             if (mysqli_num_rows($orders_sql) > 0) {
                                                 while ($orders = mysqli_fetch_array($orders_sql)) {
+
+                                                    /* Count Number Of Items In This Order */
+                                                    $query = "SELECT COUNT(*)  FROM orders WHERE order_code = '{$orders['order_code']}'";
+                                                    $stmt = $mysqli->prepare($query);
+                                                    $stmt->execute();
+                                                    $stmt->bind_result($items_in_my_order);
+                                                    $stmt->fetch();
+                                                    $stmt->close();
                                             ?>
                                                     <tr>
                                                         <td>
-                                                            <a href="backoffice_manage_order?view=<?php echo $orders['order_id']; ?>">
+                                                            <a href="backoffice_manage_order?view=<?php echo $orders['order_code']; ?>">
                                                                 <?php echo $orders['order_code']; ?>
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="text-dark" href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>"><?php echo $orders['product_name']; ?></a>
+                                                            <a class="text-dark" href="backoffice_manage_customer?view=<?php echo $orders['user_id']; ?>">
+                                                                Name: <?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?> <br>
+                                                                Contacts: <?php echo $orders['user_phone_number']; ?>
+                                                            </a>
                                                         </td>
-                                                        <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
+                                                        <td class="d-none d-lg-table-cell"><?php echo $items_in_my_order; ?> Unit(s)</td>
                                                         <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
-                                                        <td class="d-none d-lg-table-cell">Ksh <?php echo number_format($orders['order_cost']); ?></td>
                                                         <td>
                                                             <?php
                                                             if ($orders['order_status'] == 'Placed Orders') { ?>
@@ -403,7 +414,9 @@ require_once('../app/partials/backoffice_head.php');
                                                 </div>
                                                 <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
                                                     <a href="backoffice_manage_product?view=<?php echo $top_product['product_id']; ?>">
-                                                        <h6 class="mb-10px text-dark font-weight-medium"><?php echo $top_product['product_name']; ?></h6>
+                                                        <h6 class="mb-10px text-dark font-weight-medium">
+                                                            <?php echo substr($top_product['product_name'], 0, 30); ?>...
+                                                        </h6>
                                                     </a>
                                                     <p class="float-md-right sale">
                                                         <span class="mr-2"><?php echo $top_product['order_qty']; ?></span>Order Items
