@@ -106,13 +106,13 @@ if (isset($_POST['Add_Order'])) {
 
 /* Update Orders */
 if (isset($_POST['Update_Order'])) {
-    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
     $order_cost  = mysqli_real_escape_string($mysqli, $_POST['order_cost']);
     $order_estimated_delivery_date = mysqli_real_escape_string($mysqli, $_POST['order_estimated_delivery_date']);
 
     /* Persist */
     $sql = "UPDATE orders SET order_cost = '{$order_cost}',  order_estimated_delivery_date = '{$order_estimated_delivery_date}'
-    WHERE order_id ='{$order_id}'";
+    WHERE order_code ='{$order_code}'";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Order Updated";
@@ -123,11 +123,11 @@ if (isset($_POST['Update_Order'])) {
 
 /* Update Order Status */
 if (isset($_POST['Update_Order_Status'])) {
-    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
     $order_status = mysqli_real_escape_string($mysqli, $_POST['order_status']);
 
     /* Persist */
-    $sql  = "UPDATE orders SET order_status = '{$order_status}' WHERE order_id = '{$order_id}'";
+    $sql  = "UPDATE orders SET order_status = '{$order_status}' WHERE order_code = '{$order_code}'";
     if (mysqli_query($mysqli, $sql)) {
         $success = "Order status updated";
     } else {
@@ -137,11 +137,11 @@ if (isset($_POST['Update_Order_Status'])) {
 
 /* Delete Order */
 if (isset($_POST['Delete_Order'])) {
-    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
     $order_delete_status = mysqli_real_escape_string($mysqli, '1');
 
     /* Persist */
-    $sql = "UPDATE orders SET order_delete_status = '{$order_delete_status}' WHERE order_id = '{$order_id}'";
+    $sql = "UPDATE orders SET order_delete_status = '{$order_delete_status}' WHERE order_code = '{$order_code}'";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Order moved to recycle bin";
