@@ -234,7 +234,7 @@ require_once('../app/partials/backoffice_head.php');
                                                 ?>
                                                         <tr>
                                                             <td>
-                                                                <a href="backoffice_manage_order?view=<?php echo $orders['order_id']; ?>">
+                                                                <a href="backoffice_manage_order?view=<?php echo $orders['order_code']; ?>">
                                                                     <?php echo $orders['order_code']; ?>
                                                                 </a>
                                                             </td>
