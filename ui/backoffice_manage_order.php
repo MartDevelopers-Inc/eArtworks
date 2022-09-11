@@ -84,16 +84,12 @@ $product_sql = mysqli_query(
     AND c.category_delete_status = '0'
     AND p.product_delete_status = '0'
     AND o.order_delete_status = '0' 
-    AND o.order_id = '{$get_id}'"
+    AND o.order_code = '{$get_id}'
+    GROUP BY o.order_code"
 );
 if (mysqli_num_rows($product_sql) > 0) {
     while ($product = mysqli_fetch_array($product_sql)) {
-        /* Image Directory */
-        if ($product['product_image'] == '') {
-            $product_photo_directory = "../public/uploads/products/no_image.png";
-        } else {
-            $product_photo_directory = "../public/uploads/products/" . $product['product_image'];
-        }
+
 ?>
 
         <body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
@@ -144,35 +140,6 @@ if (mysqli_num_rows($product_sql) > 0) {
                                 <div class="row">
                                     <div class="col-lg-4 col-xl-4">
                                         <div class="profile-content-left profile-left-spacing">
-                                            <div class="text-center widget-profile px-0 border-0">
-                                                <div class="card-img mx-auto rounded-circle">
-                                                    <img src="<?php echo $product_photo_directory; ?>" alt="user image">
-                                                </div>
-                                                <div class="card-body">
-                                                    <h4 class="py-2 text-dark"><?php echo $product['product_name']; ?></h4>
-                                                    <p><?php echo $product['product_sku_code']; ?></p>
-                                                </div>
-                                            </div>
-                                            <hr>
-                                            <div class="d-flex justify-content-between ">
-                                                <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">Category</h6>
-                                                    <p><?php echo $product['category_name']; ?></p>
-                                                </div>
-
-                                                <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">Quantity</h6>
-                                                    <p><?php echo $product['order_qty']; ?></p>
-                                                </div>
-
-                                                <div class="text-center pb-4">
-                                                    <h6 class="text-dark pb-2">Price</h6>
-                                                    <p>Ksh <?php echo number_format($product['order_cost'], 2); ?></p>
-                                                </div>
-                                            </div>
-
-                                            <hr class="w-100">
-
                                             <div class="contact-info pt-4">
                                                 <h5 class="text-dark">Customer Information</h5>
                                                 <p class="text-dark font-weight-medium pt-24px mb-2">Names</p>
@@ -192,7 +159,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                                         <div class="profile-content-right profile-right-spacing py-5">
                                             <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myProfileTab" role="tablist">
                                                 <li class="nav-item" role="presentation">
-                                                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Details</button>
+                                                    <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Items In The Order Details</button>
                                                 </li>
 
                                                 <li class="nav-item" role="presentation">
@@ -204,19 +171,91 @@ if (mysqli_num_rows($product_sql) > 0) {
 
                                                 <div class="tab-pane fade show active" id="profile" role="tabpanel">
                                                     <div class="tab-pane-content mt-5">
-                                                        <h5 class="text-dark">Product details</h5>
-                                                        <?php echo $product['product_details']; ?>
-                                                        <hr>
-                                                        <h5 class="text-dark">Order details</h5>
-                                                        Order Date Made: <?php echo date('d M Y', strtotime($product['order_date'])); ?><br>
-                                                        Estimated Delivery Date: <?php echo date('d M Y', strtotime($product['order_estimated_delivery_date'])); ?> <br>
-                                                        Order Payment Status:
-                                                        <?php
-                                                        if ($product['order_payment_status'] == 'Pending') { ?>
-                                                            <span class="badge badge-danger">Payment Pending</span>
-                                                        <?php } else { ?>
-                                                            <span class="badge badge-success">Order Paid</span>
-                                                        <?php } ?>
+                                                        <table class="table ec-table">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Item SKU</th>
+                                                                    <th scope="col">Item Name</th>
+                                                                    <th scope="col">Item QTY</th>
+                                                                    <th scope="col">Item Cost</th>
+                                                                    <th scope="col">Total Cost</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <?php
+                                                                $total_quantity = 0;
+                                                                $total_price = 0;
+                                                                $orders_sql = mysqli_query(
+                                                                    $mysqli,
+                                                                    "SELECT * FROM orders o  
+                                                                    INNER JOIN products p ON p.product_id = o.order_product_id
+                                                                    INNER JOIN users u ON u.user_id = o.order_user_id
+                                                                    INNER JOIN categories c ON c.category_id = p.product_category_id
+                                                                    WHERE u.user_delete_status = '0' 
+                                                                    AND c.category_delete_status = '0'
+                                                                    AND p.product_delete_status = '0'
+                                                                    AND o.order_delete_status = '0'
+                                                                    AND o.order_code = '{$get_id}'"
+                                                                );
+                                                                if (mysqli_num_rows($orders_sql) > 0) {
+                                                                    while ($orders = mysqli_fetch_array($orders_sql)) {
+                                                                        /* Sum Number Of Items In The Order */
+                                                                        $query = "SELECT COUNT(*)  FROM orders WHERE order_code = '{$orders['order_code']}'";
+                                                                        $stmt = $mysqli->prepare($query);
+                                                                        $stmt->execute();
+                                                                        $stmt->bind_result($items_in_my_order);
+                                                                        $stmt->fetch();
+                                                                        $stmt->close();
+                                                                        /* Compute Quantity And Amount Supposed To Be Paid */
+                                                                        $total_quantity += $orders["order_qty"];
+                                                                        $total_price += $orders['order_cost'] * $orders['order_qty'];
+                                                                        /* DeliverY Fee */
+                                                                        $constant_delivery_fee = '1500';
+                                                                ?>
+                                                                        <tr>
+                                                                            <td><span><?php echo $orders['product_sku_code']; ?></span></td>
+                                                                            <td><span><?php echo $orders['product_name']; ?></span></td>
+                                                                            <td><span><?php echo $orders['order_qty']; ?></span></td>
+                                                                            <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
+                                                                            <td><span>Ksh <?php echo number_format(($orders['order_cost'] * $orders['order_qty']), 2); ?></span></td>
+                                                                        </tr>
+
+                                                                    <?php  } ?>
+                                                                    <tr>
+                                                                        <td data-label="Product" class="ec-cart-pro-name">
+                                                                            <b>Sub Total Payable Amount</b>
+                                                                        </td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo $total_quantity; ?></span></td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td data-label="Product" class="ec-cart-pro-name">
+                                                                            <b>Delivery Fee</b>
+                                                                        </td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($constant_delivery_fee, 2); ?></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td data-label="Product" class="ec-cart-pro-name">
+                                                                            <b>Total Payable Amount</b>
+                                                                        </td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                                        <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format(($total_price + $constant_delivery_fee), 2); ?></td>
+                                                                    </tr>
+
+                                                                <?php } else { ?>
+                                                                    <tr>
+                                                                        <th scope="row">No Items In Your Order</th>
+                                                                    </tr>
+                                                                <?php } ?>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
 
