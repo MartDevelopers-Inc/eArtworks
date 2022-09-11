@@ -227,7 +227,6 @@ require_once('../app/partials/backoffice_head.php');
                                                 <th class="d-none d-lg-table-cell">No Of Products</th>
                                                 <th class="d-none d-lg-table-cell">Order Date</th>
                                                 <th>Status</th>
-                                                <th></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -248,7 +247,12 @@ require_once('../app/partials/backoffice_head.php');
                                                 while ($orders = mysqli_fetch_array($orders_sql)) {
 
                                                     /* Count Number Of Items In This Order */
-                                                    
+                                                    $query = "SELECT COUNT(*)  FROM orders WHERE order_code = '{$orders['order_code']}'";
+                                                    $stmt = $mysqli->prepare($query);
+                                                    $stmt->execute();
+                                                    $stmt->bind_result($items_in_my_order);
+                                                    $stmt->fetch();
+                                                    $stmt->close();
                                             ?>
                                                     <tr>
                                                         <td>
@@ -257,14 +261,13 @@ require_once('../app/partials/backoffice_head.php');
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="text-dark" href="backoffice_manage_product?view=<?php echo $orders['user_id']; ?>">
-                                                                Name: <?php echo $orders['user_full_names']; ?> <br>
+                                                            <a class="text-dark" href="backoffice_manage_customer?view=<?php echo $orders['user_id']; ?>">
+                                                                Name: <?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?> <br>
                                                                 Contacts: <?php echo $orders['user_phone_number']; ?>
                                                             </a>
                                                         </td>
-                                                        <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
+                                                        <td class="d-none d-lg-table-cell"><?php echo $items_in_my_order; ?> Unit(s)</td>
                                                         <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
-                                                        <td class="d-none d-lg-table-cell">Ksh <?php echo number_format($orders['order_cost']); ?></td>
                                                         <td>
                                                             <?php
                                                             if ($orders['order_status'] == 'Placed Orders') { ?>
