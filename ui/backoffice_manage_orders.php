@@ -193,12 +193,10 @@ require_once('../app/partials/backoffice_head.php');
                                         <table id="responsive-data-table" class="table">
                                             <thead>
                                                 <tr>
-                                                    <th>Image</th>
-                                                    <th>Product</th>
-                                                    <th>Customer</th>
-                                                    <th>QTY</th>
-                                                    <th>Price</th>
-                                                    <th>Status</th>
+                                                    <th>Order Code</th>
+                                                    <th>Customer Details</th>
+                                                    <th>Order Items</th>
+                                                    <th>Order Status</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -214,7 +212,8 @@ require_once('../app/partials/backoffice_head.php');
                                                     WHERE u.user_delete_status = '0' 
                                                     AND c.category_delete_status = '0'
                                                     AND p.product_delete_status = '0'
-                                                    AND o.order_delete_status = '0'"
+                                                    AND o.order_delete_status = '0'
+                                                    GROUP BY o.order_code"
                                                 );
                                                 if (mysqli_num_rows($orders_sql) > 0) {
                                                     while ($orders = mysqli_fetch_array($orders_sql)) {
@@ -224,21 +223,26 @@ require_once('../app/partials/backoffice_head.php');
                                                         } else {
                                                             $image_dir = "../public/uploads/products/" . $orders['product_image'];
                                                         }
+
+                                                        /* Count Number Of Items In Order */
+                                                        $query = "SELECT COUNT(*)  FROM orders WHERE order_code = '{$orders['order_code']}'";
+                                                        $stmt = $mysqli->prepare($query);
+                                                        $stmt->execute();
+                                                        $stmt->bind_result($items_in_my_order);
+                                                        $stmt->fetch();
+                                                        $stmt->close();
                                                 ?>
                                                         <tr>
-                                                            <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
                                                             <td>
-                                                                <a href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>" class="text-dark">
-                                                                    SKU: <?php echo $orders['product_sku_code']; ?><br>
-                                                                    Name: <?php echo $orders['product_name']; ?>
+                                                                <a href="backoffice_manage_order?view=<?php echo $orders['order_id']; ?>">
+                                                                    <?php echo $orders['order_code']; ?>
                                                                 </a>
                                                             </td>
                                                             <td>
                                                                 Name: <?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?><br>
                                                                 Phone: <?php echo $orders['user_phone_number']; ?>
                                                             </td>
-                                                            <td><?php echo $orders['order_qty']; ?></td>
-                                                            <td>Ksh <?php echo number_format($orders['order_cost'], 2); ?></td>
+                                                            <td><?php echo $items_in_my_order; ?> Items</td>
                                                             <td>
                                                                 <?php
                                                                 if ($orders['order_status'] == 'Placed Orders') { ?>
