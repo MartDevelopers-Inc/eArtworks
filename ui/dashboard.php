@@ -414,7 +414,9 @@ require_once('../app/partials/backoffice_head.php');
                                                 </div>
                                                 <div class="col-lg-9 col-md-9 col-10 media-body align-self-center ec-pos">
                                                     <a href="backoffice_manage_product?view=<?php echo $top_product['product_id']; ?>">
-                                                        <h6 class="mb-10px text-dark font-weight-medium"><?php echo $top_product['product_name']; ?></h6>
+                                                        <h6 class="mb-10px text-dark font-weight-medium">
+                                                            <?php echo substr($top_product['product_name'], 0, 30); ?>...
+                                                        </h6>
                                                     </a>
                                                     <p class="float-md-right sale">
                                                         <span class="mr-2"><?php echo $top_product['order_qty']; ?></span>Order Items
