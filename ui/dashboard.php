@@ -223,10 +223,9 @@ require_once('../app/partials/backoffice_head.php');
                                         <thead>
                                             <tr>
                                                 <th>Order ID</th>
-                                                <th>Product Name</th>
-                                                <th class="d-none d-lg-table-cell">Units</th>
+                                                <th>Customer Details</th>
+                                                <th class="d-none d-lg-table-cell">No Of Products</th>
                                                 <th class="d-none d-lg-table-cell">Order Date</th>
-                                                <th class="d-none d-lg-table-cell">Order Cost</th>
                                                 <th>Status</th>
                                                 <th></th>
                                             </tr>
@@ -237,13 +236,19 @@ require_once('../app/partials/backoffice_head.php');
                                             $orders_sql = mysqli_query(
                                                 $mysqli,
                                                 "SELECT * FROM orders o 
+                                                INNER JOIN users u ON u.user_id  = o.order_user_id
                                                 INNER JOIN products p 
                                                 ON p.product_id = o.order_product_id
                                                 WHERE o.order_delete_status = '0'
-                                                ORDER BY order_date ASC"
+                                                GROUP BY order_code
+                                                ORDER BY order_date ASC
+                                                "
                                             );
                                             if (mysqli_num_rows($orders_sql) > 0) {
                                                 while ($orders = mysqli_fetch_array($orders_sql)) {
+
+                                                    /* Count Number Of Items In This Order */
+                                                    
                                             ?>
                                                     <tr>
                                                         <td>
@@ -252,7 +257,10 @@ require_once('../app/partials/backoffice_head.php');
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a class="text-dark" href="backoffice_manage_product?view=<?php echo $orders['product_id']; ?>"><?php echo $orders['product_name']; ?></a>
+                                                            <a class="text-dark" href="backoffice_manage_product?view=<?php echo $orders['user_id']; ?>">
+                                                                Name: <?php echo $orders['user_full_names']; ?> <br>
+                                                                Contacts: <?php echo $orders['user_phone_number']; ?>
+                                                            </a>
                                                         </td>
                                                         <td class="d-none d-lg-table-cell"><?php echo $orders['order_qty']; ?> Unit(s)</td>
                                                         <td class="d-none d-lg-table-cell"><?php echo date('M, d Y', strtotime($orders['order_date'])); ?></td>
