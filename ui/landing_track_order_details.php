@@ -445,27 +445,68 @@ require_once('../app/partials/landing_head.php');
                                                     <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
                                                     <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format(($total_price + $constant_delivery_fee), 2); ?></td>
                                                 </tr>
-                                                <tr>
-                                                    <td data-label="Product" class="ec-cart-pro-name">
-                                                    </td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
-                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
-                                                    <td data-label="Total" class="ec-cart-pro-subtotal">
-                                                        <?php
-                                                        if ($payment_status == 'Pending') {
-                                                        ?>
+                                                <?php
+                                                if ($payment_status == 'Pending') {
+                                                ?>
+                                                    <tr>
+                                                        <td data-label="Product" class="ec-cart-pro-name">
+                                                        </td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                        <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                        <td data-label="Total" class="ec-cart-pro-subtotal">
                                                             <span class="tbl-btn"><button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal_<?php echo $order_code; ?>">Add Payment</button></span>
-                                                        <?php } ?>
-                                                    </td>
-                                                </tr>
-
-                                            <?php
+                                                        </td>
+                                                    </tr>
+                                                <?php }
                                                 /* Include Payments Modal */
                                                 include('../app/modals/payment_modal.php');
                                             } else { ?>
                                                 <tr>
                                                     <th scope="row">No Items In Your Order</th>
+                                                </tr>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <br><br><br>
+                            <div class="ec-vendor-card-header text-center">
+                                <h5>Order Payment Details</h5>
+                            </div>
+                            <br>
+                            <div class="ec-vendor-card-body">
+                                <div class="ec-vendor-card-table">
+                                    <table class="table ec-table">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Payment Ref</th>
+                                                <th scope="col">Payment Means</th>
+                                                <th scope="col">Payment Amount</th>
+                                                <th scope="col">Payment Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $payment_sql = mysqli_query(
+                                                $mysqli,
+                                                "SELECT * FROM payments p
+                                                INNER JOIN payment_means pm ON pm.means_id = p.payment_means_id
+                                                WHERE p.payment_order_code = '{$order_code}'"
+                                            );
+                                            if (mysqli_num_rows($payment_sql) > 0) {
+                                                while ($payment = mysqli_fetch_array($payment_sql)) {
+                                            ?>
+                                                    <tr>
+                                                        <td><span><?php echo $payment['payment_ref_code']; ?></span></td>
+                                                        <td><span><?php echo $payment['means_code'] . ' ' . $payment['means_name']; ?></span></td>
+                                                        <td><span><?php echo number_format($payment['payment_amount'], 2); ?></span></td>
+                                                        <td><span> <?php echo date('d M Y g:ia', strtotime($payment['payment_date'])); ?></span></td>
+                                                    </tr>
+                                                <?php  }
+                                            } else { ?>
+                                                <tr>
+                                                    <th scope="row">We Can't Find Any Payment Records Related To This Order</th>
                                                 </tr>
                                             <?php } ?>
                                         </tbody>
