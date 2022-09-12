@@ -69,13 +69,15 @@
 if (isset($_POST['Add_Payment'])) {
     /* Add Extra Payment Methods Handlers Here */
     $payment_method_name = mysqli_real_escape_string($mysqli, $_POST['payment_method_name']);
+    $payment_order_code = mysqli_real_escape_string($mysqli, $_POST['payment_order_code']);
+    $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
+    $payment_amount = mysqli_real_escape_string($mysqli, $_POST['payment_amount']);
+    $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
+    $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
+    $user_email = mysqli_real_escape_string($mysqli, $_SESSION['user_email']);
+    $user_name = mysqli_real_escape_string($mysqli, $_POST['user_name']);
     /* Handle Cash On Delivery Payment Method */
-    if ($payment_method_name == 'Cash On Delivery') {
-        $payment_order_code = mysqli_real_escape_string($mysqli, $_POST['payment_order_code']);
-        $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
-        $payment_amount = mysqli_real_escape_string($mysqli, $_POST['payment_amount']);
-        $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
-        $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
+    if ($payment_method_name == 'Cash') {
 
         /* Persist */
         $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
@@ -88,8 +90,63 @@ if (isset($_POST['Add_Payment'])) {
         } else {
             $err = "Failed, please try again";
         }
+    } else if ($payment_method_name == 'Mpesa') {
+        /* Handle MPESA Payment Logic Here */
+    } else if ($payment_method_name == 'Debit / Credit Card') {
+        /* Process Flutterwave Payment API */
+        $request = [
+            'tx_ref' => time(), /* Just Timestamp Every Transaction */
+            'amount' => $payment_amount,
+            'currency' => 'KES',
+            'payment_options' => 'card',
+            /* Update This URL To Match Your Needs */
+            'redirect_url' => '',
+            'customer' => [
+                'email' => $user_email,
+                'name' => $user_name,
+            ],
+            'meta' => [
+                'price' => $total_cost
+            ],
+            'customizations' => [
+                'title' => 'Order ' . ' ' . $payment_order_code . ' Payment',
+                'description' => $user_name . 'Order Payment'
+            ]
+        ];
+
+        /* Call Flutterwave Endpoint */
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api.flutterwave.com/v3/payments',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($request),
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X', /* To Do : Never hard code this bearer */
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        $res = json_decode($response);
+        if ($res->status == 'success') {
+            /* $link = $res->data->link;
+            header('Location: ' . $link); */
+            $success = "Payment Posted";
+        } else {
+            $err =  'We can not process your payment';
+        }
     } else {
-        $err = "Failed!, Please try again";
+        $err = "Payment means is not supported yet";
     }
 }
 

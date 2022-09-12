@@ -11,7 +11,7 @@
                     <div class="row mb-2">
                         <div class="col-lg-12">
                             <div class="form-group">
-                                <label for="firstName">Are You Sure You Want To Checkout This Order</label>
+                                <label for="firstName">Are You Sure You Want To Checkout This Order?</label>
                                 <input type="hidden" name="order_status" value="Placed Orders">
                                 <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
                                 <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
