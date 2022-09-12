@@ -137,6 +137,7 @@ if (isset($_POST['Process_Cart'])) {
     $order_date = mysqli_real_escape_string($mysqli, date('Y-m-d'));
     $order_status = mysqli_real_escape_string($mysqli, $_POST['order_status']);
     $order_payment_status = mysqli_real_escape_string($mysqli, 'Pending');
+    $user_email = mysqli_real_escape_string($mysqli, $_POST['user_email']);
 
 
     /* Populate Items In the Cart Array  */
