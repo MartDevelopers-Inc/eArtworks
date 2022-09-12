@@ -16,7 +16,8 @@
                                 <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
                                 <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
                                 <input type="hidden" name="user_email" value="<?php echo $_SESSION['user_email']; ?>">
-                                <select name="order_payment_means" class="form-control">
+                                <input type="hidden" name="payment_method_name" id="PaymentMethodName">
+                                <select name="order_payment_means" class="form-control" id="PaymentMeansID" onchange="GetPaymentMeansName(this.value)">
                                     <option>Select Method</option>
                                     <?php
                                     /* Select Payment Method */
