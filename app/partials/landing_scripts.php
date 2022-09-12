@@ -32,7 +32,7 @@
         window.history.replaceState(null, null, window.location.href);
     }
     /* Load Ajax */
-    function getBookId(val)
+    function GetPaymentMeansName(val)
     {
         $.ajax({
             type: "POST",
