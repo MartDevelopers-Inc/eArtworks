@@ -75,7 +75,8 @@ include('../app/settings/fluttterwave_api_configs.php');
 if (isset($_GET['status'])) {
     /* Check Payment Status */
     if ($_GET['status'] == 'cancelled') {
-        header("Location: landing_track_order_details?view=$payment_order_code");
+        $order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
+        header("Location: landing_track_order_details?view=$order_code");
     } elseif ($_GET['status'] == 'successful') {
         $txid = $_GET['transaction_id'];
 
@@ -109,7 +110,6 @@ if (isset($_GET['status'])) {
                 $payment_ref_code = $res->data->tx_ref;
                 $payment_amount = $amountPaid;
                 $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
-                $order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
                 $means_id = mysqli_real_escape_string($mysqli, $_GET['means']);
 
                 $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
