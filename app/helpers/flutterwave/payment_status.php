@@ -65,71 +65,29 @@
  *
  */
 
-/* Add Payment */
-if (isset($_POST['Add_Payment'])) {
-    /* Add Extra Payment Methods Handlers Here */
-    $payment_method_name = mysqli_real_escape_string($mysqli, $_POST['payment_method_name']);
-    $payment_order_code = mysqli_real_escape_string($mysqli, $_POST['payment_order_code']);
-    $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
-    $payment_amount = mysqli_real_escape_string($mysqli, $_POST['payment_amount']);
-    $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
-    $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
-    $user_email = mysqli_real_escape_string($mysqli, $_SESSION['user_email']);
-    $user_name = mysqli_real_escape_string($mysqli, $_POST['user_name']);
-    /* Handle Cash On Delivery Payment Method */
-    if ($payment_method_name == 'Cash') {
+session_start();
+include('../../settings/config.php');
 
-        /* Persist */
-        $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
-        VALUES('{$payment_order_code}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
+if (isset($_GET['status'])) {
+    //* check payment status
+    if ($_GET['status'] == 'cancelled') {
+        header("Location: landing_track_order_details?view=$payment_order_code");
+    } elseif ($_GET['status'] == 'successful') {
+        $txid = $_GET['transaction_id'];
 
-        $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_code = '{$payment_order_code}'";
-
-        if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_status)) {
-            $success = "Payment reference $payment_ref_code confirmed";
-        } else {
-            $err = "Failed, please try again";
-        }
-    } else if ($payment_method_name == 'Mpesa') {
-        /* Handle MPESA Payment Logic Here */
-    } else if ($payment_method_name == 'Debit / Credit Card') {
-        /* Process Flutterwave Payment API */
-        $request = [
-            'tx_ref' => time(), /* Just Timestamp Every Transaction */
-            'amount' => $payment_amount,
-            'currency' => 'KES',
-            'payment_options' => 'card',
-            /* Update This URL To Match Your Needs */
-            'redirect_url' => 'http://127.0.0.1/eArtworks/ui/payment_response?order=' . $payment_order_code . '&means=' . $payment_means_id,
-            'customer' => [
-                'email' => $user_email,
-                'name' => $user_name,
-            ],
-            'meta' => [
-                'price' => $total_cost
-            ],
-            'customizations' => [
-                'title' => 'Order ' . ' ' . $payment_order_code . ' Payment',
-                'description' => $user_name . 'Order Payment'
-            ]
-        ];
-
-        /* Call Flutterwave Endpoint */
         $curl = curl_init();
-
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api.flutterwave.com/v3/payments',
+            CURLOPT_URL => "https://api.flutterwave.com/v3/transactions/{$txid}/verify",
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
+            CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 0,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($request),
+            CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X', /* To Do : Never hard code this bearer */
-                'Content-Type: application/json'
+                "Content-Type: application/json",
+                "Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X"/* Do Not Hard Code This Bearer */
             ),
         ));
 
@@ -138,16 +96,41 @@ if (isset($_POST['Add_Payment'])) {
         curl_close($curl);
 
         $res = json_decode($response);
-        if ($res->status == 'success') {
-            $link = $res->data->link;
-            header('Location: ' . $link);
+        if ($res->status) {
+            $amountPaid = $res->data->charged_amount;
+            $amountToPay = $res->data->meta->price;
+            if ($amountPaid >= $amountToPay) {
+
+                /* Insert This Payment Details To Payment*/
+                $payment_ref_code = $res->data->tx_ref;
+                $payment_amount = $amountPaid;
+                $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
+                $order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
+                $means_id = mysqli_real_escape_string($mysqli, $_GET['means']);
+
+                $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
+                VALUES('{$order_code}', '{$means_id}', '{$payment_amount}', '$payment_ref_code')";
+
+                $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_code = '{$payment_order_code}'";
+
+                if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_status)) {
+                    $_SESSION['success'] = 'Payment Ref ' . $payment_ref_code . 'Posted';
+                    header('Location: landing_track_order_details?view=' . $order_code);
+                    exit;
+                } else {
+                    $_SESSION['err'] = 'Failed to persist transaction details';
+                    header('Location: landing_track_order_details?view=' . $order_code);
+                    exit;
+                }
+            } else {
+                $_SESSION['err'] = 'We are having problem processing your payment';
+                header('Location: landing_track_order_details?view=' . $order_code);
+                exit;
+            }
         } else {
-            $err =  'We can not process your payment';
+            $_SESSION['err'] = 'Can not process payment, please use MPESA payment method';
+            header('Location: landing_track_order_details?view=' . $order_code);
+            exit;
         }
-    } else {
-        $err = "Payment means is not supported yet";
     }
 }
-
- /* Update Patment */
- /* Delete */

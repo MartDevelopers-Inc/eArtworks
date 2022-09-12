@@ -42,5 +42,11 @@
         $success = $_SESSION['success'];
         unset($_SESSION['success']);
     }
+    if (isset($_SESSION['err'])) {
+        $err = $_SESSION['err'];
+        unset($_SESSION['err']);
+    }
+
+
     ?>
 </head>
