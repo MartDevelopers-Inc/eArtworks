@@ -64,7 +64,6 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
-
 /* Add Payment */
 if (isset($_POST['Add_Payment'])) {
     /* Add Extra Payment Methods Handlers Here */
@@ -128,7 +127,7 @@ if (isset($_POST['Add_Payment'])) {
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode($request),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X', /* To Do : Never hard code this bearer */
+                'Authorization: Bearer ' . $flutterwave_keys, /* To Do : Never hard code this bearer */
                 'Content-Type: application/json'
             ),
         ));

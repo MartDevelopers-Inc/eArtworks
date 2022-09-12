@@ -68,6 +68,7 @@ session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 require_once('../app/settings/codeGen.php');
+require_once('../app/settings/fluttterwave_api_configs.php');
 checklogin();
 require_once('../app/helpers/payments.php');
 require_once('../app/partials/landing_head.php');

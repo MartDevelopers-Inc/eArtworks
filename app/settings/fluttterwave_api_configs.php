@@ -66,75 +66,17 @@
  */
 
 
-/* Global Variables */
+include('config.php');
 
-session_start();
-include('../app/settings/config.php');
-include('../app/settings/fluttterwave_api_configs.php');
-
-if (isset($_GET['status'])) {
-    /* Check Payment Status */
-    if ($_GET['status'] == 'cancelled') {
-        header("Location: landing_track_order_details?view=$payment_order_code");
-    } elseif ($_GET['status'] == 'successful') {
-        $txid = $_GET['transaction_id'];
-
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "https://api.flutterwave.com/v3/transactions/{$txid}/verify",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "GET",
-            CURLOPT_HTTPHEADER => array(
-                "Content-Type: application/json",
-                "Authorization: Bearer $flutterwave_keys"
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $res = json_decode($response);
-        if ($res->status) {
-            $amountPaid = $res->data->charged_amount;
-            $amountToPay = $res->data->meta->price;
-            if ($amountPaid >= $amountToPay) {
-
-                /* Insert This Payment Details To Payment*/
-                $payment_ref_code = $res->data->tx_ref;
-                $payment_amount = $amountPaid;
-                $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
-                $order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
-                $means_id = mysqli_real_escape_string($mysqli, $_GET['means']);
-
-                $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
-                VALUES('{$order_code}', '{$means_id}', '{$payment_amount}', '$payment_ref_code')";
-
-                $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_code = '{$order_code}'";
-
-                if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_status)) {
-                    $_SESSION['success'] = 'Payment Ref ' . $payment_ref_code . ' Posted';
-                    header('Location: landing_track_order_details?view=' . $order_code);
-                    exit;
-                } else {
-                    $_SESSION['err'] = 'Failed to persist transaction details';
-                    header('Location: landing_track_order_details?view=' . $order_code);
-                    exit;
-                }
-            } else {
-                $_SESSION['err'] = 'We are having problem processing your payment';
-                header('Location: landing_track_order_details?view=' . $order_code);
-                exit;
-            }
-        } else {
-            $_SESSION['err'] = 'Can not process payment, please use MPESA payment method';
-            header('Location: landing_track_order_details?view=' . $order_code);
-            exit;
-        }
+/* Get All APIs */
+$flutterwave = mysqli_query(
+    $mysqli,
+    "SELECT * FROM thirdparty_apis WHERE api_name = 'Flutterwave Rave API'"
+);
+if (mysqli_num_rows($flutterwave) > 0) {
+    while ($flutterwave_auth = mysqli_fetch_array($flutterwave)) {
+        $flutterwave_keys = $flutterwave_auth['api_token'];
+        /* Push To Global */
+        global $flutterwave_keys;
     }
 }
