@@ -111,6 +111,7 @@ if (isset($_GET['status'])) {
                 $payment_amount = $amountPaid;
                 $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
                 $means_id = mysqli_real_escape_string($mysqli, $_GET['means']);
+                $order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
 
                 $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
                 VALUES('{$order_code}', '{$means_id}', '{$payment_amount}', '$payment_ref_code')";
