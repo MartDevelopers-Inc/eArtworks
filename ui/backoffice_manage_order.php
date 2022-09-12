@@ -276,9 +276,10 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                 $payments_sql = mysqli_query(
                                                                     $mysqli,
                                                                     "SELECT * FROM payments p
-                                                                    INNER JOIN orders o ON order_id = p.payment_order_id
+                                                                    INNER JOIN orders o ON order_code = p.payment_order_code
                                                                     INNER JOIN payment_means pm ON pm.means_id = p.payment_means_id
-                                                                    WHERE p.payment_order_id = '{$get_id}'"
+                                                                    WHERE p.payment_order_code = '{$get_id}'
+                                                                    GROUP BY p.payment_order_code"
                                                                 );
                                                                 if (mysqli_num_rows($payments_sql) > 0) {
                                                                     while ($payment = mysqli_fetch_array($payments_sql)) {
