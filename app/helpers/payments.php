@@ -66,23 +66,22 @@
  */
 
 /* Add Payment */
-if (isset($_POST['Add_Order_Payment'])) {
+if (isset($_POST['Add_Payment'])) {
     /* Add Extra Payment Methods Handlers Here */
     $payment_method_name = mysqli_real_escape_string($mysqli, $_POST['payent_method_means_name']);
     /* Handle Cash On Delivery Payment Method */
     if ($payment_method_name == 'Cash On Delivery') {
-        $payment_order_id = mysqli_real_escape_string($mysqli, $_POST['payment_order_id']);
+        $payment_order_code = mysqli_real_escape_string($mysqli, $_POST['payment_order_code']);
         $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
         $payment_amount = mysqli_real_escape_string($mysqli, $_POST['payment_amount']);
         $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
         $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
-        $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
 
         /* Persist */
-        $sql = "INSERT INTO payments (payment_order_id, payment_means_id, payment_amount, payment_ref_code) 
-        VALUES('{$payments_order_id}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
+        $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
+        VALUES('{$payment_order_code}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
 
-        $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_id = '{$order_id}'";
+        $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_code = '{$payment_order_code}'";
 
         if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_status)) {
             $success = "Payment reference $payment_ref_code confirmed";

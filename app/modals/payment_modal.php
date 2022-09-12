@@ -12,12 +12,12 @@
                         <div class="col-lg-12">
                             <div class="form-group">
                                 <label for="firstName">Pay your order with:</label>
-                                <input type="hidden" name="order_status" value="Placed Orders">
-                                <input type="hidden" name="order_estimated_delivery_date" value="<?php echo date('Y-m-d', $delivery_date); ?>">
-                                <input type="hidden" name="order_user_id" value="<?php echo $_SESSION['user_id']; ?>">
+                                <input type="hidden" name="order_code" value="<?php echo $_GET['view']; ?>">
+                                <input type="hidden" name="payment_amount" value="<?php echo ($total_price + $constant_delivery_fee); ?>">
+                                <input type="hidden" name="payment_ref_code" value="<?php echo $paycode; ?>">
                                 <input type="hidden" name="user_email" value="<?php echo $_SESSION['user_email']; ?>">
                                 <input type="hidden" name="payment_method_name" id="PaymentMethodName">
-                                <select name="order_payment_means" class="form-control" id="PaymentMeansID" onchange="GetPaymentMeansName(this.value)">
+                                <select name="payment_means_id" class="form-control" id="PaymentMeansID" onchange="GetPaymentMeansName(this.value)">
                                     <option>Select Method</option>
                                     <?php
                                     /* Select Payment Method */
