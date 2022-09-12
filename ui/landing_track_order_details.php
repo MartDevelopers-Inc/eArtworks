@@ -385,7 +385,8 @@ require_once('../app/partials/landing_head.php');
                                                 AND p.product_delete_status = '0'
                                                 AND o.order_delete_status = '0'
                                                 AND u.user_id = '{$order_user_id}'
-                                                AND o.order_code = '{$order_code}'"
+                                                AND o.order_code = '{$order_code}'
+                                                "
                                             );
                                             if (mysqli_num_rows($orders_sql) > 0) {
                                                 while ($orders = mysqli_fetch_array($orders_sql)) {
