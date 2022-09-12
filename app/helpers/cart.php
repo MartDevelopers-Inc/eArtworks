@@ -159,11 +159,10 @@ if (isset($_POST['Process_Cart'])) {
             $order_sql = "INSERT INTO orders (order_user_id, order_product_id, order_payment_means,  order_code, order_date, order_qty, order_cost, order_status, order_payment_status, order_estimated_delivery_date)
             VALUES('{$order_user_id}', '{$order_product_id}', '{$order_payment_means}', '{$order_code}', '{$order_date}', '{$order_qty}', '{$total_order_cost}', '{$order_status}', '{$order_payment_status}', '{$order_estimated_delivery_date}')";
 
+            /* Order Status Mailer */
+            include('../app/mailers/order_mailer.php');
             if (mysqli_query($mysqli, $update_sql) && mysqli_query($mysqli, $order_sql)) {
-                /*
-            -> To do
-            Email user with a confirmation mail that we have received his/her order.
-             */
+
                 $success = "Order $order_code submitted";
                 /* Clear Cart */
                 unset($_SESSION["cart_item"]);
