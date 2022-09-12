@@ -292,7 +292,7 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                 <tbody>
                                                                                                                     <tr style="vertical-align: top;" valign="top">
                                                                                                                         <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Two Factor </strong></h1>
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Order </strong></h1>
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </tbody>
@@ -301,7 +301,7 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                 <tbody>
                                                                                                                     <tr style="vertical-align: top;" valign="top">
                                                                                                                         <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px 0px 10px 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong>Order ' . $order_code . ' Confirmed.</strong></h1>
+                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;"><strong> #' . $order_code . ' Confirmed.</strong></h1>
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </tbody>
@@ -314,7 +314,7 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                                 <div style="line-height: 1.8; font-size: 12px; color: #848484; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; mso-line-height-alt: 22px;">
                                                                                                                                     <p style="margin: 0; font-size: 14px; line-height: 1.8; word-break: break-word; text-align: center; mso-line-height-alt: 25px; margin-top: 0; margin-bottom: 0;">
                                                                                                                                         <span style="font-size: 14px;">
-                                                                                                                                            Hello there, your order has been successfully submitted. Log in to your customer account and click to track orders to track this order. You will be able to follow the status of your order.
+                                                                                                                                            Hello there, your order has been successfully submitted. Log in to your customer account and click track orders to track this order. You will be able to follow the status of your order.
                                                                                                                                         </span>
                                                                                                                                     </p>
                                                                                                                                 </div>
@@ -334,17 +334,6 @@ if (mysqli_num_rows($sql) > 0) {
                                                                                                                                     </tr>
                                                                                                                                 </tbody>
                                                                                                                             </table>
-                                                                                                                        </td>
-                                                                                                                    </tr>
-                                                                                                                </tbody>
-                                                                                                            </table>
-                                                                                                            <table style="table-layout: fixed; vertical-align: top; border-spacing: 0; border-collapse: collapse; mso-table-lspace: 0pt; mso-table-rspace: 0pt;" width="100%" cellspacing="0" cellpadding="0">
-                                                                                                                <tbody>
-                                                                                                                    <tr style="vertical-align: top;" valign="top">
-                                                                                                                        <td style="word-break: break-word; vertical-align: top; text-align: center; width: 100%; padding: 0px;" width="100%" valign="top" align="center">
-                                                                                                                            <h1 style="color: #03191e; direction: ltr; font-family: Arial, Helvetica Neue, Helvetica, sans-serif; font-size: 40px; font-weight: normal; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-                                                                                                                                <strong>' . $two_fa_codes . '</strong>
-                                                                                                                            </h1>
                                                                                                                         </td>
                                                                                                                     </tr>
                                                                                                                 </tbody>
