@@ -166,13 +166,16 @@ require_once('../app/partials/landing_head.php');
                                                             <?php
                                                             if ($orders['order_payment_status'] == 'Pending') {
                                                             ?>
-                                                                <a class="btn btn-lg btn-primary" href="">Pay</a>
+                                                                <button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal">Pay</button>
                                                             <?php } ?>
                                                             <a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track Order</a>
                                                         </span>
                                                     </td>
                                                 </tr>
-                                            <?php  }
+                                            <?php
+                                                /* Sales Payment Helper */
+                                                include('../app/modals/payment_modal.php');
+                                            }
                                         } else { ?>
                                             <tr>
                                                 <th scope="row">No Recent Orders</th>
