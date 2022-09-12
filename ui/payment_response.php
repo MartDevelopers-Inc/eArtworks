@@ -68,54 +68,72 @@
 
 /* Global Variables */
 
-//* Prepare our rave request
-$request = [
-    'tx_ref' => time(), /* Just Timestamp Every Transaction */
-    'amount' => $total_cost,
-    'currency' => 'KES',
-    'payment_options' => 'card',
-    /* Update This URL To Match Your Needs */
-    'redirect_url' => 'http://127.0.0.1/e_reservation/views/payment_response.php?Reservation=' . $Reservation . '&Room=' . $Room,
-    'customer' => [
-        'email' => $client_email,
-        'name' => $client_name,
-    ],
-    'meta' => [
-        'price' => $total_cost
-    ],
-    'customizations' => [
-        'title' => 'Reservation Payment',
-        'description' => $client_name . 'Room Reservation'
-    ]
-];
+session_start();
+include('../app/settings/config.php');
 
-/* Call Flutterwave Endpoint */
-$curl = curl_init();
+if (isset($_GET['status'])) {
+    /* Check Payment Status */
+    if ($_GET['status'] == 'cancelled') {
+        header("Location: landing_track_order_details?view=$payment_order_code");
+    } elseif ($_GET['status'] == 'successful') {
+        $txid = $_GET['transaction_id'];
 
-curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://api.flutterwave.com/v3/payments',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_POSTFIELDS => json_encode($request),
-    CURLOPT_HTTPHEADER => array(
-        'Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X', /* To Do : Never hard code this bearer */
-        'Content-Type: application/json'
-    ),
-));
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "https://api.flutterwave.com/v3/transactions/{$txid}/verify",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "Content-Type: application/json",
+                "Authorization: Bearer FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X"/* Do Not Hard Code This Bearer */
+            ),
+        ));
 
-$response = curl_exec($curl);
+        $response = curl_exec($curl);
 
-curl_close($curl);
+        curl_close($curl);
 
-$res = json_decode($response);
-if ($res->status == 'success') {
-    $link = $res->data->link;
-    header('Location: ' . $link);
-} else {
-    $err =  'We can not process your payment';
+        $res = json_decode($response);
+        if ($res->status) {
+            $amountPaid = $res->data->charged_amount;
+            $amountToPay = $res->data->meta->price;
+            if ($amountPaid >= $amountToPay) {
+
+                /* Insert This Payment Details To Payment*/
+                $payment_ref_code = $res->data->tx_ref;
+                $payment_amount = $amountPaid;
+                $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
+                $order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
+                $means_id = mysqli_real_escape_string($mysqli, $_GET['means']);
+
+                $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
+                VALUES('{$order_code}', '{$means_id}', '{$payment_amount}', '$payment_ref_code')";
+
+                $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_code = '{$order_code}'";
+
+                if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_status)) {
+                    $_SESSION['success'] = 'Payment Ref ' . $payment_ref_code . 'Posted';
+                    header('Location: landing_track_order_details?view=' . $order_code);
+                    exit;
+                } else {
+                    $_SESSION['err'] = 'Failed to persist transaction details';
+                    header('Location: landing_track_order_details?view=' . $order_code);
+                    exit;
+                }
+            } else {
+                $_SESSION['err'] = 'We are having problem processing your payment';
+                header('Location: landing_track_order_details?view=' . $order_code);
+                exit;
+            }
+        } else {
+            $_SESSION['err'] = 'Can not process payment, please use MPESA payment method';
+            header('Location: landing_track_order_details?view=' . $order_code);
+            exit;
+        }
+    }
 }

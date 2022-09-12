@@ -106,7 +106,7 @@ if (isset($_POST['Add_Payment'])) {
                 'name' => $user_name,
             ],
             'meta' => [
-                'price' => $total_cost
+                'price' => $payment_amount
             ],
             'customizations' => [
                 'title' => 'Order ' . ' ' . $payment_order_code . ' Payment',
