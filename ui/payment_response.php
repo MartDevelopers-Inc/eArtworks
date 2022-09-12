@@ -117,7 +117,7 @@ if (isset($_GET['status'])) {
                 $order_status = "UPDATE orders SET order_payment_status = '{$order_payment_status}' WHERE order_code = '{$order_code}'";
 
                 if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_status)) {
-                    $_SESSION['success'] = 'Payment Ref ' . $payment_ref_code . 'Posted';
+                    $_SESSION['success'] = 'Payment Ref ' . $payment_ref_code . ' Posted';
                     header('Location: landing_track_order_details?view=' . $order_code);
                     exit;
                 } else {
