@@ -401,6 +401,9 @@ require_once('../app/partials/landing_head.php');
                                                     $total_price += $orders['order_cost'] * $orders['order_qty'];
                                                     /* DeliverY Fee */
                                                     $constant_delivery_fee = '1500';
+                                                    /* Push Order Payment Status To Global Variable */
+                                                    $payment_status = $orders['order_payment_status'];
+                                                    global $payment_status;
                                             ?>
                                                     <tr>
                                                         <td><span><?php echo $orders['product_sku_code']; ?></span></td>
@@ -437,6 +440,20 @@ require_once('../app/partials/landing_head.php');
                                                     <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
                                                     <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format(($total_price + $constant_delivery_fee), 2); ?></td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-label="Product" class="ec-cart-pro-name">
+                                                    </td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
+                                                    <td data-label="Total" class="ec-cart-pro-subtotal">
+                                                        <?php
+                                                        if ($orders['order_paym'Pending') {
+                                                        ?>
+                                                            <span class="tbl-btn"><button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal_<?php echo $orders['order_code']; ?>">Pay</button></span>
+                                                        <?php } ?>
+                                                    </td>
                                                 </tr>
 
                                             <?php } else { ?>

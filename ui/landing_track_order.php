@@ -165,11 +165,6 @@ require_once('../app/partials/landing_head.php');
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></span></td>
                                                     <td>
                                                         <span class="tbl-btn">
-                                                            <?php
-                                                            if ($orders['order_payment_status'] == 'Pending') {
-                                                            ?>
-                                                                <button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal_<?php echo $orders['order_code']; ?>">Pay</button>
-                                                            <?php } ?>
                                                             <a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track Order</a>
                                                         </span>
                                                     </td>
