@@ -68,7 +68,7 @@
 /* Add Payment */
 if (isset($_POST['Add_Payment'])) {
     /* Add Extra Payment Methods Handlers Here */
-    $payment_method_name = mysqli_real_escape_string($mysqli, $_POST['payent_method_means_name']);
+    $payment_method_name = mysqli_real_escape_string($mysqli, $_POST['payment_method_name']);
     /* Handle Cash On Delivery Payment Method */
     if ($payment_method_name == 'Cash On Delivery') {
         $payment_order_code = mysqli_real_escape_string($mysqli, $_POST['payment_order_code']);
@@ -88,6 +88,8 @@ if (isset($_POST['Add_Payment'])) {
         } else {
             $err = "Failed, please try again";
         }
+    } else {
+        $err = "Failed!, Please try again";
     }
 }
 

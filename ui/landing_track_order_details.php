@@ -65,9 +65,10 @@
  *
  */
 session_start();
-require_once('../app/settings/checklogin.php');
-checklogin();
 require_once('../app/settings/config.php');
+require_once('../app/settings/checklogin.php');
+require_once('../app/settings/codeGen.php');
+checklogin();
 require_once('../app/helpers/payments.php');
 require_once('../app/partials/landing_head.php');
 ?>
