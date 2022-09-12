@@ -449,14 +449,17 @@ require_once('../app/partials/landing_head.php');
                                                     <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
                                                     <td data-label="Total" class="ec-cart-pro-subtotal">
                                                         <?php
-                                                        if ($orders['order_paym'Pending') {
+                                                        if ($payment_status == 'Pending') {
                                                         ?>
-                                                            <span class="tbl-btn"><button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal_<?php echo $orders['order_code']; ?>">Pay</button></span>
+                                                            <span class="tbl-btn"><button class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#checkout_modal_<?php echo $order_code; ?>">Add Payment</button></span>
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
 
-                                            <?php } else { ?>
+                                            <?php
+                                                /* Include Payments Modal */
+                                                include('../app/modals/payment_modal.php');
+                                            } else { ?>
                                                 <tr>
                                                     <th scope="row">No Items In Your Order</th>
                                                 </tr>

@@ -1,10 +1,10 @@
 <!-- Add User Modal  -->
-<div class="modal fade modal-add-contact" id="checkout_modal_<?php echo $orders['order_code']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade modal-add-contact" id="checkout_modal_<?php echo $order_code; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <form method="POST" enctype="multipart/form-data">
                 <div class="modal-header px-4">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Pay Ksh <?php echo number_format($total_payment_per_order, 2); ?></h5>
+                    <h5 class="modal-title" id="exampleModalCenterTitle">Pay Ksh <?php echo number_format(($total_price + $constant_delivery_fee), 2); ?></h5>
                 </div>
 
                 <div class="modal-body px-4">
@@ -36,7 +36,7 @@
 
                     <div class="modal-footer px-4">
                         <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" name="Process_Cart" class="btn btn-primary btn-pill">Checkout</button>
+                        <button type="submit" name="Add_Payment" class="btn btn-primary btn-pill">Add Payment</button>
                     </div>
                 </div>
             </form>
