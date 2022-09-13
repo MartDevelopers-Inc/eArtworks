@@ -136,20 +136,20 @@ require_once('../app/partials/backoffice_head.php');
                                                             </div>
 
 
-                                                            <div class="form-group col-lg-4">
+                                                            <div class="form-group col-lg-3">
                                                                 <label for="email">Username</label>
                                                                 <input type="email" required class="form-control" name="mail_username" value="<?php echo $mailer['mail_username']; ?>">
                                                             </div>
-                                                            <div class="form-group col-lg-4">
+                                                            <div class="form-group col-lg-3">
                                                                 <label for="email">Password</label>
                                                                 <input type="password" required class="form-control" name="mail_password" value="<?php echo $mailer['mail_password']; ?>">
                                                             </div>
 
-                                                            <div class="form-group col-lg-4">
+                                                            <div class="form-group col-lg-3">
                                                                 <label for="email">From Name</label>
                                                                 <input type="text" required class="form-control" name="mail_from_name" value="<?php echo $mailer['mail_from_name']; ?>">
                                                             </div>
-                                                            <div class="form-group col-lg-4">
+                                                            <div class="form-group col-lg-3">
                                                                 <label for="email">From Email</label>
                                                                 <input type="email" required class="form-control" name="mail_from_email" value="<?php echo $mailer['mail_from_email']; ?>">
                                                             </div>
