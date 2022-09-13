@@ -173,11 +173,11 @@ if (isset($_POST['Add_Order_Payment'])) {
 /* Delete Payment*/
 if (isset($_POST['Delete_Payment'])) {
     $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
-    $order_id = mysqli_real_escape_string($mysqli, $_POST['order_id']);
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
 
     /* Persist */
     $sql = "UPDATE payments SET payment_delete_status = '1' WHERE payment_id = '{$payment_id}'";
-    $order_sql = "UPDATE orders SET order_payment_status = 'Pending' WHERE order_id = '{$order_id}'";
+    $order_sql = "UPDATE orders SET order_payment_status = 'Pending' WHERE order_code = '{$order_code}'";
 
     if (mysqli_query($mysqli, $sql) && mysqli_query($mysqli, $order_sql)) {
         $success = "Payment moved to recycle bin";

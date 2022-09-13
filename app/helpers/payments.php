@@ -147,6 +147,3 @@ if (isset($_POST['Add_Payment'])) {
         $err = "Payment means is not supported yet";
     }
 }
-
- /* Update Patment */
- /* Delete */
