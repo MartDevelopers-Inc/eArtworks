@@ -279,6 +279,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                     INNER JOIN orders o ON order_code = p.payment_order_code
                                                                     INNER JOIN payment_means pm ON pm.means_id = p.payment_means_id
                                                                     WHERE p.payment_order_code = '{$get_id}'
+                                                                    AND p.payment_delete_status = '0'
                                                                     GROUP BY p.payment_order_code"
                                                                 );
                                                                 if (mysqli_num_rows($payments_sql) > 0) {
@@ -296,6 +297,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                     <tr>
                                                                         <td colspan="6" class="text-center">
                                                                             <span class="text-dark">There are no current orders payments posted.</span>
+                                                                            
                                                                         </td>
                                                                     </tr>
                                                                 <?php } ?>
