@@ -393,7 +393,7 @@ require_once('../app/partials/backoffice_head.php');
                                         INNER JOIN products p 
                                         ON p.product_id = o.order_product_id
                                         WHERE o.order_delete_status = '0'
-                                        ORDER BY o.order_qty ASC
+                                        ORDER BY o.order_qty DESC
                                         LIMIT 5
                                         "
                                     );
