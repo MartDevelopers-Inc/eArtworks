@@ -104,8 +104,23 @@ if (isset($_POST['Add_API'])) {
     }
 }
 
- /* Update API */
+/* Update API */
+if (isset($_POST['Update_API'])) {
+    $api_id = mysqli_real_escape_string($mysqli, $_POST['api_id']);
+    $api_name = mysqli_real_escape_string($mysqli, $_POST['api_name']);
+    $api_identification = mysqli_real_escape_string($mysqli, $_POST['api_identification']);
+    $api_token = mysqli_real_escape_string($mysqli, $_POST['api_token']);
 
+    /* Persist */
+    $sql  = "UPDATE thirdparty_apis SET api_name = '{$api_name}', api_identification = '{$api_identification}', api_token = '{$api_token}' 
+    WHERE api_id = '{$api_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "$api_name updated";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
  /* Delete API */
 
  /* Add Payment Methods */
