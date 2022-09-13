@@ -88,7 +88,21 @@ if (isset($_POST['Update_Mailer'])) {
     }
 }
 
- /* Add thirdparty API  */
+/* Add thirdparty API  */
+if (isset($_POST['Add_API'])) {
+    $api_name = mysqli_real_escape_string($mysqli, $_POST['api_name']);
+    $api_identification = mysqli_real_escape_string($mysqli, $_POST['api_identification']);
+    $api_token = mysqli_real_escape_string($mysqli, $_POST['api_token']);
+
+    /* Persist */
+    $sql = "INSERT INTO thirdparty_apis (api_name, api_identification, api_token) VALUES('{$api_name}', '{$api_identification}', '{$api_token}')";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "$api_name added to API lists";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
 
  /* Update API */
 
