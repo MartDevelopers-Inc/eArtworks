@@ -121,7 +121,20 @@ if (isset($_POST['Update_API'])) {
         $err = "Failed, please try again";
     }
 }
- /* Delete API */
+
+/* Delete API */
+if (isset($_POST['Delete_API'])) {
+    $api_id = mysqli_real_escape_string($mysqli, $_POST['api_id']);
+
+    /* Persist */
+    $sql  = "DELETE FROM thirdparty_apis WHERE api_id = '{$api_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "API deleted";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
 
  /* Add Payment Methods */
  /* Update Payment Methods */
