@@ -194,10 +194,8 @@ require_once('../app/partials/backoffice_head.php');
                                             <thead>
                                                 <tr>
                                                     <th>Payment REF</th>
-                                                    <th>Payment Means</th>
                                                     <th>Order Number</th>
-                                                    <th>Product Details</th>
-                                                    <th>QTY Ordered</th>
+                                                    <th>Payment Means</th>
                                                     <th>Payment Date</th>
                                                     <th>Amount Paid</th>
                                                     <th>Action</th>
@@ -210,13 +208,14 @@ require_once('../app/partials/backoffice_head.php');
                                                     $mysqli,
                                                     "SELECT * FROM payments pa
                                                     INNER JOIN payment_means pm ON pm.means_id = pa.payment_means_id
-                                                    INNER JOIN orders o ON o.order_id = pa.payment_order_id  
+                                                    INNER JOIN orders o ON o.order_code = pa.payment_order_code  
                                                     INNER JOIN products p ON p.product_id = o.order_product_id
                                                     INNER JOIN users u ON u.user_id = o.order_user_id
                                                     WHERE u.user_delete_status = '0' 
                                                     AND p.product_delete_status = '0'
                                                     AND o.order_delete_status = '0'
-                                                    AND pa.payment_delete_status = '0'"
+                                                    AND pa.payment_delete_status = '0'
+                                                    GROUP BY pa.payment_order_code"
                                                 );
                                                 if (mysqli_num_rows($payments_sql) > 0) {
                                                     while ($payments = mysqli_fetch_array($payments_sql)) {
@@ -225,15 +224,12 @@ require_once('../app/partials/backoffice_head.php');
                                                             <td>
                                                                 <?php echo $payments['payment_ref_code']; ?>
                                                             </td>
+                                                            <td>
+                                                                <a href="backoffice_manage_order?view=<?php echo $payments['order_code']; ?>">
+                                                                    <?php echo $payments['order_code']; ?>
+                                                                </a>
+                                                            </td>
                                                             <td><?php echo $payments['means_code'] . ' ' . $payments['means_name']; ?></td>
-                                                            <td><?php echo $payments['order_code']; ?></td>
-                                                            <td>
-                                                                SKU: <?php echo $payments['product_sku_code'] . '<br>
-                                                                Name: ' . $payments['product_name']; ?>
-                                                            </td>
-                                                            <td>
-                                                                <?php echo $payments['order_qty']; ?>
-                                                            </td>
                                                             <td>
                                                                 <?php echo date('d M Y', strtotime($payments['payment_date'])); ?>
                                                             </td>

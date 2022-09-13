@@ -19,4 +19,6 @@ artists and designers to get support for their artistic endeavors as well as to 
 7. By default, the logout session deletes the clearing cart. <br>
 8. The fixed rate for delivery fees is $15; this is hard programmed. Later, it ought to be updated. <br>
 9. All prices are in Kenyan Shillings; dynamic pricing is not yet in place. <br>
-10. Estimated delivery date is one week (7 Days) from the day you made your order.
+10. Estimated delivery date is one week (7 Days) from the day you made your order. <br>
+11. API Keys are Hadcoded - A fix has started. <br>
+12. All unpaid orders cn be marked as paid on back office module with cash as the default payment means.

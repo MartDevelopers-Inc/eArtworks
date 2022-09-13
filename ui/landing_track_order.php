@@ -144,7 +144,8 @@ require_once('../app/partials/landing_head.php');
                                             AND p.product_delete_status = '0'
                                             AND o.order_delete_status = '0'
                                             AND u.user_id = '{$order_user_id}'
-                                            GROUP BY o.order_code"
+                                            GROUP BY o.order_code
+                                            ORDER BY o.order_date DESC"
                                         );
                                         if (mysqli_num_rows($orders_sql) > 0) {
                                             while ($orders = mysqli_fetch_array($orders_sql)) {
@@ -155,15 +156,24 @@ require_once('../app/partials/landing_head.php');
                                                 $stmt->bind_result($items_in_my_order);
                                                 $stmt->fetch();
                                                 $stmt->close();
+                                               
+
                                         ?>
                                                 <tr>
                                                     <th scope="row"><span><?php echo $orders['order_code']; ?></span></th>
                                                     <td><span><?php echo $items_in_my_order; ?> Items</span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_estimated_delivery_date'])); ?></span></td>
-                                                    <td><span class="tbl-btn"><a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track</a></span></td>
+                                                    <td>
+                                                        <span class="tbl-btn">
+                                                            <a class="btn btn-lg btn-primary" href="landing_track_order_details?view=<?php echo $orders['order_code']; ?>">Track Order</a>
+                                                        </span>
+                                                    </td>
                                                 </tr>
-                                            <?php  }
+                                            <?php
+                                                /* Sales Payment Helper */
+                                                include('../app/modals/payment_modal.php');
+                                            }
                                         } else { ?>
                                             <tr>
                                                 <th scope="row">No Recent Orders</th>

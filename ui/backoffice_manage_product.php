@@ -288,7 +288,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                             <?php
                                                             /* Compute Sum Of Sales Made By This Artwork */
                                                             $query = "SELECT SUM(payment_amount)  FROM payments p
-                                                            INNER JOIN orders o ON o.order_id = p.payment_order_id
+                                                            INNER JOIN orders o ON o.order_code = p.payment_order_code
                                                             WHERE  p.payment_delete_status = '0'
                                                             AND o.order_product_id = '{$get_id}'
                                                             AND o.order_delete_status = '0'";

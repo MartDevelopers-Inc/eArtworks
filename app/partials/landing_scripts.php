@@ -31,6 +31,20 @@
     if (window.history.replaceState) {
         window.history.replaceState(null, null, window.location.href);
     }
+    /* Load Ajax */
+    function GetPaymentMeansName(val)
+    {
+        $.ajax({
+            type: "POST",
+            url: "ajax.php",
+            data: 'PaymentMeansID=' + val,
+            success: function(data) {
+                //alert(data);
+                $('#PaymentMethodName').val(data);
+            }
+        });
+
+    }
 </script>
 <!-- Main Js -->
 <script src="../public/landing_assets/js/vendor/index.js"></script>

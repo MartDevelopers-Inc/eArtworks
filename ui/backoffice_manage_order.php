@@ -276,9 +276,11 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                 $payments_sql = mysqli_query(
                                                                     $mysqli,
                                                                     "SELECT * FROM payments p
-                                                                    INNER JOIN orders o ON order_id = p.payment_order_id
+                                                                    INNER JOIN orders o ON order_code = p.payment_order_code
                                                                     INNER JOIN payment_means pm ON pm.means_id = p.payment_means_id
-                                                                    WHERE p.payment_order_id = '{$get_id}'"
+                                                                    WHERE p.payment_order_code = '{$get_id}'
+                                                                    AND p.payment_delete_status = '0'
+                                                                    GROUP BY p.payment_order_code"
                                                                 );
                                                                 if (mysqli_num_rows($payments_sql) > 0) {
                                                                     while ($payment = mysqli_fetch_array($payments_sql)) {
@@ -294,10 +296,16 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                     /* No Payments To Fetch */ ?>
                                                                     <tr>
                                                                         <td colspan="6" class="text-center">
-                                                                            <span class="text-dark">There are no current orders payments posted.</span>
+                                                                            <span class="text-danger">There are no current orders payments posted.</span><br>
+                                                                            <span class="text-center">
+                                                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#mark_as_paid">Add Payment</button>
+                                                                            </span>
                                                                         </td>
                                                                     </tr>
-                                                                <?php } ?>
+
+                                                                <?php
+                                                                    include('../app/modals/mark_as_paid_modal.php');
+                                                                } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>

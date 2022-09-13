@@ -230,27 +230,7 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Button Start -->
                         <div class="align-self-center">
                             <div class="ec-header-bottons">
-                                <!-- Header User Start -->
-                                <div class="ec-header-user dropdown">
-                                    <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-right">
-                                        <li>
-                                            <a class="dropdown-item" href="landing_profile">My Profile</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="landing_purchase_history">Recent Orders</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="landing_track_order">Track Orders</a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="logout">Logout</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <!-- Header User End -->
+
                                 <!-- Header wishlist Start -->
                                 <a href="landing_wishlist" class="ec-header-btn ec-header-wishlist">
                                     <div class="header-icon">
@@ -275,6 +255,27 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                                     </div>
                                 </a>
                                 <!-- Header Cart End -->
+                                <!-- Header User Start -->
+                                <div class="ec-header-user dropdown">
+                                    <button class="dropdown-toggle" data-bs-toggle="dropdown">
+                                        <img src="../public/landing_assets/images/icons/user.svg" class="svg_img header_svg" alt="" />
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-right">
+                                        <li>
+                                            <a class="dropdown-item" href="landing_profile">My Profile</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="landing_purchase_history">Recent Orders</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="landing_track_order">Track Orders</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="logout">Logout</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!-- Header User End -->
                             </div>
                         </div>
                     </div>

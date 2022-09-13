@@ -117,7 +117,7 @@ if (isset($_POST['User_Login'])) {
                     $client = new Client([
                         'base_uri' => "https://89y4k1.api.infobip.com/",
                         'headers' => [
-                            'Authorization' => "App 2015dca8a64813666b47902dd6567af9-12ae6a93-ddb3-4af8-b01f-c82bab88a71c",
+                            'Authorization' => "",
                             'Content-Type' => 'application/json',
                             'Accept' => 'application/json',
                         ]
