@@ -296,11 +296,16 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                     /* No Payments To Fetch */ ?>
                                                                     <tr>
                                                                         <td colspan="6" class="text-center">
-                                                                            <span class="text-dark">There are no current orders payments posted.</span>
-                                                                            
+                                                                            <span class="text-danger">There are no current orders payments posted.</span><br>
+                                                                            <span class="text-center">
+                                                                                <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#mark_as_paid">Add Payment</button>
+                                                                            </span>
                                                                         </td>
                                                                     </tr>
-                                                                <?php } ?>
+
+                                                                <?php
+                                                                    include('../app/modals/mark_as_paid_modal.php');
+                                                                } ?>
                                                             </tbody>
                                                         </table>
                                                     </div>
