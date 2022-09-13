@@ -93,151 +93,75 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Staffs</h1>
+                            <h1>STMP Mailer API</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Staffs</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Staffs
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_staffs">Settings</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Mailer Configurations
                             </p>
                         </div>
-                        <div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
-                                Register Staff
-                            </button>
-                        </div>
                     </div>
 
-                    <!-- Add User Modal  -->
-                    <div class="modal fade modal-add-contact" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                            <div class="modal-content">
-                                <form method="POST" enctype="multipart/form-data">
-                                    <div class="modal-header px-4">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Staff</h5>
-                                    </div>
-
-                                    <div class="modal-body px-4">
-                                        <div class="row mb-2">
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="firstName">First name</label>
-                                                    <input type="text" required class="form-control" name="user_first_name">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="lastName">Last name</label>
-                                                    <input type="text" required class="form-control" name="user_last_name">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-lg-12">
-                                                <label for="email">Email</label>
-                                                <input type="email" required class="form-control" name="user_email">
-                                            </div>
-
-                                            <div class="form-group col-lg-4">
-                                                <label for="email">Phone Number</label>
-                                                <input type="text" required class="form-control" name="user_phone_number">
-                                            </div>
-
-                                            <div class="form-group col-lg-4">
-                                                <label for="email">Access Level</label>
-                                                <select type="text" required class="form-control" name="user_access_level">
-                                                    <option>Staff</option>
-                                                    <option>Administrator</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="form-group col-lg-4">
-                                                <label for="email">Date Of Birth</label>
-                                                <input type="date" required class="form-control" name="user_dob">
-                                            </div>
-
-                                            <div class="form-group col-lg-12">
-                                                <label for="email">Address</label>
-                                                <textarea class="form-control" required name="user_default_address"></textarea>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="form-group row mb-6">
-                                            <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Profile Photo</label>
-                                            <div class="col-sm-12 col-lg-12">
-                                                <div class="custom-file mb-1">
-                                                    <input type="file" accept=".png, .jpg, .jpeg" required name="user_profile_picture" class="custom-file-input">
-                                                    <label class="custom-file-label" for="coverImage">
-                                                        Choose file...
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer px-4">
-                                        <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" name="Register_New_Staff" class="btn btn-primary btn-pill">Register Staff</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="ec-vendor-list card card-default">
                                 <div class="card-body">
                                     <div class="table-responsive">
-                                        <table id="responsive-data-table" class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Profile</th>
-                                                    <th>Name</th>
-                                                    <th>Email</th>
-                                                    <th>Phone</th>
-                                                    <th>DOB</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                <?php
-                                                $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'");
-                                                if (mysqli_num_rows($user_sql) > 0) {
-                                                    while ($staffs = mysqli_fetch_array($user_sql)) {
-                                                        /* Image Directory */
-                                                        if ($staffs['user_profile_picture'] == '') {
-                                                            $image_dir = "../public/uploads/users/no-profile.png";
-                                                        } else {
-                                                            $image_dir = "../public/uploads/users/" . $staffs['user_profile_picture'];
-                                                        }
-                                                ?>
-                                                        <tr>
-                                                            <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="user profile" /></td>
-                                                            <td><?php echo $staffs['user_first_name'] . ' ' . $staffs['user_last_name']; ?></td>
-                                                            <td><?php echo $staffs['user_email']; ?></td>
-                                                            <td><?php echo $staffs['user_phone_number']; ?></td>
-                                                            <td><?php echo date('M d Y', strtotime($staffs['user_dob'])); ?></td>
-                                                            <td>
-                                                                <div class="btn-group mb-1">
-                                                                    <button type="button" class="btn btn-outline-success">Manage</button>
-                                                                    <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                                                        <span class="sr-only">Manage</span>
-                                                                    </button>
-
-                                                                    <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" href="backoffice_manage_staff?view=<?php echo $staffs['user_id']; ?>">View</a>
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_staff_<?php echo $staffs['user_id']; ?>">Delete</a>
-                                                                    </div>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            <?php
+                                            $mailer_sql = mysqli_query($mysqli, "SELECT * FROM mailer_settings");
+                                            if (mysqli_num_rows($mailer_sql) > 0) {
+                                                while ($mailer = mysqli_fetch_array($mailer_sql)) {
+                                            ?>
+                                                    <div class="modal-body px-4">
+                                                        <div class="row mb-2">
+                                                            <div class="col-lg-8">
+                                                                <div class="form-group">
+                                                                    <label for="firstName">Host</label>
+                                                                    <input type="text" required class="form-control" name="mail_host" value="<?php echo $mailer['mail_host']; ?>">
                                                                 </div>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- Delete Staff Modal -->
-                                                        <?php include('../app/modals/delete_staff.php'); ?>
-                                                        <!-- End Modal -->
-                                                <?php }
-                                                } ?>
-                                            </tbody>
-                                        </table>
+                                                            </div>
+
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label for="lastName">Port</label>
+                                                                    <input type="text" required class="form-control" name="mail_port" value="<?php echo $mailer['mail_port']; ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-2">
+                                                                <div class="form-group">
+                                                                    <label for="lastName">Protocol</label>
+                                                                    <input type="text" required class="form-control" name="mail_protocol" value="<?php echo $mailer['mail_protocol']; ?>">
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group col-lg-4">
+                                                                <label for="email">Username</label>
+                                                                <input type="email" required class="form-control" name="mail_username" value="<?php echo $mailer['mail_username']; ?>">
+                                                            </div>
+                                                            <div class="form-group col-lg-4">
+                                                                <label for="email">Password</label>
+                                                                <input type="password" required class="form-control" name="mail_password" value="<?php echo $mailer['mail_password']; ?>">
+                                                            </div>
+
+                                                            <div class="form-group col-lg-4">
+                                                                <label for="email">From Name</label>
+                                                                <input type="text" required class="form-control" name="mail_from_name" value="<?php echo $mailer['mail_from_name']; ?>">
+                                                            </div>
+                                                            <div class="form-group col-lg-4">
+                                                                <label for="email">From Email</label>
+                                                                <input type="email" required class="form-control" name="mail_from_email" value="<?php echo $mailer['mail_from_email']; ?>">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            <?php }
+                                            } ?>
+
+                                            <div class="modal-footer px-4">
+                                                <button type="submit" name="Update_Mailer" class="btn btn-primary btn-pill">Update Configurations</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
