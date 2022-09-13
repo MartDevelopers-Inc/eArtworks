@@ -136,6 +136,24 @@ if (isset($_POST['Delete_API'])) {
     }
 }
 
- /* Add Payment Methods */
- /* Update Payment Methods */
+/* Add Payment Methods */
+if (isset($_POST['Add_Payment_Means'])) {
+    $means_code = mysqli_real_escape_string($mysqli, $_POST['means_code']);
+    $means_name = mysqli_real_escape_string($mysqli, $_POST['means_name']);
+
+    /* Persist */
+    $sql = "INSERT INTO payment_means (means_code, means_name) VALUES('{$means_name}', '{$means_code}')";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "$means_name payment method added";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+
+/* Update Payment Methods */
+if (isset($_POST['Update_Payment_Means'])) {
+    
+}
 /* Delete Payment Methods */
