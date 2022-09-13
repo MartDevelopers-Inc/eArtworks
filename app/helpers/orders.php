@@ -151,23 +151,26 @@ if (isset($_POST['Delete_Order'])) {
 }
 
 /* Add Payment */
-if (isset($_POST['Add_Order_Payment'])) {
+if (isset($_POST['Mark_Order_As_Paid'])) {
     /* Add Extra Payment Methods Handlers Here */
-    $payment_order_id = mysqli_real_escape_string($mysqli, $_POST['payment_order_id']);
-    $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
+    $payment_order_code = mysqli_real_escape_string($mysqli, $_POST['payment_order_code']);
     $payment_amount = mysqli_real_escape_string($mysqli, $_POST['payment_amount']);
+    $payment_means_id = mysqli_real_escape_string($mysqli, $_POST['payment_means_id']);
     $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
 
     /* Persist */
-    $sql = "INSERT INTO payments (payment_order_id, payment_means_id, payment_amount, payment_ref_code) 
+    $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
     VALUES('{$payments_order_id}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
+    $order_sql = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'";
 
-    if (mysqli_query($mysqli, $sql)) {
+    if (mysqli_query($mysqli, $sql)  && mysqli_query($mysqli, $order_sql)) {
         $success = "Payment reference $payment_ref_code confirmed";
     } else {
         $err = "Failed, please try again";
     }
 }
+
+
 
 
 /* Delete Payment*/
@@ -185,4 +188,3 @@ if (isset($_POST['Delete_Payment'])) {
         $err = "Failed, please try again";
     }
 }
-
