@@ -160,8 +160,8 @@ if (isset($_POST['Mark_Order_As_Paid'])) {
 
     /* Persist */
     $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
-    VALUES('{$payments_order_id}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
-    $order_sql = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'";
+    VALUES('{$payment_order_code}', '{$payment_means_id}', '{$payment_amount}', '$payment_ref_code')";
+    $order_sql = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$payment_order_code}'";
 
     if (mysqli_query($mysqli, $sql)  && mysqli_query($mysqli, $order_sql)) {
         $success = "Payment reference $payment_ref_code confirmed";
