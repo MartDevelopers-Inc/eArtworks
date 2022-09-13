@@ -145,7 +145,7 @@ if (isset($_POST['Add_Payment_Means'])) {
     $sql = "INSERT INTO payment_means (means_code, means_name) VALUES('{$means_name}', '{$means_code}')";
 
     if (mysqli_query($mysqli, $sql)) {
-        $success = "$means_name payment method added";
+        $success = "Payment method added";
     } else {
         $err = "Failed, please try again";
     }
@@ -154,6 +154,32 @@ if (isset($_POST['Add_Payment_Means'])) {
 
 /* Update Payment Methods */
 if (isset($_POST['Update_Payment_Means'])) {
-    
+    $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
+    $means_code = mysqli_real_escape_string($mysqli, $_POST['means_code']);
+    $means_name = mysqli_real_escape_string($mysqli, $_POST['means_name']);
+
+    /* Persist */
+    $sql = "UPDATE payment_means SET means_code = '{$means_code}', means_name = '{$means_name}' WHERE means_id = '{$means_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Payment method updated";
+    } else {
+        $err = "Failed, please try again";
+    }
 }
+
+
 /* Delete Payment Methods */
+if (isset($_POST['Delete_Payment_Means'])) {
+    $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
+    $means_delete_status = mysqli_real_escape_string($mysqli, $_POST['means_delete_status']);
+
+    /* Persist */
+    $sql = "UPDATE payment_means SET means_delete_status = '{$means_delete_status}' WHERE means_id = '{$means_id}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Payment means moved to recycle bin";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
