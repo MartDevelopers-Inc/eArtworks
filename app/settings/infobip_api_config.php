@@ -74,7 +74,7 @@ $infobip = mysqli_query(
     "SELECT * FROM thirdparty_apis WHERE api_name = 'InfoBip Bulk SMS'"
 );
 if (mysqli_num_rows($infobip) > 0) {
-    while ($infobip_auth = mysqli_fetch_array($flutterwave)) {
+    while ($infobip_auth = mysqli_fetch_array($infobip)) {
         $infobip_keys = $infobip_auth['api_token'];
         /* Push To Global */
         global $infobip_keys;

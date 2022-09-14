@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Thu Aug 18 2022
+ *   Crafted On Wed Sep 14 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -64,84 +64,22 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
-session_start();
-require_once('../app/settings/config.php');
-require_once('../app/settings/codeGen.php');
-require_once('../app/helpers/authentication.php');
-require_once('../app/partials/landing_head.php');
-?>
-
-<body>
-    <div id="ec-overlay"><span class="loader_img"></span></div>
-
-    <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
-    <!-- Header End  -->
-
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Reset Password</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Reset password</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
-
-    <!-- Ec login page -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-title">
-                        <h2 class="ec-bg-title">Reset password</h2>
-                        <h2 class="ec-title">Reset Password</h2>
-                        <p class="sub-title mb-3">Forget password, worry not. Enter your email and your password reset details will be emailed to you</p>
-                    </div>
-                </div>
-                <div class="ec-register-wrapper">
-                    <div class="ec-register-wrapper">
-                        <div class="ec-register-container">
-                            <div class="ec-register-form">
-                                <form method="post">
-                                    <span class="ec-register-wrap">
-                                        <label>Email*</label>
-                                        <input type="email" name="user_email" required />
-                                    </span>
-                                    <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Reset_Password" type="submit">Reset Password</button>
-                                    </span>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer Start -->
-    <?php require_once('../app/partials/landing_footer.php'); ?>
-    <!-- Footer Area End -->
-
-    <!-- Feature tools end -->
-    <?php require_once('../app/partials/landing_scripts.php'); ?>
-
-</body>
 
 
-</html>
+include('config.php');
+
+/* Get All APIs */
+$mpesa_sql = mysqli_query(
+    $mysqli,
+    "SELECT * FROM thirdparty_apis WHERE api_name = 'eArtworks Mpesa'"
+);
+if (mysqli_num_rows($mpesa_sql) > 0) {
+    while ($mpesa = mysqli_fetch_array($mpesa_sql)) {
+        $api_identification = $mpesa['api_identification'];
+        $api_token = $mpesa['api_token'];
+
+        /* Push To Global */
+        global $api_identification;
+        global $api_token;
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Thu Aug 18 2022
+ *   Crafted On Wed Sep 14 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -66,82 +66,46 @@
  */
 session_start();
 require_once('../app/settings/config.php');
-require_once('../app/settings/codeGen.php');
-require_once('../app/helpers/authentication.php');
-require_once('../app/partials/landing_head.php');
-?>
 
-<body>
-    <div id="ec-overlay"><span class="loader_img"></span></div>
+$callbackJSONData = file_get_contents('php://input');
 
-    <!-- Header start  -->
-    <?php require_once('../app/partials/landing_navigation.php'); ?>
-    <!-- Header End  -->
+$logFile = "stkPush.json";
+$log = fopen($logFile, "a");
+fwrite($log, $callbackJSONData);
+fclose($log);
 
-    <!-- Ec breadcrumb start -->
-    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                    <div class="row ec_breadcrumb_inner">
-                        <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Reset Password</h2>
-                        </div>
-                        <div class="col-md-6 col-sm-12">
-                            <!-- ec-breadcrumb-list start -->
-                            <ul class="ec-breadcrumb-list">
-                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Reset password</li>
-                            </ul>
-                            <!-- ec-breadcrumb-list end -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Ec breadcrumb end -->
+$callbackData = json_decode($callbackJSONData);
 
-    <!-- Ec login page -->
-    <section class="ec-page-content section-space-p">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <div class="section-title">
-                        <h2 class="ec-bg-title">Reset password</h2>
-                        <h2 class="ec-title">Reset Password</h2>
-                        <p class="sub-title mb-3">Forget password, worry not. Enter your email and your password reset details will be emailed to you</p>
-                    </div>
-                </div>
-                <div class="ec-register-wrapper">
-                    <div class="ec-register-wrapper">
-                        <div class="ec-register-container">
-                            <div class="ec-register-form">
-                                <form method="post">
-                                    <span class="ec-register-wrap">
-                                        <label>Email*</label>
-                                        <input type="email" name="user_email" required />
-                                    </span>
-                                    <span class="ec-register-wrap ec-register-btn">
-                                        <button class="btn btn-primary" name="Reset_Password" type="submit">Reset Password</button>
-                                    </span>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+$resultCode = $callbackData->Body->stkCallback->ResultCode;
+$resultDesc = $callbackData->Body->stkCallback->ResultDesc;
+$merchantRequestID = $callbackData->Body->stkCallback->MerchantRequestID;
+$checkoutRequestID = $callbackData->Body->stkCallback->CheckoutRequestID;
+$mpesa = $callbackData->stkCallback->Body->CallbackMetadata->Item[0]->Name;
+$amount = $callbackData->Body->stkCallback->CallbackMetadata->Item[0]->Value;
+$mpesaReceiptNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[1]->Value;
+$balance = $callbackData->stkCallback->Body->CallbackMetadata->Item[2]->Value;
+$b2CUtilityAccountAvailableFunds = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
+$transactionDate = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
+$phoneNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[4]->Value;
 
-    <!-- Footer Start -->
-    <?php require_once('../app/partials/landing_footer.php'); ?>
-    <!-- Footer Area End -->
+$amount = strval($amount);
+$order_code = mysqli_real_query($mysqli, $_GET['order']);
+$payment_means = mysqli_real_query($mysqli, $_GET['means']);
 
-    <!-- Feature tools end -->
-    <?php require_once('../app/partials/landing_scripts.php'); ?>
+if ($resultCode == 0) {
 
-</body>
+    /* Persist This Payment */
+    //$order_status = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'";
 
+    $payment_sql = $mysqli->query("INSERT INTO payments(payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
+    VALUES('{$order_code}', '{$payment_means}', '{$amount}', '{$mpesaReceiptNumber}'");
+    $order_sql = $mysqli_->query("UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'");
 
-</html>
+    $_SESSION['success'] = 'Payment Ref ' . $mpesaReceiptNumber . ' Posted';
+    header('Location: landing_track_order_details?view=' . $order_code);
+    exit;
+} else {
+    $_SESSION['err'] = 'We cant process your payment now, kindly try again later';
+    header('Location: landing_track_order_details?view=' . $order_code);
+    exit;
+}

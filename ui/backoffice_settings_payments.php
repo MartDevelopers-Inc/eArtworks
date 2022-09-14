@@ -70,7 +70,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
-require_once('../app/helpers/artworks.php');
+require_once('../app/helpers/system_settings.php');
 require_once('../app/partials/backoffice_head.php');
 ?>
 
@@ -94,16 +94,16 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Product Categories</h1>
+                            <h1>Payment Means</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_categories">Categories</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Categories
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_categories">Payment Means</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Payment Means
                             </p>
                         </div>
                         <div>
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
-                                Register Category
+                                Register New Payment Means
                             </button>
                         </div>
                     </div>
@@ -114,94 +114,86 @@ require_once('../app/partials/backoffice_head.php');
                             <div class="modal-content">
                                 <form method="POST" enctype="multipart/form-data">
                                     <div class="modal-header px-4">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Category</h5>
+                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Payment Means</h5>
                                     </div>
 
                                     <div class="modal-body px-4">
                                         <div class="row mb-2">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-6">
                                                 <div class="form-group">
-                                                    <label for="firstName">Category Name</label>
-                                                    <input type="text" required class="form-control" name="category_name">
+                                                    <label for="firstName">Payment Means Code</label>
+                                                    <input type="text" required class="form-control" name="means_code">
                                                 </div>
                                             </div>
-                                            <div class="form-group col-lg-12">
-                                                <label for="email">Category Details</label>
-                                                <textarea class="form-control" rows="5" required name="category_details"></textarea>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label for="firstName">Payment Means Name</label>
+                                                    <input type="text" required class="form-control" name="means_name">
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="modal-footer px-4">
                                         <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" name="Register_New_Category" class="btn btn-primary btn-pill">Register Category</button>
+                                        <button type="submit" name="Add_Payment_Means" class="btn btn-primary btn-pill">Register New Payment Means</button>
                                     </div>
                                 </form>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="ec-vendor-list card card-default">
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table id="responsive-data-table" class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Code</th>
-                                                    <th>Name</th>
-                                                    <th>Description</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
+                    <div class="product-brand p-24px">
+                        <div class="row mb-m-24px">
+                            <?php
+                            /* Pop All Registered API`S */
+                            $payment_means = mysqli_query($mysqli, "SELECT * FROM payment_means WHERE means_delete_status = '0' ");
+                            if (mysqli_num_rows($payment_means) > 0) {
+                                while ($payments = mysqli_fetch_array($payment_means)) {
+                            ?>
 
-                                            <tbody>
-                                                <?php
-                                                $categories_sql = mysqli_query($mysqli, "SELECT * FROM categories WHERE category_delete_status = '0'");
-                                                if (mysqli_num_rows($categories_sql) > 0) {
-                                                    while ($categories = mysqli_fetch_array($categories_sql)) {
-                                                ?>
-                                                        <tr>
-                                                            <td><?php echo $categories['category_code']; ?></td>
-                                                            <td><?php echo $categories['category_name']; ?></td>
-                                                            <td><?php echo $categories['category_details']; ?></td>
-                                                            <td>
-                                                                <div class="btn-group mb-1">
-                                                                    <button type="button" class="btn btn-outline-success">Manage</button>
-                                                                    <button type="button" class="btn btn-outline-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
-                                                                        <span class="sr-only">Manage</span>
-                                                                    </button>
+                                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
+                                        <div class="card card-default">
+                                            <div class="card-body text-center p-24px">
+                                                <div class="image mb-3">
+                                                    <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                                </div>
+                                                <h5 class="card-title text-dark"><?php echo $payments['means_name']; ?></h5>
+                                                <p class="item-count">
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $payments['means_id']; ?>">Edit</button>
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $payments['means_id']; ?>">Delete</button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                    /* API Managment Modals */
+                                    include('../app/modals/payment_means_modal.php');
+                                }
+                            } else { ?>
+                                <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/error.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
 
-                                                                    <div class="dropdown-menu">
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#update_category_<?php echo $categories['category_id']; ?>">Edit</a>
-                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#delete_category_<?php echo $categories['category_id']; ?>">Delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                <?php include('../app/modals/delete_categories.php');
-                                                    }
-                                                } ?>
-                                            </tbody>
-                                        </table>
+                                            <h5 class="card-title text-dark">No Payments Methods Found</h5>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php } ?>
                         </div>
                     </div>
 
+                </div> <!-- End Content Wrapper -->
 
-                </div> <!-- End Content -->
-            </div> <!-- End Content Wrapper -->
+                <!-- Footer -->
+                <?php require_once('../app/partials/backoffice_footer.php'); ?>
 
-            <!-- Footer -->
-            <?php require_once('../app/partials/backoffice_footer.php'); ?>
+            </div> <!-- End Page Wrapper -->
+        </div> <!-- End Wrapper -->
 
-        </div> <!-- End Page Wrapper -->
-    </div> <!-- End Wrapper -->
-
-    <?php require_once('../app/partials/backoffice_scripts.php'); ?>
+        <?php require_once('../app/partials/backoffice_scripts.php'); ?>
 </body>
-
 
 </html>

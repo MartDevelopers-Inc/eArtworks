@@ -69,6 +69,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/fluttterwave_api_configs.php');
+require_once('../app/settings/mpesa_api_config.php');
 checklogin();
 require_once('../app/helpers/payments.php');
 require_once('../app/partials/landing_head.php');
@@ -404,10 +405,17 @@ require_once('../app/partials/landing_head.php');
                                                     $total_quantity += $orders["order_qty"];
                                                     $total_price += $orders['order_cost'] * $orders['order_qty'];
                                                     /* DeliverY Fee */
+
                                                     $constant_delivery_fee = '1500';
-                                                    /* Push Order Payment Status To Global Variable */
                                                     $payment_status = $orders['order_payment_status'];
-                                                    global $payment_status;
+                                                    $user_name = $orders['user_first_name'] . ' ' . $orders['user_last_name'];
+                                                    $user_contacts = $orders['user_phone_number'];
+                                                    
+
+                                                    /* Push Variables To Global Variable */
+                                                    global $payment_status, $user_name, $user_contacts;
+
+
                                             ?>
                                                     <tr>
                                                         <td><span><?php echo $orders['product_sku_code']; ?></span></td>
@@ -492,7 +500,7 @@ require_once('../app/partials/landing_head.php');
                                                 $mysqli,
                                                 "SELECT * FROM payments p
                                                 INNER JOIN payment_means pm ON pm.means_id = p.payment_means_id
-                                                WHERE p.payment_order_code = '{$order_code}'"
+                                                WHERE p.payment_order_code = '{$order_code}' AND p.payment_delete_status = '0'"
                                             );
                                             if (mysqli_num_rows($payment_sql) > 0) {
                                                 while ($payment = mysqli_fetch_array($payment_sql)) {
