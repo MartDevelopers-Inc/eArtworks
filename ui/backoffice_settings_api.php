@@ -144,36 +144,50 @@ require_once('../app/partials/backoffice_head.php');
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card-deck">
-                                <div class="card">
-                                    <img src="..." class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <div class="product-brand p-24px">
+                        <div class="row mb-m-24px">
+                            <?php
+                            /* Pop All Registered API`S */
+                            $api_sql = mysqli_query($mysqli, "SELECT * FROM thirdparty_apis");
+                            if (mysqli_num_rows($api_sql) > 0) {
+                                while ($apis = mysqli_fetch_array($api_sql)) {
+                            ?>
+
+                                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
+                                        <div class="card card-default">
+                                            <div class="card-body text-center p-24px">
+                                                <div class="image mb-3">
+                                                    <img src="../public/backoffice_assets/img/api.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                                </div>
+                                                <h5 class="card-title text-dark"><?php echo $apis['api_name']; ?></h5>
+                                                <p class="item-count">
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">Edit</button>
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">Delete</button>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                    /* API Managment Modals */
+                                    include('../app/modals/api_modals.php');
+                                }
+                            } else { ?>
+                                <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="assets/img/brand/1.jpg" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+
+                                            <h5 class="card-title text-dark">No API`s Found</h5>
+                                            <p class="item-count">We Can`t <span>Find Any API Here</span></p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card">
-                                    <img src="..." class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    </div>
-                                </div>
-                                <div class="card">
-                                    <img src="..." class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Card title</h5>
-                                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This card has even longer content than the first to show that equal height action.</p>
-                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php } ?>
                         </div>
-                    </div> <!-- End Content -->
+                    </div>
+
                 </div> <!-- End Content Wrapper -->
 
                 <!-- Footer -->
