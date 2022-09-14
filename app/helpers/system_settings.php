@@ -142,7 +142,7 @@ if (isset($_POST['Add_Payment_Means'])) {
     $means_name = mysqli_real_escape_string($mysqli, $_POST['means_name']);
 
     /* Persist */
-    $sql = "INSERT INTO payment_means (means_code, means_name) VALUES('{$means_name}', '{$means_code}')";
+    $sql = "INSERT INTO payment_means (means_code, means_name) VALUES('{$means_code}', '{$means_name}')";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Payment method added";
@@ -172,10 +172,9 @@ if (isset($_POST['Update_Payment_Means'])) {
 /* Delete Payment Methods */
 if (isset($_POST['Delete_Payment_Means'])) {
     $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
-    $means_delete_status = mysqli_real_escape_string($mysqli, $_POST['means_delete_status']);
 
     /* Persist */
-    $sql = "UPDATE payment_means SET means_delete_status = '{$means_delete_status}' WHERE means_id = '{$means_id}'";
+    $sql = "UPDATE payment_means SET means_delete_status = '1' WHERE means_id = '{$means_id}'";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Payment means moved to recycle bin";

@@ -146,28 +146,28 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="row mb-m-24px">
                             <?php
                             /* Pop All Registered API`S */
-                            $api_sql = mysqli_query($mysqli, "SELECT * FROM thirdparty_apis ");
-                            if (mysqli_num_rows($api_sql) > 0) {
-                                while ($apis = mysqli_fetch_array($api_sql)) {
+                            $payment_means = mysqli_query($mysqli, "SELECT * FROM payment_means WHERE means_delete_status = '0' ");
+                            if (mysqli_num_rows($payment_means) > 0) {
+                                while ($payments = mysqli_fetch_array($payment_means)) {
                             ?>
 
                                     <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
                                         <div class="card card-default">
                                             <div class="card-body text-center p-24px">
                                                 <div class="image mb-3">
-                                                    <img src="../public/backoffice_assets/img/api.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                                    <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                                 </div>
-                                                <h5 class="card-title text-dark"><?php echo $apis['api_name']; ?></h5>
+                                                <h5 class="card-title text-dark"><?php echo $payments['means_name']; ?></h5>
                                                 <p class="item-count">
-                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">Edit</button>
-                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">Delete</button>
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $payments['means_id']; ?>">Edit</button>
+                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $payments['means_id']; ?>">Delete</button>
                                                 </p>
                                             </div>
                                         </div>
                                     </div>
                                 <?php
                                     /* API Managment Modals */
-                                    include('../app/modals/api_modals.php');
+                                    include('../app/modals/payment_means_modal.php');
                                 }
                             } else { ?>
                                 <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
@@ -177,7 +177,7 @@ require_once('../app/partials/backoffice_head.php');
                                                 <img src="../public/backoffice_assets/img/error.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                             </div>
 
-                                            <h5 class="card-title text-dark">No Registered APIs Found</h5>
+                                            <h5 class="card-title text-dark">No Payments Methods Found</h5>
                                         </div>
                                     </div>
                                 </div>
