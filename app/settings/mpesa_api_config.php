@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Mon Sep 12 2022
+ *   Crafted On Wed Sep 14 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -69,14 +69,16 @@
 include('config.php');
 
 /* Get All APIs */
-$infobip = mysqli_query(
+$mpesa_sql = mysqli_query(
     $mysqli,
-    "SELECT * FROM thirdparty_apis WHERE api_name = 'InfoBip Bulk SMS'"
+    "SELECT * FROM thirdparty_apis WHERE api_name = 'eArtworks Mpesa'"
 );
-if (mysqli_num_rows($infobip) > 0) {
-    while ($infobip_auth = mysqli_fetch_array($infobip)) {
-        $infobip_keys = $infobip_auth['api_token'];
+if (mysqli_num_rows($mpesa_sql) > 0) {
+    while ($mpesa = mysqli_fetch_array($mpesa_sql)) {
+        $api_identification = $mpesa['api_identification'];
+        $api_token = $mpesa['api_token'];
         /* Push To Global */
-        global $infobip_keys;
+        global $api_identification;
+        global $api_token;
     }
 }
