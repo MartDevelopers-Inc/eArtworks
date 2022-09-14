@@ -41,11 +41,11 @@
                             </div>
                         </div>
                         <div class="form-group col-lg-12">
-                            <label for="email">API Token</label>
+                            <label for="email">API Token (Consumer Secret)</label>
                             <textarea class="form-control" rows="2" name="api_token"><?php echo $apis['api_token']; ?></textarea>
                         </div>
                         <div class=" form-group col-lg-">
-                            <label for="email">API Identification</label>
+                            <label for="email">API Identification (Consumer Key)</label>
                             <textarea class="form-control" rows="2" name="api_identification"><?php echo $apis['api_identification']; ?></textarea>
                         </div>
                     </div>
