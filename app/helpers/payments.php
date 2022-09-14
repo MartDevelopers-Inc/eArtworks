@@ -95,7 +95,8 @@ if (isset($_POST['Add_Payment'])) {
         $consumerKey = $api_token; //Fill with your app Consumer Key
         $consumerSecret = $api_identification; // Fill with your app Secret
 
-        $Amount = $payment_amount;
+        $Amount = '1';
+        //$payment_amount;
         $BusinessShortCode = '174379'; // This is a test business short code update it to match your organization
         $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; // Update This To Match Your Organization Too
 
