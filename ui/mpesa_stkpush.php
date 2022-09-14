@@ -1,11 +1,11 @@
 <?php
-
+include('../app/settings/mpesa_api_config.php');
 // STKPUSH
 date_default_timezone_set('Africa/Nairobi');
 
 # access token
-$consumerKey = ''; //Fill with your app Consumer Key
-$consumerSecret = ''; // Fill with your app Secret
+$consumerKey = $api_token; //Fill with your app Consumer Key
+$consumerSecret = $api_identification; // Fill with your app Secret
 
 # define the variales
 # provide the following details, this part is found on your test credentials on the developer account

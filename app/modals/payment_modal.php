@@ -16,7 +16,8 @@
                                 <input type="hidden" name="payment_amount" value="<?php echo ($total_price + $constant_delivery_fee); ?>">
                                 <input type="hidden" name="payment_ref_code" value="<?php echo $paycode; ?>">
                                 <input type="hidden" name="user_email" value="<?php echo $_SESSION['user_email']; ?>">
-                                <input type="hidden" name="user_name" value="<?php echo $orders['user_first_name'] . ' ' . $orders['user_last_name']; ?>">
+                                <input type="hidden" name="user_name" value="<?php echo $user_name; ?>">
+                                <input type="hidden" name="user_phone_number" value="<?php echo $user_contacts; ?>">
                                 <input type="hidden" name="payment_method_name" id="PaymentMethodName">
                                 <select name="payment_means_id" class="form-control" id="PaymentMeansID" onchange="GetPaymentMeansName(this.value)">
                                     <option>Select Method</option>
