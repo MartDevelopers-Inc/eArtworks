@@ -148,7 +148,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="row mb-m-24px">
                             <?php
                             /* Pop All Registered API`S */
-                            $api_sql = mysqli_query($mysqli, "SELECT * FROM thirdparty_apis");
+                            $api_sql = mysqli_query($mysqli, "SELECT * FROM thirdparty_apis ");
                             if (mysqli_num_rows($api_sql) > 0) {
                                 while ($apis = mysqli_fetch_array($api_sql)) {
                             ?>
@@ -176,11 +176,10 @@ require_once('../app/partials/backoffice_head.php');
                                     <div class="card card-default">
                                         <div class="card-body text-center p-24px">
                                             <div class="image mb-3">
-                                                <img src="assets/img/brand/1.jpg" class="img-fluid rounded-circle" alt="Avatar Image">
+                                                <img src="../public/backoffice_assets/img/error.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                             </div>
 
-                                            <h5 class="card-title text-dark">No API`s Found</h5>
-                                            <p class="item-count">We Can`t <span>Find Any API Here</span></p>
+                                            <h5 class="card-title text-dark">No Registered APIs Found</h5>
                                         </div>
                                     </div>
                                 </div>
