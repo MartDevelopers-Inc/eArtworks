@@ -92,26 +92,12 @@ if (isset($_POST['Add_Payment'])) {
         }
     } else if ($payment_method_name == 'Mpesa') {
 
-        # access token
         $consumerKey = $api_token; //Fill with your app Consumer Key
         $consumerSecret = $api_identification; // Fill with your app Secret
 
-        # define the variales
-        # provide the following details, this part is found on your test credentials on the developer account
-        $Amount = '1';
-        //$payment_amount;
+        $Amount = $payment_amount;
         $BusinessShortCode = '174379'; // This is a test business short code update it to match your organization
         $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; // Update This To Match Your Organization Too
-
-        /*
-            This are your info, for
-            $PartyA should be the ACTUAL clients phone number or your phone number, format 2547********
-            $AccountRefference, it maybe invoice number, account number etc on production systems, but for test just put anything
-            TransactionDesc can be anything, probably a better description of or the transaction
-            $Amount this is the total invoiced amount, Any amount here will be 
-            actually deducted from a clients side/your test phone number once the PIN has been entered to authorize the transaction. 
-            for developer/test accounts, this money will be reversed automatically by midnight.
-        */
 
         $PartyA =  $user_contacts;
         $AccountReference = 'eArtworks';
@@ -130,8 +116,8 @@ if (isset($_POST['Add_Payment'])) {
         $access_token_url = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
         $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
-        # callback url
-        $CallBackURL = 'https://8d33-197-136-137-5.in.ngrok.io/eArtworks/ui/mpesa_callback_url.php';
+        # callback url -> Update This Url On Application Set Up
+        $CallBackURL = 'https://8d33-197-136-137-5.in.ngrok.io/eArtworks/ui/mpesa_callback_url.php?order=' . $payment_order_code . '&means=' . $payment_means_id;
 
         $curl = curl_init($access_token_url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
