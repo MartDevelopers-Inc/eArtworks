@@ -405,10 +405,12 @@ require_once('../app/partials/landing_head.php');
                                                     $total_quantity += $orders["order_qty"];
                                                     $total_price += $orders['order_cost'] * $orders['order_qty'];
                                                     /* DeliverY Fee */
+
                                                     $constant_delivery_fee = '1500';
                                                     $payment_status = $orders['order_payment_status'];
                                                     $user_name = $orders['user_first_name'] . ' ' . $orders['user_last_name'];
                                                     $user_contacts = $orders['user_phone_number'];
+                                                    
 
                                                     /* Push Variables To Global Variable */
                                                     global $payment_status, $user_name, $user_contacts;

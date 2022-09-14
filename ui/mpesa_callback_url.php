@@ -65,7 +65,7 @@
  *
  */
 
-require_once('../config/config.php');
+require_once('../app/settings/config.php');
 
 $callbackJSONData = file_get_contents('php://input');
 
@@ -90,10 +90,4 @@ $phoneNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[4]->Valu
 
 $amount = strval($amount);
 if ($resultCode == 0) {
-
-    /* Persist Mpesa Transaction Report*/
-
-    /* Persist Payment Record */
-    
-    /* Update Order Status */
 }

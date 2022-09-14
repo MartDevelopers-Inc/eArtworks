@@ -65,9 +65,6 @@
  *
  */
 /* Add Payment */
-
-use PHPMailer\PHPMailer\POP3;
-
 if (isset($_POST['Add_Payment'])) {
     /* Add Extra Payment Methods Handlers Here */
     $payment_method_name = mysqli_real_escape_string($mysqli, $_POST['payment_method_name']);
@@ -77,7 +74,7 @@ if (isset($_POST['Add_Payment'])) {
     $payment_ref_code = mysqli_real_escape_string($mysqli, $_POST['payment_ref_code']);
     $order_payment_status = mysqli_real_escape_string($mysqli, 'Paid');
     $user_email = mysqli_real_escape_string($mysqli, $_SESSION['user_email']);
-    $user_phone_number = mysqli_real_escape_string($mysqli, $_POST['user_phone_number']);
+    $user_contacts = mysqli_real_escape_string($mysqli, $_POST['user_contacts']);
     $user_name = mysqli_real_escape_string($mysqli, $_POST['user_name']);
     /* Handle Cash On Delivery Payment Method */
     if ($payment_method_name == 'Cash') {
@@ -94,8 +91,6 @@ if (isset($_POST['Add_Payment'])) {
             $err = "Failed, please try again";
         }
     } else if ($payment_method_name == 'Mpesa') {
-        // STKPUSH
-        date_default_timezone_set('Africa/Nairobi');
 
         # access token
         $consumerKey = $api_token; //Fill with your app Consumer Key
@@ -103,9 +98,10 @@ if (isset($_POST['Add_Payment'])) {
 
         # define the variales
         # provide the following details, this part is found on your test credentials on the developer account
-        $Amount = $payment_amount;
+        $Amount = '1';
+        //$payment_amount;
         $BusinessShortCode = '174379'; // This is a test business short code update it to match your organization
-        $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; //
+        $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; // Update This To Match Your Organization Too
 
         /*
             This are your info, for
@@ -117,7 +113,7 @@ if (isset($_POST['Add_Payment'])) {
             for developer/test accounts, this money will be reversed automatically by midnight.
         */
 
-        $PartyA =  $user_phone_number;
+        $PartyA =  $user_contacts;
         $AccountReference = 'eArtworks';
         $TransactionDesc = "Payment For Order#: $payment_order_code";
 
@@ -135,7 +131,7 @@ if (isset($_POST['Add_Payment'])) {
         $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
         # callback url
-        $CallBackURL = 'https://e-reservation.devlan.co.ke/views/callback_url.php';
+        $CallBackURL = 'https://8d33-197-136-137-5.in.ngrok.io/eArtworks/ui/mpesa_callback_url.php';
 
         $curl = curl_init($access_token_url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
