@@ -77,6 +77,7 @@ if (mysqli_num_rows($mpesa_sql) > 0) {
     while ($mpesa = mysqli_fetch_array($mpesa_sql)) {
         $api_identification = $mpesa['api_identification'];
         $api_token = $mpesa['api_token'];
+
         /* Push To Global */
         global $api_identification;
         global $api_token;
