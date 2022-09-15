@@ -182,3 +182,29 @@ if (isset($_POST['Delete_Payment_Means'])) {
         $err = "Failed, please try again";
     }
 }
+
+
+/* Purge Everything */
+if (isset($_POST['Purge_Everything'])) {
+    /* Purge Everything */
+    $categories_purge = "DELETE FROM categories WHERE category_delete_status = '1'";
+    $orders_purge = "DELETE FROM orders WHERE order_delete_status= '1'";
+    $payments_purge = "DELETE FROM payments WHERE payment_delete_status = '1'";
+    $payment_means_purge = "DELETE FROM payment_means WHERE means_delete_status  = '1'";
+    $products_purge = "DELETE FROM products WHERE product_delete_status = '1'";
+    $users_purge = "DELETE FROM users WHERE user_delete_status  = '1'";
+
+    /* Persist */
+    if (
+        mysqli_query($mysqli, $categories_purge) &&
+        mysqli_query($mysqli, $orders_purge) &&
+        mysqli_query($mysqli, $payments_purge) &&
+        mysqli_query($mysqli, $payment_means_purge) &&
+        mysqli_query($mysqli, $products_purge) &&
+        mysqli_query($mysqli, $users_purge)
+    ) {
+        $success  = "Contents in recycle bin purged";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
