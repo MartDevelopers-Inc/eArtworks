@@ -94,11 +94,11 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Payment Means</h1>
+                            <h1>System Recycle Bin</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_categories">Payment Means</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Payment Means
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_categories">System Settings</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Recycle Bin
                             </p>
                         </div>
                         <div>
@@ -133,44 +133,18 @@ require_once('../app/partials/backoffice_head.php');
                     <!-- End Modal -->
                     <div class="product-brand p-24px">
                         <div class="row mb-m-24px">
-                            <?php
-                            /* Pop All Registered API`S */
-                            $payment_means = mysqli_query($mysqli, "SELECT * FROM payment_means WHERE means_delete_status = '0' ");
-                            if (mysqli_num_rows($payment_means) > 0) {
-                                while ($payments = mysqli_fetch_array($payment_means)) {
-                            ?>
 
-                                    <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                        <div class="card card-default">
-                                            <div class="card-body text-center p-24px">
-                                                <div class="image mb-3">
-                                                    <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
-                                                </div>
-                                                <h5 class="card-title text-dark"><?php echo $payments['means_name']; ?></h5>
-                                                <p class="item-count">
-                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $payments['means_id']; ?>">Edit</button>
-                                                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $payments['means_id']; ?>">Delete</button>
-                                                </p>
-                                            </div>
+                            <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
+                                <div class="card card-default">
+                                    <div class="card-body text-center p-24px">
+                                        <div class="image mb-3">
+                                            <img src="../public/backoffice_assets/img/man.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                         </div>
-                                    </div>
-                                <?php
-                                    /* API Managment Modals */
-                                    include('../app/modals/payment_means_modal.php');
-                                }
-                            } else { ?>
-                                <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                    <div class="card card-default">
-                                        <div class="card-body text-center p-24px">
-                                            <div class="image mb-3">
-                                                <img src="../public/backoffice_assets/img/error.png" class="img-fluid rounded-circle" alt="Avatar Image">
-                                            </div>
-
-                                            <h5 class="card-title text-dark">No Payments Methods Found</h5>
-                                        </div>
+                                        <h5 class="card-title text-dark">Staffs</h5>
                                     </div>
                                 </div>
-                            <?php } ?>
+                            </div>
+
                         </div>
                     </div>
 

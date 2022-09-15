@@ -286,17 +286,35 @@ if (isset($_POST['Restore_Products'])) {
     }
 }
 
-/* Restore Users */
-if (isset($_POST['Restore_Users'])) {
+/* Restore Staffs */
+if (isset($_POST['Restore_Staffs'])) {
     $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
 
     /* Persist */
     if (mysqli_query(
         $mysqli,
-        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}'"
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Staff'"
     )) {
-        $success = "User restored";
+        $success = "Staff restored";
     } else {
         $err = "Failed, please try again";
     }
 }
+
+
+/* Restore Customers */
+if (isset($_POST['Restore_Customers'])) {
+    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Customer'"
+    )) {
+        $success = "Customer restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+/* Analytics Of Items In Recycle Bin */
