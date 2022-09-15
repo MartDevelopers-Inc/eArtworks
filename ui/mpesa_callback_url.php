@@ -94,16 +94,17 @@ $payment_means = mysqli_real_query($mysqli, $_GET['means']);
 
 if ($resultCode == 0) {
 
-    /* Persist This Payment */
-    //$order_status = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'";
+    /* Persist This Payment In Stk Push Table First */
+    $insert = $mysqli->query("INSERT INTO `stkpush`(`merchantRequestID`, `checkoutRequestID`,`resultCode`, `resultDesc`, `amount`, `mpesaReceiptNumber`, `transactionDate`, `phoneNumber`)
+    VALUES ('$merchantRequestID', '$checkoutRequestID','$resultCode', '$resultDesc', '$amount','$mpesaReceiptNumber','$transactionDate','$phoneNumber')");
 
-    $payment_sql = $mysqli->query("INSERT INTO payments(payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
+    /* $payment_sql = $mysqli->query("INSERT INTO payments(payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
     VALUES('{$order_code}', '{$payment_means}', '{$amount}', '{$mpesaReceiptNumber}'");
     $order_sql = $mysqli_->query("UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'");
 
     $_SESSION['success'] = 'Payment Ref ' . $mpesaReceiptNumber . ' Posted';
     header('Location: landing_track_order_details?view=' . $order_code);
-    exit;
+    exit; */
 } else {
     $_SESSION['err'] = 'We cant process your payment now, kindly try again later';
     header('Location: landing_track_order_details?view=' . $order_code);
