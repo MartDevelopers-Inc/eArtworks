@@ -318,3 +318,61 @@ if (isset($_POST['Restore_Customers'])) {
 }
 
 /* Analytics Of Items In Recycle Bin */
+
+/* 1. Deleted Staffs */
+$query = "SELECT COUNT(*)  FROM users WHERE user_access_level = 'Staff' AND  user_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_staffs);
+$stmt->fetch();
+$stmt->close();
+
+/* 2. Deleted Customers */
+$query = "SELECT COUNT(*)  FROM users WHERE user_access_level = 'Customer' AND  user_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_customers);
+$stmt->fetch();
+$stmt->close();
+
+
+/* 3. Deleted Product Categories */
+$query = "SELECT COUNT(*)  FROM categories WHERE category_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_categories);
+$stmt->fetch();
+$stmt->close();
+
+
+/* 4. Deleted Products */
+$query = "SELECT COUNT(*)  FROM products WHERE product_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_products);
+$stmt->fetch();
+$stmt->close();
+
+/* 5. Deleted Orders */
+$query = "SELECT COUNT(*)  FROM orders WHERE order_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_orders);
+$stmt->fetch();
+$stmt->close();
+
+/* 6. Deleted Payment Means */
+$query = "SELECT COUNT(*)  FROM payment_means WHERE means_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_payment_means);
+$stmt->fetch();
+$stmt->close();
+
+/* 7. Deleted Payments */
+$query = "SELECT COUNT(*)  FROM payment_means WHERE means_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_payments);
+$stmt->fetch();
+$stmt->close();
