@@ -63,7 +63,7 @@ $userID 			= $_SESSION['user_id'];        // place your registered userID or md5
 // if userID is empty, system will autogenerate userID and save it in cookies
 $userFormat		= "COOKIE";       // save userID in cookies (or you can use IPADDRESS, SESSION, MANUAL)
 $orderID		= mysqli_escape_string($mysqli, $_GET['order']);	  // invoice #000383
-$amountUSD		= 0.12;			  // invoice amount - 0.12 USD; or you can use - $amountUSD = convert_currency_live("EUR", "USD", 22.37); // convert 22.37EUR to USD
+$amountUSD		= mysqli_escape_string($mysqli, (0.0083 * ($_GET['amount'])));  // invoice amount - 0.12 USD; or you can use - $amountUSD = convert_currency_live("EUR", "USD", 22.37); // convert 22.37EUR to USD
 
 $period			= "NOEXPIRY";	  // one time payment, not expiry
 $def_language	= "en";			  // default Language in payment box
@@ -78,14 +78,6 @@ $coins = array('bitcoin', 'bitcoincash', 'litecoin', 'dogecoin', 'dash', 'speedc
 // Create record for each your coin - https://gourl.io/editrecord/coin_boxes/0 ; and get free gourl keys
 // It is not bitcoin wallet private keys! Place GoUrl Public/Private keys below for all coins which you accept
 
-
-
-
-$all_keys = array(
-	"bitcoin"  => 		array("public_key" => "-your public key for Bitcoin box-",  "private_key" => "-your private key for Bitcoin box-"),
-	"bitcoincash"  =>	array("public_key" => "-your public key for BitcoinCash box-",  "private_key" => "-your private key for BitcoinCash box-"),
-	"litecoin" => 		array("public_key" => "-your public key for Litecoin box-", "private_key" => "-your private key for Litecoin box-")
-); // etc.
 
 // Demo Keys; for tests	(example - 5 coins)
 $all_keys = array(
@@ -113,7 +105,8 @@ $all_keys = array(
 		"public_key"  => "20116AA36hi8Speedcoin77SPDPUBjTMX31yIra1IBRssY7yFy",
 		"private_key" => "20116AA36hi8Speedcoin77SPDPRVNOwjzYNqVn4Sn5XOwMI2c"
 	)
-); // Demo keys!
+);
+// Demo keys!
 
 //  IMPORTANT: Add in file /lib/cryptobox.config.php your database settings and your gourl.io coin private keys (need for Instant Payment Notifications) -
 /* if you use demo keys above, please add to /lib/cryptobox.config.php - 
@@ -164,7 +157,7 @@ $options = array(
 	"orderID"     	=> $orderID, 		// order id or product name
 	"userID"      		=> $userID, 	// unique identifier for every user
 	"userFormat"  	=> $userFormat, 	// save userID in COOKIE, IPADDRESS, SESSION  or MANUAL
-	"amount"   	  	=> 0,			    // product price in btc/bch/bsv/ltc/doge/etc OR setup price in USD below
+	"amount"   	  	=> '',			    // product price in btc/bch/bsv/ltc/doge/etc OR setup price in USD below
 	"amountUSD"   	=> $amountUSD,	    // we use product price in USD
 	"period"      		=> $period, 	// payment valid period
 	"language"	  	=> $def_language    // text on EN - english, FR - french, etc
@@ -201,13 +194,8 @@ $coinName = $box->coin_name();
 	<meta name="description" content="">
 	<title>Payment Box</title>
 
-
 	<!-- Bootstrap4 CSS - -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" crossorigin="anonymous">
-
-	<!-- Note - If your website not use Bootstrap4 CSS as main style, please use custom css style below and delete css line above. 
-    It isolate Bootstrap CSS to a particular class 'bootstrapiso' to avoid css conflicts with your site main css style -->
-	<!-- <link rel="stylesheet" href="css/bootstrapcustom.min.css" crossorigin="anonymous"> -->
 
 	<!-- JS -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" crossorigin="anonymous"></script>
@@ -264,18 +252,17 @@ $coinName = $box->coin_name();
 	<?php
 
 	// Text above payment box
-	$custom_text  = "<p class='lead'>Demo Text - Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>";
-	$custom_text .= "<p class='lead'>Please contact us for any questions on aaa@example.com</p>";
+	$custom_text  = "<p class='lead'>Pay Order $orderID Using Cryptocurrency.</p>";
+	$custom_text .= "<p class='lead'>Please contact us for any questions on payments@eartworks.org</p>";
+	$custom_text .= "<p class='lead'><a href='../landing_track_order_details?view=$orderID'>Go Back</a></p>";
+
 
 	// Display payment box 	
-	echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, 70, 200, true, "default", "default", 250, "", "curl", true);
+	echo $box->display_cryptobox_bootstrap($coins, $def_coin, $def_language, $custom_text, 70, 200, true, "default", "default", 250, true);
 
-
-	// You can setup method='curl' in function above and use code below on this webpage -
-	// if successful bitcoin payment received .... allow user to access your premium data/files/products, etc.
-	// if ($box->is_paid()) { ... your code here ... }
-
-
+	if ($box->is_paid()) {
+		/* Mark Order As Paid And Persist This Transaction */
+	}
 	?>
 
 </body>
