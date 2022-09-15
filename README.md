@@ -23,3 +23,4 @@ artists and designers to get support for their artistic endeavors as well as to 
 11. API Keys are Hadcoded - A fix has started. <br>
 12. All unpaid orders cn be marked as paid on back office module with cash as the default payment means.
 13. Mpesa payment method has been removed because Flutterwave handles both Card and Phone Payments.
+14. Careful on editing Third Party Api`s it will break entire payment process.

@@ -90,6 +90,9 @@ if (isset($_POST['Add_Payment'])) {
         } else {
             $err = "Failed, please try again";
         }
+    } else if ($payment_method_name == 'Cryptocurrency') {
+        /* Handle Crypto Currency Payment */
+    
     } else if ($payment_method_name == 'Debit / Credit Card') {
         /* Process Flutterwave Payment API */
         $request = [
