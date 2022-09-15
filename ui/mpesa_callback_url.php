@@ -66,47 +66,24 @@
  */
 session_start();
 require_once('../app/settings/config.php');
+header("Content-Type:application/json");
 
-$callbackJSONData = file_get_contents('php://input');
+$content = file_get_contents('php://input'); //Recieves the response from MPESA as a string
 
-$logFile = "stkPush.json";
-$log = fopen($logFile, "a");
-fwrite($log, $callbackJSONData);
-fclose($log);
+$res = json_decode($content, false); //Converts the response string to an object
 
-$callbackData = json_decode($callbackJSONData);
+$dataToLog = array(
+    date("Y-m-d H:i:s"), //Date and time
+    $res
+); //Sets up the log format: Date, time and the response
+$data = implode(" - ", $dataToLog);
 
-$resultCode = $callbackData->Body->stkCallback->ResultCode;
-$resultDesc = $callbackData->Body->stkCallback->ResultDesc;
-$merchantRequestID = $callbackData->Body->stkCallback->MerchantRequestID;
-$checkoutRequestID = $callbackData->Body->stkCallback->CheckoutRequestID;
-$mpesa = $callbackData->stkCallback->Body->CallbackMetadata->Item[0]->Name;
-$amount = $callbackData->Body->stkCallback->CallbackMetadata->Item[0]->Value;
-$mpesaReceiptNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[1]->Value;
-$balance = $callbackData->stkCallback->Body->CallbackMetadata->Item[2]->Value;
-$b2CUtilityAccountAvailableFunds = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
-$transactionDate = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
-$phoneNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[4]->Value;
+$data .= PHP_EOL; //Add an end of line to the transaction log
 
-$amount = strval($amount);
-$order_code = mysqli_real_query($mysqli, $_GET['order']);
-$payment_means = mysqli_real_query($mysqli, $_GET['means']);
+file_put_contents('transaction_log', $data, FILE_APPEND); //Appends the response to the log file transaction_log
 
-if ($resultCode == 0) {
-
-    /* Persist This Payment In Stk Push Table First */
-    $insert = $mysqli->query("INSERT INTO `stkpush`(`merchantRequestID`, `checkoutRequestID`,`resultCode`, `resultDesc`, `amount`, `mpesaReceiptNumber`, `transactionDate`, `phoneNumber`)
-    VALUES ('$merchantRequestID', '$checkoutRequestID','$resultCode', '$resultDesc', '$amount','$mpesaReceiptNumber','$transactionDate','$phoneNumber')");
-
-    /* $payment_sql = $mysqli->query("INSERT INTO payments(payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
-    VALUES('{$order_code}', '{$payment_means}', '{$amount}', '{$mpesaReceiptNumber}'");
-    $order_sql = $mysqli_->query("UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'");
-
-    $_SESSION['success'] = 'Payment Ref ' . $mpesaReceiptNumber . ' Posted';
-    header('Location: landing_track_order_details?view=' . $order_code);
-    exit; */
-} else {
-    $_SESSION['err'] = 'We cant process your payment now, kindly try again later';
-    header('Location: landing_track_order_details?view=' . $order_code);
-    exit;
+$sql = "INSERT INTO `mpesa_responses` (`responses`) VALUES ('$content')";
+$rs = mysqli_query($mysqli, $sql); //Record the response to the database
+if ($rs) {
+    echo "Records Inserted";
 }
