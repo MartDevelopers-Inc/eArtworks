@@ -92,7 +92,7 @@ if (isset($_POST['Add_Payment'])) {
         }
     } else if ($payment_method_name == 'Cryptocurrency') {
         /* Handle Crypto Currency Payment */
-    
+        header("Location: crypto_handler/index?order=$payment_order_code&amount=$payment_amount");
     } else if ($payment_method_name == 'Debit / Credit Card') {
         /* Process Flutterwave Payment API */
         $request = [
