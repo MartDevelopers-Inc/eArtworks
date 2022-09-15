@@ -182,3 +182,197 @@ if (isset($_POST['Delete_Payment_Means'])) {
         $err = "Failed, please try again";
     }
 }
+
+
+/* Purge Everything */
+if (isset($_POST['Purge_Everything'])) {
+    /* Purge Everything */
+    $categories_purge = "DELETE FROM categories WHERE category_delete_status = '1'";
+    $orders_purge = "DELETE FROM orders WHERE order_delete_status= '1'";
+    $payments_purge = "DELETE FROM payments WHERE payment_delete_status = '1'";
+    $payment_means_purge = "DELETE FROM payment_means WHERE means_delete_status  = '1'";
+    $products_purge = "DELETE FROM products WHERE product_delete_status = '1'";
+    $users_purge = "DELETE FROM users WHERE user_delete_status  = '1'";
+
+    /* Persist */
+    if (
+        mysqli_query($mysqli, $categories_purge) &&
+        mysqli_query($mysqli, $orders_purge) &&
+        mysqli_query($mysqli, $payments_purge) &&
+        mysqli_query($mysqli, $payment_means_purge) &&
+        mysqli_query($mysqli, $products_purge) &&
+        mysqli_query($mysqli, $users_purge)
+    ) {
+        $success  = "Contents in recycle bin purged";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+
+/* Restore Categories */
+if (isset($_POST['Restore_Categories'])) {
+    $category_id   = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE categories SET category_delete_status = '0' WHERE category_id = '{$category_id}'"
+    )) {
+        $success = "Category restored";
+    } else {
+        $err  = "Failed, please try again";
+    }
+}
+
+/* Restore Orders */
+if (isset($_POST['Restore_Orders'])) {
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE orders SET order_delete_status = '0' WHERE order_code = '{$order_code}'"
+    )) {
+        $success = "Order restored";
+    } else {
+        $err =  "Failed, please try again";
+    }
+}
+
+
+/* Restore Payments */
+if (isset($_POST['Restore_Payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE payments SET payment_delete_status = '0' WHERE payment_id = '{$payment_id}'"
+    )) {
+        $success = "Payment restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+/* Restore Payments Methods */
+if (isset($_POST['Restore_Payment_Methods'])) {
+    $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE payment_means SET means_delete_status = '0' WHERE means_id = '{$means_id}'"
+    )) {
+        $success = "Payment means restored";
+    } else {
+        $err = "Failed, pelase try again";
+    }
+}
+
+/* Restore Products */
+if (isset($_POST['Restore_Products'])) {
+    $product_id  = mysqli_escape_string($mysqli, $_POST['product_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE products SET product_delete_status = '0' WHERE product_id = '{$product_id}'"
+    )) {
+        $success = "Product restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+/* Restore Staffs */
+if (isset($_POST['Restore_Staffs'])) {
+    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Staff'"
+    )) {
+        $success = "Staff restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+
+/* Restore Customers */
+if (isset($_POST['Restore_Customers'])) {
+    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Customer'"
+    )) {
+        $success = "Customer restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+/* Analytics Of Items In Recycle Bin */
+
+/* 1. Deleted Staffs */
+$query = "SELECT COUNT(*)  FROM users WHERE user_access_level = 'Staff' AND  user_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_staffs);
+$stmt->fetch();
+$stmt->close();
+
+/* 2. Deleted Customers */
+$query = "SELECT COUNT(*)  FROM users WHERE user_access_level = 'Customer' AND  user_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_customers);
+$stmt->fetch();
+$stmt->close();
+
+
+/* 3. Deleted Product Categories */
+$query = "SELECT COUNT(*)  FROM categories WHERE category_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_categories);
+$stmt->fetch();
+$stmt->close();
+
+
+/* 4. Deleted Products */
+$query = "SELECT COUNT(*)  FROM products WHERE product_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_products);
+$stmt->fetch();
+$stmt->close();
+
+/* 5. Deleted Orders */
+$query = "SELECT COUNT(*)  FROM orders WHERE order_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_orders);
+$stmt->fetch();
+$stmt->close();
+
+/* 6. Deleted Payment Means */
+$query = "SELECT COUNT(*)  FROM payment_means WHERE means_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_payment_means);
+$stmt->fetch();
+$stmt->close();
+
+/* 7. Deleted Payments */
+$query = "SELECT COUNT(*)  FROM payment_means WHERE means_delete_status = '1'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($deleted_payments);
+$stmt->fetch();
+$stmt->close();

@@ -71,7 +71,7 @@ include('config.php');
 /* Get All APIs */
 $flutterwave = mysqli_query(
     $mysqli,
-    "SELECT * FROM thirdparty_apis WHERE api_name = 'Flutterwave Rave API'"
+    "SELECT * FROM thirdparty_apis WHERE api_name = 'Flutterwave Rave'"
 );
 if (mysqli_num_rows($flutterwave) > 0) {
     while ($flutterwave_auth = mysqli_fetch_array($flutterwave)) {
