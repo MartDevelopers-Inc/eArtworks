@@ -208,3 +208,95 @@ if (isset($_POST['Purge_Everything'])) {
         $err = "Failed, please try again";
     }
 }
+
+
+/* Restore Categories */
+if (isset($_POST['Restore_Categories'])) {
+    $category_id   = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE categories SET category_delete_status = '0' WHERE category_id = '{$category_id}'"
+    )) {
+        $success = "Category restored";
+    } else {
+        $err  = "Failed, please try again";
+    }
+}
+
+/* Restore Orders */
+if (isset($_POST['Restore_Orders'])) {
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE orders SET order_delete_status = '0' WHERE order_code = '{$order_code}'"
+    )) {
+        $success = "Order restored";
+    } else {
+        $err =  "Failed, please try again";
+    }
+}
+
+
+/* Restore Payments */
+if (isset($_POST['Restore_Payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE payments SET payment_delete_status = '0' WHERE payment_id = '{$payment_id}'"
+    )) {
+        $success = "Payment restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+/* Restore Payments Methods */
+if (isset($_POST['Restore_Payment_Methods'])) {
+    $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE payment_means SET means_delete_status = '0' WHERE means_id = '{$means_id}'"
+    )) {
+        $success = "Payment means restored";
+    } else {
+        $err = "Failed, pelase try again";
+    }
+}
+
+/* Restore Products */
+if (isset($_POST['Restore_Products'])) {
+    $product_id  = mysqli_escape_string($mysqli, $_POST['product_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE products SET product_delete_status = '0' WHERE product_id = '{$product_id}'"
+    )) {
+        $success = "Product restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
+/* Restore Users */
+if (isset($_POST['Restore_Users'])) {
+    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}'"
+    )) {
+        $success = "User restored";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
