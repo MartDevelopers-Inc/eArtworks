@@ -18,7 +18,7 @@
                                 <input type="hidden" name="user_email" value="<?php echo $_SESSION['user_email']; ?>">
                                 <input type="hidden" name="user_name" value="<?php echo $user_name; ?>">
                                 <input type="hidden" name="user_contacts" value="<?php echo $user_contacts; ?>">
-                                <input type="sts" name="payment_method_name" id="PaymentMethodName">
+                                <input type="hidden" name="payment_method_name" id="PaymentMethodName">
                                 <select name="payment_means_id" class="form-control" id="PaymentMeansID" onchange="GetPaymentMeansName(this.value)">
                                     <option>Select Method</option>
                                     <?php
