@@ -271,6 +271,21 @@ if (isset($_POST['Restore_Orders'])) {
 }
 
 
+/* Delete Payments */
+if (isset($_POST['Delete_Payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM payments WHERE payment_id = '{$payment_id}'"
+    )) {
+        $success = "Payment deleted";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
 /* Restore Payments */
 if (isset($_POST['Restore_Payment'])) {
     $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
@@ -285,6 +300,22 @@ if (isset($_POST['Restore_Payment'])) {
         $err = "Failed, please try again";
     }
 }
+
+/* Delete Payment Means */
+if (isset($_POST['Delete_Payment_Means_From_Trash'])) {
+    $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM payment_means  WHERE means_id = '{$means_id}'"
+    )) {
+        $success = "Payment means deleted";
+    } else {
+        $err = "Failed, pelase try again";
+    }
+}
+
 
 /* Restore Payments Methods */
 if (isset($_POST['Restore_Payment_Methods'])) {
