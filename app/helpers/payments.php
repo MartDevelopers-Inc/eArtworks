@@ -150,15 +150,15 @@ if (isset($_POST['Add_Payment'])) {
         /* Load Mpesa STK PUSH */
         date_default_timezone_set('Africa/Nairobi');
 
-        # access token
-        $consumerKey = 'c2oPrnEhmDFde327b9TlgAj2RTwtM7lO'; //Fill with your app Consumer Key
-        $consumerSecret = 'KWRKJNEY207CTnZn'; // Fill with your app Secret
+        # access token - Automatically added to the database to avoid key bleeds
+        $consumerKey = $consumer_key;
+        $consumerSecret = $consumer_secret;
 
         # define the variales
         # provide the following details, this part is found on your test credentials on the developer account
-        $Amount = '1';
-        $BusinessShortCode = '174379';
-        $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
+        $Amount = $payment_amount;
+        $BusinessShortCode = $business_shortCode; /* Find this variable under app/settings/mpesa_daraja_api_config.php */
+        $Passkey = $passkey;
 
         /*
             This are your info, for
@@ -188,7 +188,7 @@ if (isset($_POST['Add_Payment'])) {
         $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
         # callback url
-        $CallBackURL = 'https://34b6-197-136-137-5.in.ngrok.io/eArtworks/ui/callback_url.php?order=' . $payment_order_code . '&means=' . $payment_means_id;
+        $CallBackURL = 'https://' . $_SERVER['HTTP_HOST'] . '/eArtworks/ui/callback_url.php?order=' . $payment_order_code . '&means=' . $payment_means_id;
 
         $curl = curl_init($access_token_url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
@@ -230,7 +230,7 @@ if (isset($_POST['Add_Payment'])) {
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
 
-        $info = "We are processing your mobile payment";
+        $info = "We are processing your mobile payment. Refresh this page after you have paid";
     } else {
         $err = "Payment means is not supported yet";
     }

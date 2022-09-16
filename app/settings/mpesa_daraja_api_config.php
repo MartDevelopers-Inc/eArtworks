@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Fri Sep 16 2022
+ *   Crafted On Mon Sep 12 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -65,56 +65,26 @@
  *
  */
 
-session_start();
-require_once('../app/settings/config.php');
 
-$callbackJSONData = file_get_contents('php://input');
+include('config.php');
 
-$logFile = "stkPush.json";
-$log = fopen($logFile, "a");
-fwrite($log, $callbackJSONData);
-fclose($log);
+/* Get All APIs */
+$daraja = mysqli_query(
+    $mysqli,
+    "SELECT * FROM thirdparty_apis WHERE api_name = 'Mpesa'"
+);
+if (mysqli_num_rows($daraja) > 0) {
+    while ($daraja_credentials = mysqli_fetch_array($daraja)) {
+        $consumer_key = $daraja_credentials['api_identification'];
+        $consumer_secret = $daraja_credentials['api_token'];
+        /* Edit This Variables  */
+        $business_shortCode = '174379'; /* Enter Your Till Number From Gportal */
+        $passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'; /* Enter Your Passkey */
 
-$callbackData = json_decode($callbackJSONData);
-$order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
-$payment_means = mysqli_real_escape_string($mysqli, $_GET['means']);
-$resultCode = $callbackData->Body->stkCallback->ResultCode;
-$resultDesc = $callbackData->Body->stkCallback->ResultDesc;
-$merchantRequestID = $callbackData->Body->stkCallback->MerchantRequestID;
-$checkoutRequestID = $callbackData->Body->stkCallback->CheckoutRequestID;
-$mpesa = $callbackData->stkCallback->Body->CallbackMetadata->Item[0]->Name;
-$amount = $callbackData->Body->stkCallback->CallbackMetadata->Item[0]->Value;
-$mpesaReceiptNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[1]->Value;
-$balance = $callbackData->stkCallback->Body->CallbackMetadata->Item[2]->Value;
-$b2CUtilityAccountAvailableFunds = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
-$transactionDate = $callbackData->Body->stkCallback->CallbackMetadata->Item[3]->Value;
-$phoneNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[4]->Value;
-
-$amount = strval($amount);
-if ($resultCode == 0) {
-
-    /* Persit JSON Response From Safcom This Is For Reference Purposes */
-    $stk_response = "INSERT INTO stkpush (merchantRequestID, checkoutRequestID, resultCode, resultDesc, amount, mpesaReceiptNumber, transactionDate, phoneNumber)
-    VALUES ('{$merchantRequestID}', '{$checkoutRequestID}','{$resultCode}', '{$resultDesc}', '{$amount}','{$mpesaReceiptNumber}','{$transactionDate}','{$phoneNumber}')";
-
-    /* Persist This Order Payment Code */
-    $payment_sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
-    VALUES('{$order_code}', '{$payment_means}', '{$amount}', '$mpesaReceiptNumber')";
-
-    /* Update Order Set Order Status As Paid */
-    $order_sql = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'";
-
-
-    /* Execute The Above Sqls */
-    mysqli_query($mysqli, $stk_response);
-    mysqli_query($mysqli, $payment_sql);
-    mysqli_query($mysqli, $order_sql);
-} else {
-    /*
-    -> This exception handler is not invoked but lets keep it there.
-    -> Redirect User To Order Tracking Page But With An Error Message.
-     */
-    $_SESSION['err'] = 'Failed to persist transaction details, please pay with a different payment method';
-    header('Location: landing_track_order_details?view=' . $order_code);
-    exit;
+        /* Push To Global */
+        global $consumer_key;
+        global $consumer_secret;
+        global $business_shortCode;
+        global $passkey;
+    }
 }
