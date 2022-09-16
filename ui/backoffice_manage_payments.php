@@ -93,98 +93,15 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Orders</h1>
+                            <h1>Order Payments</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_orders">Orders</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Orders
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_payments">Orders</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Payments
                             </p>
                         </div>
-                        <div>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUser">
-                                Register Order
-                            </button>
-                        </div>
                     </div>
 
-                    <!-- Add User Modal  -->
-                    <div class="modal fade modal-add-contact" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                            <div class="modal-content">
-                                <form method="POST" enctype="multipart/form-data">
-                                    <div class="modal-header px-4">
-                                        <h5 class="modal-title" id="exampleModalCenterTitle">Register New Order</h5>
-                                    </div>
-
-                                    <div class="modal-body px-4">
-                                        <div class="row mb-2">
-                                            <div class="form-row">
-                                                <div class="form-group col-lg-12">
-                                                    <label for="email">Select Customer</label>
-                                                    <select type="text" required class="form-control" name="order_user_id">
-                                                        <?php
-                                                        $customer_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' 
-                                                        AND user_access_level = 'Customer' ORDER BY user_first_name ASC");
-                                                        if (mysqli_num_rows($customer_sql) > 0) {
-                                                            while ($customers = mysqli_fetch_array($customer_sql)) {
-                                                        ?>
-                                                                <option value="<?php echo $customers['user_id']; ?>"><?php echo $customers['user_first_name'] . ' ' . $customers['user_last_name'] . '.  Phone Number: ' . $customers['user_phone_number']; ?></option>
-                                                        <?php }
-                                                        } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group col-lg-8">
-                                                    <label for="email">Select Product</label>
-                                                    <select type="text" required class="form-control" name="order_product_id">
-                                                        <option>Select Product</option>
-                                                        <?php
-                                                        $products_sql = mysqli_query($mysqli, "SELECT * FROM products WHERE product_delete_status = '0'");
-                                                        if (mysqli_num_rows($products_sql) > 0) {
-                                                            while ($products = mysqli_fetch_array($products_sql)) {
-                                                        ?>
-                                                                <option value="<?php echo $products['product_id']; ?>"><?php echo $products['product_name']; ?></option>
-                                                        <?php }
-                                                        } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-lg-4">
-                                                    <div class="form-group">
-                                                        <label for="firstName">Order Qty</label>
-                                                        <input type="number" required class="form-control" name="order_qty">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-lg-6">
-                                                <div class="form-group">
-                                                    <label for="lastName">Order Status</label>
-                                                    <select type="text" required class="form-control" name="order_status">
-                                                        <option value="Placed Orders">Order Placed</option>
-                                                        <option>Awaiting Fullfilment</option>
-                                                        <option>Shipped</option>
-                                                        <option>Out For Delivery</option>
-                                                        <option>Delivered</option>
-                                                        <option>Returned</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group col-lg-6">
-                                                <label for="email">Estimated Delivery Date</label>
-                                                <input type="date" required class="form-control" name="order_estimated_delivery_date">
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div class="modal-footer px-4">
-                                        <button type="button" class="btn btn-secondary btn-pill" data-bs-dismiss="modal">Cancel</button>
-                                        <button type="submit" name="Add_Order" class="btn btn-primary btn-pill">Register Order</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row">
                         <div class="col-12">
                             <div class="ec-vendor-list card card-default">

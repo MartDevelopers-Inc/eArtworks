@@ -157,13 +157,15 @@
                                     <span class="nav-text">Payments Methods</span>
                                 </a>
                             </li>
-                            <li class="">
-                                <a class="sidenav-item-link" href="back_office_recycle_bin">
-                                    <span class="nav-text">Recycle Bin</span>
-                                </a>
-                            </li>
                         </ul>
                     </div>
+                </li>
+                <li>
+                    <a class="sidenav-item-link" href="backoffice_recycle_bin">
+                        <i class="mdi mdi-trash-can"></i>
+                        <span class="nav-text">Recycle Bin</span>
+                    </a>
+                    <hr>
                 </li>
 
                 <!-- Lite CMS -->

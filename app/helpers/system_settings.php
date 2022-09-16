@@ -209,6 +209,21 @@ if (isset($_POST['Purge_Everything'])) {
     }
 }
 
+/* Delete Categories */
+if (isset($_POST['Delete_Categories'])) {
+    $category_id = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM categories WHERE category_id = '{$category_id}'"
+    )) {
+        $success = "Category deleted";
+    } else {
+        $err  = "Failed, please try again";
+    }
+}
+
 
 /* Restore Categories */
 if (isset($_POST['Restore_Categories'])) {
@@ -222,6 +237,21 @@ if (isset($_POST['Restore_Categories'])) {
         $success = "Category restored";
     } else {
         $err  = "Failed, please try again";
+    }
+}
+
+/* Delete Order */
+if (isset($_POST['Delete_Order'])) {
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM  orders WHERE order_code = '{$order_code}'"
+    )) {
+        $success = "Order deleted";
+    } else {
+        $err =  "Failed, please try again";
     }
 }
 
@@ -241,6 +271,21 @@ if (isset($_POST['Restore_Orders'])) {
 }
 
 
+/* Delete Payments */
+if (isset($_POST['Delete_Payment'])) {
+    $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM payments WHERE payment_id = '{$payment_id}'"
+    )) {
+        $success = "Payment deleted";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
 /* Restore Payments */
 if (isset($_POST['Restore_Payment'])) {
     $payment_id = mysqli_real_escape_string($mysqli, $_POST['payment_id']);
@@ -255,6 +300,22 @@ if (isset($_POST['Restore_Payment'])) {
         $err = "Failed, please try again";
     }
 }
+
+/* Delete Payment Means */
+if (isset($_POST['Delete_Payment_Means_From_Trash'])) {
+    $means_id = mysqli_real_escape_string($mysqli, $_POST['means_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM payment_means  WHERE means_id = '{$means_id}'"
+    )) {
+        $success = "Payment means deleted";
+    } else {
+        $err = "Failed, pelase try again";
+    }
+}
+
 
 /* Restore Payments Methods */
 if (isset($_POST['Restore_Payment_Methods'])) {
@@ -271,9 +332,24 @@ if (isset($_POST['Restore_Payment_Methods'])) {
     }
 }
 
+/* Delete Product */
+if (isset($_POST['Delete_Product'])) {
+    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM products WHERE product_id = '{$product_id}'"
+    )) {
+        $success = "Product deleted";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
 /* Restore Products */
 if (isset($_POST['Restore_Products'])) {
-    $product_id  = mysqli_escape_string($mysqli, $_POST['product_id']);
+    $product_id  = mysqli_real_escape_string($mysqli, $_POST['product_id']);
 
     /* Persist */
     if (mysqli_query(
@@ -286,32 +362,31 @@ if (isset($_POST['Restore_Products'])) {
     }
 }
 
-/* Restore Staffs */
-if (isset($_POST['Restore_Staffs'])) {
-    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+/* Delete Staffs */
+if (isset($_POST['Delete_Staff_Account'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
 
     /* Persist */
     if (mysqli_query(
         $mysqli,
-        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Staff'"
+        "DELETE FROM users WHERE user_id ='{$user_id}'"
     )) {
-        $success = "Staff restored";
+        $success = "Account deleted";
     } else {
         $err = "Failed, please try again";
     }
 }
 
-
-/* Restore Customers */
-if (isset($_POST['Restore_Customers'])) {
-    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+/* Restore Staffs */
+if (isset($_POST['Restore_Staff_Account'])) {
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
 
     /* Persist */
     if (mysqli_query(
         $mysqli,
-        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Customer'"
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}'"
     )) {
-        $success = "Customer restored";
+        $success = "Account restored";
     } else {
         $err = "Failed, please try again";
     }
@@ -370,7 +445,7 @@ $stmt->fetch();
 $stmt->close();
 
 /* 7. Deleted Payments */
-$query = "SELECT COUNT(*)  FROM payment_means WHERE means_delete_status = '1'";
+$query = "SELECT COUNT(*)  FROM payments WHERE payment_delete_status = '1'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($deleted_payments);

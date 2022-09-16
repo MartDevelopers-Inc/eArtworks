@@ -69,6 +69,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/fluttterwave_api_configs.php');
+require_once('../app/settings/mpesa_daraja_api_config.php');
 checklogin();
 require_once('../app/helpers/payments.php');
 require_once('../app/partials/landing_head.php');
@@ -409,7 +410,7 @@ require_once('../app/partials/landing_head.php');
                                                     $payment_status = $orders['order_payment_status'];
                                                     $user_name = $orders['user_first_name'] . ' ' . $orders['user_last_name'];
                                                     $user_contacts = $orders['user_phone_number'];
-                                                    
+
 
                                                     /* Push Variables To Global Variable */
                                                     global $payment_status, $user_name, $user_contacts;
