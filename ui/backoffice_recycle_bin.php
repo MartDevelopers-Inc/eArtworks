@@ -134,7 +134,7 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="row mb-m-24px">
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <a href="bac">
+                                <a href="backoffice_deleted_staff">
                                     <div class="card card-default">
                                         <div class="card-body text-center p-24px">
                                             <div class="image mb-3">
@@ -150,89 +150,100 @@ require_once('../app/partials/backoffice_head.php');
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/man.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="backoffice_deleted_customers">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/man.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Customers</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_customers; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Customers</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_customers; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/categories.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="backoffice_deleted_categories">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/categories.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Categories</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_categories; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Categories</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_categories; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/auction.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="backoffice_deleted_products">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/auction.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Products</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_products; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Products</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_products; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/order.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="backoffice_deleted_order">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/order.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Orders</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_orders; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Orders</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_orders; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/debit-card_2.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="backoffice_deleted_means">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/debit-card_2.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Payment Means</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_payment_means; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Payment Means</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_payment_means; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="backoffice_deleted_payments">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Payments</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_payments; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Payments</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_payments; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
-
                         </div>
                     </div>
 
