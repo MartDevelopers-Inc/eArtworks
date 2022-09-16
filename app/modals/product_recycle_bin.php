@@ -1,5 +1,4 @@
-<!-- Delete Modal -->
-<div class="modal fade" id="delete_category_<?php echo $categories['category_id']; ?>" tabindex="-1" role="dialog">
+<div class="modal fade" id="delete_product_<?php echo $products['product_id']; ?>" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,23 +8,24 @@
             <form method="POST">
                 <div class="modal-body text-center ">
                     <h4 class="text-danger">
-                        Delete <?php echo  $categories['category_name']; ?>?
+                        Delete <?php echo  $products['product_sku_code'] . '  ' . $products['product_name']; ?>?
                     </h4>
                     <br>
                     <!-- Hide This -->
-                    <input type="hidden" name="category_id" value="<?php echo $categories['category_id']; ?>">
+                    <input type="hidden" name="product_id" value="<?php echo $products['product_id']; ?>">
                     <button type="button" class="text-center btn btn-success" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="text-center btn btn-danger" name="Restore_Products">Yes, Delete</button>
+                    <button type="submit" class="text-center btn btn-danger" name="Delete_Product">Yes, Delete</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- End Modal -->
+
+<!-- End Delete Modal -->
 
 
-<!-- Restore Categories -->
-<div class="modal fade" id="restore_category_<?php echo $categories['category_id']; ?>" tabindex="-1" role="dialog">
+<!-- Restore Modal -->
+<div class="modal fade" id="restore_product_<?php echo $products['product_id']; ?>" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -35,16 +35,16 @@
             <form method="POST">
                 <div class="modal-body text-center ">
                     <h4 class="text-danger">
-                        Restore <?php echo  $categories['category_name']; ?>?
+                        Restore <?php echo  $products['product_sku_code'] . '  ' . $products['product_name']; ?>?
                     </h4>
                     <br>
                     <!-- Hide This -->
-                    <input type="hidden" name="category_id" value="<?php echo $categories['category_id']; ?>">
+                    <input type="hidden" name="product_id" value="<?php echo $products['product_id']; ?>">
                     <button type="button" class="text-center btn btn-success" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="text-center btn btn-danger" name="Restore_Categories">Yes, Restore</button>
+                    <button type="submit" class="text-center btn btn-danger" name="Restore_Products">Yes, Restore</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<!-- End Restore Categories -->
+<!-- End Restore Modal -->

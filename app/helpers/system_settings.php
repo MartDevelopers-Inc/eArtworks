@@ -286,6 +286,21 @@ if (isset($_POST['Restore_Payment_Methods'])) {
     }
 }
 
+/* Delete Product */
+if (isset($_POST['Delete_Product'])) {
+    $product_id = mysqli_real_escape_string($mysqli, $_POST['product_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM products WHERE product_id = '{$product_id}'"
+    )) {
+        $success = "Product deleted";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
 /* Restore Products */
 if (isset($_POST['Restore_Products'])) {
     $product_id  = mysqli_real_escape_string($mysqli, $_POST['product_id']);
