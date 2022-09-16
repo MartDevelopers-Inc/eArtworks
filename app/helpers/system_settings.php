@@ -286,8 +286,23 @@ if (isset($_POST['Restore_Products'])) {
     }
 }
 
+/* Delete Staffs */
+if (isset($_POST['Delete_Staff_Account'])) {
+    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM users WHERE user_id ='{$user_id}'"
+    )) {
+        $success = "Account deleted";
+    } else {
+        $err = "Failed, please try again";
+    }
+}
+
 /* Restore Staffs */
-if (isset($_POST['Restore_Staffs'])) {
+if (isset($_POST['Restore_Staff_Account'])) {
     $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
 
     /* Persist */
