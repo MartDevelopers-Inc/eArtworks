@@ -146,9 +146,6 @@ if (isset($_POST['Add_Payment'])) {
             $err =  'We can not process your payment';
         }
     } else if ($payment_method_name == 'Mobile Payment') {
-        /* Persist Payment Record But Without Payment Code */
-        $sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount) 
-        VALUES('{$payment_order_code}', '{$payment_means_id}', '{$payment_amount}')";
 
         /* Load Mpesa STK PUSH */
         date_default_timezone_set('Africa/Nairobi');
@@ -191,7 +188,7 @@ if (isset($_POST['Add_Payment'])) {
         $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
         # callback url
-        $CallBackURL = 'https://34b6-197-136-137-5.in.ngrok.io/eArtworks/ui/callback_url.php?order=' . $payment_order_code;
+        $CallBackURL = 'https://34b6-197-136-137-5.in.ngrok.io/eArtworks/ui/callback_url.php?order=' . $payment_order_code . '&means=' . $payment_means_id;
 
         $curl = curl_init($access_token_url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
@@ -232,11 +229,8 @@ if (isset($_POST['Add_Payment'])) {
         curl_setopt($curl, CURLOPT_POST, true);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);
         $curl_response = curl_exec($curl);
-        if (mysqli_query($mysqli, $sql)) {
-            $success = "Order $payment_order_code paid";
-        } else {
-            $err = "Failed, please try again";
-        }
+
+        $info = "We are processing your mobile payment";
     } else {
         $err = "Payment means is not supported yet";
     }

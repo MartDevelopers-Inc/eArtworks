@@ -76,8 +76,8 @@ fwrite($log, $callbackJSONData);
 fclose($log);
 
 $callbackData = json_decode($callbackJSONData);
-$order_code = mysqli_real_escape_string($mysqli, $_GET['order_code']);
-
+$order_code = mysqli_real_escape_string($mysqli, $_GET['order']);
+$payment_means = mysqli_real_escape_string($mysqli, $_GET['means']);
 $resultCode = $callbackData->Body->stkCallback->ResultCode;
 $resultDesc = $callbackData->Body->stkCallback->ResultDesc;
 $merchantRequestID = $callbackData->Body->stkCallback->MerchantRequestID;
@@ -93,15 +93,17 @@ $phoneNumber = $callbackData->Body->stkCallback->CallbackMetadata->Item[4]->Valu
 $amount = strval($amount);
 if ($resultCode == 0) {
 
-    /* Persit JSON Response From Safcom */
+    /* Persit JSON Response From Safcom This Is For Reference Purposes */
     $stk_response = "INSERT INTO stkpush (merchantRequestID, checkoutRequestID, resultCode, resultDesc, amount, mpesaReceiptNumber, transactionDate, phoneNumber)
     VALUES ('{$merchantRequestID}', '{$checkoutRequestID}','{$resultCode}', '{$resultDesc}', '{$amount}','{$mpesaReceiptNumber}','{$transactionDate}','{$phoneNumber}')";
 
-    /* Update Payment Add Payment TRXN Code From Mpesa */
-    $payment_sql = "UPDATE payments SET payment_ref_code = '{$mpesaReceiptNumber}' WHERE payment_order_code = '{$order_code}'";
+    /* Persist This Order Payment Code */
+    $payment_sql = "INSERT INTO payments (payment_order_code, payment_means_id, payment_amount, payment_ref_code) 
+    VALUES('{$order_code}', '{$payment_means}', '{$amount}', '$mpesaReceiptNumber')";
 
     /* Update Order Set Order Status As Paid */
     $order_sql = "UPDATE orders SET order_payment_status = 'Paid' WHERE order_code = '{$order_code}'";
+
 
     /* Execute The Above Sqls */
     mysqli_query($mysqli, $stk_response);
