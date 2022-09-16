@@ -445,7 +445,7 @@ $stmt->fetch();
 $stmt->close();
 
 /* 7. Deleted Payments */
-$query = "SELECT COUNT(*)  FROM payment_means WHERE means_delete_status = '1'";
+$query = "SELECT COUNT(*)  FROM payments WHERE payment_delete_status = '1'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
 $stmt->bind_result($deleted_payments);

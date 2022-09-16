@@ -69,7 +69,7 @@ require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
 require_once('../app/settings/checklogin.php');
 checklogin();
-require_once('../app/helpers/orders.php');
+require_once('../app/helpers/system_settings.php');
 require_once('../app/partials/backoffice_head.php');
 ?>
 
@@ -93,11 +93,11 @@ require_once('../app/partials/backoffice_head.php');
                 <div class="content">
                     <div class="breadcrumb-wrapper breadcrumb-contacts">
                         <div>
-                            <h1>Order Payments</h1>
+                            <h1>Deleted Payments</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_payments">Orders</a>
-                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Payments
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_recycle_bin">Recycle Bin</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Payments
                             </p>
                         </div>
                     </div>
@@ -131,7 +131,7 @@ require_once('../app/partials/backoffice_head.php');
                                                     WHERE u.user_delete_status = '0' 
                                                     AND p.product_delete_status = '0'
                                                     AND o.order_delete_status = '0'
-                                                    AND pa.payment_delete_status = '0'
+                                                    AND pa.payment_delete_status != '0'
                                                     GROUP BY pa.payment_order_code"
                                                 );
                                                 if (mysqli_num_rows($payments_sql) > 0) {
@@ -142,9 +142,7 @@ require_once('../app/partials/backoffice_head.php');
                                                                 <?php echo $payments['payment_ref_code']; ?>
                                                             </td>
                                                             <td>
-                                                                <a href="backoffice_manage_order?view=<?php echo $payments['order_code']; ?>">
-                                                                    <?php echo $payments['order_code']; ?>
-                                                                </a>
+                                                                <?php echo $payments['order_code']; ?>
                                                             </td>
                                                             <td><?php echo $payments['means_code'] . ' ' . $payments['means_name']; ?></td>
                                                             <td>
@@ -162,13 +160,16 @@ require_once('../app/partials/backoffice_head.php');
                                                                     </button>
 
                                                                     <div class="dropdown-menu">
+                                                                        <a class="dropdown-item" data-bs-toggle="modal" href="#restore_payment_<?php echo $payments['payment_id']; ?>">Restore</a>
                                                                         <a class="dropdown-item" data-bs-toggle="modal" href="#delete_payment_<?php echo $payments['payment_id']; ?>">Delete</a>
+
                                                                     </div>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                         <!-- Delete Staff Modal -->
-                                                        <?php include('../app/modals/delete_payment.php'); ?>
+                                                        <?php
+                                                        include('../app/modals/payment_recycle_bin.php'); ?>
                                                         <!-- End Modal -->
                                                 <?php }
                                                 } ?>
