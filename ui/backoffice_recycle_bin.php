@@ -97,7 +97,6 @@ require_once('../app/partials/backoffice_head.php');
                             <h1>System Recycle Bin</h1>
                             <p class="breadcrumbs">
                                 <span><a href="dashboard">Home</a></span>
-                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_manage_categories">System Settings</a>
                                 <span><i class="mdi mdi-chevron-right"></i></span>Recycle Bin
                             </p>
                         </div>
@@ -135,17 +134,19 @@ require_once('../app/partials/backoffice_head.php');
                         <div class="row mb-m-24px">
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <div class="card card-default">
-                                    <div class="card-body text-center p-24px">
-                                        <div class="image mb-3">
-                                            <img src="../public/backoffice_assets/img/man.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                <a href="bac">
+                                    <div class="card card-default">
+                                        <div class="card-body text-center p-24px">
+                                            <div class="image mb-3">
+                                                <img src="../public/backoffice_assets/img/man.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                            </div>
+                                            <h5 class="card-title text-dark">Staffs</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm"><?php echo $deleted_staffs; ?></button>
+                                            </p>
                                         </div>
-                                        <h5 class="card-title text-dark">Staffs</h5>
-                                        <p class="item-count">
-                                            <button class="btn btn-primary btn-sm"><?php echo $deleted_staffs; ?></button>
-                                        </p>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
