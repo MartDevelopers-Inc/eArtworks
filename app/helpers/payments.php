@@ -154,14 +154,14 @@ if (isset($_POST['Add_Payment'])) {
         date_default_timezone_set('Africa/Nairobi');
 
         # access token
-        $consumerKey = ''; //Fill with your app Consumer Key
-        $consumerSecret = ''; // Fill with your app Secret
+        $consumerKey = 'c2oPrnEhmDFde327b9TlgAj2RTwtM7lO'; //Fill with your app Consumer Key
+        $consumerSecret = 'KWRKJNEY207CTnZn'; // Fill with your app Secret
 
         # define the variales
         # provide the following details, this part is found on your test credentials on the developer account
-        $Amount = '';
-        $BusinessShortCode = '';
-        $Passkey = '';
+        $Amount = '1';
+        $BusinessShortCode = '174379';
+        $Passkey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
 
         /*
             This are your info, for
@@ -191,7 +191,7 @@ if (isset($_POST['Add_Payment'])) {
         $initiate_url = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
 
         # callback url
-        $CallBackURL = '/eArtworks/ui/callback_url.php?order=' . $payment_order_code;
+        $CallBackURL = 'https://34b6-197-136-137-5.in.ngrok.io/eArtworks/ui/callback_url.php?order=' . $payment_order_code;
 
         $curl = curl_init($access_token_url);
         curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
