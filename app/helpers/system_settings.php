@@ -240,6 +240,21 @@ if (isset($_POST['Restore_Categories'])) {
     }
 }
 
+/* Delete Order */
+if (isset($_POST['Delete_Order'])) {
+    $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM  orders WHERE order_code = '{$order_code}'"
+    )) {
+        $success = "Order deleted";
+    } else {
+        $err =  "Failed, please try again";
+    }
+}
+
 /* Restore Orders */
 if (isset($_POST['Restore_Orders'])) {
     $order_code = mysqli_real_escape_string($mysqli, $_POST['order_code']);
