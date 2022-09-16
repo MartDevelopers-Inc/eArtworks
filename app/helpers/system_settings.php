@@ -308,25 +308,9 @@ if (isset($_POST['Restore_Staff_Account'])) {
     /* Persist */
     if (mysqli_query(
         $mysqli,
-        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Staff'"
+        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}'"
     )) {
-        $success = "Staff restored";
-    } else {
-        $err = "Failed, please try again";
-    }
-}
-
-
-/* Restore Customers */
-if (isset($_POST['Restore_Customers'])) {
-    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
-
-    /* Persist */
-    if (mysqli_query(
-        $mysqli,
-        "UPDATE users SET user_delete_status = '0' WHERE user_id = '{$user_id}' AND user_access_level = 'Customer'"
-    )) {
-        $success = "Customer restored";
+        $success = "Account restored";
     } else {
         $err = "Failed, please try again";
     }
