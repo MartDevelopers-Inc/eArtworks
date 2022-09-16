@@ -273,7 +273,7 @@ if (isset($_POST['Restore_Payment_Methods'])) {
 
 /* Restore Products */
 if (isset($_POST['Restore_Products'])) {
-    $product_id  = mysqli_escape_string($mysqli, $_POST['product_id']);
+    $product_id  = mysqli_real_escape_string($mysqli, $_POST['product_id']);
 
     /* Persist */
     if (mysqli_query(
@@ -288,7 +288,7 @@ if (isset($_POST['Restore_Products'])) {
 
 /* Delete Staffs */
 if (isset($_POST['Delete_Staff_Account'])) {
-    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
 
     /* Persist */
     if (mysqli_query(
@@ -303,7 +303,7 @@ if (isset($_POST['Delete_Staff_Account'])) {
 
 /* Restore Staffs */
 if (isset($_POST['Restore_Staff_Account'])) {
-    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
 
     /* Persist */
     if (mysqli_query(
@@ -319,7 +319,7 @@ if (isset($_POST['Restore_Staff_Account'])) {
 
 /* Restore Customers */
 if (isset($_POST['Restore_Customers'])) {
-    $user_id = mysqli_real_query($mysqli, $_POST['user_id']);
+    $user_id = mysqli_real_escape_string($mysqli, $_POST['user_id']);
 
     /* Persist */
     if (mysqli_query(
