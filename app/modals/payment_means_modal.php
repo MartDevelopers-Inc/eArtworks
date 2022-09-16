@@ -44,7 +44,7 @@
                         <div class=" col-lg-6">
                             <div class="form-group">
                                 <label for="firstName">Payment Means Name</label>
-                                <input type="text" required class="form-control" name="means_name" value="<?php echo $payments['means_code']; ?>">
+                                <input type="text" required class="form-control" name="means_name" value="<?php echo $payments['means_name']; ?>">
                             </div>
                         </div>
                     </div>
