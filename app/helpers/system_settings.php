@@ -209,6 +209,21 @@ if (isset($_POST['Purge_Everything'])) {
     }
 }
 
+/* Delete Categories */
+if (isset($_POST['Delete_Categories'])) {
+    $category_id = mysqli_real_escape_string($mysqli, $_POST['category_id']);
+
+    /* Persist */
+    if (mysqli_query(
+        $mysqli,
+        "DELETE FROM categories WHERE category_id = '{$category_id}'"
+    )) {
+        $success = "Category deleted";
+    } else {
+        $err  = "Failed, please try again";
+    }
+}
+
 
 /* Restore Categories */
 if (isset($_POST['Restore_Categories'])) {
