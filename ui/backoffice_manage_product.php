@@ -212,7 +212,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                                     <div class="col-lg-4">
                                                                         <div class="form-group">
                                                                             <label for="lastName">Available From</label>
-                                                                            <input type="date" value="<?php echo date('m/d/Y', strtotime($product['product_available_from'])); ?>" required class="form-control" name="product_available_from">
+                                                                            <input value="<?php echo date('Y-m-d', strtotime($product['product_available_from'])); ?>" type="date"  required class="form-control" name="product_available_from">
                                                                         </div>
                                                                     </div>
 

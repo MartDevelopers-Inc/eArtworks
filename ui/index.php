@@ -146,6 +146,7 @@ require_once('../app/partials/landing_head.php');
             <div class="tab-pane fade show active" id="tab-pro-for-all">
               <div class="row">
                 <?php
+                
                 $products_sql = mysqli_query(
                   $mysqli,
                   "SELECT * FROM products p
