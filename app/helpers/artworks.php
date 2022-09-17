@@ -137,7 +137,7 @@ if (isset($_POST['Register_New_Product'])) {
     $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
     $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
     $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
-    $product_available_from = strtotime(mysqli_real_escape_string($mysqli, $_POST['product_available_from']));
+    $product_available_from = date('Y-m-d g:ia', strtotime(mysqli_real_escape_string($mysqli, $_POST['product_available_from'])));
 
     /* Process Product Image */
     $temp_product_image = explode('.', $_FILES['product_image']['name']);
@@ -168,7 +168,7 @@ if (isset($_POST['Update_Product'])) {
     $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
     $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
     $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
-    $product_available_from = strtotime(mysqli_real_escape_string($mysqli, $_POST['product_available_from']));
+    $product_available_from = date('Y-m-d g:ia', strtotime(mysqli_real_escape_string($mysqli, $_POST['product_available_from'])));
 
 
     /* Check If Posted Update Has Image */

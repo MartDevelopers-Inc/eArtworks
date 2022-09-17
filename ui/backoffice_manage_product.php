@@ -199,11 +199,17 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                         <form method="POST" enctype="multipart/form-data">
                                                             <div class="modal-body px-4">
                                                                 <div class="row mb-2">
-                                                                    <div class="col-lg-12">
+                                                                    <div class="col-lg-8">
                                                                         <div class="form-group">
                                                                             <label for="firstName">Product Name</label>
                                                                             <input type="hidden" required class="form-control" name="product_id" value="<?php echo $product['product_id']; ?>">
                                                                             <input type="text" required class="form-control" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label for="lastName">Available From</label>
+                                                                            <input type="date" value="<?php echo date('m/d/Y', strtotime($product['product_available_from'])); ?>" required class="form-control" name="product_available_from">
                                                                         </div>
                                                                     </div>
 
