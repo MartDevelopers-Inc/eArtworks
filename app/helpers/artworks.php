@@ -137,6 +137,7 @@ if (isset($_POST['Register_New_Product'])) {
     $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
     $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
     $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
+    $product_available_from = strtotime(mysqli_real_escape_string($mysqli, $_POST['product_available_from']));
 
     /* Process Product Image */
     $temp_product_image = explode('.', $_FILES['product_image']['name']);
@@ -147,8 +148,8 @@ if (isset($_POST['Register_New_Product'])) {
     );
 
     /* Persist */
-    $sql = "INSERT INTO products (product_category_id, product_seller_id, product_sku_code, product_name, product_details, product_qty_in_stock, product_price, product_image)
-    VALUES('{$product_category_id}', '{$product_seller_id}', '{$product_sku_code}', '{$product_name}', '{$product_details}', '{$product_qty_in_stock}', '{$product_price}', '{$new_product_image}')";
+    $sql = "INSERT INTO products (product_category_id, product_seller_id, product_sku_code, product_name, product_details, product_qty_in_stock, product_price, product_image, product_available_from)
+    VALUES('{$product_category_id}', '{$product_seller_id}', '{$product_sku_code}', '{$product_name}', '{$product_details}', '{$product_qty_in_stock}', '{$product_price}', '{$new_product_image}', '{$product_available_from}')";
 
     if (mysqli_query($mysqli, $sql)) {
         $success = "Product added";
@@ -167,6 +168,8 @@ if (isset($_POST['Update_Product'])) {
     $product_details = mysqli_real_escape_string($mysqli, $_POST['product_details']);
     $product_qty_in_stock = mysqli_real_escape_string($mysqli, $_POST['product_qty_in_stock']);
     $product_price = mysqli_real_escape_string($mysqli, $_POST['product_price']);
+    $product_available_from = strtotime(mysqli_real_escape_string($mysqli, $_POST['product_available_from']));
+
 
     /* Check If Posted Update Has Image */
     if (!empty($_FILES['product_image']['name'])) {
@@ -192,10 +195,10 @@ if (isset($_POST['Update_Product'])) {
             /* Delete It */
             unlink($old_product_photo_location);
         }
-        
+
         /* Persist */
         $sql = "UPDATE products SET product_category_id = '{$product_category_id}', product_seller_id = '{$product_seller_id}', product_sku_code= '{$product_sku_code}',
-        product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}', product_image = '{$new_product_image}'
+        product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}', product_image = '{$new_product_image}', product_available_from = '{$product_available_from}'
         WHERE product_id = '{$product_id}'";
 
         if (mysqli_query($mysqli, $sql)) {
@@ -206,7 +209,7 @@ if (isset($_POST['Update_Product'])) {
     } else {
         /* Persist Update Without affecting the image */
         $sql = "UPDATE products SET product_category_id = '{$product_category_id}', product_seller_id = '{$product_seller_id}', product_sku_code= '{$product_sku_code}',
-        product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}'
+        product_name = '{$product_name}',product_details = '{$product_details}', product_qty_in_stock = '{$product_qty_in_stock}', product_price = '{$product_price}', product_available_from = '{$product_available_from}'
         WHERE product_id = '{$product_id}'";
 
         if (mysqli_query($mysqli, $sql)) {

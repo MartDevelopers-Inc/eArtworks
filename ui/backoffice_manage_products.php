@@ -118,13 +118,18 @@ require_once('../app/partials/backoffice_head.php');
 
                                     <div class="modal-body px-4">
                                         <div class="row mb-2">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-8">
                                                 <div class="form-group">
                                                     <label for="firstName">Product Name</label>
                                                     <input type="text" required class="form-control" name="product_name">
                                                 </div>
                                             </div>
-
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="lastName">Available From</label>
+                                                    <input type="date" required class="form-control" name="product_available_from">
+                                                </div>
+                                            </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="lastName">SKU Code</label>
