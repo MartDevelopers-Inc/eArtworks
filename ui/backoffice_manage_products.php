@@ -215,7 +215,7 @@ require_once('../app/partials/backoffice_head.php');
                                                     <th>Seller</th>
                                                     <th>QTY</th>
                                                     <th>Price</th>
-                                                    <th>Availability</th>
+                                                    <th>Available From</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
