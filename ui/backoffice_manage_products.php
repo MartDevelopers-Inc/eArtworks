@@ -118,13 +118,18 @@ require_once('../app/partials/backoffice_head.php');
 
                                     <div class="modal-body px-4">
                                         <div class="row mb-2">
-                                            <div class="col-lg-12">
+                                            <div class="col-lg-8">
                                                 <div class="form-group">
                                                     <label for="firstName">Product Name</label>
                                                     <input type="text" required class="form-control" name="product_name">
                                                 </div>
                                             </div>
-
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label for="lastName">Available From</label>
+                                                    <input type="date" required class="form-control" name="product_available_from">
+                                                </div>
+                                            </div>
                                             <div class="col-lg-4">
                                                 <div class="form-group">
                                                     <label for="lastName">SKU Code</label>
@@ -173,7 +178,7 @@ require_once('../app/partials/backoffice_head.php');
                                                 <label for="coverImage" class="col-sm-12 col-lg-12 col-form-label">Product Image</label>
                                                 <div class="col-sm-12 col-lg-12">
                                                     <div class="custom-file mb-1">
-                                                        <input type="file" accept=".png, .jpg, .jpeg" name="product_image" class="custom-file-input">
+                                                        <input type="file" required accept=".png, .jpg, .jpeg" name="product_image" class="custom-file-input">
                                                         <label class="custom-file-label" for="coverImage">
                                                             Choose file...
                                                         </label>
@@ -210,6 +215,7 @@ require_once('../app/partials/backoffice_head.php');
                                                     <th>Seller</th>
                                                     <th>QTY</th>
                                                     <th>Price</th>
+                                                    <th>Available From</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -237,10 +243,15 @@ require_once('../app/partials/backoffice_head.php');
                                                         <tr>
                                                             <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
                                                             <td><?php echo $products['product_sku_code']; ?></td>
-                                                            <td><?php echo $products['product_name']; ?></td>
+                                                            <td>
+                                                                <?php echo $products['product_name']; ?>
+                                                            </td>
                                                             <td><?php echo $products['user_first_name'] . ' ' . $products['user_last_name']; ?></td>
                                                             <td><?php echo $products['product_qty_in_stock']; ?></td>
                                                             <td>Ksh <?php echo number_format($products['product_price'], 2); ?></td>
+                                                            <td>
+                                                                <?php echo date('d M Y', strtotime($products['product_available_from'])); ?>
+                                                            </td>
                                                             <td>
                                                                 <div class="btn-group mb-1">
                                                                     <button type="button" class="btn btn-outline-success">Manage</button>

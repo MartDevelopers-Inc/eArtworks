@@ -21,3 +21,14 @@ artists and designers to get support for their artistic endeavors as well as to 
 9. Estimated delivery date is one week (7 Days) from the day you made your order. <br>
 10. All unpaid orders can be marked as paid on back office module with cash as the default payment means.
 11. Careful on editing Third Party Api`s it will break entire payment process, Only change tokens not names.
+12. Top selling products - Returns Null if there are no available products.
+
+# To Do`s
+
+1. Force 2547123456789 format on all phone numbers. <br>
+2. Optimize mobile payments logic. Its unstable. <br>
+3. Seller dashboard. <br>
+4. Notify seller after a customer orders a product. <br>
+5. Add reports module - Reports In XLS, PDF, and .Docx <br>
+6. Add Charts, Indicate sales / Purchases. <br>
+7. Generate delivery notes on all orders. <br>

@@ -67,6 +67,8 @@
 
 /* Default Application Timezone */
 date_default_timezone_set('Africa/Nairobi');
+/* Default Time */
+$current_time = time();
 
 /* Database Connection File */
 $dbuser = "root";

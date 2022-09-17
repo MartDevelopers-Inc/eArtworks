@@ -124,7 +124,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                             </div>
                             <div class="card bg-white profile-content">
                                 <div class="row">
-                                    <div class="col-lg-4 col-xl-3">
+                                    <div class="col-lg-6 col-xl-4">
                                         <div class="profile-content-left profile-left-spacing">
                                             <div class="text-center widget-profile px-0 border-0">
                                                 <div class="card-img mx-auto rounded-circle">
@@ -132,7 +132,10 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                 </div>
                                                 <div class="card-body">
                                                     <h4 class="py-2 text-dark"><?php echo $product['product_name']; ?></h4>
-                                                    <p><?php echo $product['product_sku_code']; ?></p>
+                                                    <p><?php echo $product['product_sku_code']; ?></p> <br>
+                                                    <p>
+                                                        In Market From : <?php echo date('d M Y', strtotime($product['product_available_from'])); ?>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <hr>
@@ -170,7 +173,7 @@ if (mysqli_num_rows($product_sql) > 0) {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-8 col-xl-9">
+                                    <div class="col-lg-6 col-xl-8">
                                         <div class="profile-content-right profile-right-spacing py-5">
                                             <ul class="nav nav-tabs px-3 px-xl-5 nav-style-border" id="myProfileTab" role="tablist">
                                                 <li class="nav-item" role="presentation">
@@ -199,11 +202,17 @@ if (mysqli_num_rows($product_sql) > 0) {
                                                         <form method="POST" enctype="multipart/form-data">
                                                             <div class="modal-body px-4">
                                                                 <div class="row mb-2">
-                                                                    <div class="col-lg-12">
+                                                                    <div class="col-lg-8">
                                                                         <div class="form-group">
                                                                             <label for="firstName">Product Name</label>
                                                                             <input type="hidden" required class="form-control" name="product_id" value="<?php echo $product['product_id']; ?>">
                                                                             <input type="text" required class="form-control" name="product_name" value="<?php echo $product['product_name']; ?>">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-lg-4">
+                                                                        <div class="form-group">
+                                                                            <label for="lastName">Available From</label>
+                                                                            <input value="<?php echo date('Y-m-d', strtotime($product['product_available_from'])); ?>" type="date" required class="form-control" name="product_available_from">
                                                                         </div>
                                                                     </div>
 

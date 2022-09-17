@@ -281,32 +281,37 @@ require_once('../app/partials/landing_head.php');
                         } else {
                             $image_dir = "../public/uploads/products/" . $products['product_image'];
                         }
+                        /* Only show available artworks */
+                        $availability = strtotime($products['product_available_from']);
+                        /* Show Available Artowkrs */
+                        if ($current_time >= $availability) {
                 ?>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
-                            <div class="ec-product-inner">
-                                <div class="ec-pro-image-outer">
-                                    <div class="ec-pro-image">
-                                        <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
-                                            <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
-                                        </a>
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                <div class="ec-product-inner">
+                                    <div class="ec-pro-image-outer">
+                                        <div class="ec-pro-image">
+                                            <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
+                                                <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="ec-pro-content">
-                                    <h5 class="ec-pro-title"><a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>"><?php echo $products['product_name']; ?></a></h5>
-                                    <div class="ec-pro-rating">
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
-                                        <i class="ecicon eci-star fill"></i>
+                                    <div class="ec-pro-content">
+                                        <h5 class="ec-pro-title"><a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>"><?php echo $products['product_name']; ?></a></h5>
+                                        <div class="ec-pro-rating">
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                        </div>
+                                        <span class="ec-price">
+                                            <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                                        </span>
                                     </div>
-                                    <span class="ec-price">
-                                        <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
-                                    </span>
                                 </div>
                             </div>
-                        </div>
                 <?php }
+                    }
                 } ?>
             </div>
         </div>

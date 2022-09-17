@@ -146,6 +146,7 @@ require_once('../app/partials/landing_head.php');
             <div class="tab-pane fade show active" id="tab-pro-for-all">
               <div class="row">
                 <?php
+
                 $products_sql = mysqli_query(
                   $mysqli,
                   "SELECT * FROM products p
@@ -154,7 +155,7 @@ require_once('../app/partials/landing_head.php');
                   WHERE u.user_delete_status = '0' 
                   AND c.category_delete_status = '0'
                   AND p.product_delete_status = '0'
-                  LIMIT 6"
+                  ORDER BY RAND() LIMIT 6"
                 );
                 if (mysqli_num_rows($products_sql) > 0) {
                   while ($products = mysqli_fetch_array($products_sql)) {
@@ -164,29 +165,35 @@ require_once('../app/partials/landing_head.php');
                     } else {
                       $image_dir = "../public/uploads/products/" . $products['product_image'];
                     }
+
+                    /* Only show available artworks */
+                    $availability = strtotime($products['product_available_from']);
+                    /* Show Available Artowkrs */
+                    if ($current_time >= $availability) {
                 ?>
-                    <!-- Product Content -->
-                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-6 ec-product-content" data-animation="fadeIn">
-                      <div class="ec-product-inner">
-                        <div class="ec-pro-image-outer">
-                          <div class="ec-pro-image">
-                            <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
-                              <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
-                            </a>
-                            <span class="percentage"><?php echo $products['product_sku_code']; ?></span>
+                      <!-- Product Content -->
+                      <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-6 ec-product-content" data-animation="fadeIn">
+                        <div class="ec-product-inner">
+                          <div class="ec-pro-image-outer">
+                            <div class="ec-pro-image">
+                              <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>" class="image">
+                                <img class="main-image" src="<?php echo $image_dir; ?>" alt="Product" />
+                              </a>
+                              <span class="percentage"><?php echo $products['product_sku_code']; ?> </span>
+                            </div>
+                          </div>
+                          <div class="ec-pro-content">
+                            <h5 class="ec-pro-title">
+                              <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>"><?php echo $products['product_name']; ?></a>
+                            </h5>
+                            <span class="ec-price">
+                              <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
+                            </span>
                           </div>
                         </div>
-                        <div class="ec-pro-content">
-                          <h5 class="ec-pro-title">
-                            <a href="landing_product?view=<?php echo $products['product_id']; ?>&category=<?php echo $products['category_id']; ?>"><?php echo $products['product_name']; ?></a>
-                          </h5>
-                          <span class="ec-price">
-                            <span class="new-price">Ksh <?php echo number_format($products['product_price'], 2); ?></span>
-                          </span>
-                        </div>
                       </div>
-                    </div>
                   <?php }
+                  }
                 } else { ?>
                   <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 mb-6 ec-product-content" data-animation="fadeIn">
                     <div class="ec-product-inner">
