@@ -8,7 +8,7 @@
  *
  *
  *   The MartDevelopers End User License Agreement
- *   Copyright (c) 2022 MartDevelopers
+ *   Copyright (c) 2022 MartDevelopers 
  *
  *
  *   1. GRANT OF LICENSE 
@@ -65,66 +65,82 @@
  *
  */
 
-/* Terms And Conditions */
-if (isset($_POST['Terms_And_Conditions'])) {
-    $system_toc = mysqli_real_escape_string($mysqli, $_POST['system_toc']);
+session_start();
+require_once('../app/settings/config.php');
+require_once('../app/settings/codeGen.php');
+require_once('../app/settings/checklogin.php');
+checklogin();
+require_once('../app/helpers/lite_cms.php');
+require_once('../app/partials/backoffice_head.php');
+?>
 
-    /* Persist */
-    $sql = "UPDATE system_litecms SET system_toc = '{$system_toc}'";
+<body class="ec-header-fixed ec-sidebar-fixed ec-sidebar-dark ec-header-light" id="body">
 
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Terms and conditions updated";
-    } else {
-        $err = "Failed, try again";
-    }
-}
+    <!-- WRAPPER -->
+    <div class="wrapper">
 
-/* Faq */
-if (isset($_POST['FAQ'])) {
-    $system_faq = mysqli_real_escape_string($mysqli, $_POST['system_faq']);
+        <!-- LEFT MAIN SIDEBAR -->
+        <?php require_once('../app/partials/backoffice_sidebar.php'); ?>
 
-    /* Persist */
-    $sql = "UPDATE system_litecms SET system_faq = '{$system_faq}'";
 
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Frequently asked questions updated";
-    } else {
-        $erR = "Failed, try again";
-    }
-}
+        <!-- PAGE WRAPPER -->
+        <div class="ec-page-wrapper">
 
-/* Contact Us */
-if (isset($_POST['Contact_Us'])) {
-    $system_contact = mysqli_real_escape_string($mysqli,  $_POST['system_contact']);
-    $system_email = mysqli_real_escape_string($mysqli, $_POST['system_email']);
-    $system_address = mysqli_real_escape_string($mysqli, $_POST['system_address']);
-    $system_facebook_url = mysqli_real_escape_string($mysqli, $_POST['system_facebook_url']);
-    $system_twittwer_url = mysqli_real_escape_string($mysqli, $_POST['system_twittwer_url']);
-    $system_instagram_url = mysqli_real_escape_string($mysqli, $_POST['system_instagram_url']);
-    $system_linkedin_url = mysqli_real_escape_string($mysqli, $_POST['system_linkedin_url']);
+            <!-- Header -->
+            <?php require_once('../app/partials/backoffice_header.php'); ?>
 
-    /* Persist */
-    $sql = "UPDATE system_litecms SET system_contact = '{$system_contact}', system_email = '{$system_email}',  system_address = '{$system_address}',
-    system_facebook_url = '{$system_facebook_url}', system_twittwer_url = '{$system_twittwer_url}', system_instagram_url = '{$system_instagram_url}',
-    system_linkedin_url = '{$system_linkedin_url}'";
+            <!-- CONTENT WRAPPER -->
+            <div class="ec-content-wrapper">
+                <div class="content">
+                    <div class="breadcrumb-wrapper breadcrumb-contacts">
+                        <div>
+                            <h1>Terms & Conditions</h1>
+                            <p class="breadcrumbs">
+                                <span><a href="dashboard">Home</a></span>
+                                <span><i class="mdi mdi-chevron-right"></i></span><a href="backoffice_cms_toc">LiteCms</a>
+                                <span><i class="mdi mdi-chevron-right"></i></span>Manage Terms & Conditions
+                            </p>
+                        </div>
 
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "Contact details updated";
-    } else {
-        $err = "Failed, please try again";
-    }
-}
+                    </div>
 
-/* About Us */
-if (isset($_POST['About_Us'])) {
-    $system_about = mysqli_real_escape_string($mysqli, $_POST['system_about']);
 
-    /* Persist */
-    $sql = "UPDATE system_litecms SET system_about = '{$system_about}'";
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="ec-vendor-list card card-default">
+                                <div class="card-body">
+                                    <form method="POST" enctype="multipart/form-data">
+                                        <div class="modal-body px-4">
+                                            <div class="row mb-2">
+                                                <div class="form-group col-lg-12">
+                                                    <label for="email">Terms And Conditions</label>
+                                                    <textarea class="form-control" rows="10" required name="system_toc"></textarea>
+                                                </div>
+                                            </div>
 
-    if (mysqli_query($mysqli, $sql)) {
-        $success = "About details updated";
-    } else {
-        $err = "Failed, please try again";
-    }
-}
+                                        </div>
+
+                                        <div class="modal-footer px-4">
+                                            <button type="submit" name="Terms_And_Conditions" class="btn btn-primary btn-pill">Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div> <!-- End Content -->
+            </div> <!-- End Content Wrapper -->
+
+            <!-- Footer -->
+            <?php require_once('../app/partials/backoffice_footer.php'); ?>
+
+        </div> <!-- End Page Wrapper -->
+    </div> <!-- End Wrapper -->
+
+    <?php require_once('../app/partials/backoffice_scripts.php'); ?>
+</body>
+
+
+</html>
