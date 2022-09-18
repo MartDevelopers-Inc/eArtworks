@@ -117,4 +117,14 @@ if (isset($_POST['Contact_Us'])) {
 
 /* About Us */
 if (isset($_POST['About_Us'])) {
+    $system_about = mysqli_real_escape_string($mysqli, $_POST['system_about']);
+
+    /* Persist */
+    $sql = "UPDATE system_litecms SET system_about = '{$system_about}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "About details updated";
+    } else {
+        $err = "Failed, please try again";
+    }
 }
