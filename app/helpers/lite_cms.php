@@ -95,6 +95,24 @@ if (isset($_POST['FAQ'])) {
 
 /* Contact Us */
 if (isset($_POST['Contact_Us'])) {
+    $system_contact = mysqli_real_escape_string($mysqli,  $_POST['system_contact']);
+    $system_email = mysqli_real_escape_string($mysqli, $_POST['system_email']);
+    $system_address = mysqli_real_escape_string($mysqli, $_POST['system_address']);
+    $system_facebook_url = mysqli_real_escape_string($mysqli, $_POST['system_facebook_url']);
+    $system_twittwer_url = mysqli_real_escape_string($mysqli, $_POST['system_twittwer_url']);
+    $system_instagram_url = mysqli_real_escape_string($mysqli, $_POST['system_instagram_url']);
+    $system_linkedin_url = mysqli_real_escape_string($mysqli, $_POST['system_linkedin_url']);
+
+    /* Persist */
+    $sql = "UPDATE system_litecms SET system_contact = '{$system_contact}', system_email = '{$system_email}',  system_address = '{$system_address}',
+    system_facebook_url = '{$system_facebook_url}', system_twittwer_url = '{$system_twittwer_url}', system_instagram_url = '{$system_instagram_url}',
+    system_linkedin_url = '{$system_linkedin_url}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Contact details updated";
+    } else {
+        $err = "Failed, please try again";
+    }
 }
 
 /* About Us */
