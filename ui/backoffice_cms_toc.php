@@ -114,7 +114,13 @@ require_once('../app/partials/backoffice_head.php');
                                             <div class="row mb-2">
                                                 <div class="form-group col-lg-12">
                                                     <label for="email">Terms And Conditions</label>
-                                                    <textarea class="form-control" rows="10" required name="system_toc"></textarea>
+                                                    <?php
+                                                    $litecms_sql = mysqli_query($mysqli, "SELECT * FROM system_litecms");
+                                                    if (mysqli_num_rows($litecms_sql) > 0) {
+                                                        while ($toc = mysqli_fetch_array($litecms_sql)) { ?>
+                                                            <textarea class="form-control" rows="10" required name="system_toc"><?php echo $toc['system_toc']; ?></textarea>
+                                                    <?php }
+                                                    } ?>
                                                 </div>
                                             </div>
 
