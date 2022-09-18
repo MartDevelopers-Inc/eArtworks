@@ -67,19 +67,30 @@
 
 /* Terms And Conditions */
 if (isset($_POST['Terms_And_Conditiond'])) {
-    $system_toc = mysqli_real_escape_string($mysli, $_POST['system_toc']);
+    $system_toc = mysqli_real_escape_string($mysqli, $_POST['system_toc']);
 
     /* Persist */
     $sql = "UPDATE system_litecms SET system_toc = '{$system_toc}'";
 
-    if (mysqli_query($mysli, $sql)) {
+    if (mysqli_query($mysqli, $sql)) {
         $success = "Terms and conditions updated";
     } else {
         $err = "Failed, try again";
     }
 }
+
 /* Faq */
 if (isset($_POST['FAQ'])) {
+    $system_faq = mysqli_real_escape_string($mysqli, $_POST['system_faq']);
+
+    /* Persist */
+    $sql = "UPDATE system_litecms SET system_faq = '{$system_faq}'";
+
+    if (mysqli_query($mysqli, $sql)) {
+        $success = "Frequently asked questions updated";
+    } else {
+        $erR = "Failed, try again";
+    }
 }
 
 /* Contact Us */
