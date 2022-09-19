@@ -447,3 +447,178 @@ if ($module == 'Customers') {
 }
 
 
+/* Product Categories */
+if ($module == 'Categories') {
+    if ($type == 'PDF') {
+        /* Generate Customers Reports In PDF */
+        $html = '
+        <style type="text/css">
+            table {
+                font-size: 12px;
+                padding: 4px;
+            }          
+
+            th {
+                text-align: left;
+                padding: 4pt;
+            }
+
+            td {
+                padding: 5pt;
+            }
+
+            #b_border {
+                border-bottom: dashed thin;
+            }
+
+            legend {
+                color: #0b77b7;
+                font-size: 1.2em;
+            }
+
+            #error_msg {
+                text-align: left;
+                font-size: 11px;
+                color: red;
+            }
+
+            .header {
+                margin-bottom: 20px;
+                width: 100%;
+                text-align: left;
+                position: absolute;
+                top: 0px;
+            }
+
+            .footer {
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                bottom: 5px;
+            }
+
+            #no_border_table {
+                border: none;
+            }
+
+            #bold_row {
+                font-weight: bold;
+            }
+
+            #amount {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .pagenum:before {
+                content: counter(page);
+            }
+
+            /* Thick red border */
+            hr.red {
+                border: 1px solid red;
+            }
+            .list_header{
+                font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+            }
+        </style>
+        <div class="list_header" align="center">
+            <h3>
+                eArtworks <br> Staffs Reports
+            </h3>
+        </div>
+        
+        <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
+            <thead>
+                <tr>
+                    <th style="width:10%">No</th>
+                    <th style="width:60%">Category Code</th>
+                    <th style="width:100%">Category Name</th>
+                    <th style="width:100%">Category Details</th>
+                </tr>
+            </thead>
+        <tbody>
+        ';
+        $cnt = 1;
+        $categories_sql = mysqli_query(
+            $mysqli,
+            "SELECT * FROM categories WHERE category_delete_status = '0' ORDER BY category_name ASC"
+        );
+        if (mysqli_num_rows($categories_sql) > 0) {
+            while ($categories = mysqli_fetch_array($categories_sql)) {
+                $html .=
+                    '
+                <tr>
+                    <td>' . $cnt . '</td>
+                    <td>' . $categories['category_code'] . '</td>
+                    <td>' . $categories['category_name'] . '</td>
+                    <td>' . $categories['category_details'] . '</td>
+                </tr>
+            ';
+                $cnt = $cnt + 1;
+            }
+        }
+        $html .= '
+            </tbody>
+        </table>
+    ';
+        $dompdf->load_html($html);
+        $dompdf->set_paper('A4');
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        $dompdf->render();
+        $dompdf->stream('Categories Report ', array("Attachment" => 1));
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('');
+        $dompdf->setOptions($options);
+    } elseif ($type == 'CSV' && $module == 'Customers') {
+        /* Generate Categories Reports In XLS / CSV */
+        function filterData(&$str)
+        {
+            $str = preg_replace("/\t/", "\\t", $str);
+            $str = preg_replace("/\r?\n/", "\\n", $str);
+            if (strstr($str, '"')) {
+                $str = '"' . str_replace('"', '""', $str) . '"';
+            }
+        }
+
+        /* Excel File Name */
+        $fileName = "Categories Reports.xls";
+
+        /* Excel Column Name */
+        $header = array("Categories Reports");
+        $fields = array('#', 'Category Code', 'Category Name');
+
+        /* Implode Excel Data */
+        $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+        $excelData = implode("\t", array_values($fields)) . "\n";
+
+        $cnt = 1;
+        /* Fetch All Records From The Database */
+        $query = $mysqli->query("SELECT * FROM categories WHERE category_delete_status = '0' ORDER BY category_name ASC");
+        if ($query->num_rows > 0) {
+            /* Load All Fetched Rows */
+            while ($row = $query->fetch_assoc()) {
+                $lineData = array($cnt, $row['category_code'], $row['category_name']);
+                array_walk($lineData, 'filterData');
+                $excelData .= implode("\t", array_values($lineData)) . "\n";
+                $cnt = $cnt + 1;
+            }
+        } else {
+            $excelData .= 'No Categories Records Available...' . "\n";
+        }
+
+        /* Generate Header File Encordings For Download */
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+        /* Render  Excel Data For Download */
+        echo $excelDataHeader;
+        echo $excelData;
+        exit;
+    } else {
+        /* Load Error */
+        $_SESSION['error'] = 'Please specify report type';
+        header('Location: backoffice_reports');
+        exit;
+    }
+}
