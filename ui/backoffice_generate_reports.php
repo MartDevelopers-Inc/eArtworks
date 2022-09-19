@@ -341,7 +341,7 @@ if ($module == 'Customers') {
         </style>
         <div class="list_header" align="center">
             <h3>
-                eArtworks <br> Staffs Reports
+                eArtworks <br> Customers Reports
             </h3>
         </div>
         
@@ -524,7 +524,7 @@ if ($module == 'Categories') {
         </style>
         <div class="list_header" align="center">
             <h3>
-                eArtworks <br> Staffs Reports
+                eArtworks <br> Categories Reports
             </h3>
         </div>
         
@@ -532,8 +532,8 @@ if ($module == 'Categories') {
             <thead>
                 <tr>
                     <th style="width:10%">No</th>
-                    <th style="width:60%">Category Code</th>
-                    <th style="width:100%">Category Name</th>
+                    <th style="width:20%">Category Code</th>
+                    <th style="width:30%">Category Name</th>
                     <th style="width:100%">Category Details</th>
                 </tr>
             </thead>
