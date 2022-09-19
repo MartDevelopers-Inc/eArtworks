@@ -23,6 +23,14 @@
 <!-- Custom File Upload Scripts -->
 <script src="../public/backoffice_assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
 
+<!-- Floara Scripts CDN -->
+<script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+<script>
+    /* Initialize Floara WYSIWYG Editor */
+    new FroalaEditor('#editor', {
+        height: 300
+    })
+</script>
 <!-- Inline Scripts -->
 <script>
     /* Prevent Double Submissions */
@@ -39,6 +47,7 @@
         var nextSibling = e.target.nextElementSibling
         nextSibling.innerText = fileName
     })
+
 
     /* Initialize Select 2 Plugin */
     $(document).ready(function() {
