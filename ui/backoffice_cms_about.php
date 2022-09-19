@@ -118,7 +118,7 @@ require_once('../app/partials/backoffice_head.php');
                                                     $litecms_sql = mysqli_query($mysqli, "SELECT * FROM system_litecms");
                                                     if (mysqli_num_rows($litecms_sql) > 0) {
                                                         while ($about = mysqli_fetch_array($litecms_sql)) { ?>
-                                                            <textarea class="form-control" rows="10" required name="system_about"><?php echo $about['system_about']; ?></textarea>
+                                                            <textarea id="editor" class="form-control" rows="10" required name="system_about"><?php echo $about['system_about']; ?></textarea>
                                                     <?php }
                                                     } ?>
                                                 </div>
