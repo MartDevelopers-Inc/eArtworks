@@ -769,11 +769,11 @@ if ($module == 'Products') {
         }
 
         /* Excel File Name */
-        $fileName = "Categories Reports.xls";
+        $fileName = "Products Reports.xls";
 
         /* Excel Column Name */
-        $header = array("Categories Reports");
-        $fields = array('#', 'Category Code', 'Category Name');
+        $header = array("Products Reports");
+        $fields = array('#', 'SKU', 'Name', 'QTY', 'Seller', 'Price');
 
         /* Implode Excel Data */
         $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
@@ -781,17 +781,23 @@ if ($module == 'Products') {
 
         $cnt = 1;
         /* Fetch All Records From The Database */
-        $query = $mysqli->query("SELECT * FROM categories WHERE category_delete_status = '0' ORDER BY category_name ASC");
+        $query = $mysqli->query("SELECT * FROM products p
+        INNER JOIN users u ON u.user_id = p.product_seller_id
+        INNER JOIN categories c ON c.category_id = p.product_category_id
+        WHERE u.user_delete_status = '0' 
+        AND c.category_delete_status = '0'
+        AND p.product_delete_status = '0'
+        ORDER BY p.product_name ASC");
         if ($query->num_rows > 0) {
             /* Load All Fetched Rows */
             while ($row = $query->fetch_assoc()) {
-                $lineData = array($cnt, $row['category_code'], $row['category_name']);
+                $lineData = array($cnt, $row['product_sku_code'], $row['product_name'], $row['product_qty_in_stock'], $row['user_first_name'] . ' ' . $row['user_last_name'], $row['product_price']);
                 array_walk($lineData, 'filterData');
                 $excelData .= implode("\t", array_values($lineData)) . "\n";
                 $cnt = $cnt + 1;
             }
         } else {
-            $excelData .= 'No Categories Records Available...' . "\n";
+            $excelData .= 'No Product Records Available...' . "\n";
         }
 
         /* Generate Header File Encordings For Download */
