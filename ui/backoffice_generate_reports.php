@@ -81,6 +81,8 @@ $dompdf = new Dompdf();
 $type = mysqli_real_escape_string($mysqli, $_GET['type']);
 $module = mysqli_real_escape_string($mysqli, $_GET['module']);
 
+
+/* Staffs Reports */
 if ($type == 'PDF' && $module == 'Staffs') {
     /* Get Staffs Reports In PDF */
     $html = '
@@ -241,6 +243,185 @@ if ($type == 'PDF' && $module == 'Staffs') {
         }
     } else {
         $excelData .= 'No Staffs Records Available...' . "\n";
+    }
+
+    /* Generate Header File Encordings For Download */
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+    /* Render  Excel Data For Download */
+    echo $excelDataHeader;
+    echo $excelData;
+    exit;
+} else {
+    /* Load Error */
+    $_SESSION['error'] = 'Please specify report type';
+    header('Location: backoffice_reports');
+    exit;
+}
+
+
+/* Customers Reports */
+if ($type == 'PDF' && $module == 'Customers') {
+    /* Generate Customers Reports In PDF */
+    $html = '
+        <style type="text/css">
+            table {
+                font-size: 12px;
+                padding: 4px;
+            }          
+
+            th {
+                text-align: left;
+                padding: 4pt;
+            }
+
+            td {
+                padding: 5pt;
+            }
+
+            #b_border {
+                border-bottom: dashed thin;
+            }
+
+            legend {
+                color: #0b77b7;
+                font-size: 1.2em;
+            }
+
+            #error_msg {
+                text-align: left;
+                font-size: 11px;
+                color: red;
+            }
+
+            .header {
+                margin-bottom: 20px;
+                width: 100%;
+                text-align: left;
+                position: absolute;
+                top: 0px;
+            }
+
+            .footer {
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                bottom: 5px;
+            }
+
+            #no_border_table {
+                border: none;
+            }
+
+            #bold_row {
+                font-weight: bold;
+            }
+
+            #amount {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .pagenum:before {
+                content: counter(page);
+            }
+
+            /* Thick red border */
+            hr.red {
+                border: 1px solid red;
+            }
+            .list_header{
+                font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+            }
+        </style>
+        <div class="list_header" align="center">
+            <h3>
+                eArtworks <br> Staffs Reports
+            </h3>
+        </div>
+        
+        <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
+            <thead>
+                <tr>
+                    <th style="width:10%">No</th>
+                    <th style="width:100%">Full Names</th>
+                    <th style="width:100%">Email</th>
+                    <th style="width:100%">Phone</th>
+                    <th style="width:100%">DOB</th>
+                    <th style="width:100%">Date Joined</th>
+                </tr>
+            </thead>
+        <tbody>
+        ';
+    $cnt = 1;
+    $user_sql = mysqli_query(
+        $mysqli,
+        "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'
+        ORDER BY user_first_name ASC"
+    );
+    if (mysqli_num_rows($user_sql) > 0) {
+        while ($customers = mysqli_fetch_array($user_sql)) {
+            $html .=
+                '
+                <tr>
+                    <td>' . $cnt . '</td>
+                    <td>' . $customers['user_first_name'] . ' ' . $customers['user_last_name'] . '</td>
+                    <td>' . $customers['user_email'] . '</td>
+                    <td>' . $customers['user_phone_number'] . '</td>
+                    <td>' . date('M d Y', strtotime($customers['user_dob'])) . '</td>
+                    <td>' . date('M d Y', strtotime($customers['user_date_joined'])) . '</td>
+                </tr>
+            ';
+            $cnt = $cnt + 1;
+        }
+    }
+    $html .= '
+            </tbody>
+        </table>
+    ';
+    $dompdf->load_html($html);
+    $dompdf->set_paper('A4');
+    $dompdf->set_option('isHtml5ParserEnabled', true);
+    $dompdf->render();
+    $dompdf->stream('Customers Reports ', array("Attachment" => 1));
+    $options = $dompdf->getOptions();
+    $options->setDefaultFont('');
+    $dompdf->setOptions($options);
+} else if ($type == 'CSV' && $module == 'Customers') {
+    /* Generate Customers Reports In XLS / CSV */
+    function filterData(&$str)
+    {
+        $str = preg_replace("/\t/", "\\t", $str);
+        $str = preg_replace("/\r?\n/", "\\n", $str);
+        if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+    }
+
+    /* Excel File Name */
+    $fileName = "Customers Reports.xls";
+
+    /* Excel Column Name */
+    $header = array("Customers Reports");
+    $fields = array('#', 'Full Names', 'Email', 'Phone', 'DOB', 'Date Registered');
+
+    /* Implode Excel Data */
+    $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+    $excelData = implode("\t", array_values($fields)) . "\n";
+
+    $cnt = 1;
+    /* Fetch All Records From The Database */
+    $query = $mysqli->query("SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'
+    ORDER BY user_first_name ASC");
+    if ($query->num_rows > 0) {
+        /* Load All Fetched Rows */
+        while ($row = $query->fetch_assoc()) {
+            $lineData = array($cnt, $row['user_first_name'] . ' ' . $row['user_last_name'], $row['user_email'], $row['user_phone_number'], date('M d Y', strtotime($row['user_dob'])), date('M d Y', strtotime($row['user_date_joined'])));
+            array_walk($lineData, 'filterData');
+            $excelData .= implode("\t", array_values($lineData)) . "\n";
+            $cnt = $cnt + 1;
+        }
+    } else {
+        $excelData .= 'No Customers Records Available...' . "\n";
     }
 
     /* Generate Header File Encordings For Download */
