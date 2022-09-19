@@ -111,7 +111,10 @@ require_once('../app/partials/backoffice_head.php');
                                             <img src="../public/backoffice_assets/img/man.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                         </div>
                                         <h5 class="card-title text-dark">Staffs</h5>
-
+                                        <p class="item-count">
+                                            <a href="backoffice_generate_reports?type=PDF&module=Staffs" class="btn btn-primary btn-sm">PDF</a>
+                                            <a href="backoffice_generate_reports?type=CSV&module=Staffs" class="btn btn-primary btn-sm">CSV</a>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -123,7 +126,10 @@ require_once('../app/partials/backoffice_head.php');
                                             <img src="../public/backoffice_assets/img/customer.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                         </div>
                                         <h5 class="card-title text-dark">Customers</h5>
-
+                                        <p class="item-count">
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -135,6 +141,10 @@ require_once('../app/partials/backoffice_head.php');
                                             <img src="../public/backoffice_assets/img/categories.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                         </div>
                                         <h5 class="card-title text-dark">Categories</h5>
+                                        <p class="item-count">
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -144,9 +154,13 @@ require_once('../app/partials/backoffice_head.php');
                                     <div class="card card-default">
                                         <div class="card-body text-center p-24px">
                                             <div class="image mb-3">
-                                                <img src="../public/backoffice_assets/img/auction.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                                <img src="../public/backoffice_assets/img/painting.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                             </div>
                                             <h5 class="card-title text-dark">Products</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
+                                            </p>
                                         </div>
                                     </div>
                                 </a>
@@ -160,6 +174,10 @@ require_once('../app/partials/backoffice_head.php');
                                                 <img src="../public/backoffice_assets/img/order.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                             </div>
                                             <h5 class="card-title text-dark">Orders</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
+                                            </p>
                                         </div>
                                     </div>
                                 </a>
@@ -173,6 +191,10 @@ require_once('../app/partials/backoffice_head.php');
                                                 <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                             </div>
                                             <h5 class="card-title text-dark">Payments</h5>
+                                            <p class="item-count">
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
+                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
+                                            </p>
                                         </div>
                                     </div>
                                 </a>

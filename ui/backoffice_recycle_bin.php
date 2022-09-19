@@ -186,7 +186,7 @@ require_once('../app/partials/backoffice_head.php');
                                     <div class="card card-default">
                                         <div class="card-body text-center p-24px">
                                             <div class="image mb-3">
-                                                <img src="../public/backoffice_assets/img/auction.png" class="img-fluid rounded-circle" alt="Avatar Image">
+                                                <img src="../public/backoffice_assets/img/painting.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                             </div>
                                             <h5 class="card-title text-dark">Products</h5>
                                             <p class="item-count">
