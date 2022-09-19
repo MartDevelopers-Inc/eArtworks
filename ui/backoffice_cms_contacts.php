@@ -142,7 +142,7 @@ require_once('../app/partials/backoffice_head.php');
                                                         </div>
                                                         <div class="form-group col-lg-12">
                                                             <label for="email">Address eArtworks</label>
-                                                            <textarea class="form-control" required name="system_address"><?php echo $contacts['system_address']; ?></textarea>
+                                                            <textarea class="form-control" id="editor" required name="system_address"><?php echo $contacts['system_address']; ?></textarea>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -33,11 +33,17 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <!-- Toastr -->
     <link rel="stylesheet" href="../public/backoffice_assets/plugins/toastr/toastr.min.css">
+    <!-- Floara CDN -->
+    <link href='https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css' rel='stylesheet' type='text/css' />
     <?php
     /* Alert Sesion Via Alerts */
     if (isset($_SESSION['success'])) {
         $success = $_SESSION['success'];
         unset($_SESSION['success']);
+    }
+    if (isset($_SESSION['error'])) {
+        $err = $_SESSION['error'];
+        unset($_SESSION['error']);
     }
     ?>
 </head>

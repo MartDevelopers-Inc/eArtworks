@@ -197,7 +197,7 @@ if (mysqli_num_rows($staff_sql) > 0) {
 
                                                                 <div class="form-group col-lg-8">
                                                                     <label for="email">Phone Number</label>
-                                                                    <input type="text" required value="<?php echo $staff['user_phone_number']; ?>" class="form-control" name="user_phone_number">
+                                                                    <input type="tel" minlength="12" maxlength="12" type="text" required value="<?php echo $staff['user_phone_number']; ?>" class="form-control" name="user_phone_number">
                                                                 </div>
 
                                                                 <div class="form-group col-lg-4">

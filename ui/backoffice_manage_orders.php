@@ -268,6 +268,7 @@ require_once('../app/partials/backoffice_head.php');
 
                                                                     <div class="dropdown-menu">
                                                                         <a class="dropdown-item" href="backoffice_manage_order?view=<?php echo $orders['order_code']; ?>">View</a>
+                                                                        <a class="dropdown-item" href="backoffice_generate_delivery_note?view=<?php echo $orders['order_code']; ?>">Generate Delivery Note</a>
                                                                         <a class="dropdown-item" data-bs-toggle="modal" href="#update_order_status<?php echo $orders['order_code']; ?>">Update Status</a>
                                                                         <a class="dropdown-item" data-bs-toggle="modal" href="#update_order_<?php echo $orders['order_code']; ?>">Edit</a>
                                                                         <a class="dropdown-item" data-bs-toggle="modal" href="#delete_order_<?php echo $orders['order_code']; ?>">Delete</a>
