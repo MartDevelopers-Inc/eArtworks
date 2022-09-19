@@ -158,8 +158,8 @@ require_once('../app/partials/backoffice_head.php');
                                             </div>
                                             <h5 class="card-title text-dark">Products</h5>
                                             <p class="item-count">
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
+                                                <a href="backoffice_generate_reports?type=PDF&module=Products" class="btn btn-primary btn-sm">PDF</a>
+                                                <a href="backoffice_generate_reports?type=CSV&module=Products" class="btn btn-primary btn-sm">CSV</a>
                                             </p>
                                         </div>
                                     </div>
