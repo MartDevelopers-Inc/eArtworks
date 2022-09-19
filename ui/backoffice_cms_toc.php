@@ -101,10 +101,7 @@ require_once('../app/partials/backoffice_head.php');
                                 <span><i class="mdi mdi-chevron-right"></i></span>Manage Terms & Conditions
                             </p>
                         </div>
-
                     </div>
-
-
                     <div class="row">
                         <div class="col-12">
                             <div class="ec-vendor-list card card-default">

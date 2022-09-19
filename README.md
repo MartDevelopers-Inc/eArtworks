@@ -31,4 +31,3 @@ artists and designers to get support for their artistic endeavors as well as to 
 4. Notify seller after a customer orders a product. <br>
 5. Add reports module - Reports In XLS, PDF, and .Docx <br>
 6. Add Charts, Indicate sales / Purchases. <br>
-7. WSIWYG Text editor on lite cms module. <br>

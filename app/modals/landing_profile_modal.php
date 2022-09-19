@@ -25,7 +25,7 @@
                                 </div>
                                 <div class="col-md-6 space-t-15">
                                     <label class="form-label">Phone Number</label>
-                                    <input type="text" name="user_phone_number" value="<?php echo $customer['user_phone_number']; ?>" required class="form-control">
+                                    <input type="tel" minlength="12" maxlength="12" name="user_phone_number" value="<?php echo $customer['user_phone_number']; ?>" required class="form-control">
                                 </div>
                                 <div class="col-md-6 space-t-15">
                                     <label class="form-label">Profile Photo</label>

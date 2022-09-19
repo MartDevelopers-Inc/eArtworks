@@ -139,7 +139,7 @@ require_once('../app/partials/backoffice_head.php');
 
                                             <div class="form-group col-lg-4">
                                                 <label for="email">Phone Number</label>
-                                                <input type="text" required class="form-control" name="user_phone_number">
+                                                <input type="tel" placeholder="2547123456789" minlength="12" maxlength="12" required class="form-control" name="user_phone_number">
                                             </div>
 
                                             <div class="form-group col-lg-4">
