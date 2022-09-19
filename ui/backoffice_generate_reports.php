@@ -392,7 +392,7 @@ if ($module == 'Customers') {
         $options = $dompdf->getOptions();
         $options->setDefaultFont('');
         $dompdf->setOptions($options);
-    } elseif ($type == 'CSV' && $module == 'Customers') {
+    } elseif ($type == 'CSV') {
         /* Generate Customers Reports In XLS / CSV */
         function filterData(&$str)
         {
@@ -570,7 +570,7 @@ if ($module == 'Categories') {
         $options = $dompdf->getOptions();
         $options->setDefaultFont('');
         $dompdf->setOptions($options);
-    } elseif ($type == 'CSV' && $module == 'Customers') {
+    } elseif ($type == 'CSV') {
         /* Generate Categories Reports In XLS / CSV */
         function filterData(&$str)
         {
