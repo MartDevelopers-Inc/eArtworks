@@ -164,7 +164,7 @@ if ($type == 'PDF' && $module == 'Staffs') {
             <thead>
                 <tr>
                     <th style="width:10%">No</th>
-                    <th style="width:100%">Name</th>
+                    <th style="width:100%">Full Names</th>
                     <th style="width:100%">Email</th>
                     <th style="width:100%">Phone</th>
                     <th style="width:100%">DOB</th>
@@ -174,7 +174,11 @@ if ($type == 'PDF' && $module == 'Staffs') {
         <tbody>
         ';
     $cnt = 1;
-    $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'");
+    $user_sql = mysqli_query(
+        $mysqli,
+        "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'
+        ORDER BY user_first_name ASC"
+    );
     if (mysqli_num_rows($user_sql) > 0) {
         while ($staffs = mysqli_fetch_array($user_sql)) {
             $html .=
@@ -199,12 +203,54 @@ if ($type == 'PDF' && $module == 'Staffs') {
     $dompdf->set_paper('A4');
     $dompdf->set_option('isHtml5ParserEnabled', true);
     $dompdf->render();
-    $dompdf->stream('Order Number' . $order_code . ' Delivery Note', array("Attachment" => 1));
+    $dompdf->stream('Staff Reports ', array("Attachment" => 1));
     $options = $dompdf->getOptions();
     $options->setDefaultFont('');
     $dompdf->setOptions($options);
 } else if ($type == 'CSV' && $module == 'Staffs') {
     /* Get Staffs Reports In CSV */
+    function filterData(&$str)
+    {
+        $str = preg_replace("/\t/", "\\t", $str);
+        $str = preg_replace("/\r?\n/", "\\n", $str);
+        if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
+    }
+
+    /* Excel File Name */
+    $fileName = "Staffs Reports.xls";
+
+    /* Excel Column Name */
+    $header = array("Staffs Reports");
+    $fields = array('#', 'Full Names', 'Email', 'Phone', 'DOB', 'Access Level');
+
+    /* Implode Excel Data */
+    $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+    $excelData = implode("\t", array_values($fields)) . "\n";
+
+    $cnt = 1;
+    /* Fetch All Records From The Database */
+    $query = $mysqli->query("SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'
+    ORDER BY user_first_name ASC");
+    if ($query->num_rows > 0) {
+        /* Load All Fetched Rows */
+        while ($row = $query->fetch_assoc()) {
+            $lineData = array($cnt, $row['user_first_name'] . ' ' . $row['user_last_name'], $row['user_email'], $row['user_phone_number'], date('M d Y', strtotime($row['user_dob'])), $row['user_access_level']);
+            array_walk($lineData, 'filterData');
+            $excelData .= implode("\t", array_values($lineData)) . "\n";
+            $cnt = $cnt + 1;
+        }
+    } else {
+        $excelData .= 'No Staffs Records Available...' . "\n";
+    }
+
+    /* Generate Header File Encordings For Download */
+    header("Content-Type: application/vnd.ms-excel");
+    header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+    /* Render  Excel Data For Download */
+    echo $excelDataHeader;
+    echo $excelData;
+    exit;
 } else {
     /* Load Error */
     $_SESSION['error'] = 'Please specify report type';
