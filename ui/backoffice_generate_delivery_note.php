@@ -95,108 +95,103 @@ if (mysqli_num_rows($order_sql) > 0) {
     while ($order = mysqli_fetch_array($order_sql)) {
         /* Dump To PDF */
         $html = '
-<style type="text/css">
-    table {
-        font-size: 12px;
-        padding: 4px;
-    }
+        <style type="text/css">
+            table {
+                font-size: 12px;
+                padding: 4px;
+            }
 
-    tr {
-        page-break-after: always;
-    }
+            
 
-    th {
-        text-align: left;
-        padding: 4pt;
-    }
+            th {
+                text-align: left;
+                padding: 4pt;
+            }
 
-    td {
-        padding: 5pt;
-    }
+            td {
+                padding: 5pt;
+            }
 
-    #b_border {
-        border-bottom: dashed thin;
-    }
+            #b_border {
+                border-bottom: dashed thin;
+            }
 
-    legend {
-        color: #0b77b7;
-        font-size: 1.2em;
-    }
+            legend {
+                color: #0b77b7;
+                font-size: 1.2em;
+            }
 
-    #error_msg {
-        text-align: left;
-        font-size: 11px;
-        color: red;
-    }
+            #error_msg {
+                text-align: left;
+                font-size: 11px;
+                color: red;
+            }
 
-    .header {
-        margin-bottom: 20px;
-        width: 100%;
-        text-align: left;
-        position: absolute;
-        top: 0px;
-    }
+            .header {
+                margin-bottom: 20px;
+                width: 100%;
+                text-align: left;
+                position: absolute;
+                top: 0px;
+            }
 
-    .footer {
-        width: 100%;
-        text-align: center;
-        position: fixed;
-        bottom: 5px;
-    }
+            .footer {
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                bottom: 5px;
+            }
 
-    #no_border_table {
-        border: none;
-    }
+            #no_border_table {
+                border: none;
+            }
 
-    #bold_row {
-        font-weight: bold;
-    }
+            #bold_row {
+                font-weight: bold;
+            }
 
-    #amount {
-        text-align: right;
-        font-weight: bold;
-    }
+            #amount {
+                text-align: right;
+                font-weight: bold;
+            }
 
-    .pagenum:before {
-        content: counter(page);
-    }
+            .pagenum:before {
+                content: counter(page);
+            }
 
-    /* Thick red border */
-    hr.red {
-        border: 1px solid red;
-    }
-    .list_header{
-        font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-    }
-</style>
-<div class="list_header" align="center">
-    <h3>
-        eArtworks Delivery Note For Order # ' . $order_code . '
-    </h3>
-</div>
-<div class="list_header" align="left">
-    <hr style="width:100%" , color=black>
-    <h5>
-        Consignee: ' . $order['user_first_name'] . ' ' . $order['user_last_name'] . ' <br>
-        Order Date: ' . date('M d Y', strtotime($order['order_date'])) . ' <br>
-        Delivery Address: ' . $order['user_default_address'] . '
-    </h5>
-</div>
-<table border="1" cellspacing="0" width="98%" style="font-size:9pt">
-    <thead>
-        <tr>
-            <th style="width:10%">No</th>
-            <th style="width:100%">SKU</th>
-            <th style="width:100%">Product Name</th>
-            <th style="width:100%">Quantity</th>
-        </tr>
-    </thead>
-    <tbody>
-    ';
-        $cnt = 1;
-        $items_sql = mysqli_query(
-            $mysqli,
-            "SELECT * FROM orders o  
+            /* Thick red border */
+            hr.red {
+                border: 1px solid red;
+            }
+            .list_header{
+                font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+            }
+        </style>
+        <div class="list_header" align="center">
+            <h3>
+                eArtworks <br> Delivery Note For Order # ' . $order_code . '
+            </h3>
+        </div>
+        <div class="list_header" align="left">
+            <hr style="width:100%" , color=black>
+            <h5>
+                Consignee: ' . $order['user_first_name'] . ' ' . $order['user_last_name'] . ' <br>
+                Order Date: ' . date('M d Y', strtotime($order['order_date'])) . ' <br>
+                Delivery Address: ' . $order['user_default_address'] . '
+            </h5>
+        </div>
+        <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
+            <thead>
+                <tr>
+                    <th style="width:10%">No</th>
+                    <th style="width:100%">SKU</th>
+                    <th style="width:100%">Product Name</th>
+                    <th style="width:30%">Quantity</th>
+                </tr>
+            </thead>
+        <tbody>
+        ';
+        $ret = "SELECT * FROM orders o  
             INNER JOIN products p ON p.product_id = o.order_product_id
             INNER JOIN users u ON u.user_id = o.order_user_id
             INNER JOIN categories c ON c.category_id = p.product_category_id
@@ -204,25 +199,35 @@ if (mysqli_num_rows($order_sql) > 0) {
             AND c.category_delete_status = '0'
             AND p.product_delete_status = '0'
             AND o.order_delete_status = '0'
-            AND o.order_code = '{$order_code}'"
-        );
-        if (mysqli_num_rows($items_sql) > 0) {
-            while ($items = mysqli_fetch_array($items_sql)) {
-                $html .=
-                    '
-            <tr>
-                <td>' . $cnt . '</td>
-                <td>' . $items['product_sku_code'] . '</td>
-                <td>' . $items['product_name'] . '</td>
-                <td>' . $items['order_qty'] . '</td>
-            </tr>
-        ';
-                $cnt = $cnt + 1;
-            }
+            AND o.order_code = '{$order_code}'";
+        $stmt = $mysqli->prepare($ret);
+        $stmt->execute(); //ok
+        $res = $stmt->get_result();
+        $cnt = 1;
+        while ($items = $res->fetch_object()) {
+            $html .=
+                '
+                <tr>
+                    <td>' . $cnt . '</td>
+                    <td>' . $items->product_sku_code . '</td>
+                    <td>' . $items->product_name . '</td>
+                    <td>' . $items->order_qty . '</td>
+                </tr>
+            ';
+            $cnt = $cnt + 1;
         }
         $html .= '
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <br>
+        <div align="left">
+            <p>
+                This is not a purchase invoice. It is the seller`s obligation to issue and deliver an invoice to 
+                the client. It is the duty of the seller to establish if the price of the things sold is subject to VAT,
+                custom charges, and other taxes. It is also the seller`s duty to pay any applicable VAT, custom duties,
+                fees, or other taxes.
+            </p>
+        </div>
     ';
         $dompdf->load_html($html);
         $dompdf->set_paper('A4');
