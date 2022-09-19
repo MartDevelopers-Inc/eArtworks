@@ -83,9 +83,10 @@ $module = mysqli_real_escape_string($mysqli, $_GET['module']);
 
 
 /* Staffs Reports */
-if ($type == 'PDF' && $module == 'Staffs') {
-    /* Get Staffs Reports In PDF */
-    $html = '
+if ($module == 'Staffs') {
+    if ($type == 'PDF') {
+        /* Get Staffs Reports In PDF */
+        $html = '
         <style type="text/css">
             table {
                 font-size: 12px;
@@ -175,16 +176,16 @@ if ($type == 'PDF' && $module == 'Staffs') {
             </thead>
         <tbody>
         ';
-    $cnt = 1;
-    $user_sql = mysqli_query(
-        $mysqli,
-        "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'
+        $cnt = 1;
+        $user_sql = mysqli_query(
+            $mysqli,
+            "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'
         ORDER BY user_first_name ASC"
-    );
-    if (mysqli_num_rows($user_sql) > 0) {
-        while ($staffs = mysqli_fetch_array($user_sql)) {
-            $html .=
-                '
+        );
+        if (mysqli_num_rows($user_sql) > 0) {
+            while ($staffs = mysqli_fetch_array($user_sql)) {
+                $html .=
+                    '
                 <tr>
                     <td>' . $cnt . '</td>
                     <td>' . $staffs['user_first_name'] . ' ' . $staffs['user_last_name'] . '</td>
@@ -194,77 +195,80 @@ if ($type == 'PDF' && $module == 'Staffs') {
                     <td>' . $staffs['user_access_level'] . '</td>
                 </tr>
             ';
-            $cnt = $cnt + 1;
+                $cnt = $cnt + 1;
+            }
         }
-    }
-    $html .= '
+        $html .= '
             </tbody>
         </table>
     ';
-    $dompdf->load_html($html);
-    $dompdf->set_paper('A4');
-    $dompdf->set_option('isHtml5ParserEnabled', true);
-    $dompdf->render();
-    $dompdf->stream('Staff Reports ', array("Attachment" => 1));
-    $options = $dompdf->getOptions();
-    $options->setDefaultFont('');
-    $dompdf->setOptions($options);
-} else if ($type == 'CSV' && $module == 'Staffs') {
-    /* Get Staffs Reports In CSV */
-    function filterData(&$str)
-    {
-        $str = preg_replace("/\t/", "\\t", $str);
-        $str = preg_replace("/\r?\n/", "\\n", $str);
-        if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
-    }
+        $dompdf->load_html($html);
+        $dompdf->set_paper('A4');
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        $dompdf->render();
+        $dompdf->stream('Staff Reports ', array("Attachment" => 1));
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('');
+        $dompdf->setOptions($options);
+    } else if ($type == 'CSV' && $module == 'Staffs') {
 
-    /* Excel File Name */
-    $fileName = "Staffs Reports.xls";
-
-    /* Excel Column Name */
-    $header = array("Staffs Reports");
-    $fields = array('#', 'Full Names', 'Email', 'Phone', 'DOB', 'Access Level');
-
-    /* Implode Excel Data */
-    $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
-    $excelData = implode("\t", array_values($fields)) . "\n";
-
-    $cnt = 1;
-    /* Fetch All Records From The Database */
-    $query = $mysqli->query("SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'
-    ORDER BY user_first_name ASC");
-    if ($query->num_rows > 0) {
-        /* Load All Fetched Rows */
-        while ($row = $query->fetch_assoc()) {
-            $lineData = array($cnt, $row['user_first_name'] . ' ' . $row['user_last_name'], $row['user_email'], $row['user_phone_number'], date('M d Y', strtotime($row['user_dob'])), $row['user_access_level']);
-            array_walk($lineData, 'filterData');
-            $excelData .= implode("\t", array_values($lineData)) . "\n";
-            $cnt = $cnt + 1;
+        /* Get Staffs Reports In CSV */
+        function filterData(&$str)
+        {
+            $str = preg_replace("/\t/", "\\t", $str);
+            $str = preg_replace("/\r?\n/", "\\n", $str);
+            if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
         }
+
+        /* Excel File Name */
+        $fileName = "Staffs Reports.xls";
+
+        /* Excel Column Name */
+        $header = array("Staffs Reports");
+        $fields = array('#', 'Full Names', 'Email', 'Phone', 'DOB', 'Access Level');
+
+        /* Implode Excel Data */
+        $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+        $excelData = implode("\t", array_values($fields)) . "\n";
+
+        $cnt = 1;
+        /* Fetch All Records From The Database */
+        $query = $mysqli->query("SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'
+        ORDER BY user_first_name ASC");
+        if ($query->num_rows > 0) {
+            /* Load All Fetched Rows */
+            while ($row = $query->fetch_assoc()) {
+                $lineData = array($cnt, $row['user_first_name'] . ' ' . $row['user_last_name'], $row['user_email'], $row['user_phone_number'], date('M d Y', strtotime($row['user_dob'])), $row['user_access_level']);
+                array_walk($lineData, 'filterData');
+                $excelData .= implode("\t", array_values($lineData)) . "\n";
+                $cnt = $cnt + 1;
+            }
+        } else {
+            $excelData .= 'No Staffs Records Available...' . "\n";
+        }
+
+        /* Generate Header File Encordings For Download */
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+        /* Render  Excel Data For Download */
+        echo $excelDataHeader;
+        echo $excelData;
+        exit;
     } else {
-        $excelData .= 'No Staffs Records Available...' . "\n";
+        /* Load Error */
+        $_SESSION['error'] = 'Please specify report type';
+        header('Location: backoffice_reports');
+        exit;
     }
-
-    /* Generate Header File Encordings For Download */
-    header("Content-Type: application/vnd.ms-excel");
-    header("Content-Disposition: attachment; filename=\"$fileName\"");
-
-    /* Render  Excel Data For Download */
-    echo $excelDataHeader;
-    echo $excelData;
-    exit;
-} else {
-    /* Load Error */
-    $_SESSION['error'] = 'Please specify report type';
-    header('Location: backoffice_reports');
-    exit;
 }
 
 
 /* Customers Reports */
-if ($type == 'PDF' && $module == 'Customers') {
-    /* Generate Customers Reports In PDF */
-    $html = '
+if ($module == 'Customers') {
+    if ($type == 'PDF') {
+        /* Generate Customers Reports In PDF */
+        $html = '
         <style type="text/css">
             table {
                 font-size: 12px;
@@ -354,16 +358,16 @@ if ($type == 'PDF' && $module == 'Customers') {
             </thead>
         <tbody>
         ';
-    $cnt = 1;
-    $user_sql = mysqli_query(
-        $mysqli,
-        "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'
+        $cnt = 1;
+        $user_sql = mysqli_query(
+            $mysqli,
+            "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'
         ORDER BY user_first_name ASC"
-    );
-    if (mysqli_num_rows($user_sql) > 0) {
-        while ($customers = mysqli_fetch_array($user_sql)) {
-            $html .=
-                '
+        );
+        if (mysqli_num_rows($user_sql) > 0) {
+            while ($customers = mysqli_fetch_array($user_sql)) {
+                $html .=
+                    '
                 <tr>
                     <td>' . $cnt . '</td>
                     <td>' . $customers['user_first_name'] . ' ' . $customers['user_last_name'] . '</td>
@@ -373,68 +377,73 @@ if ($type == 'PDF' && $module == 'Customers') {
                     <td>' . date('M d Y', strtotime($customers['user_date_joined'])) . '</td>
                 </tr>
             ';
-            $cnt = $cnt + 1;
+                $cnt = $cnt + 1;
+            }
         }
-    }
-    $html .= '
+        $html .= '
             </tbody>
         </table>
     ';
-    $dompdf->load_html($html);
-    $dompdf->set_paper('A4');
-    $dompdf->set_option('isHtml5ParserEnabled', true);
-    $dompdf->render();
-    $dompdf->stream('Customers Reports ', array("Attachment" => 1));
-    $options = $dompdf->getOptions();
-    $options->setDefaultFont('');
-    $dompdf->setOptions($options);
-} else if ($type == 'CSV' && $module == 'Customers') {
-    /* Generate Customers Reports In XLS / CSV */
-    function filterData(&$str)
-    {
-        $str = preg_replace("/\t/", "\\t", $str);
-        $str = preg_replace("/\r?\n/", "\\n", $str);
-        if (strstr($str, '"')) $str = '"' . str_replace('"', '""', $str) . '"';
-    }
-
-    /* Excel File Name */
-    $fileName = "Customers Reports.xls";
-
-    /* Excel Column Name */
-    $header = array("Customers Reports");
-    $fields = array('#', 'Full Names', 'Email', 'Phone', 'DOB', 'Date Registered');
-
-    /* Implode Excel Data */
-    $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
-    $excelData = implode("\t", array_values($fields)) . "\n";
-
-    $cnt = 1;
-    /* Fetch All Records From The Database */
-    $query = $mysqli->query("SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'
-    ORDER BY user_first_name ASC");
-    if ($query->num_rows > 0) {
-        /* Load All Fetched Rows */
-        while ($row = $query->fetch_assoc()) {
-            $lineData = array($cnt, $row['user_first_name'] . ' ' . $row['user_last_name'], $row['user_email'], $row['user_phone_number'], date('M d Y', strtotime($row['user_dob'])), date('M d Y', strtotime($row['user_date_joined'])));
-            array_walk($lineData, 'filterData');
-            $excelData .= implode("\t", array_values($lineData)) . "\n";
-            $cnt = $cnt + 1;
+        $dompdf->load_html($html);
+        $dompdf->set_paper('A4');
+        $dompdf->set_option('isHtml5ParserEnabled', true);
+        $dompdf->render();
+        $dompdf->stream('Customers Reports ', array("Attachment" => 1));
+        $options = $dompdf->getOptions();
+        $options->setDefaultFont('');
+        $dompdf->setOptions($options);
+    } elseif ($type == 'CSV' && $module == 'Customers') {
+        /* Generate Customers Reports In XLS / CSV */
+        function filterData(&$str)
+        {
+            $str = preg_replace("/\t/", "\\t", $str);
+            $str = preg_replace("/\r?\n/", "\\n", $str);
+            if (strstr($str, '"')) {
+                $str = '"' . str_replace('"', '""', $str) . '"';
+            }
         }
+
+        /* Excel File Name */
+        $fileName = "Customers Reports.xls";
+
+        /* Excel Column Name */
+        $header = array("Customers Reports");
+        $fields = array('#', 'Full Names', 'Email', 'Phone', 'DOB', 'Date Registered');
+
+        /* Implode Excel Data */
+        $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+        $excelData = implode("\t", array_values($fields)) . "\n";
+
+        $cnt = 1;
+        /* Fetch All Records From The Database */
+        $query = $mysqli->query("SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level = 'Customer'
+        ORDER BY user_first_name ASC");
+        if ($query->num_rows > 0) {
+            /* Load All Fetched Rows */
+            while ($row = $query->fetch_assoc()) {
+                $lineData = array($cnt, $row['user_first_name'] . ' ' . $row['user_last_name'], $row['user_email'], $row['user_phone_number'], date('M d Y', strtotime($row['user_dob'])), date('M d Y', strtotime($row['user_date_joined'])));
+                array_walk($lineData, 'filterData');
+                $excelData .= implode("\t", array_values($lineData)) . "\n";
+                $cnt = $cnt + 1;
+            }
+        } else {
+            $excelData .= 'No Customers Records Available...' . "\n";
+        }
+
+        /* Generate Header File Encordings For Download */
+        header("Content-Type: application/vnd.ms-excel");
+        header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+        /* Render  Excel Data For Download */
+        echo $excelDataHeader;
+        echo $excelData;
+        exit;
     } else {
-        $excelData .= 'No Customers Records Available...' . "\n";
+        /* Load Error */
+        $_SESSION['error'] = 'Please specify report type';
+        header('Location: backoffice_reports');
+        exit;
     }
-
-    /* Generate Header File Encordings For Download */
-    header("Content-Type: application/vnd.ms-excel");
-    header("Content-Disposition: attachment; filename=\"$fileName\"");
-
-    /* Render  Excel Data For Download */
-    echo $excelDataHeader;
-    echo $excelData;
-    exit;
-} else {
-    /* Load Error */
-    $_SESSION['error'] = 'Please specify report type';
-    header('Location: backoffice_reports');
-    exit;
 }
+
+
