@@ -161,6 +161,13 @@
                     </div>
                 </li>
                 <li>
+                    <a class="sidenav-item-link" href="backoffice_reports">
+                        <i class="mdi mdi-file"></i>
+                        <span class="nav-text">Reports</span>
+                    </a>
+                    <hr>
+                </li>
+                <li>
                     <a class="sidenav-item-link" href="backoffice_recycle_bin">
                         <i class="mdi mdi-trash-can"></i>
                         <span class="nav-text">Recycle Bin</span>
