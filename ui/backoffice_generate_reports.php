@@ -83,6 +83,126 @@ $module = mysqli_real_escape_string($mysqli, $_GET['module']);
 
 if ($type == 'PDF' && $module == 'Staffs') {
     /* Get Staffs Reports In PDF */
+    $html = '
+        <style type="text/css">
+            table {
+                font-size: 12px;
+                padding: 4px;
+            }          
+
+            th {
+                text-align: left;
+                padding: 4pt;
+            }
+
+            td {
+                padding: 5pt;
+            }
+
+            #b_border {
+                border-bottom: dashed thin;
+            }
+
+            legend {
+                color: #0b77b7;
+                font-size: 1.2em;
+            }
+
+            #error_msg {
+                text-align: left;
+                font-size: 11px;
+                color: red;
+            }
+
+            .header {
+                margin-bottom: 20px;
+                width: 100%;
+                text-align: left;
+                position: absolute;
+                top: 0px;
+            }
+
+            .footer {
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                bottom: 5px;
+            }
+
+            #no_border_table {
+                border: none;
+            }
+
+            #bold_row {
+                font-weight: bold;
+            }
+
+            #amount {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .pagenum:before {
+                content: counter(page);
+            }
+
+            /* Thick red border */
+            hr.red {
+                border: 1px solid red;
+            }
+            .list_header{
+                font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+            }
+        </style>
+        <div class="list_header" align="center">
+            <h3>
+                eArtworks <br> Staffs Reports
+            </h3>
+        </div>
+        
+        <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
+            <thead>
+                <tr>
+                    <th style="width:10%">No</th>
+                    <th style="width:100%">Name</th>
+                    <th style="width:100%">Email</th>
+                    <th style="width:100%">Phone</th>
+                    <th style="width:100%">DOB</th>
+                    <th style="width:100%">Access Level</th>
+                </tr>
+            </thead>
+        <tbody>
+        ';
+    $cnt = 1;
+    $user_sql = mysqli_query($mysqli, "SELECT * FROM users WHERE user_delete_status = '0' AND user_access_level != 'Customer'");
+    if (mysqli_num_rows($user_sql) > 0) {
+        while ($staffs = mysqli_fetch_array($user_sql)) {
+            $html .=
+                '
+                <tr>
+                    <td>' . $cnt . '</td>
+                    <td>' . $staffs['user_first_name'] . ' ' . $staffs['user_last_name'] . '</td>
+                    <td>' . $staffs['user_email'] . '</td>
+                    <td>' . $staffs['user_phone_number'] . '</td>
+                    <td>' . date('M d Y', strtotime($staffs['user_dob'])) . '</td>
+                    <td>' . $staffs['user_access_level'] . '</td>
+                </tr>
+            ';
+            $cnt = $cnt + 1;
+        }
+    }
+    $html .= '
+            </tbody>
+        </table>
+    ';
+    $dompdf->load_html($html);
+    $dompdf->set_paper('A4');
+    $dompdf->set_option('isHtml5ParserEnabled', true);
+    $dompdf->render();
+    $dompdf->stream('Order Number' . $order_code . ' Delivery Note', array("Attachment" => 1));
+    $options = $dompdf->getOptions();
+    $options->setDefaultFont('');
+    $dompdf->setOptions($options);
 } else if ($type == 'CSV' && $module == 'Staffs') {
     /* Get Staffs Reports In CSV */
 } else {
