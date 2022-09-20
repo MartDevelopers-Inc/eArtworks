@@ -87,9 +87,9 @@ require_once('../app/partials/landing_head.php');
             <div class="row">
               <div class="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
                 <div class="ec-slide-content slider-animation">
-                  <h1 class="ec-slide-title">Top Artwork Collection</h1>
-                  <h2 class="ec-slide-stitle">Sale Offer</h2>
-                  <p>
+                  <h1 class="ec-slide-title text-light">Top Artwork Collection</h1>
+                  <h2 class="ec-slide-stitle text-light">Sale Offer</h2>
+                  <p class="text-light">
                     Purchase high-quality artworks from your favorite artists from across the world.
                   </p>
                   <a href="landing_products" class="btn btn-lg btn-secondary">Order Now</a>
@@ -220,7 +220,7 @@ require_once('../app/partials/landing_head.php');
       </div>
     </div>
   </section>
-  
+
 
   <!-- Footer Start -->
   <?php require_once('../app/partials/landing_footer.php'); ?>
