@@ -907,13 +907,13 @@ if (isset($_POST['Generate_PDF_On_Orders'])) {
         <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
             <thead>
                 <tr>
-                    <th style="width:60%">Order Number</th>
-                    <th style="width:100%">Products Details</th>
-                    <th style="width:20%">Order Date</th>
-                    <th style="width:20%">Order QTY</th>
-                    <th style="width:50%">Order Cost</th>
-                    <th style="width:50%">Order Status</th>
-                    <th style="width:100%">Customer Details</th>
+                    <th style="width:60%">Order</th>
+                    <th style="width:100%">Products</th>
+                    <th style="width:60%">Order Date</th>
+                    <th style="width:50%">Status</th>
+                    <th style="width:100%">Customer</th>
+                    <th style="width:20%">QTY</th>
+                    <th style="width:80%">Order Cost</th>
                 </tr>
             </thead>
         <tbody>
@@ -936,14 +936,20 @@ if (isset($_POST['Generate_PDF_On_Orders'])) {
                                 <td>' . $orders['order_code'] . '</td>
                                 <td>' . $orders['product_name'] . '</td>
                                 <td>' . date('d M Y', strtotime($orders['order_date'])) . '</td>
-                                <td>' . $orders['order_qty'] . '</td>
-                                <td> Ksh ' . number_format($orders['order_cost'], 2) . '</td>
                                 <td>' . $orders['order_status'] . '</td>
                                 <td>' . $orders['user_first_name'] . ' ' . $orders['user_last_name'] . '</td>
+                                <td>' . $orders['order_qty'] . '</td>
+                                <td> Ksh ' . number_format($orders['order_cost'], 2) . '</td>
                             </tr>
                         ';
-                    $cnt = $cnt + 1;
                 }
+            } else {
+                $html .=
+                    '
+                            <tr>
+                                <td colspan="7" align="center">No Orders Available For This Duration</td>
+                            </tr>
+                        ';
             }
             $html .= '
             </tbody>
