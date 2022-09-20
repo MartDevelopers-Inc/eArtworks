@@ -182,20 +182,18 @@ require_once('../app/partials/backoffice_head.php');
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <a href="backoffice_deleted_payments">
-                                    <div class="card card-default">
-                                        <div class="card-body text-center p-24px">
-                                            <div class="image mb-3">
-                                                <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
-                                            </div>
-                                            <h5 class="card-title text-dark">Payments</h5>
-                                            <p class="item-count">
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#get_payments_pdf_report">PDF</button>
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#get_payments_csv_report">CSV</button>
-                                            </p>
+                                <div class="card card-default">
+                                    <div class="card-body text-center p-24px">
+                                        <div class="image mb-3">
+                                            <img src="../public/backoffice_assets/img/debit-card.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                         </div>
+                                        <h5 class="card-title text-dark">Payments</h5>
+                                        <p class="item-count">
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#get_payments_pdf_report">PDF</button>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#get_payments_csv_report">CSV</button>
+                                        </p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
                             <!-- Modals -->
                             <?php include('../app/modals/reports_modal.php'); ?>
