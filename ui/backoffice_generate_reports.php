@@ -263,7 +263,6 @@ if ($module == 'Staffs') {
     }
 }
 
-
 /* Customers Reports */
 if ($module == 'Customers') {
     if ($type == 'PDF') {
@@ -446,7 +445,6 @@ if ($module == 'Customers') {
     }
 }
 
-
 /* Product Categories */
 if ($module == 'Categories') {
     if ($type == 'PDF') {
@@ -622,7 +620,6 @@ if ($module == 'Categories') {
         exit;
     }
 }
-
 
 /* Products Reports */
 if ($module == 'Products') {
@@ -815,7 +812,6 @@ if ($module == 'Products') {
         exit;
     }
 }
-
 
 /* Orders */
 if (isset($_POST['Generate_Order_Reports'])) {
@@ -1025,7 +1021,6 @@ if (isset($_POST['Generate_Order_Reports'])) {
         }
     }
 }
-
 
 /* Payments */
 if (isset($_POST['Generate_Payments_Reports'])) {
