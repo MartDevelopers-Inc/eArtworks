@@ -1025,3 +1025,205 @@ if (isset($_POST['Generate_Order_Reports'])) {
         }
     }
 }
+
+
+/* Payments */
+if (isset($_POST['Generate_Payments_Reports'])) {
+    if ($module == 'Payments') {
+        /* Filter Values */
+        $start = mysqli_real_escape_string($mysqli, $_POST['start_date']);
+        $end = mysqli_real_escape_string($mysqli, $_POST['end_date']);
+        
+
+        if ($type == 'PDF') {
+            /* Generate Customers Reports In PDF */
+            $html = '
+            <style type="text/css">
+                table {
+                    font-size: 12px;
+                    padding: 4px;
+                }          
+
+                th {
+                    text-align: left;
+                    padding: 4pt;
+                }
+
+                td {
+                    padding: 5pt;
+                }
+
+                #b_border {
+                    border-bottom: dashed thin;
+                }
+
+                legend {
+                    color: #0b77b7;
+                    font-size: 1.2em;
+                }
+
+                #error_msg {
+                    text-align: left;
+                    font-size: 11px;
+                    color: red;
+                }
+
+                .header {
+                    margin-bottom: 20px;
+                    width: 100%;
+                    text-align: left;
+                    position: absolute;
+                    top: 0px;
+                }
+
+                .footer {
+                    width: 100%;
+                    text-align: center;
+                    position: fixed;
+                    bottom: 5px;
+                }
+
+                #no_border_table {
+                    border: none;
+                }
+
+                #bold_row {
+                    font-weight: bold;
+                }
+
+                #amount {
+                    text-align: right;
+                    font-weight: bold;
+                }
+
+                .pagenum:before {
+                    content: counter(page);
+                }
+
+                /* Thick red border */
+                hr.red {
+                    border: 1px solid red;
+                }
+                .list_header{
+                    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+                }
+            </style>
+        <div class="list_header" align="center">
+            <h3>
+                eArtworks <br> Payments Reports From Date ' . date('d M Y', strtotime($start)) . ' To ' . date('d M Y', strtotime($end)) . '
+            </h3>
+        </div>
+        
+        <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
+            <thead>
+                <tr>
+                    <th style="width:100%">Order #</th>
+                    <th style="width:100%">Payment Ref #</th>
+                    <th style="width:100%">Payment Date</th>
+                    <th style="width:100%">Payment Amount</th>
+                </tr>
+            </thead>
+        <tbody>
+        ';
+            $cnt = 1;
+            $payments_sql = mysqli_query(
+                $mysqli,
+                "SELECT * FROM payments
+                WHERE payment_delete_status = '0'
+                AND payment_date  BETWEEN '{$start}' AND '{$end}'
+                ORDER BY payment_date ASC"
+            );
+            if (mysqli_num_rows($payments_sql) > 0) {
+                while ($payments = mysqli_fetch_array($payments_sql)) {
+                    $html .=
+                        '
+                            <tr>
+                                <td>' . $payments['payment_order_code'] . '</td>
+                                <td>' . $payments['payment_ref_code'] . '</td>
+                                <td>' . date('d M Y g:ia', strtotime($payments['payment_date'])) . '</td>
+                                <td> Ksh ' . number_format($payments['payment_amount'], 2) . '</td>
+                            </tr>
+                        ';
+                }
+            } else {
+                $html .=
+                    '
+                            <tr>
+                                <td colspan="4" align="center">No Payments Recorded  For This Duration</td>
+                            </tr>
+                        ';
+            }
+            $html .= '
+            </tbody>
+        </table>
+        ';
+            $dompdf->load_html($html);
+            $dompdf->set_paper('A4');
+            $dompdf->set_option('isHtml5ParserEnabled', true);
+            $dompdf->render();
+            $dompdf->stream('Orders From ' . date('d M Y', strtotime($start)) . ' To ' . date('d M Y', strtotime($end)), array("Attachment" => 1));
+            $options = $dompdf->getOptions();
+            $options->setDefaultFont('');
+            $dompdf->setOptions($options);
+        } elseif ($type == 'CSV') {
+            /* Load CSV Reports */
+            /* Generate Categories Reports In XLS / CSV */
+            function filterData(&$str)
+            {
+                $str = preg_replace("/\t/", "\\t", $str);
+                $str = preg_replace("/\r?\n/", "\\n", $str);
+                if (strstr($str, '"')) {
+                    $str = '"' . str_replace('"', '""', $str) . '"';
+                }
+            }
+
+            /* Excel File Name */
+            $fileName = "Payments Reports.xls";
+
+            /* Excel Column Name */
+            $header = array("Payments Reports");
+            $fields = array('Order #', 'Products', 'Order Date', 'Status', 'Customer', 'QTY', 'Order Cost (Ksh)');
+
+            /* Implode Excel Data */
+            $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+            $excelData = implode("\t", array_values($fields)) . "\n";
+
+            $cnt = 1;
+            /* Fetch All Records From The Database */
+            $query = $mysqli->query("SELECT * FROM orders o
+            INNER JOIN products p ON p.product_id = o.order_product_id
+            INNER JOIN users u ON u.user_id = o.order_user_id
+            WHERE o.order_delete_status = '0'
+            AND o.order_date BETWEEN '{$start}' AND '{$end}'
+            ORDER BY o.order_date ASC");
+            if ($query->num_rows > 0) {
+                /* Load All Fetched Rows */
+                while ($row = $query->fetch_assoc()) {
+                    $lineData = array(
+                        $row['order_code'], $row['product_name'], date('d M Y', strtotime($row['order_date'])),
+                        $row['order_status'], $row['user_first_name'] . ' ' . $row['user_last_name'], $row['order_qty'], $row['order_cost']
+                    );
+                    array_walk($lineData, 'filterData');
+                    $excelData .= implode("\t", array_values($lineData)) . "\n";
+                    $cnt = $cnt + 1;
+                }
+            } else {
+                $excelData .= 'No Payments Records Available...' . "\n";
+            }
+
+            /* Generate Header File Encordings For Download */
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+            /* Render  Excel Data For Download */
+            echo $excelDataHeader;
+            echo $excelData;
+            exit;
+        } else {
+            /* Load Error */
+            $_SESSION['error'] = 'Please specify report type';
+            header('Location: backoffice_reports');
+            exit;
+        }
+    }
+}
