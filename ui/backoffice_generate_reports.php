@@ -907,7 +907,7 @@ if (isset($_POST['Generate_PDF_On_Orders'])) {
         <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
             <thead>
                 <tr>
-                    <th style="width:60%">Order</th>
+                    <th style="width:60%">Order #</th>
                     <th style="width:100%">Products</th>
                     <th style="width:60%">Order Date</th>
                     <th style="width:50%">Status</th>
@@ -954,7 +954,7 @@ if (isset($_POST['Generate_PDF_On_Orders'])) {
             $html .= '
             </tbody>
         </table>
-    ';
+        ';
             $dompdf->load_html($html);
             $dompdf->set_paper('A4');
             $dompdf->set_option('isHtml5ParserEnabled', true);
@@ -965,6 +965,63 @@ if (isset($_POST['Generate_PDF_On_Orders'])) {
             $dompdf->setOptions($options);
         } elseif ($type == 'CSV') {
             /* Load CSV Reports */
+            /* Generate Categories Reports In XLS / CSV */
+            function filterData(&$str)
+            {
+                $str = preg_replace("/\t/", "\\t", $str);
+                $str = preg_replace("/\r?\n/", "\\n", $str);
+                if (strstr($str, '"')) {
+                    $str = '"' . str_replace('"', '""', $str) . '"';
+                }
+            }
+
+            /* Excel File Name */
+            $fileName = "Order Reports.xls";
+
+            /* Excel Column Name */
+            $header = array("Order Reports");
+            $fields = array('Order #', 'Products', 'Order Date', 'Status', 'Customer', 'QTY', 'Order Cost (Ksh)');
+
+            /* Implode Excel Data */
+            $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
+            $excelData = implode("\t", array_values($fields)) . "\n";
+
+            $cnt = 1;
+            /* Fetch All Records From The Database */
+            $query = $mysqli->query("SELECT * FROM orders o
+            INNER JOIN products p ON p.product_id = o.order_product_id
+            INNER JOIN users u ON u.user_id = o.order_user_id
+            WHERE o.order_delete_status = '0'
+            AND o.order_date BETWEEN '{$start}' AND '{$end}'
+            ORDER BY o.order_date ASC");
+            if ($query->num_rows > 0) {
+                /* Load All Fetched Rows */
+                while ($row = $query->fetch_assoc()) {
+                    $lineData = array(
+                        $row['order_code'], $row['product_name'], date('d M Y', strtotime($row['order_date'])),
+                        $row['order_status'], $row['user_first_name'] . ' ' . $row['user_last_name'], $row['order_qty'], $row['order_cost']
+                    );
+                    array_walk($lineData, 'filterData');
+                    $excelData .= implode("\t", array_values($lineData)) . "\n";
+                    $cnt = $cnt + 1;
+                }
+            } else {
+                $excelData .= 'No Orders Records Available...' . "\n";
+            }
+
+            /* Generate Header File Encordings For Download */
+            header("Content-Type: application/vnd.ms-excel");
+            header("Content-Disposition: attachment; filename=\"$fileName\"");
+
+            /* Render  Excel Data For Download */
+            echo $excelDataHeader;
+            echo $excelData;
+            exit;
+        } else {
+            /* Load Error */
+            $_SESSION['error'] = 'Please specify report type';
+            header('Location: backoffice_reports');
+            exit;
         }
     }
 }
