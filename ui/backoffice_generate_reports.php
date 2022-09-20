@@ -1033,7 +1033,7 @@ if (isset($_POST['Generate_Payments_Reports'])) {
         /* Filter Values */
         $start = mysqli_real_escape_string($mysqli, $_POST['start_date']);
         $end = mysqli_real_escape_string($mysqli, $_POST['end_date']);
-        
+
 
         if ($type == 'PDF') {
             /* Generate Customers Reports In PDF */
@@ -1161,13 +1161,12 @@ if (isset($_POST['Generate_Payments_Reports'])) {
             $dompdf->set_paper('A4');
             $dompdf->set_option('isHtml5ParserEnabled', true);
             $dompdf->render();
-            $dompdf->stream('Orders From ' . date('d M Y', strtotime($start)) . ' To ' . date('d M Y', strtotime($end)), array("Attachment" => 1));
+            $dompdf->stream('Payment From ' . date('d M Y', strtotime($start)) . ' To ' . date('d M Y', strtotime($end)), array("Attachment" => 1));
             $options = $dompdf->getOptions();
             $options->setDefaultFont('');
             $dompdf->setOptions($options);
         } elseif ($type == 'CSV') {
             /* Load CSV Reports */
-            /* Generate Categories Reports In XLS / CSV */
             function filterData(&$str)
             {
                 $str = preg_replace("/\t/", "\\t", $str);
@@ -1182,7 +1181,7 @@ if (isset($_POST['Generate_Payments_Reports'])) {
 
             /* Excel Column Name */
             $header = array("Payments Reports");
-            $fields = array('Order #', 'Products', 'Order Date', 'Status', 'Customer', 'QTY', 'Order Cost (Ksh)');
+            $fields = array('Order #', 'Payment Ref #', 'Payment Date', 'Payment Amount (Ksh)');
 
             /* Implode Excel Data */
             $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
@@ -1190,18 +1189,16 @@ if (isset($_POST['Generate_Payments_Reports'])) {
 
             $cnt = 1;
             /* Fetch All Records From The Database */
-            $query = $mysqli->query("SELECT * FROM orders o
-            INNER JOIN products p ON p.product_id = o.order_product_id
-            INNER JOIN users u ON u.user_id = o.order_user_id
-            WHERE o.order_delete_status = '0'
-            AND o.order_date BETWEEN '{$start}' AND '{$end}'
-            ORDER BY o.order_date ASC");
+            $query = $mysqli->query("SELECT * FROM payments
+            WHERE payment_delete_status = '0'
+            AND payment_date  BETWEEN '{$start}' AND '{$end}'
+            ORDER BY payment_date ASC");
             if ($query->num_rows > 0) {
                 /* Load All Fetched Rows */
                 while ($row = $query->fetch_assoc()) {
                     $lineData = array(
-                        $row['order_code'], $row['product_name'], date('d M Y', strtotime($row['order_date'])),
-                        $row['order_status'], $row['user_first_name'] . ' ' . $row['user_last_name'], $row['order_qty'], $row['order_cost']
+                        $row['payment_order_code'], $row['payment_ref_code'], date('d M Y g:ia', strtotime($row['payment_date'])),
+                        $row['payment_amount']
                     );
                     array_walk($lineData, 'filterData');
                     $excelData .= implode("\t", array_values($lineData)) . "\n";
