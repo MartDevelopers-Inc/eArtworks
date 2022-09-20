@@ -818,7 +818,7 @@ if ($module == 'Products') {
 
 
 /* Orders */
-if (isset($_POST['Generate_PDF_On_Orders'])) {
+if (isset($_POST['Generate_Order_Reports'])) {
     if ($module == 'Orders') {
         /* Filter Values */
         $start = mysqli_real_escape_string($mysqli, $_POST['start_date']);
