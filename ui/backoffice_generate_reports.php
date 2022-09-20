@@ -821,124 +821,127 @@ if ($module == 'Products') {
 if (isset($_POST['Generate_PDF_On_Orders'])) {
     if ($module == 'Orders') {
         /* Filter Values */
-        $start = date('d M Y', strtotime(mysqli_real_escape_string($mysqli, $_POST['start_date'])));
-        $end = date('d M Y', strtotime(mysqli_real_escape_string($mysqli, $_POST['end_date'])));
+        $start = mysqli_real_escape_string($mysqli, $_POST['start_date']);
+        $end = mysqli_real_escape_string($mysqli, $_POST['end_date']);
+
+
         if ($type == 'PDF') {
             /* Generate Customers Reports In PDF */
             $html = '
-        <style type="text/css">
-            table {
-                font-size: 12px;
-                padding: 4px;
-            }          
+            <style type="text/css">
+                table {
+                    font-size: 12px;
+                    padding: 4px;
+                }          
 
-            th {
-                text-align: left;
-                padding: 4pt;
-            }
+                th {
+                    text-align: left;
+                    padding: 4pt;
+                }
 
-            td {
-                padding: 5pt;
-            }
+                td {
+                    padding: 5pt;
+                }
 
-            #b_border {
-                border-bottom: dashed thin;
-            }
+                #b_border {
+                    border-bottom: dashed thin;
+                }
 
-            legend {
-                color: #0b77b7;
-                font-size: 1.2em;
-            }
+                legend {
+                    color: #0b77b7;
+                    font-size: 1.2em;
+                }
 
-            #error_msg {
-                text-align: left;
-                font-size: 11px;
-                color: red;
-            }
+                #error_msg {
+                    text-align: left;
+                    font-size: 11px;
+                    color: red;
+                }
 
-            .header {
-                margin-bottom: 20px;
-                width: 100%;
-                text-align: left;
-                position: absolute;
-                top: 0px;
-            }
+                .header {
+                    margin-bottom: 20px;
+                    width: 100%;
+                    text-align: left;
+                    position: absolute;
+                    top: 0px;
+                }
 
-            .footer {
-                width: 100%;
-                text-align: center;
-                position: fixed;
-                bottom: 5px;
-            }
+                .footer {
+                    width: 100%;
+                    text-align: center;
+                    position: fixed;
+                    bottom: 5px;
+                }
 
-            #no_border_table {
-                border: none;
-            }
+                #no_border_table {
+                    border: none;
+                }
 
-            #bold_row {
-                font-weight: bold;
-            }
+                #bold_row {
+                    font-weight: bold;
+                }
 
-            #amount {
-                text-align: right;
-                font-weight: bold;
-            }
+                #amount {
+                    text-align: right;
+                    font-weight: bold;
+                }
 
-            .pagenum:before {
-                content: counter(page);
-            }
+                .pagenum:before {
+                    content: counter(page);
+                }
 
-            /* Thick red border */
-            hr.red {
-                border: 1px solid red;
-            }
-            .list_header{
-                font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
-            }
-        </style>
+                /* Thick red border */
+                hr.red {
+                    border: 1px solid red;
+                }
+                .list_header{
+                    font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+                }
+            </style>
         <div class="list_header" align="center">
             <h3>
-                eArtworks <br> Orders Reports From Date ' . $start . ' To ' . $end . '
+                eArtworks <br> Orders Reports From Date ' . date('d M Y', strtotime($start)) . ' To ' . date('d M Y', strtotime($end)) . '
             </h3>
         </div>
         
         <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
             <thead>
                 <tr>
-                    <th style="width:10%">No</th>
-                    <th style="width:60%">SKU</th>
-                    <th style="width:100%">Name</th>
-                    <th style="width:20%">QTY</th>
-                    <th style="width:50%">Seller</th>
-                    <th style="width:50%">Price</th>
+                    <th style="width:60%">Order Number</th>
+                    <th style="width:100%">Products Details</th>
+                    <th style="width:20%">Order Date</th>
+                    <th style="width:20%">Order QTY</th>
+                    <th style="width:50%">Order Cost</th>
+                    <th style="width:50%">Order Status</th>
+                    <th style="width:100%">Customer Details</th>
                 </tr>
             </thead>
         <tbody>
         ';
             $cnt = 1;
-            $products_sql = mysqli_query(
+            $orders_sql = mysqli_query(
                 $mysqli,
-                "SELECT * FROM products p
-            INNER JOIN users u ON u.user_id = p.product_seller_id
-            INNER JOIN categories c ON c.category_id = p.product_category_id
-            WHERE u.user_delete_status = '0' 
-            AND c.category_delete_status = '0'
-            AND p.product_delete_status = '0'
-            ORDER BY p.product_name ASC"
+                "SELECT * FROM orders o
+                INNER JOIN products p ON p.product_id = o.order_product_id
+                INNER JOIN users u ON u.user_id = o.order_user_id
+                WHERE o.order_delete_status = '0'
+                AND o.order_date BETWEEN '{$start}' AND '{$end}'
+                ORDER BY o.order_date ASC "
             );
-            if (mysqli_num_rows($products_sql) > 0) {
-                while ($products = mysqli_fetch_array($products_sql)) {
+            if (mysqli_num_rows($orders_sql) > 0) {
+                while ($orders = mysqli_fetch_array($orders_sql)) {
                     $html .=
                         '
-                <tr>
-                    <td>' . $cnt . '</td>
-                    <td>' . $products['product_sku_code'] . '</td>
-                    <td>' . $products['product_name'] . '</td>
-                    <td>' . $products['product_qty_in_stock'] . '</td>
-                    <td>' . $products['user_first_name'] . ' ' . $products['user_last_name'] . '</td>
-                    <td> Ksh ' . number_format($products['product_price'], 2) . '</td>
-                </tr>
-            ';
+                            <tr>
+                                <td>' . $orders['order_code'] . '</td>
+                                <td>' . $orders['product_name'] . '</td>
+                                <td>' . date('d M Y', strtotime($orders['order_date'])) . '</td>
+                                <td>' . $orders['order_qty'] . '</td>
+                                <td> Ksh ' . number_format($orders['order_cost'], 2) . '</td>
+                                <td>' . $orders['order_status'] . '</td>
+                                <td>' . $orders['user_first_name'] . ' ' . $orders['user_last_name'] . '</td>
+                            </tr>
+                        ';
                     $cnt = $cnt + 1;
                 }
             }
@@ -950,7 +953,7 @@ if (isset($_POST['Generate_PDF_On_Orders'])) {
             $dompdf->set_paper('A4');
             $dompdf->set_option('isHtml5ParserEnabled', true);
             $dompdf->render();
-            $dompdf->stream('Orders From ' . $start . ' To ' . $end, array("Attachment" => 1));
+            $dompdf->stream('Orders From ' . date('d M Y', strtotime($start)) . ' To ' . date('d M Y', strtotime($end)), array("Attachment" => 1));
             $options = $dompdf->getOptions();
             $options->setDefaultFont('');
             $dompdf->setOptions($options);
