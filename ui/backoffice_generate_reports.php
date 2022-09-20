@@ -815,3 +815,147 @@ if ($module == 'Products') {
         exit;
     }
 }
+
+
+/* Orders */
+if (isset($_POST['Generate_PDF_On_Orders'])) {
+    if ($module == 'Orders') {
+        /* Filter Values */
+        $start = date('d M Y', strtotime(mysqli_real_escape_string($mysqli, $_POST['start_date'])));
+        $end = date('d M Y', strtotime(mysqli_real_escape_string($mysqli, $_POST['end_date'])));
+        if ($type == 'PDF') {
+            /* Generate Customers Reports In PDF */
+            $html = '
+        <style type="text/css">
+            table {
+                font-size: 12px;
+                padding: 4px;
+            }          
+
+            th {
+                text-align: left;
+                padding: 4pt;
+            }
+
+            td {
+                padding: 5pt;
+            }
+
+            #b_border {
+                border-bottom: dashed thin;
+            }
+
+            legend {
+                color: #0b77b7;
+                font-size: 1.2em;
+            }
+
+            #error_msg {
+                text-align: left;
+                font-size: 11px;
+                color: red;
+            }
+
+            .header {
+                margin-bottom: 20px;
+                width: 100%;
+                text-align: left;
+                position: absolute;
+                top: 0px;
+            }
+
+            .footer {
+                width: 100%;
+                text-align: center;
+                position: fixed;
+                bottom: 5px;
+            }
+
+            #no_border_table {
+                border: none;
+            }
+
+            #bold_row {
+                font-weight: bold;
+            }
+
+            #amount {
+                text-align: right;
+                font-weight: bold;
+            }
+
+            .pagenum:before {
+                content: counter(page);
+            }
+
+            /* Thick red border */
+            hr.red {
+                border: 1px solid red;
+            }
+            .list_header{
+                font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+            }
+        </style>
+        <div class="list_header" align="center">
+            <h3>
+                eArtworks <br> Orders Reports From Date ' . $start . ' To ' . $end . '
+            </h3>
+        </div>
+        
+        <table border="1" cellspacing="0" width="98%" style="font-size:9pt">
+            <thead>
+                <tr>
+                    <th style="width:10%">No</th>
+                    <th style="width:60%">SKU</th>
+                    <th style="width:100%">Name</th>
+                    <th style="width:20%">QTY</th>
+                    <th style="width:50%">Seller</th>
+                    <th style="width:50%">Price</th>
+                </tr>
+            </thead>
+        <tbody>
+        ';
+            $cnt = 1;
+            $products_sql = mysqli_query(
+                $mysqli,
+                "SELECT * FROM products p
+            INNER JOIN users u ON u.user_id = p.product_seller_id
+            INNER JOIN categories c ON c.category_id = p.product_category_id
+            WHERE u.user_delete_status = '0' 
+            AND c.category_delete_status = '0'
+            AND p.product_delete_status = '0'
+            ORDER BY p.product_name ASC"
+            );
+            if (mysqli_num_rows($products_sql) > 0) {
+                while ($products = mysqli_fetch_array($products_sql)) {
+                    $html .=
+                        '
+                <tr>
+                    <td>' . $cnt . '</td>
+                    <td>' . $products['product_sku_code'] . '</td>
+                    <td>' . $products['product_name'] . '</td>
+                    <td>' . $products['product_qty_in_stock'] . '</td>
+                    <td>' . $products['user_first_name'] . ' ' . $products['user_last_name'] . '</td>
+                    <td> Ksh ' . number_format($products['product_price'], 2) . '</td>
+                </tr>
+            ';
+                    $cnt = $cnt + 1;
+                }
+            }
+            $html .= '
+            </tbody>
+        </table>
+    ';
+            $dompdf->load_html($html);
+            $dompdf->set_paper('A4');
+            $dompdf->set_option('isHtml5ParserEnabled', true);
+            $dompdf->render();
+            $dompdf->stream('Orders From ' . $start . ' To ' . $end, array("Attachment" => 1));
+            $options = $dompdf->getOptions();
+            $options->setDefaultFont('');
+            $dompdf->setOptions($options);
+        } elseif ($type == 'CSV') {
+            /* Load CSV Reports */
+        }
+    }
+}

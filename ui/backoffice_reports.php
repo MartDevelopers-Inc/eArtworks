@@ -167,20 +167,18 @@ require_once('../app/partials/backoffice_head.php');
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
-                                <a href="backoffice_deleted_order">
-                                    <div class="card card-default">
-                                        <div class="card-body text-center p-24px">
-                                            <div class="image mb-3">
-                                                <img src="../public/backoffice_assets/img/order.png" class="img-fluid rounded-circle" alt="Avatar Image">
-                                            </div>
-                                            <h5 class="card-title text-dark">Orders</h5>
-                                            <p class="item-count">
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#edit_<?php echo $apis['api_id']; ?>">PDF</button>
-                                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#delete_<?php echo $apis['api_id']; ?>">CSV</button>
-                                            </p>
+                                <div class="card card-default">
+                                    <div class="card-body text-center p-24px">
+                                        <div class="image mb-3">
+                                            <img src="../public/backoffice_assets/img/order.png" class="img-fluid rounded-circle" alt="Avatar Image">
                                         </div>
+                                        <h5 class="card-title text-dark">Orders</h5>
+                                        <p class="item-count">
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#get_orders_pdf_report">PDF</button>
+                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#get_orders_csv_report">CSV</button>
+                                        </p>
                                     </div>
-                                </a>
+                                </div>
                             </div>
 
                             <div class="col-xxl-2 col-xl-3 col-lg-4 col-md-6">
@@ -199,6 +197,8 @@ require_once('../app/partials/backoffice_head.php');
                                     </div>
                                 </a>
                             </div>
+                            <!-- Modals -->
+                            <?php include('../app/modals/reports_modal.php'); ?>
                         </div>
                     </div>
 
