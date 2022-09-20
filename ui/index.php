@@ -220,6 +220,7 @@ require_once('../app/partials/landing_head.php');
       </div>
     </div>
   </section>
+  
 
   <!-- Footer Start -->
   <?php require_once('../app/partials/landing_footer.php'); ?>
