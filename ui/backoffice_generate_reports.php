@@ -773,7 +773,7 @@ if ($module == 'Products') {
 
         /* Excel Column Name */
         $header = array("Products Reports");
-        $fields = array('#', 'SKU', 'Name', 'QTY', 'Seller', 'Price');
+        $fields = array('#', 'SKU', 'Name', 'QTY', 'Price', 'Seller Contacts');
 
         /* Implode Excel Data */
         $excelDataHeader = implode("\t\t\t", array_values($header)) . "\n\n";
@@ -791,7 +791,7 @@ if ($module == 'Products') {
         if ($query->num_rows > 0) {
             /* Load All Fetched Rows */
             while ($row = $query->fetch_assoc()) {
-                $lineData = array($cnt, $row['product_sku_code'], $row['product_name'], $row['product_qty_in_stock'], $row['user_first_name'] . ' ' . $row['user_last_name'], $row['product_price']);
+                $lineData = array($cnt, $row['product_sku_code'], $row['product_name'], $row['product_qty_in_stock'], $row['product_price'], $row['user_phone_number']);
                 array_walk($lineData, 'filterData');
                 $excelData .= implode("\t", array_values($lineData)) . "\n";
                 $cnt = $cnt + 1;
