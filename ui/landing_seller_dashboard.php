@@ -130,7 +130,7 @@ require_once('../app/partials/landing_head.php');
                         <div class="ec-vendor-card-header">
                             <h5>Latest Orders</h5>
                             <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-primary" href="#">View All</a>
+                                <a class="btn btn-lg btn-primary" href="landing_seller_orders">View All</a>
                             </div>
                         </div>
                         <div class="ec-vendor-card-body">
@@ -138,23 +138,59 @@ require_once('../app/partials/landing_head.php');
                                 <table class="table ec-table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">ID</th>
+                                            <th scope="col">Order#</th>
                                             <th scope="col">Image</th>
+                                            <th scope="col">SKU</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Method</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Total</th>
+                                            <th scope="col">QTY</th>
+                                            <th scope="col">Date</th>
+                                            <th scope="col">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row"><span>225</span></th>
-                                            <td><img class="prod-img" src="assets/images/product-image/1.jpg" alt="product image"></td>
-                                            <td><span>Stylish baby shoes</span></td>
-                                            <td><span>COD</span></td>
-                                            <td><span>Pending</span></td>
-                                            <td><span>$320</span></td>
-                                        </tr>
+                                        <?php
+                                        /* Pull All Orders By For Products Owned By This Fella */
+                                        $orders_sql = mysqli_query(
+                                            $mysqli,
+                                            "SELECT * FROM orders o  
+                                            INNER JOIN products p ON p.product_id = o.order_product_id
+                                            INNER JOIN users u ON u.user_id = o.order_user_id
+                                            INNER JOIN categories c ON c.category_id = p.product_category_id
+                                            WHERE u.user_delete_status = '0' 
+                                            AND c.category_delete_status = '0'
+                                            AND p.product_delete_status = '0'
+                                            AND o.order_delete_status = '0'
+                                            AND p.product_seller_id = '{$user_id}'
+                                            ORDER BY o.order_date DESC
+                                            "
+                                        );
+                                        if (mysqli_num_rows($orders_sql) > 0) {
+                                            while ($orders = mysqli_fetch_array($orders_sql)) {
+                                                /* Image Directory */
+                                                if ($orders['product_image'] == '') {
+                                                    $image_dir = "../public/uploads/products/no_image.png";
+                                                } else {
+                                                    $image_dir = "../public/uploads/products/" . $orders['product_image'];
+                                                }
+
+                                        ?>
+                                                <tr>
+                                                    <th scope="row"><span><?php echo $orders['order_code']; ?></span></th>
+                                                    <td>
+                                                        <img class="prod-img" src="<?php echo $image_dir; ?>" alt="product image">
+                                                    </td>
+                                                    <td><span><?php echo $orders['product_sku_code']; ?></span></td>
+                                                    <td><span><?php echo $orders['product_name']; ?></span></td>
+                                                    <td><span><?php echo $orders['order_qty']; ?></span></td>
+                                                    <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
+                                                    <td>
+                                                        <span>
+                                                            Ksh <?php echo number_format($orders['order_cost'], 2); ?>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                        <?php }
+                                        } ?>
                                     </tbody>
                                 </table>
                             </div>
