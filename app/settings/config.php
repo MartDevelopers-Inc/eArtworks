@@ -76,3 +76,24 @@ $dbpass = "";
 $host = "localhost";
 $db = "eArtworks";
 $mysqli = new mysqli($host, $dbuser, $dbpass, $db);
+
+
+/* Fetch Lite CMS Content */
+$litecms_sql = mysqli_query($mysqli, "SELECT * FROM system_litecms");
+if (mysqli_num_rows($litecms_sql) > 0) {
+    while ($litecms = mysqli_fetch_array($litecms_sql)) {
+        $terms_and_conditions  = $litecms['system_toc'];
+        $faq = $litecms['system_faq'];
+        $about = $litecms['system_about'];
+        $contacts = $litecms['system_contact'];
+        $email = $litecms['system_email'];
+        $address = $litecms['system_address'];
+        $fb = $litecms['system_facebook_url'];
+        $twitter = $litecms['system_twitter_url'];
+        $instagram = $litecms['system_instagram'];
+        $linkedin = $litecms['system_linkedin_url'];
+
+        /* Push these values to global */
+        global $terms_and_conditions, $faq, $about, $contacts, $email, $address, $fb, $twitter, $instagram, $linkedin;
+    }
+}
