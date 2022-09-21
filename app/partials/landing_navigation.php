@@ -87,16 +87,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             <span class="social-text text-upper">Follow us on:</span>
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -421,16 +421,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <div class="header-top-social">
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -454,16 +454,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             <span class="social-text text-upper">Follow us on:</span>
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -717,16 +717,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <div class="header-top-social">
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
