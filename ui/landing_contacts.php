@@ -83,13 +83,13 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Terms And Conditions</h2>
+                            <h2 class="ec-breadcrumb-title">Contact Us</h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item active">Terms And Conditions</li>
+                                <li class="ec-breadcrumb-item active">Contact Us</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
                         </div>
@@ -106,17 +106,21 @@ require_once('../app/partials/landing_head.php');
             <div class="row">
                 <div class="col-md-12 text-center">
                     <div class="section-title">
-                        <h2 class="ec-bg-title">Terms And Conditions</h2>
-                        <h2 class="ec-title">Terms And Conditions</h2>
-                        <p class="sub-title mb-3">Terms And Conditions</p>
+                        <h2 class="ec-bg-title">Contact Us</h2>
                     </div>
                 </div>
                 <div class="ec-common-wrapper">
                     <div class="row">
                         <div class="col-md-12 ec-cms-block ec-abcms-block text-center">
                             <div class="ec-cms-block-inner">
-                                <h3 class="ec-cms-block-title">eArtworks Terms & Conditions</h3>
-                                <?php echo $terms_and_conditions; ?>
+                                <h3 class="ec-cms-block-title">eArtworks Contacts</h3>
+                                <ul class="align-items-center">
+                                    <li class="ec-contact-item">
+                                        <i class="ecicon eci-map-marker" aria-hidden="true"></i><span>Address :</span><?php echo $address; ?>
+                                    </li>
+                                    <li class="ec-contact-item align-items-center"><i class="ecicon eci-phone" aria-hidden="true"></i><span>Call Us :</span><a href="tel:<?php echo $contacts; ?>"><?php echo $contacts; ?></a></li>
+                                    <li class="ec-contact-item align-items-center"><i class="ecicon eci-envelope" aria-hidden="true"></i><span>Email :</span><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></li>
+                                </ul>
                             </div>
                         </div>
                     </div>
