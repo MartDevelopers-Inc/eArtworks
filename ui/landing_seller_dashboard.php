@@ -185,7 +185,7 @@ require_once('../app/partials/landing_head.php');
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
                                                     <td>
                                                         <span>
-                                                            Ksh <?php echo number_format($orders['order_cost'], 2); ?>
+                                                            Ksh <?php echo number_format($orders['order_cost'] + 1500, 2); ?>
                                                         </span>
                                                     </td>
                                                 </tr>
