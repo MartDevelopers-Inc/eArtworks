@@ -16,13 +16,13 @@
                             <div class="ec-footer-links">
                                 <ul class="align-items-center">
                                     <li class="ec-footer-link">
-                                        71 Pilgrim Avenue Chevy Chase, east california.
+                                        <?php echo $address; ?>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <span>Call Us:</span><a href="tel:+440123456789">+44 0123 456 789</a>
+                                        <span>Call Us:</span><a href="tel:<?php echo $contacts; ?>"><?php echo $contacts; ?></a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <span>Email:</span><a href="mailto:example@ec-email.com">+example@ec-email.com</a>
+                                        <span>Email:</span><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
                                     </li>
                                 </ul>
                             </div>
