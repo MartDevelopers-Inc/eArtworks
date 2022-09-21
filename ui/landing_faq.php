@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Sun Jul 17 2022
+ *   Crafted On Sun Aug 21 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -64,36 +64,73 @@
  *   TORT OR ANY OTHER THEORY OF LIABILITY, EXCEED THE LICENSE FEE PAID BY YOU, IF ANY.
  *
  */
+session_start();
+require_once('../app/settings/config.php');
+require_once('../app/partials/landing_head.php');
+?>
 
-/* Default Application Timezone */
-date_default_timezone_set('Africa/Nairobi');
-/* Default Time */
-$current_time = time();
+<body class="aboutus_page">
+    <div id="ec-overlay"><span class="loader_img"></span></div>
 
-/* Database Connection File */
-$dbuser = "root";
-$dbpass = "";
-$host = "localhost";
-$db = "eArtworks";
-$mysqli = new mysqli($host, $dbuser, $dbpass, $db);
+    <!-- Header start  -->
+    <?php require_once('../app/partials/landing_navigation.php'); ?>
+    <!-- Header End  -->
+
+    <!-- Ec breadcrumb start -->
+    <div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="row ec_breadcrumb_inner">
+                        <div class="col-md-6 col-sm-12">
+                            <h2 class="ec-breadcrumb-title">FAQ</h2>
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            <!-- ec-breadcrumb-list start -->
+                            <ul class="ec-breadcrumb-list">
+                                <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
+                                <li class="ec-breadcrumb-item active">FAQ</li>
+                            </ul>
+                            <!-- ec-breadcrumb-list end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Ec breadcrumb end -->
+
+    <!-- Ec About Us page -->
+    <section class="ec-page-content section-space-p">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <div class="section-title">
+                        <h2 class="ec-bg-title">FAQ</h2>
+                        <h2 class="ec-title">FAQ</h2>
+                        <p class="sub-title mb-3">eArtworks FAQ</p>
+                    </div>
+                </div>
+                <div class="ec-common-wrapper">
+                    <div class="row">
+                        <div class="col-md-12 ec-cms-block ec-abcms-block text-center">
+                            <div class="ec-cms-block-inner">
+                                <h3 class="ec-cms-block-title">Frequently Asked Question On eArtworks</h3>
+                                <?php echo $faq; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer Start -->
+    <?php require_once('../app/partials/landing_footer.php'); ?>
+    <!-- Footer Area End -->
 
 
-/* Fetch Lite CMS Content */
-$litecms_sql = mysqli_query($mysqli, "SELECT * FROM system_litecms");
-if (mysqli_num_rows($litecms_sql) > 0) {
-    while ($litecms = mysqli_fetch_array($litecms_sql)) {
-        $terms_and_conditions  = $litecms['system_toc'];
-        $faq = $litecms['system_faq'];
-        $about = $litecms['system_about'];
-        $contacts = $litecms['system_contact'];
-        $email = $litecms['system_email'];
-        $address = $litecms['system_address'];
-        $fb = $litecms['system_facebook_url'];
-        $twitter = $litecms['system_twitter_url'];
-        $instagram = $litecms['system_instagram'];
-        $linkedin = $litecms['system_linkedin_url'];
+    <!-- Vendor JS -->
+    <?php require_once('../app/partials/landing_scripts.php'); ?>
+</body>
 
-        /* Push these values to global */
-        global $terms_and_conditions, $faq, $about, $contacts, $email, $address, $fb, $twitter, $instagram, $linkedin;
-    }
-}
+</html>

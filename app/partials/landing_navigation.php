@@ -87,16 +87,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             <span class="social-text text-upper">Follow us on:</span>
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -209,7 +209,11 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center">
                             <div class="header-logo">
-                                <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                                <a href="../">
+                                    <h2>
+                                        eArtworks
+                                    </h2>
+                                </a>
                             </div>
                         </div>
                         <!-- Ec Header Logo End -->
@@ -290,7 +294,11 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Logo Start -->
                     <div class="col">
                         <div class="header-logo">
-                            <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                            <a href="../">
+                                <h2>
+                                    eArtworks
+                                </h2>
+                            </a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -413,16 +421,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <div class="header-top-social">
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -446,16 +454,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                             <span class="social-text text-upper">Follow us on:</span>
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>
@@ -545,7 +553,13 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center">
                             <div class="header-logo">
-                                <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                                <a href="../">
+                                    <a href="../">
+                                        <h2>
+                                            eArtworks
+                                        </h2>
+                                    </a>
+                                </a>
                             </div>
                         </div>
                         <!-- Ec Header Logo End -->
@@ -574,7 +588,11 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Logo Start -->
                     <div class="col">
                         <div class="header-logo">
-                            <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                            <a href="../">
+                                <h2>
+                                    eArtworks
+                                </h2>
+                            </a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -699,16 +717,16 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <div class="header-top-social">
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class="ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>

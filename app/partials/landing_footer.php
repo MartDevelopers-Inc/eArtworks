@@ -6,19 +6,23 @@
                     <div class="col-sm-12 col-lg-3 ec-footer-contact">
                         <div class="ec-footer-widget">
                             <div class="ec-footer-logo">
-                                <a href="#"><img src="../public/landing_assets/images/logo/footer-logo.png" alt="" /><img class="dark-footer-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                                <a href="../">
+                                    <h2>
+                                        eArtworks
+                                    </h2>
+                                </a>
                             </div>
                             <h4 class="ec-footer-heading">Contact us</h4>
                             <div class="ec-footer-links">
                                 <ul class="align-items-center">
                                     <li class="ec-footer-link">
-                                        71 Pilgrim Avenue Chevy Chase, east california.
+                                        <?php echo $address; ?>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <span>Call Us:</span><a href="tel:+440123456789">+44 0123 456 789</a>
+                                        <span>Call Us:</span><a href="tel:<?php echo $contacts; ?>"><?php echo $contacts; ?></a>
                                     </li>
                                     <li class="ec-footer-link">
-                                        <span>Email:</span><a href="mailto:example@ec-email.com">+example@ec-email.com</a>
+                                        <span>Email:</span><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a>
                                     </li>
                                 </ul>
                             </div>
@@ -114,16 +118,16 @@
                             <span class="social-text text-upper">Follow us on:</span>
                             <ul class="mb-0">
                                 <li class="list-inline-item">
-                                    <a class="hdr-facebook" href="#"><i class="ecicon eci-facebook"></i></a>
+                                    <a class="hdr-facebook" href="https://<?php echo $fb; ?>" target="_blank"><i class="ecicon eci-facebook"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-twitter" href="#"><i class="ecicon eci-twitter"></i></a>
+                                    <a class="hdr-twitter" href="https://<?php echo $twitter; ?>" target="_blank"><i class="ecicon eci-twitter"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-instagram" href="#"><i class="ecicon eci-instagram"></i></a>
+                                    <a class="hdr-instagram" href="https://<?php echo $instagram; ?>" target="_blank"><i class=" ecicon eci-instagram"></i></a>
                                 </li>
                                 <li class="list-inline-item">
-                                    <a class="hdr-linkedin" href="#"><i class="ecicon eci-linkedin"></i></a>
+                                    <a class="hdr-linkedin" href="https://<?php echo $linkedin; ?>" target="_blank"><i class="ecicon eci-linkedin"></i></a>
                                 </li>
                             </ul>
                         </div>

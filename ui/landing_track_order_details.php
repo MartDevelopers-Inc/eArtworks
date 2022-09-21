@@ -403,7 +403,7 @@ require_once('../app/partials/landing_head.php');
                                                     $stmt->close();
                                                     /* Compute Quantity And Amount Supposed To Be Paid */
                                                     $total_quantity += $orders["order_qty"];
-                                                    $total_price += $orders['order_cost'] * $orders['order_qty'];
+                                                    $total_price += $orders['order_cost'];
                                                     /* DeliverY Fee */
 
                                                     $constant_delivery_fee = '1500';
@@ -421,8 +421,8 @@ require_once('../app/partials/landing_head.php');
                                                         <td><span><?php echo $orders['product_sku_code']; ?></span></td>
                                                         <td><span><?php echo $orders['product_name']; ?></span></td>
                                                         <td><span><?php echo $orders['order_qty']; ?></span></td>
+                                                        <td><span>Ksh <?php echo number_format($orders['product_price'], 2); ?></span></td>
                                                         <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
-                                                        <td><span>Ksh <?php echo number_format(($orders['order_cost'] * $orders['order_qty']), 2); ?></span></td>
                                                     </tr>
 
                                                 <?php  } ?>
@@ -431,7 +431,7 @@ require_once('../app/partials/landing_head.php');
                                                         <b>Sub Total Payable Amount</b>
                                                     </td>
                                                     <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
-                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"><?php echo $total_quantity; ?></span></td>
+                                                    <td data-label="Price" class="ec-cart-pro-price"><span class="amount"></span></td>
                                                     <td data-label="Price" class="ec-cart-pro-price text-center"><span class="amount"></span></td>
                                                     <td data-label="Total" class="ec-cart-pro-subtotal">Ksh <?php echo number_format($total_price, 2); ?></td>
                                                 </tr>

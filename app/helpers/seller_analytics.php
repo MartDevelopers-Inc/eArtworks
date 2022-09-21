@@ -1,6 +1,6 @@
 <?php
 /*
- *   Crafted On Sun Jul 17 2022
+ *   Crafted On Wed Sep 21 2022
  *
  * 
  *   https://bit.ly/MartMbithi
@@ -65,35 +65,26 @@
  *
  */
 
-/* Default Application Timezone */
-date_default_timezone_set('Africa/Nairobi');
-/* Default Time */
-$current_time = time();
+$user_id = mysqli_real_escape_string($mysqli, $_SESSION['user_id']);
 
-/* Database Connection File */
-$dbuser = "root";
-$dbpass = "";
-$host = "localhost";
-$db = "eArtworks";
-$mysqli = new mysqli($host, $dbuser, $dbpass, $db);
+/* Products */
+$query = "SELECT COUNT(*)  FROM products 
+WHERE  product_delete_status = '0' AND product_seller_id = '{$user_id}'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($my_products);
+$stmt->fetch();
+$stmt->close();
 
 
-/* Fetch Lite CMS Content */
-$litecms_sql = mysqli_query($mysqli, "SELECT * FROM system_litecms");
-if (mysqli_num_rows($litecms_sql) > 0) {
-    while ($litecms = mysqli_fetch_array($litecms_sql)) {
-        $terms_and_conditions  = $litecms['system_toc'];
-        $faq = $litecms['system_faq'];
-        $about = $litecms['system_about'];
-        $contacts = $litecms['system_contact'];
-        $email = $litecms['system_email'];
-        $address = $litecms['system_address'];
-        $fb = $litecms['system_facebook_url'];
-        $twitter = $litecms['system_twitter_url'];
-        $instagram = $litecms['system_instagram'];
-        $linkedin = $litecms['system_linkedin_url'];
-
-        /* Push these values to global */
-        global $terms_and_conditions, $faq, $about, $contacts, $email, $address, $fb, $twitter, $instagram, $linkedin;
-    }
-}
+/* Income */
+$query = "SELECT SUM(payment_amount)  
+FROM payments p
+INNER JOIN orders o ON o.order_code = p.payment_order_code
+INNER JOIN products pd ON pd.product_id = o.order_product_id
+WHERE  p.payment_delete_status = '0' AND pd.product_seller_id = '{$user_id}'";
+$stmt = $mysqli->prepare($query);
+$stmt->execute();
+$stmt->bind_result($my_earnings);
+$stmt->fetch();
+$stmt->close();
