@@ -46,7 +46,5 @@
         $err = $_SESSION['err'];
         unset($_SESSION['err']);
     }
-
-
     ?>
 </head>

@@ -6,7 +6,11 @@
                     <div class="col-sm-12 col-lg-3 ec-footer-contact">
                         <div class="ec-footer-widget">
                             <div class="ec-footer-logo">
-                                <a href="#"><img src="../public/landing_assets/images/logo/footer-logo.png" alt="" /><img class="dark-footer-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                                <a href="../">
+                                    <h2>
+                                        eArtworks
+                                    </h2>
+                                </a>
                             </div>
                             <h4 class="ec-footer-heading">Contact us</h4>
                             <div class="ec-footer-links">

@@ -209,7 +209,11 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center">
                             <div class="header-logo">
-                                <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                                <a href="../">
+                                    <h2>
+                                        eArtworks
+                                    </h2>
+                                </a>
                             </div>
                         </div>
                         <!-- Ec Header Logo End -->
@@ -290,7 +294,11 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Logo Start -->
                     <div class="col">
                         <div class="header-logo">
-                            <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                            <a href="../">
+                                <h2>
+                                    eArtworks
+                                </h2>
+                            </a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
@@ -545,7 +553,13 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                         <!-- Ec Header Logo Start -->
                         <div class="align-self-center">
                             <div class="header-logo">
-                                <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                                <a href="../">
+                                    <a href="../">
+                                        <h2>
+                                            eArtworks
+                                        </h2>
+                                    </a>
+                                </a>
                             </div>
                         </div>
                         <!-- Ec Header Logo End -->
@@ -574,7 +588,11 @@ if ($_SESSION['user_access_level'] == 'Customer') {
                     <!-- Ec Header Logo Start -->
                     <div class="col">
                         <div class="header-logo">
-                            <a href="../"><img src="../public/landing_assets/images/logo/logo.png" alt="Site Logo" /><img class="dark-logo" src="assets/images/logo/dark-logo.png" alt="Site Logo" style="display: none" /></a>
+                            <a href="../">
+                                <h2>
+                                    eArtworks
+                                </h2>
+                            </a>
                         </div>
                     </div>
                     <!-- Ec Header Logo End -->
