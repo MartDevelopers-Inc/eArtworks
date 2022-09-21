@@ -12,6 +12,7 @@
                         <li><a href="landing_cart">Cart</a></li>
                         <li><a href="landing_track_order">Track Order</a></li>
                         <li><a href="landing_auth">Authentication Settings</a></li>
+                        <li><a href="landing_seller_dashboard">Seller Dashboard</a></li>
                     </ul>
                 </div>
             </div>

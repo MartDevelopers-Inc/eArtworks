@@ -31900,7 +31900,7 @@ input[type=email]:focus::-webkit-input-placeholder {
 .ec-vendor-dashboard .ec-vendor-sidebar .ec-sidebar-block .ec-vendor-block .ec-vendor-block-bg, .ec-vendor-uploads .ec-vendor-sidebar .ec-sidebar-block .ec-vendor-block .ec-vendor-block-bg {
   width: 100%;
   height: 200px;
-  background-image: url(../images/banner/7.jpg);
+  background-image: url(../public/landing_assets/images/banner/7.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -32430,7 +32430,7 @@ input[type=email]:focus::-webkit-input-placeholder {
 .ec-vendor-profile-card .ec-vendor-block-profile .ec-vendor-block-img .ec-vendor-block-bg {
   width: 100%;
   height: 200px;
-  background-image: url(../images/banner/7.jpg);
+  background-image: url(../public/landing_assets/images/banner/7.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -32490,7 +32490,7 @@ input[type=email]:focus::-webkit-input-placeholder {
 .ec-vendor-setting-card .ec-vendor-block-bg {
   width: 100%;
   height: 200px;
-  background-image: url(../images/banner/7.jpg);
+  background-image: url(../public/landing_assets/images/banner/7.jpg);
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -32734,7 +32734,7 @@ input[type=email]:focus::-webkit-input-placeholder {
 .ec-user-account .ec-vendor-block-bg {
   width: 100%;
   height: 200px;
-  background-image: url(../images/banner/8.jpg) !important;
+  background-image: url(../public/landing_assets/images/banner/7.jpg) !important;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
