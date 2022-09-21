@@ -189,8 +189,14 @@ require_once('../app/partials/landing_head.php');
                                                         </span>
                                                     </td>
                                                 </tr>
-                                        <?php }
-                                        } ?>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                                <td colspan="8" align="center">
+                                                    No orders available
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -209,37 +215,48 @@ require_once('../app/partials/landing_head.php');
                                 <table class="table ec-table">
                                     <thead>
                                         <tr>
-                                            <th scope="col">ID</th>
+                                            <th scope="col">SKU</th>
                                             <th scope="col">Image</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Price</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">Qty In Stock</th>
                                             <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <th scope="row"><span>684</span></th>
-                                            <td><img class="prod-img" src="assets/images/product-image/3.jpg" alt="product image"></td>
-                                            <td><span>T-shirt for girl</span></td>
-                                            <td><span>Ewallets</span></td>
-                                            <td><span>On Way</span></td>
-                                            <td><span>$548</span></td>
-                                        </tr>
+                                        <?php
+                                        /* Pop All Products Owned By This Fella */
+                                        $products_sql = mysqli_query(
+                                            $mysqli,
+                                            "SELECT * FROM products p
+                                            INNER JOIN users u ON u.user_id = p.product_seller_id
+                                            INNER JOIN categories c ON c.category_id = p.product_category_id
+                                            WHERE u.user_delete_status = '0' 
+                                            AND c.category_delete_status = '0'
+                                            AND p.product_delete_status = '0'"
+                                        );
+                                        if (mysqli_num_rows($products_sql) > 0) {
+                                            while ($products = mysqli_fetch_array($products_sql)) {
+                                                /* Image Directory */
+                                                if ($products['product_image'] == '') {
+                                                    $image_dir = "../public/uploads/products/no_image.png";
+                                                } else {
+                                                    $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                }
+                                        ?>
+                                                <tr>
+                                                    <th scope="row"><span>684</span></th>
+                                                    <td><img class="prod-img" src="assets/images/product-image/3.jpg" alt="product image"></td>
+                                                    <td><span>T-shirt for girl</span></td>
+                                                    <td><span>Ewallets</span></td>
+                                                    <td><span>On Way</span></td>
+                                                    <td><span>$548</span></td>
+                                                </tr>
+                                        <?php }
+                                        } ?>
                                     </tbody>
                                 </table>
                             </div>
-                        </div>
-                    </div>
-                    <div class="ec-vendor-dashboard-card">
-                        <div class="ec-vendor-card-header">
-                            <h5>Growth statastics</h5>
-                            <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-primary" href="#">View All</a>
-                            </div>
-                        </div>
-                        <div class="ec-vendor-card-body">
-                            <canvas id="growthChart"></canvas>
                         </div>
                     </div>
                 </div>
