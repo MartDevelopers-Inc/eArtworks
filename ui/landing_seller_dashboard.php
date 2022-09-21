@@ -233,7 +233,8 @@ require_once('../app/partials/landing_head.php');
                                             INNER JOIN categories c ON c.category_id = p.product_category_id
                                             WHERE u.user_delete_status = '0' 
                                             AND c.category_delete_status = '0'
-                                            AND p.product_delete_status = '0'"
+                                            AND p.product_delete_status = '0'
+                                            AND p.product_seller_id = '{$user_id}'"
                                         );
                                         if (mysqli_num_rows($products_sql) > 0) {
                                             while ($products = mysqli_fetch_array($products_sql)) {
@@ -245,15 +246,21 @@ require_once('../app/partials/landing_head.php');
                                                 }
                                         ?>
                                                 <tr>
-                                                    <th scope="row"><span>684</span></th>
-                                                    <td><img class="prod-img" src="assets/images/product-image/3.jpg" alt="product image"></td>
-                                                    <td><span>T-shirt for girl</span></td>
-                                                    <td><span>Ewallets</span></td>
-                                                    <td><span>On Way</span></td>
+                                                    <th scope="row"><span><?php echo $products['product_sku_code']; ?></span></th>
+                                                    <td><img class="prod-img" src="<?php echo $image_dir; ?>" alt="product image"></td>
+                                                    <td><span><?php echo $products['product_name']; ?></span></td>
+                                                    <td><span><?php echo number_format($products['product_price'], 2); ?></span></td>
+                                                    <td><span>Ksh <?php echo $products['product_qty_in_stock']; ?></span></td>
                                                     <td><span>$548</span></td>
                                                 </tr>
-                                        <?php }
-                                        } ?>
+                                            <?php }
+                                        } else { ?>
+                                            <tr>
+                                                <td colspan="8" align="center">
+                                                    No products available
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
