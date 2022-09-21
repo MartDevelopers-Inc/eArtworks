@@ -206,8 +206,8 @@ require_once('../app/partials/landing_head.php');
                         <div class="ec-vendor-card-header">
                             <h5>Product List</h5>
                             <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-primary" href="#">View All</a>
-                                <a class="btn btn-lg btn-primary" href="#">Add</a>
+                                <a class="btn btn-lg btn-primary" href="landing_seller_products">View All</a>
+                                <a class="btn btn-lg btn-primary" href="">Add</a>
                             </div>
                         </div>
                         <div class="ec-vendor-card-body">
@@ -220,7 +220,6 @@ require_once('../app/partials/landing_head.php');
                                             <th scope="col">Name</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Qty In Stock</th>
-                                            <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -234,7 +233,8 @@ require_once('../app/partials/landing_head.php');
                                             WHERE u.user_delete_status = '0' 
                                             AND c.category_delete_status = '0'
                                             AND p.product_delete_status = '0'
-                                            AND p.product_seller_id = '{$user_id}'"
+                                            AND p.product_seller_id = '{$user_id}'
+                                            ORDER BY RAND() LIMIT 5"
                                         );
                                         if (mysqli_num_rows($products_sql) > 0) {
                                             while ($products = mysqli_fetch_array($products_sql)) {
@@ -249,9 +249,8 @@ require_once('../app/partials/landing_head.php');
                                                     <th scope="row"><span><?php echo $products['product_sku_code']; ?></span></th>
                                                     <td><img class="prod-img" src="<?php echo $image_dir; ?>" alt="product image"></td>
                                                     <td><span><?php echo $products['product_name']; ?></span></td>
-                                                    <td><span><?php echo number_format($products['product_price'], 2); ?></span></td>
-                                                    <td><span>Ksh <?php echo $products['product_qty_in_stock']; ?></span></td>
-                                                    <td><span>$548</span></td>
+                                                    <td><span>Ksh<?php echo number_format($products['product_price'], 2); ?></span></td>
+                                                    <td><span><?php echo $products['product_qty_in_stock']; ?></span></td>
                                                 </tr>
                                             <?php }
                                         } else { ?>
