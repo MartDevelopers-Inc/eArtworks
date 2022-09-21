@@ -87,9 +87,9 @@ require_once('../app/partials/landing_head.php');
             <div class="row">
               <div class="col-xl-6 col-lg-7 col-md-7 col-sm-7 align-self-center">
                 <div class="ec-slide-content slider-animation">
-                  <h1 class="ec-slide-title">Top Artwork Collection</h1>
-                  <h2 class="ec-slide-title">Sale Offer</h2>
-                  <p class="">
+                  <h1 class="ec-slide-title text-primary">Top Artwork Collection</h1>
+                  <h2 class="ec-slide-title text-primary">Sale Offer</h2>
+                  <p class="text-primary">
                     Purchase high-quality artworks from your favorite artists from across the world.
                   </p>
                   <a href="landing_products" class="btn btn-lg btn-secondary">Order Now</a>
@@ -105,7 +105,7 @@ require_once('../app/partials/landing_head.php');
                 <div class="ec-slide-content slider-animation">
                   <h1 class="ec-slide-title">Ready Market</h1>
                   <h2 class="ec-slide-stitle">Expand your market quickly.</h2>
-                  <p>
+                  <p class="">
                     Are you an artist looking to expand into new markets? Register today and receive a free platform to sell your artworks.
                   </p>
                   <a href="register" class="btn btn-lg btn-secondary">Register Now</a>
