@@ -67,7 +67,9 @@
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/codeGen.php');
-require_once('../app/helpers/authentication.php');
+require_once('../app/settings/checklogin.php');
+checklogin();
+require_once('../app/helpers/seller_analytics.php');
 require_once('../app/partials/landing_head.php');
 ?>
 
@@ -111,28 +113,16 @@ require_once('../app/partials/landing_head.php');
 
                 <div class="ec-shop-rightside col-lg-9 col-md-12">
                     <div class="row">
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <div class="ec-vendor-dashboard-sort-card color-blue">
                                 <h5>Products</h5>
-                                <h3>625</h3>
+                                <h3><?php echo $my_products; ?></h3>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="ec-vendor-dashboard-sort-card color-pink">
-                                <h5>Orders</h5>
-                                <h3>56<span>/ Day</span></h3>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
+                        <div class="col-lg-6 col-md-6">
                             <div class="ec-vendor-dashboard-sort-card color-green">
                                 <h5>Earnings</h5>
-                                <h3>$56<span>/ Day</span></h3>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6">
-                            <div class="ec-vendor-dashboard-sort-card color-orange">
-                                <h5>Sales</h5>
-                                <h3>550<span>/ Mo</span></h3>
+                                <h3>Ksh <?php echo number_format($my_earnings, 2); ?></h3>
                             </div>
                         </div>
                     </div>

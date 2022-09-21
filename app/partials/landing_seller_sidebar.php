@@ -17,15 +17,14 @@ if (mysqli_num_rows($user_sql) > 0) {
                                 <img class="v-img" src="../public/uploads/users/no-profile.png" alt="Customer image">
                             <?php } else { ?>
                                 <img class="v-img" src="../public/uploads/users/<?php echo $customer['user_profile_picture']; ?>" alt="Customer image">
-                            <?php } ?> <h5>Neon Fashion</h5>
+                            <?php } ?> <h5><?php echo $customer['user_first_name'] . ' ' . $customer['user_last_name']; ?></h5>
                         </div>
                         <div class="ec-vendor-block-items">
                             <ul>
-                                <li><a href="vendor-dashboard.html">Dashboard</a></li>
-                                <li><a href="vendor-profile.html">Public Profile</a></li>
-                                <li><a href="vendor-uploads.html">Uploads</a></li>
-                                <li><a href="track-order.html">Track Shipping</a></li>
-                                <li><a href="vendor-settings.html">Settings (Edit)</a></li>
+                                <li><a href="landing_seller_dashboard">Dashboard</a></li>
+                                <li><a href="landing_seller_products">Products</a></li>
+                                <li><a href="landing_seller_orders">Orders</a></li>
+                                <li><a href="landing_seller_payments">Payments</a></li>
                             </ul>
                         </div>
                     </div>

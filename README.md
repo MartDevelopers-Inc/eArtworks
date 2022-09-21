@@ -19,9 +19,10 @@ artists and designers to get support for their artistic endeavors as well as to 
 7. The fixed rate for delivery fees is $15; this is hard programmed. Later, it ought to be updated. <br>
 8. All prices are in Kenyan Shillings; dynamic pricing is not yet in place. <br>
 9. Estimated delivery date is one week (7 Days) from the day you made your order. <br>
-10. All unpaid orders can be marked as paid on back office module with cash as the default payment means.
-11. Careful on editing Third Party Api`s it will break entire payment process, Only change tokens not names.
-12. Top selling products - Returns Null if there are no available products.
+10. All unpaid orders can be marked as paid on back office module with cash as the default payment means. <br>
+11. Careful on editing Third Party Api`s it will break entire payment process, Only change tokens not names.<br>
+12. Top selling products - Returns Null if there are no available products. <br>
+13. Seller Dashboard - Payments logic needs to be optimized, its fetching orders and payments based on their order codes. <br>
 
 # To Do`s
 
