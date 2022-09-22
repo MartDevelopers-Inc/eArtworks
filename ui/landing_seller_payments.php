@@ -114,7 +114,7 @@ require_once('../app/partials/landing_head.php');
                 <div class="ec-shop-rightside col-lg-9 col-md-12">
                     <div class="ec-vendor-dashboard-card space-bottom-30">
                         <div class="ec-vendor-card-header">
-                            <h5>Orders</h5>
+                            <h5>Order Payments</h5>
                         </div>
                         <div class="ec-vendor-card-body">
                             <div class="ec-vendor-card-table">
@@ -122,15 +122,9 @@ require_once('../app/partials/landing_head.php');
                                     <thead>
                                         <tr>
                                             <th scope="col">Order#</th>
-                                            <th scope="col">Image</th>
-                                            <th scope="col">SKU</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">QTY</th>
+                                            <th scope="col">Payment #</th>
+                                            <th scope="col">Payment Amount</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Status</th>
-                                            <th scope="col">Payment Status</th>
-                                            <th scope="col">Cost</th>
-                                            <th scope="col">Customer</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -138,7 +132,8 @@ require_once('../app/partials/landing_head.php');
                                         /* Pull All Orders By For Products Owned By This Fella */
                                         $orders_sql = mysqli_query(
                                             $mysqli,
-                                            "SELECT * FROM orders o  
+                                            "SELECT * FROM payments pa
+                                            INNER JOIN orders o ON o.order_code = pa.payment_order_code 
                                             INNER JOIN products p ON p.product_id = o.order_product_id
                                             INNER JOIN users u ON u.user_id = o.order_user_id
                                             INNER JOIN categories c ON c.category_id = p.product_category_id
@@ -147,50 +142,18 @@ require_once('../app/partials/landing_head.php');
                                             AND p.product_delete_status = '0'
                                             AND o.order_delete_status = '0'
                                             AND p.product_seller_id = '{$user_id}'
-                                            ORDER BY o.order_date DESC
+                                            GROUP BY o.order_code
                                             "
                                         );
                                         if (mysqli_num_rows($orders_sql) > 0) {
                                             while ($orders = mysqli_fetch_array($orders_sql)) {
-                                                /* Image Directory */
-                                                if ($orders['product_image'] == '') {
-                                                    $image_dir = "../public/uploads/products/no_image.png";
-                                                } else {
-                                                    $image_dir = "../public/uploads/products/" . $orders['product_image'];
-                                                }
 
                                         ?>
                                                 <tr>
                                                     <th scope="row"><span><?php echo $orders['order_code']; ?></span></th>
-                                                    <td>
-                                                        <img class="prod-img" src="<?php echo $image_dir; ?>" alt="product image">
-                                                    </td>
-                                                    <td><span><?php echo $orders['product_sku_code']; ?></span></td>
-                                                    <td><span><?php echo $orders['product_name']; ?></span></td>
-                                                    <td><span><?php echo $orders['order_qty']; ?></span></td>
-                                                    <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
-                                                    <td>
-                                                        <?php
-                                                        if ($orders['order_status'] == 'Placed Orders') { ?>
-                                                            <span class="">Order Placed</span>
-                                                        <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
-                                                            <span class="">Awaiting Fulfillment</span>
-                                                        <?php } else if ($orders['order_status'] == 'Shipped') { ?>
-                                                            <span class="">Shipped</span>
-                                                        <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
-                                                            <span class="">Out For Delivery</span>
-                                                        <?php } else if ($orders['order_status'] == 'Delivered') { ?>
-                                                            <span class="">Delivered</span>
-                                                        <?php } else { ?>
-                                                            <span class="">Cancelled</span>
-                                                        <?php } ?>
-                                                    </td>
-                                                    <td><span><?php echo $orders['order_payment_status']; ?></span></td>
-                                                    <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
-                                                    <td>
-                                                        <span><?php echo ($orders['user_first_name'] . ' ' . $orders['user_last_name']); ?></span>
-                                                    </td>
-
+                                                    <th scope="row"><span><?php echo $orders['payment_ref_code']; ?></span></th>
+                                                    <td><span>Ksh <?php echo number_format($orders['payment_amount'], 2); ?></span></td>
+                                                    <td><span><?php echo date('d M Y', strtotime($orders['payment_date'])); ?></span></td>
                                                 </tr>
                                             <?php }
                                         } else { ?>
