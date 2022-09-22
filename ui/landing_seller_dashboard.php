@@ -144,7 +144,6 @@ require_once('../app/partials/landing_head.php');
                                             <th scope="col">Name</th>
                                             <th scope="col">QTY</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -183,11 +182,6 @@ require_once('../app/partials/landing_head.php');
                                                     <td><span><?php echo $orders['product_name']; ?></span></td>
                                                     <td><span><?php echo $orders['order_qty']; ?></span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
-                                                    <td>
-                                                        <span>
-                                                            Ksh <?php echo number_format($orders['order_cost'] + 1500, 2); ?>
-                                                        </span>
-                                                    </td>
                                                 </tr>
                                             <?php }
                                         } else { ?>
