@@ -201,7 +201,7 @@ require_once('../app/partials/landing_head.php');
                             <h5>Product List</h5>
                             <div class="ec-header-btn">
                                 <a class="btn btn-lg btn-primary" href="landing_seller_products">View All</a>
-                                <a class="btn btn-lg btn-primary" href="">Add</a>
+                                <a class="btn btn-lg btn-primary" data-bs-toggle="modal" data-bs-target="#add_product_modal">Add</a>
                             </div>
                         </div>
                         <div class="ec-vendor-card-body">
@@ -257,6 +257,10 @@ require_once('../app/partials/landing_head.php');
                                     </tbody>
                                 </table>
                             </div>
+                            <?php
+                            /* Add Order */
+                            include('../app/modals/add_product_modal.php'); ?>
+                            ?>
                         </div>
                     </div>
                 </div>

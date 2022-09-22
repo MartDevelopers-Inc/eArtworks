@@ -107,7 +107,7 @@ require_once('../app/partials/backoffice_head.php');
                         </div>
                     </div>
 
-                    <!-- Add User Modal  -->
+                    <!-- Add  Modal  -->
                     <div class="modal fade modal-add-contact" id="addUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
