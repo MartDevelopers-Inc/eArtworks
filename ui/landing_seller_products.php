@@ -87,14 +87,14 @@ require_once('../app/partials/landing_head.php');
                 <div class="col-12">
                     <div class="row ec_breadcrumb_inner">
                         <div class="col-md-6 col-sm-12">
-                            <h2 class="ec-breadcrumb-title">Add Product</h2>
+                            <h2 class="ec-breadcrumb-title">Manage Products</h2>
                         </div>
                         <div class="col-md-6 col-sm-12">
                             <!-- ec-breadcrumb-list start -->
                             <ul class="ec-breadcrumb-list">
                                 <li class="ec-breadcrumb-item"><a href="../">Home</a></li>
-                                <li class="ec-breadcrumb-item"><a href="../">Dashboard</a></li>
-                                <li class="ec-breadcrumb-item active">Add Product</li>
+                                <li class="ec-breadcrumb-item"><a href="landing_seller_dashboard">Dashboard</a></li>
+                                <li class="ec-breadcrumb-item active">Products</li>
                             </ul>
                             <!-- ec-breadcrumb-list end -->
                         </div>
@@ -122,7 +122,76 @@ require_once('../app/partials/landing_head.php');
                         </div>
                         <div class="ec-vendor-card-body">
                             <div class="ec-vendor-card-table">
+                                <table id="responsive-data-table" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>SKU</th>
+                                            <th>Name</th>
+                                            <th>Seller</th>
+                                            <th>QTY</th>
+                                            <th>Price</th>
+                                            <th>Available From</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
 
+                                    <tbody>
+                                        <?php
+                                        $products_sql = mysqli_query(
+                                            $mysqli,
+                                            "SELECT * FROM products p
+                                            INNER JOIN users u ON u.user_id = p.product_seller_id
+                                            INNER JOIN categories c ON c.category_id = p.product_category_id
+                                            WHERE u.user_delete_status = '0' 
+                                            AND c.category_delete_status = '0'
+                                            AND p.product_delete_status = '0'
+                                            AND p.product_seller_id = '{$user_id}'
+                                            ORDER BY p.product_name ASC
+                                            "
+                                        );
+                                        if (mysqli_num_rows($products_sql) > 0) {
+                                            while ($products = mysqli_fetch_array($products_sql)) {
+                                                /* Image Directory */
+                                                if ($products['product_image'] == '') {
+                                                    $image_dir = "../public/uploads/products/no_image.png";
+                                                } else {
+                                                    $image_dir = "../public/uploads/products/" . $products['product_image'];
+                                                }
+                                        ?>
+                                                <tr>
+                                                    <td><img class="vendor-thumb" src="<?php echo $image_dir; ?>" alt="Product" /></td>
+                                                    <td><?php echo $products['product_sku_code']; ?></td>
+                                                    <td>
+                                                        <?php echo $products['product_name']; ?>
+                                                    </td>
+                                                    <td><?php echo $products['user_first_name'] . ' ' . $products['user_last_name']; ?></td>
+                                                    <td><?php echo $products['product_qty_in_stock']; ?></td>
+                                                    <td>Ksh <?php echo number_format($products['product_price'], 2); ?></td>
+                                                    <td>
+                                                        <?php echo date('d M Y', strtotime($products['product_available_from'])); ?>
+                                                    </td>
+                                                    <td>
+                                                        <div class="btn-group mb-1">
+                                                            <button type="button" class="btn btn-success">Manage</button>
+                                                            <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-display="static">
+                                                                <span class="sr-only">Manage</span>
+                                                            </button>
+
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" href="backoffice_manage_product?view=<?php echo $products['product_id']; ?>">View</a>
+                                                                <a class="dropdown-item" data-bs-toggle="modal" href="#delete_product_<?php echo $products['product_id']; ?>">Delete</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                <!-- Delete Staff Modal -->
+                                                <?php include('../app/modals/delete_product.php'); ?>
+                                                <!-- End Modal -->
+                                        <?php }
+                                        } ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

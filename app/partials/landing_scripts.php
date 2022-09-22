@@ -65,7 +65,6 @@
 <script src="../public/landing_assets/js/main.js"></script>
 <!-- Toastr -->
 <script src="../public/backoffice_assets/plugins/toastr/toastr.min.js"></script>
-
 <!-- Init  Alerts -->
 <?php if (isset($success)) { ?>
     <!-- Pop Success Alert -->

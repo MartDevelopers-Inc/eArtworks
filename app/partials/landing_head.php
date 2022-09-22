@@ -31,7 +31,6 @@
     <link rel="stylesheet" href="../public/landing_assets/css/demo1.css" />
     <link rel="stylesheet" href="../public/landing_assets/css/style.css" />
     <link rel="stylesheet" href="../public/landing_assets/css/responsive.css" />
-
     <!-- Background css -->
     <link rel="stylesheet" id="bg-switcher-css" href="../public/landing_assets/css/backgrounds/bg-4.css" />
     <!-- Toastr -->
