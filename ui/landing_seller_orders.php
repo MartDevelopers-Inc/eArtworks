@@ -112,26 +112,9 @@ require_once('../app/partials/landing_head.php');
                 <?php require_once('../app/partials/landing_seller_sidebar.php'); ?>
 
                 <div class="ec-shop-rightside col-lg-9 col-md-12">
-                    <div class="row">
-                        <div class="col-lg-6 col-md-6">
-                            <div class="ec-vendor-dashboard-sort-card color-blue">
-                                <h5>Products</h5>
-                                <h3><?php echo $my_products; ?></h3>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 col-md-6">
-                            <div class="ec-vendor-dashboard-sort-card color-green">
-                                <h5>Orders</h5>
-                                <h3><?php echo $my_orders; ?></h3>
-                            </div>
-                        </div>
-                    </div>
                     <div class="ec-vendor-dashboard-card space-bottom-30">
                         <div class="ec-vendor-card-header">
                             <h5>Latest Orders</h5>
-                            <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-primary" href="landing_seller_orders">View All</a>
-                            </div>
                         </div>
                         <div class="ec-vendor-card-body">
                             <div class="ec-vendor-card-table">
@@ -144,6 +127,9 @@ require_once('../app/partials/landing_head.php');
                                             <th scope="col">Name</th>
                                             <th scope="col">QTY</th>
                                             <th scope="col">Date</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Cost</th>
+                                            <th scope="col">Customer</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -182,76 +168,33 @@ require_once('../app/partials/landing_head.php');
                                                     <td><span><?php echo $orders['product_name']; ?></span></td>
                                                     <td><span><?php echo $orders['order_qty']; ?></span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
+                                                    <td>
+                                                        <?php
+                                                        if ($orders['order_status'] == 'Placed Orders') { ?>
+                                                            <span class="">Order Placed</span>
+                                                        <?php } else if ($orders['order_status'] == 'Awaiting Fullfilment') { ?>
+                                                            <span class="">Awaiting Fulfillment</span>
+                                                        <?php } else if ($orders['order_status'] == 'Shipped') { ?>
+                                                            <span class="">Shipped</span>
+                                                        <?php } else if ($orders['order_status'] == 'Out For Delivery') { ?>
+                                                            <span class="">Out For Delivery</span>
+                                                        <?php } else if ($orders['order_status'] == 'Delivered') { ?>
+                                                            <span class="">Delivered</span>
+                                                        <?php } else { ?>
+                                                            <span class="">Cancelled</span>
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
+                                                    <td>
+                                                        <span><?php echo ($orders['user_first_name'] . ' ' . $orders['user_last_name']); ?></span>
+                                                    </td>
+
                                                 </tr>
                                             <?php }
                                         } else { ?>
                                             <tr>
                                                 <td colspan="8" align="center">
                                                     No orders available
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="ec-vendor-dashboard-card space-bottom-30">
-                        <div class="ec-vendor-card-header">
-                            <h5>Product List</h5>
-                            <div class="ec-header-btn">
-                                <a class="btn btn-lg btn-primary" href="landing_seller_products">View All</a>
-                                <a class="btn btn-lg btn-primary" href="landing_seller_add_product">Add</a>
-                            </div>
-                        </div>
-                        <div class="ec-vendor-card-body">
-                            <div class="ec-vendor-card-table">
-                                <table class="table ec-table">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">SKU</th>
-                                            <th scope="col">Image</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Qty In Stock</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php
-                                        /* Pop All Products Owned By This Fella */
-                                        $products_sql = mysqli_query(
-                                            $mysqli,
-                                            "SELECT * FROM products p
-                                            INNER JOIN users u ON u.user_id = p.product_seller_id
-                                            INNER JOIN categories c ON c.category_id = p.product_category_id
-                                            WHERE u.user_delete_status = '0' 
-                                            AND c.category_delete_status = '0'
-                                            AND p.product_delete_status = '0'
-                                            AND p.product_seller_id = '{$user_id}'
-                                            ORDER BY RAND() LIMIT 5"
-                                        );
-                                        if (mysqli_num_rows($products_sql) > 0) {
-                                            while ($products = mysqli_fetch_array($products_sql)) {
-                                                /* Image Directory */
-                                                if ($products['product_image'] == '') {
-                                                    $image_dir = "../public/uploads/products/no_image.png";
-                                                } else {
-                                                    $image_dir = "../public/uploads/products/" . $products['product_image'];
-                                                }
-                                        ?>
-                                                <tr>
-                                                    <th scope="row"><span><?php echo $products['product_sku_code']; ?></span></th>
-                                                    <td><img class="prod-img" src="<?php echo $image_dir; ?>" alt="product image"></td>
-                                                    <td><span><?php echo $products['product_name']; ?></span></td>
-                                                    <td><span>Ksh<?php echo number_format($products['product_price'], 2); ?></span></td>
-                                                    <td><span><?php echo $products['product_qty_in_stock']; ?></span></td>
-                                                </tr>
-                                            <?php }
-                                        } else { ?>
-                                            <tr>
-                                                <td colspan="8" align="center">
-                                                    No products available
                                                 </td>
                                             </tr>
                                         <?php } ?>
