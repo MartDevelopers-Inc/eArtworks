@@ -137,18 +137,18 @@ require_once('../app/partials/landing_head.php');
                                                     <input type="date" required class="form-control" name="product_available_from">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-4">
+                                            <div class="col-lg-4" style="display: none;">
                                                 <div class="form-group">
                                                     <label for="lastName">SKU Code</label>
                                                     <input type="text" required class="form-control" value="<?php echo $sku_code; ?>" name="product_sku_code">
                                                 </div>
                                             </div>
-                                            <div class="form-group col-lg-4">
+                                            <div class="form-group col-lg-6">
                                                 <label for="email">Product price (Ksh)</label>
                                                 <input type="number" required class="form-control" name="product_price">
                                             </div>
 
-                                            <div class="form-group col-lg-4">
+                                            <div class="form-group col-lg-6">
                                                 <label for="email">Quantity In Stock</label>
                                                 <input type="hidden" value="<?php echo $_SESSION['user_id']; ?>" required class="form-control" name="product_seller_id">
                                                 <input type="number" required class="form-control" name="product_qty_in_stock">
