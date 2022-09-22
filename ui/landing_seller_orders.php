@@ -128,6 +128,7 @@ require_once('../app/partials/landing_head.php');
                                             <th scope="col">QTY</th>
                                             <th scope="col">Date</th>
                                             <th scope="col">Status</th>
+                                            <th scope="col">Payment Status</th>
                                             <th scope="col">Cost</th>
                                             <th scope="col">Customer</th>
                                         </tr>
@@ -184,6 +185,7 @@ require_once('../app/partials/landing_head.php');
                                                             <span class="">Cancelled</span>
                                                         <?php } ?>
                                                     </td>
+                                                    <td><span><?php echo $orders['order_payment_status']; ?></span></td>
                                                     <td><span>Ksh <?php echo number_format($orders['order_cost'], 2); ?></span></td>
                                                     <td>
                                                         <span><?php echo ($orders['user_first_name'] . ' ' . $orders['user_last_name']); ?></span>
