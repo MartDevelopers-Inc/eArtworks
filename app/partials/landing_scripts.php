@@ -18,6 +18,9 @@
 <script src="../public/landing_assets/js/plugins/jquery.sticky-sidebar.js"></script>
 <!-- Google translate Js -->
 <script src="../public/landing_assets/js/vendor/google-translate.js"></script>
+<!-- Custom File Upload Scripts -->
+<script src="../public/backoffice_assets/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
 <script>
     /* Google Translate */
     function googleTranslateElementInit() {
@@ -32,8 +35,7 @@
         window.history.replaceState(null, null, window.location.href);
     }
     /* Load Ajax */
-    function GetPaymentMeansName(val)
-    {
+    function GetPaymentMeansName(val) {
         $.ajax({
             type: "POST",
             url: "ajax.php",
@@ -46,12 +48,23 @@
 
     }
 </script>
+<script>
+    /* Init Custom File Select */
+    $(document).ready(function() {
+        bsCustomFileInput.init();
+    });
+    /* Show Selected File Name */
+    document.querySelector('.custom-file-input').addEventListener('change', function(e) {
+        var fileName = document.getElementById("myInput").files[0].name;
+        var nextSibling = e.target.nextElementSibling
+        nextSibling.innerText = fileName
+    })
+</script>
 <!-- Main Js -->
 <script src="../public/landing_assets/js/vendor/index.js"></script>
 <script src="../public/landing_assets/js/main.js"></script>
 <!-- Toastr -->
 <script src="../public/backoffice_assets/plugins/toastr/toastr.min.js"></script>
-</script>
 <!-- Init  Alerts -->
 <?php if (isset($success)) { ?>
     <!-- Pop Success Alert -->

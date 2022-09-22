@@ -121,8 +121,8 @@ require_once('../app/partials/landing_head.php');
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="ec-vendor-dashboard-sort-card color-green">
-                                <h5>Earnings</h5>
-                                <h3>Ksh <?php echo number_format($my_earnings, 2); ?></h3>
+                                <h5>Orders</h5>
+                                <h3><?php echo $my_orders; ?></h3>
                             </div>
                         </div>
                     </div>
@@ -144,7 +144,6 @@ require_once('../app/partials/landing_head.php');
                                             <th scope="col">Name</th>
                                             <th scope="col">QTY</th>
                                             <th scope="col">Date</th>
-                                            <th scope="col">Amount</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -183,11 +182,6 @@ require_once('../app/partials/landing_head.php');
                                                     <td><span><?php echo $orders['product_name']; ?></span></td>
                                                     <td><span><?php echo $orders['order_qty']; ?></span></td>
                                                     <td><span><?php echo date('d M Y', strtotime($orders['order_date'])); ?></span></td>
-                                                    <td>
-                                                        <span>
-                                                            Ksh <?php echo number_format($orders['order_cost'] + 1500, 2); ?>
-                                                        </span>
-                                                    </td>
                                                 </tr>
                                             <?php }
                                         } else { ?>
@@ -202,12 +196,13 @@ require_once('../app/partials/landing_head.php');
                             </div>
                         </div>
                     </div>
+
                     <div class="ec-vendor-dashboard-card space-bottom-30">
                         <div class="ec-vendor-card-header">
                             <h5>Product List</h5>
                             <div class="ec-header-btn">
                                 <a class="btn btn-lg btn-primary" href="landing_seller_products">View All</a>
-                                <a class="btn btn-lg btn-primary" href="">Add</a>
+                                <a class="btn btn-lg btn-primary" href="landing_seller_add_product">Add</a>
                             </div>
                         </div>
                         <div class="ec-vendor-card-body">

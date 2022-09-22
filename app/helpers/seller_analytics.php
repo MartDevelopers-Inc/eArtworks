@@ -77,14 +77,12 @@ $stmt->fetch();
 $stmt->close();
 
 
-/* Income */
-$query = "SELECT SUM(payment_amount)  
-FROM payments p
-INNER JOIN orders o ON o.order_code = p.payment_order_code
-INNER JOIN products pd ON pd.product_id = o.order_product_id
-WHERE  p.payment_delete_status = '0' AND pd.product_seller_id = '{$user_id}'";
+/* Orders */
+$query = "SELECT COUNT(*)  FROM orders o
+INNER JOIN products p ON p.product_id = o.order_product_id 
+WHERE  p.product_delete_status = '0' AND p.product_seller_id = '{$user_id}'";
 $stmt = $mysqli->prepare($query);
 $stmt->execute();
-$stmt->bind_result($my_earnings);
+$stmt->bind_result($my_orders);
 $stmt->fetch();
 $stmt->close();
