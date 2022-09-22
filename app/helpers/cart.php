@@ -164,7 +164,7 @@ if (isset($_POST['Process_Cart'])) {
             /* Order Status Mailer */
             include('../app/mailers/order_mailer.php');
             if (mysqli_query($mysqli, $order_sql) &&  mysqli_query($mysqli, $update_sql) && $mail->send()) {
-                $_SESSION['success'] = "Order $order_code submitted";
+                //$_SESSION['success'] = "Order $order_code submitted";
                 header('Location: landing_track_order_details?view=' . $order_code);
                 unset($_SESSION["cart_item"]);
                 //exit  -This Code Is The One Which Killed My Session;

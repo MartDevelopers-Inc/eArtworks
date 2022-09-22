@@ -508,7 +508,7 @@ require_once('../app/partials/landing_head.php');
                                                     <tr>
                                                         <td><span><?php echo $payment['payment_ref_code']; ?></span></td>
                                                         <td><span><?php echo $payment['means_code'] . ' ' . $payment['means_name']; ?></span></td>
-                                                        <td><span><?php echo number_format($payment['payment_amount'], 2); ?></span></td>
+                                                        <td><span>Ksh <?php echo number_format($payment['payment_amount'], 2); ?></span></td>
                                                         <td><span> <?php echo date('d M Y g:ia', strtotime($payment['payment_date'])); ?></span></td>
                                                     </tr>
                                                 <?php  }
