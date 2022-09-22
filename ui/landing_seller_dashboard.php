@@ -121,8 +121,8 @@ require_once('../app/partials/landing_head.php');
                         </div>
                         <div class="col-lg-6 col-md-6">
                             <div class="ec-vendor-dashboard-sort-card color-green">
-                                <h5>Earnings</h5>
-                                <h3>Ksh <?php echo number_format($my_earnings, 2); ?></h3>
+                                <h5>Orders</h5>
+                                <h3><?php echo $my_orders; ?></h3>
                             </div>
                         </div>
                     </div>
