@@ -86,7 +86,7 @@ if (isset($_POST['User_Login'])) {
         $_SESSION['user_phone_number'] = $num['user_phone_number'];
 
         /* Determiner Where To Redirect Based On Access Leveles */
-        if (($num['user_access_level'] == 'Administrator') ||  ($num['user_access_level'] == 'Staff)')) {
+        if (($num['user_access_level'] == 'Administrator') ||  ($num['user_access_level'] == 'Staff')) {
             /* Load Sessions */
             $_SESSION['user_access_level'] = $num['user_access_level'];
             $_SESSION['success'] = "Welcome to back office module";

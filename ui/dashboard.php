@@ -90,54 +90,58 @@ require_once('../app/partials/backoffice_head.php');
             <!-- CONTENT WRAPPER -->
             <div class="ec-content-wrapper">
                 <div class="content">
-                    <!-- Top Statistics -->
-                    <div class="row">
-                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
-                            <div class="card card-mini dash-card card-1">
-                                <a href="backoffice_manage_customers" class="text-dark">
-                                    <div class="card-body">
-                                        <h2 class="mb-1"><?php echo $customers; ?></h2>
-                                        <p>Customers</p>
-                                        <span class="mdi mdi-account-group"></span>
-                                    </div>
-                                </a>
+                    <?php
+                    /* Only Show This To Admins */
+                    if ($user_access_level == 'Administrator') {
+                    ?>
+                        <!-- Top Statistics -->
+                        <div class="row">
+                            <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                                <div class="card card-mini dash-card card-1">
+                                    <a href="backoffice_manage_customers" class="text-dark">
+                                        <div class="card-body">
+                                            <h2 class="mb-1"><?php echo $customers; ?></h2>
+                                            <p>Customers</p>
+                                            <span class="mdi mdi-account-group"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                                <div class="card card-mini dash-card card-2">
+                                    <a href="backoffice_manage_staffs" class="text-dark">
+                                        <div class="card-body">
+                                            <h2 class="mb-1"><?php echo $staffs; ?></h2>
+                                            <p>Staffs</p>
+                                            <span class="mdi mdi-account-group-outline"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                                <div class="card card-mini dash-card card-3">
+                                    <a href="backoffice_manage_products" class="text-dark">
+                                        <div class="card-body">
+                                            <h2 class="mb-1"><?php echo $products; ?></h2>
+                                            <p>Products</p>
+                                            <span class="mdi mdi-palette-advanced"></span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
+                                <div class="card card-mini dash-card card-4">
+                                    <a href="backoffice_manage_payments" class="text-dark">
+                                        <div class="card-body">
+                                            <h2 class="mb-1">Ksh <?php echo number_format($payments); ?></h2>
+                                            <p>Overall Revenue</p>
+                                            <span class="mdi mdi-currency-usd"></span>
+                                        </div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
-                            <div class="card card-mini dash-card card-2">
-                                <a href="backoffice_manage_staffs" class="text-dark">
-                                    <div class="card-body">
-                                        <h2 class="mb-1"><?php echo $staffs; ?></h2>
-                                        <p>Staffs</p>
-                                        <span class="mdi mdi-account-group-outline"></span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
-                            <div class="card card-mini dash-card card-3">
-                                <a href="backoffice_manage_products" class="text-dark">
-                                    <div class="card-body">
-                                        <h2 class="mb-1"><?php echo $products; ?></h2>
-                                        <p>Products</p>
-                                        <span class="mdi mdi-palette-advanced"></span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">
-                            <div class="card card-mini dash-card card-4">
-                                <a href="backoffice_manage_payments" class="text-dark">
-                                    <div class="card-body">
-                                        <h2 class="mb-1">Ksh <?php echo number_format($payments); ?></h2>
-                                        <p>Overall Revenue</p>
-                                        <span class="mdi mdi-currency-usd"></span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
+                    <?php } ?>
                     <!-- Orders statistics -->
                     <div class="row">
                         <div class="col-xl-3 col-sm-6 p-b-15 lbl-card">

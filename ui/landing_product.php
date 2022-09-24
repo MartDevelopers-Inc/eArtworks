@@ -67,7 +67,6 @@
 session_start();
 require_once('../app/settings/config.php');
 require_once('../app/settings/checklogin.php');
-checklogin();
 require_once('../app/helpers/landing.php');
 require_once('../app/settings/cart_db_controller.php');
 include('../app/helpers/cart.php');
