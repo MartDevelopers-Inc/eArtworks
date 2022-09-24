@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Sep 22, 2022 at 01:21 PM
+-- Generation Time: Sep 24, 2022 at 07:39 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.10
 
@@ -134,8 +134,8 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `order_user_id`, `order_product_id`, `order_code`, `order_date`, `order_qty`, `order_cost`, `order_status`, `order_payment_status`, `order_delete_status`, `order_estimated_delivery_date`) VALUES
-(61, 35, 1, 'OBITY41508', '2022-09-22', '1', '150', 'Placed Orders', 'Paid', 0, '2022-09-29'),
-(62, 35, 3, 'OBITY41508', '2022-09-22', '1', '500', 'Placed Orders', 'Paid', 0, '2022-09-29');
+(61, 35, 1, 'OBITY41508', '2022-09-22', '1', '150', 'Out For Delivery', 'Paid', 0, '2022-09-29'),
+(62, 35, 3, 'OBITY41508', '2022-09-22', '1', '500', 'Out For Delivery', 'Paid', 0, '2022-09-29');
 
 -- --------------------------------------------------------
 
@@ -355,12 +355,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_dob`, `user_phone_number`, `user_default_address`, `user_password`, `user_password_reset_token`, `user_email_status`, `user_account_status`, `user_profile_picture`, `user_date_joined`, `user_access_level`, `user_2fa_status`, `user_2fa_code`, `user_delete_status`) VALUES
 (1, 'Mart', 'Martin', 'martinezmbithi@gmail.com', '1998-07-13', '254740847563', '120 Kikima', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Pending', 'Active', 'Customer_1661348959.jpg', '2022-08-19 06:51:39', 'Customer', 0, '18MDVG', 0),
-(8, 'Martin', 'Mbithi', 'martmbithi@protonmail.com', '2022-02-28', '+12523457895', '54-9865 Manhattan New York', 'a69681bcf334ae130217fea4505fd3c994f5683f', '7627807510fe621c846ec657', 'Confirmed', 'Active', 'Customer_1661408324.jpg', '2022-08-22 15:19:00', 'Administrator', 1, '1BP0TZ', 0),
+(8, 'Martin', 'Mbithi', 'martmbithi@protonmail.com', '2022-02-28', '+12523457895', '54-9865 Manhattan New York', 'a69681bcf334ae130217fea4505fd3c994f5683f', '7627807510fe621c846ec657', 'Confirmed', 'Active', 'Customer_1661408324.jpg', '2022-08-22 15:19:00', 'Administrator', 0, '1BP0TZ', 0),
 (13, 'James', 'Doe', 'jamesdoe@gmail.com', '1998-07-13', '7234567890', '120 Localhost', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-27 04:29:00', 'Staff', 0, NULL, 0),
 (14, 'Janet ', 'Monroe', 'janetmon89@gmail.com', '1996-08-15', '7901235648', '120 Beverley Hills California', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-27 04:29:00', 'Staff', 0, NULL, 0),
 (15, 'Mr Hudson', 'Rivera', 'hudrivera76@hotmail.com', '1980-05-18', '7453328976', '54-9865 Manhattan New York', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-27 04:29:00', 'Staff', 0, NULL, 0),
 (17, 'Hillary', 'Kagame', 'kagamehil876@gmail.com', '2022-08-01', '+255710988765', '127 Biashara Street. Kigali Rwanda', '67a74306b06d0c01624fe0d0249a570f4d093747', NULL, 'Pending', 'Active', NULL, '2022-08-29 08:46:56', 'Staff', 0, NULL, 0),
-(18, 'Arthur ', 'Bailey', 'athurbailer@hotmail.com', '2022-08-02', '+89777654778', '120 Beverley Hills California', '67a74306b06d0c01624fe0d0249a570f4d093747', NULL, 'Pending', 'Active', 'Staff_1661763132.jpg', '2022-08-29 08:52:11', 'Staff', 0, NULL, 0),
+(18, 'Arthur ', 'Bailey', 'athurbailer@hotmail.com', '2022-08-02', '+89777654778', '120 Beverley Hills California', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Pending', 'Active', 'Staff_1661763132.jpg', '2022-08-29 08:52:11', 'Staff', 0, NULL, 0),
 (19, 'Juliani', 'Slink', 'slinkjulian86@protonmail.com', '1978-01-07', '+12565438343', '54-9865 Manhattan New York', '63982e54a7aeb0d89910475ba6dbd3ca6dd4e5a1', NULL, 'Pending', 'Active', 'Administrator_1661763386.jpg', '2022-08-29 08:56:25', 'Administrator', 0, NULL, 0),
 (25, 'Amparo ', ' Stephens', 'bailey.swif3@yahoo.com', '1964-07-13', '254026647392', '1644 Coffman Alley Louisville, Kentucky(KY), 40202', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Pending', 'Active', NULL, '2022-08-29 10:14:12', 'Customer', 0, NULL, 0),
 (26, 'Kevin ', 'Vazquez', 'cloyd2004@hotmail.com', '1996-07-13', '910-824-4189', '4176 Twin Willow Lane Fayetteville, North Carolina(NC), 28301', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-29 10:14:12', 'Customer', 0, NULL, 0),
