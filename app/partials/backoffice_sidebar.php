@@ -65,6 +65,7 @@
  *
  */
 $user_access_level = mysqli_real_escape_string($mysqli, $_SESSION['user_access_level']);
+global $user_access_level;
 if ($user_access_level == 'Administrator') {
 ?>
     <div class="ec-left-sidebar ec-bg-sidebar">
@@ -302,23 +303,6 @@ if ($user_access_level == 'Administrator') {
                             <span class="nav-text">Dashboard</span>
                         </a>
                         <hr>
-                    </li>
-
-                    <!-- Users -->
-                    <li class="has-sub">
-                        <a class="sidenav-item-link" href="javascript:void(0)">
-                            <i class="mdi mdi-account-group"></i>
-                            <span class="nav-text">Staffs</span> <b class="caret"></b>
-                        </a>
-                        <div class="collapse">
-                            <ul class="sub-menu" id="users" data-parent="#sidebar-menu">
-                                <li class="">
-                                    <a class="sidenav-item-link" href="backoffice_manage_staffs">
-                                        <span class="nav-text">Manage Staffs</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
                     </li>
 
                     <!-- Customers -->
