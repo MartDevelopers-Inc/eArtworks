@@ -107,7 +107,7 @@ CREATE TABLE `mailer_settings` (
 --
 
 INSERT INTO `mailer_settings` (`mailer_id`, `mail_host`, `mail_port`, `mail_protocol`, `mail_username`, `mail_password`, `mail_from_name`, `mail_from_email`) VALUES
-(1, 'bhs104.truehost.cloud', '465', 'ssl', 'sandbox@devlan.co.ke', '20Devlan@', 'eArtworks', 'sandbox@devlan.co.ke');
+(1, 'your_host.com', '465', 'ssl', 'yourmailer.com', 'your_password', 'eArtworks', 'eartworks@mail.com');
 
 -- --------------------------------------------------------
 
@@ -319,9 +319,9 @@ CREATE TABLE `thirdparty_apis` (
 --
 
 INSERT INTO `thirdparty_apis` (`api_id`, `api_name`, `api_identification`, `api_token`) VALUES
-(1, 'Flutterwave Rave', '', 'FLWSECK_TEST-a90855faf858298f0b14bfb4621e53fe-X'),
-(2, 'InfoBip Bulk SMS', '', 'App 2015dca8a64813666b47902dd6567af9-12ae6a93-ddb3-4af8-b01f-c82bab88a71c'),
-(5, 'Mpesa', 'c2oPrnEhmDFde327b9TlgAj2RTwtM7lO', 'KWRKJNEY207CTnZn');
+(1, 'Flutterwave Rave', '', 'Your API TOKEN'),
+(2, 'InfoBip Bulk SMS', '', 'Your API TOKEN'),
+(5, 'Mpesa', 'Your API TOKEN', 'Your API TOKEN');
 
 -- --------------------------------------------------------
 
@@ -354,8 +354,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `user_first_name`, `user_last_name`, `user_email`, `user_dob`, `user_phone_number`, `user_default_address`, `user_password`, `user_password_reset_token`, `user_email_status`, `user_account_status`, `user_profile_picture`, `user_date_joined`, `user_access_level`, `user_2fa_status`, `user_2fa_code`, `user_delete_status`) VALUES
-(1, 'Mart', 'Martin', 'martinezmbithi@gmail.com', '1998-07-13', '254740847563', '120 Kikima', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Pending', 'Active', 'Customer_1661348959.jpg', '2022-08-19 06:51:39', 'Customer', 0, '18MDVG', 0),
-(8, 'Martin', 'Mbithi', 'martmbithi@protonmail.com', '2022-02-28', '+12523457895', '54-9865 Manhattan New York', 'a69681bcf334ae130217fea4505fd3c994f5683f', '7627807510fe621c846ec657', 'Confirmed', 'Active', 'Customer_1661408324.jpg', '2022-08-22 15:19:00', 'Administrator', 0, '1BP0TZ', 0),
+(1, 'Mart', 'Martin', 'm@gmail.com', '1998-07-13', '254740847563', '120 Kikima', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Pending', 'Active', 'Customer_1661348959.jpg', '2022-08-19 06:51:39', 'Customer', 0, '18MDVG', 0),
+(8, 'Martin', 'Mbithi', 'm@protonmail.com', '2022-02-28', '+12523457895', '54-9865 Manhattan New York', 'a69681bcf334ae130217fea4505fd3c994f5683f', '7627807510fe621c846ec657', 'Confirmed', 'Active', 'Customer_1661408324.jpg', '2022-08-22 15:19:00', 'Administrator', 0, '1BP0TZ', 0),
 (13, 'James', 'Doe', 'jamesdoe@gmail.com', '1998-07-13', '7234567890', '120 Localhost', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-27 04:29:00', 'Staff', 0, NULL, 0),
 (14, 'Janet ', 'Monroe', 'janetmon89@gmail.com', '1996-08-15', '7901235648', '120 Beverley Hills California', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-27 04:29:00', 'Staff', 0, NULL, 0),
 (15, 'Mr Hudson', 'Rivera', 'hudrivera76@hotmail.com', '1980-05-18', '7453328976', '54-9865 Manhattan New York', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-27 04:29:00', 'Staff', 0, NULL, 0),
@@ -370,7 +370,7 @@ INSERT INTO `users` (`user_id`, `user_first_name`, `user_last_name`, `user_email
 (30, 'Janet ', ' Durbin', 'orval.kuhi1@yahoo.com', '1997-03-08', '562-313-2116', '3339 Rainbow Road Long Beach, California(CA), 90802', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Pending', 'Active', 'Customer_1661770129.jpg', '2022-08-29 10:48:48', 'Customer', 0, NULL, 0),
 (32, 'Jean R ', 'Ortiz', 'jordi.legro0@hotmail.com', '1971-05-10', '336-402-2925', '2835 Bryan Street, Greensboro, North Carolina(NC), 27406', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', NULL, '2022-08-29 10:55:56', 'Customer', 0, NULL, 0),
 (33, 'Juan ', 'Demarco', 'thaddeus_johns@yahoo.com', '1983-12-05', '832-426-8655', '2887 Worthington Drive, Richardson, Texas(TX), 75081', '2a215231238ab859227b54b137dc6799a40fd39c', NULL, 'Pending', 'Active', 'Customer_1661770676.jpg', '2022-08-29 10:57:55', 'Customer', 0, NULL, 0),
-(35, 'Devlan ', 'Solutions LTD', 'devlaninc18@gmail.com', '1998-12-08', '+254740847561', '120 Kikima, Mbooni', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Confirmed', 'Active', NULL, '2022-09-12 12:51:05', 'Customer', 0, NULL, 0);
+(35, 'Devlan ', 'Solutions LTD', 'HH@gmail.com', '1998-12-08', '+254740847561', '120 Kikima, Mbooni', 'a69681bcf334ae130217fea4505fd3c994f5683f', NULL, 'Confirmed', 'Active', NULL, '2022-09-12 12:51:05', 'Customer', 0, NULL, 0);
 
 -- --------------------------------------------------------
 
