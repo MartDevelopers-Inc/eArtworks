@@ -1,6 +1,4 @@
 <script src="../public/landing_assets/js/vendor/jquery-3.5.1.min.js"></script>
-<script src="../public/landing_assets/js/vendor/jquery.notify.min.js"></script>
-<script src="../public/landing_assets/js/vendor/jquery.bundle.notify.min.js"></script>
 
 <script src="../public/landing_assets/js/vendor/popper.min.js"></script>
 <script src="../public/landing_assets/js/vendor/bootstrap.min.js"></script>
